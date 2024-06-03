@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
+		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
+		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,21 +69,14 @@
 			isa = PBXGroup;
 			children = (
 				DB085B532C0DFEB600199065 /* Font */,
-				DB085B522C0DFEB200199065 /* Color */,
 			);
 			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		DB085B522C0DFEB200199065 /* Color */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Color;
 			sourceTree = "<group>";
 		};
 		DB085B532C0DFEB600199065 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				DB085B562C0E05CD00199065 /* Font.swift */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -224,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
