@@ -11,12 +11,21 @@ import SwiftUI
 @Reducer
 struct OnboardingFeature {
     
-  @ObservableState
-  struct State {
+    @ObservableState
+    struct State {
+        @Presents var loginList: LoginFeature.State?
+    }
     
-  }
-  
-  enum Action {
+    enum Action {
+        case loginButtonTapped(PresentationAction<LoginFeature.Action>)
+    }
     
-  }
+//    var body : some ReducerOf<Self> {
+//        Reduce { state, action in
+//            switch action {
+//            case .loginButtonTapped:
+//                
+//            }
+//        }
+//    }
 }
