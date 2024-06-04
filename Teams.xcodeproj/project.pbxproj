@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
+		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
+		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
+		DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B582C0E104A00199065 /* AuthFeature.swift */; };
+		DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B5A2C0E106B00199065 /* AuthView.swift */; };
+		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
+		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
+		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
-		DBF85C1B2C0DF5FB00CDFA04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C1A2C0DF5FB00CDFA04 /* ContentView.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
 		DBF85C282C0DF68D00CDFA04 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C272C0DF68D00CDFA04 /* .gitignore */; };
@@ -16,9 +23,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
+		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		DB085B582C0E104A00199065 /* AuthFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFeature.swift; sourceTree = "<group>"; };
+		DB085B5A2C0E106B00199065 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
+		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
-		DBF85C1A2C0DF5FB00CDFA04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DBF85C272C0DF68D00CDFA04 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -36,6 +50,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB085B4A2C0DFAFC00199065 /* Onbaording */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B4D2C0DFB2400199065 /* Views */,
+				DB085B4E2C0DFB2800199065 /* Feature */,
+			);
+			path = Onbaording;
+			sourceTree = "<group>";
+		};
+		DB085B4D2C0DFB2400199065 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B4B2C0DFB2000199065 /* OnboardingView.swift */,
+				DB085B5A2C0E106B00199065 /* AuthView.swift */,
+				DB085B612C0ED09700199065 /* SignUpView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DB085B4E2C0DFB2800199065 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */,
+				DB085B582C0E104A00199065 /* AuthFeature.swift */,
+				DB085B632C0ED0A500199065 /* SignUpFeature.swift */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		DB085B512C0DFE7D00199065 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B532C0DFEB600199065 /* Font */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		DB085B532C0DFEB600199065 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B562C0E05CD00199065 /* Font.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		DB5A3B2A2C0EFC0300463E0B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		DBF85C0C2C0DF5FB00CDFA04 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +123,9 @@
 		DBF85C172C0DF5FB00CDFA04 /* Teams */ = {
 			isa = PBXGroup;
 			children = (
-				DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */,
-				DBF85C1A2C0DF5FB00CDFA04 /* ContentView.swift */,
-				DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */,
+				DBF85C2C2C0DF80E00CDFA04 /* App */,
+				DBF85C2D2C0DF82300CDFA04 /* Presentation */,
+				DBF85C2E2C0DF84C00CDFA04 /* Resources */,
 				DBF85C1E2C0DF5FC00CDFA04 /* Preview Content */,
 			);
 			path = Teams;
@@ -70,6 +137,32 @@
 				DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DBF85C2C2C0DF80E00CDFA04 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DBF85C2D2C0DF82300CDFA04 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DB085B4A2C0DFAFC00199065 /* Onbaording */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		DBF85C2E2C0DF84C00CDFA04 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB5A3B2A2C0EFC0300463E0B /* Extension */,
+				DB085B512C0DFE7D00199065 /* DesignSystem */,
+				DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,7 +242,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBF85C1B2C0DF5FB00CDFA04 /* ContentView.swift in Sources */,
+				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
+				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
+				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
+				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
+				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
+				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
+				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
+				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
