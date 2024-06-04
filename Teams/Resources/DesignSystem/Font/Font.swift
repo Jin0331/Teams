@@ -20,11 +20,11 @@ extension View {
         self.font(.system(size: 13).weight(.bold))
     }
     
-    func body() -> some View {
+    func bodyRegular() -> some View {
         self.font(.system(size: 13).weight(.regular))
     }
     
-    func caption() -> some View {
+    func captionRegular() -> some View {
         self.font(.system(size: 12).weight(.regular))
     }
 
