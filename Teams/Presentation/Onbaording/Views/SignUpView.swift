@@ -26,16 +26,17 @@ struct SignUpView: View {
             .navigationBarItems(
               leading:
                 Button {
-    //              viewStore.send(.addButtonTapped)
+                    store.send(.dismiss)
                 } label : {
                     Image("Vector")
                 }
             )
         }
-
-
-        
-        
-            
     }
+}
+
+#Preview {
+    SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {
+        SignUpFeature()
+    }))
 }

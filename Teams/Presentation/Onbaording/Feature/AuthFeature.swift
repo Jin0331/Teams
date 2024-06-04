@@ -22,11 +22,21 @@ struct AuthFeature {
         case signUpPresentation
     }
     
+    @Dependency(\.dismiss) var dismiss
+    
     var body : some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .signUp:
-                return .none
+            case let .signUp(childAction):
+                switch childAction {
+                case .dismiss:
+                    return .run { send in
+                        await self.dismiss()
+                    }
+                default:
+                    return .none
+                }
+                
             case .signUpButtonTapped:
                 return .run { send in
                     await send(.signUpPresentation)
