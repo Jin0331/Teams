@@ -1,18 +1,20 @@
 //
-//  LoginView.swift
+//  AuthView.swift
 //  Teams
 //
 //  Created by JinwooLee on 6/3/24.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 // 코드 리팩토링은 추후. 기능 동작 확인부터 시작
 
-struct LoginView: View {
+struct AuthView: View {
+    
+    @Perception.Bindable var store : StoreOf<AuthFeature>
+    
     var body: some View {
-        
-        
         
         VStack(spacing : 20) {
             
@@ -57,9 +59,13 @@ struct LoginView: View {
             HStack {
                 Text("또는")
                 Button("새롭게 회원가입 하기") {
-                    
+                    store.send(.signUpButtonTapped)
                 }
                 .tint(.brandGreen)
+                .sheet(item: $store.scope(state: \.signUp, action: \.signUp)) { store in
+                    SignUpView(store: store)
+                        .presentationDragIndicator(.visible)
+                }
             }
             .title2()
         }
@@ -73,8 +79,4 @@ struct LoginView: View {
     }
     
     
-}
-
-#Preview {
-    LoginView()
 }

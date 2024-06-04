@@ -41,7 +41,7 @@ struct OnboardingView: View {
             .cornerRadius(8)
             .padding()
             .sheet(item: $store.scope(state: \.login, action: \.login)) { store in
-              LoginView()
+              AuthView(store: store)
                     .presentationDetents([.height(290)])
                     .presentationDragIndicator(.visible)
             }
@@ -49,7 +49,3 @@ struct OnboardingView: View {
         
     }
 }
-
-//#Preview {
-//    OnboardingView()
-//}

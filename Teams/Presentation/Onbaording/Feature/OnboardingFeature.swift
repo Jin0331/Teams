@@ -13,11 +13,11 @@ struct OnboardingFeature {
     
     @ObservableState
     struct State {
-        @Presents var login: LoginFeature.State?
+        @Presents var login: AuthFeature.State?
     }
     
     enum Action {
-        case login(PresentationAction<LoginFeature.Action>)
+        case login(PresentationAction<AuthFeature.Action>)
         case loginButtonTapped
         case loginPresentation
     }
@@ -34,13 +34,13 @@ struct OnboardingFeature {
                 }
                 
             case .loginPresentation:
-                state.login = LoginFeature.State()
+                state.login = AuthFeature.State()
                 return .none
                 
             }
         }
         .ifLet(\.$login, action: \.login) {
-            LoginFeature()
+            AuthFeature()
         }
     }
 }
