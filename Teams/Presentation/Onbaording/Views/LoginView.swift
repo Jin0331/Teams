@@ -12,6 +12,8 @@ import SwiftUI
 struct LoginView: View {
     var body: some View {
         
+        
+        
         VStack(spacing : 20) {
             
             Button(action: {}, label: {
@@ -25,7 +27,7 @@ struct LoginView: View {
             .title2()
             .background(.appleLogin)
             .cornerRadius(6)
-
+            
             
             Button(action: {}, label: {
                 HStack {
@@ -38,7 +40,7 @@ struct LoginView: View {
             .title2()
             .background(.kakaoLogin)
             .cornerRadius(6)
-
+            
             
             Button(action: {}, label: {
                 HStack {
@@ -61,8 +63,16 @@ struct LoginView: View {
             }
             .title2()
         }
+        .padding()
+        .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
+            Text("")
+                .frame(maxWidth: .infinity)
+        }
         
+        Spacer()
     }
+    
+    
 }
 
 #Preview {

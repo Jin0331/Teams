@@ -13,19 +13,34 @@ struct OnboardingFeature {
     
     @ObservableState
     struct State {
-        @Presents var loginList: LoginFeature.State?
+        @Presents var login: LoginFeature.State?
     }
     
     enum Action {
-        case loginButtonTapped(PresentationAction<LoginFeature.Action>)
+        case login(PresentationAction<LoginFeature.Action>)
+        case loginButtonTapped
+        case loginPresentation
     }
     
-//    var body : some ReducerOf<Self> {
-//        Reduce { state, action in
-//            switch action {
-//            case .loginButtonTapped:
-//                
-//            }
-//        }
-//    }
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .login:
+                return .none
+                
+            case .loginButtonTapped:
+                return .run { send in
+                    await send(.loginPresentation)
+                }
+                
+            case .loginPresentation:
+                state.login = LoginFeature.State()
+                return .none
+                
+            }
+        }
+        .ifLet(\.$login, action: \.login) {
+            LoginFeature()
+        }
+    }
 }

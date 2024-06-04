@@ -10,6 +10,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     
+    @Perception.Bindable var store : StoreOf<OnboardingFeature>
     
     var body: some View {
         VStack {
@@ -31,7 +32,7 @@ struct OnboardingView: View {
             Spacer()
             
             Button("시작하기") {
-                
+                store.send(.loginButtonTapped)
             }
             .tint(.brandWhite)
             .frame(width: 345, height: 44)
@@ -39,10 +40,16 @@ struct OnboardingView: View {
             .background(.brandGreen)
             .cornerRadius(8)
             .padding()
+            .sheet(item: $store.scope(state: \.login, action: \.login)) { store in
+              LoginView()
+                    .presentationDetents([.height(290)])
+                    .presentationDragIndicator(.visible)
+            }
         }
+        
     }
 }
 
-#Preview {
-    OnboardingView()
-}
+//#Preview {
+//    OnboardingView()
+//}
