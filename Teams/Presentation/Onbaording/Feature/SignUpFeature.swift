@@ -18,7 +18,9 @@ struct SignUpFeature {
         var phoneNumberText = ""
         var passwordText = ""
         var passwordRepeatText = ""
+        
         var emailValid = false
+        var nicknameValid = false
     }
     
     enum Action {
@@ -33,6 +35,7 @@ struct SignUpFeature {
         
         // valid
         case isEmailValid(String)
+        case isNicknameValid(String)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -51,30 +54,37 @@ struct SignUpFeature {
                 return .run { [email = state.emailText] send in
                     await send(.isEmailValid(email))
                 }
+                
             case let .nicknameChanged(nickname):
                 state.nicknameText = nickname
-                return .none
+                return .run { [nickname = state.nicknameText] send in
+                    await send(.isNicknameValid(nickname))
+                }
+                
             case let .phoneNumberChanged(phoneNumber):
                 state.phoneNumberText = phoneNumber
                 return .none
+                
             case let .passwordChanged(password):
                 state.passwordText = password
                 return .none
+                
             case let .passwordRepeatChanged(passwordRepeat):
                 state.passwordRepeatText = passwordRepeat
                 return .none
                 
-                
             case let .isEmailValid(email):
-                
                 state.emailValid = validEmail(email) ? true : false
+                return .none
+                
+            case let .isNicknameValid(nickname):
+                state.nicknameValid = isValidNickname(nickname) ? true : false
                 
                 return .none
             }
-                
+            
         }
     }
-    
 }
 
 //MARK: - 유효성 검증 함수
@@ -85,4 +95,12 @@ extension SignUpFeature {
         
         return emailPredicate.evaluate(with: email)
     }
+    
+    private func isValidNickname(_ nickname: String) -> Bool {
+        let minCharacters = 1
+        let maxCharacters = 30
+        
+        return nickname.count >= minCharacters && nickname.count <= maxCharacters
+    }
+
 }

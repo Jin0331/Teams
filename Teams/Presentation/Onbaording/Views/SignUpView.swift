@@ -35,7 +35,7 @@ struct SignUpView: View {
                     .frame(width: 345, height: 44)
                     .title2()
                     .background(.brandInActive)
-                    .cornerRadius(8)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 .padding()
                 .navigationBarTitle("회원가입", displayMode: .inline)
