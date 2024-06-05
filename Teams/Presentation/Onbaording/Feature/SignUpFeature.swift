@@ -21,6 +21,7 @@ struct SignUpFeature {
         
         var emailValid = false
         var nicknameValid = false
+        var phoneNumberValid = false
     }
     
     enum Action {
@@ -36,13 +37,14 @@ struct SignUpFeature {
         // valid
         case isEmailValid(String)
         case isNicknameValid(String)
+        case isPhoneNumberValid(String)
     }
     
     @Dependency(\.dismiss) var dismiss
     
     var body : some Reducer<State, Action> {
         Reduce { state, action in
-        
+            
             switch action {
             case .dismiss:
                 return .run { send in
@@ -63,7 +65,9 @@ struct SignUpFeature {
                 
             case let .phoneNumberChanged(phoneNumber):
                 state.phoneNumberText = phoneNumber
-                return .none
+                return .run { [phoneNumber = state.phoneNumberText] send in
+                    await send(.isPhoneNumberValid(phoneNumber))
+                }
                 
             case let .passwordChanged(password):
                 state.passwordText = password
@@ -79,6 +83,12 @@ struct SignUpFeature {
                 
             case let .isNicknameValid(nickname):
                 state.nicknameValid = isValidNickname(nickname) ? true : false
+                return .none
+                
+            case let .isPhoneNumberValid(phoneNumber):
+                state.phoneNumberValid = isValidPhoneNumber(phoneNumber) ? true : false
+                let clean = phoneNumber.filter { $0.isNumber }
+                state.phoneNumberText = formatPhoneNumber(clean)
                 
                 return .none
             }
@@ -102,5 +112,26 @@ extension SignUpFeature {
         
         return nickname.count >= minCharacters && nickname.count <= maxCharacters
     }
-
+    
+    private func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
+        let phoneRegex = "^01\\d{1}-\\d{3,4}-\\d{4}$"
+        let phonePredicate = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        
+        return phonePredicate.evaluate(with: phoneNumber)
+    }
+    
+    private func formatPhoneNumber(_ number: String) -> String {
+        var result = ""
+        let mask = number.count < 11 ? "XXX-XXX-XXXX" : "XXX-XXXX-XXXX"
+        var index = number.startIndex
+        for change in mask where index < number.endIndex {
+            if change == "X" {
+                result.append(number[index])
+                index = number.index(after: index)
+            } else {
+                result.append(change)
+            }
+        }
+        return result
+    }
 }

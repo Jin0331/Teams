@@ -52,59 +52,6 @@ struct SignUpView: View {
     }
 }
 
-
-struct UserInputView: View {
-    
-    var title : String
-    var placement : String
-    var store : Binding<String>
-    var isEmail : Bool = false
-    var isPassword : Bool = false
-    var emailValid : Bool = false
-    
-    var body: some View {
-        VStack(alignment : .leading, spacing: 10) {
-            Text(title)
-                .title2()
-            HStack(spacing : 5) {
-                
-                if isEmail {
-                    TextField(placement, text: store)
-                        .bodyRegular()
-                        .padding()
-                        .frame(width: 233, height: 44)
-                    
-                    Button("중복 확인") {
-                        
-                    }
-                    .frame(width: 100, height: 44)
-                    .title2()
-                    .foregroundStyle(.brandWhite)
-                    .background(backgroundForIsActive(emailValid))
-                    .cornerRadius(8)
-                } else {
-                    
-                    if isPassword {
-                        SecureField(placement, text: store)
-                            .bodyRegular()
-                            .padding()
-                            .frame(width: 345, height: 44)
-                    } else {
-                        TextField(placement, text: store)
-                            .bodyRegular()
-                            .padding()
-                            .frame(width: 345, height: 44)
-                    }
-                    
-
-                }
-            }
-        }
-        .frame(width: 345, height: 76)
-    }
-}
-
-
 #Preview {
     SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {
         SignUpFeature()
