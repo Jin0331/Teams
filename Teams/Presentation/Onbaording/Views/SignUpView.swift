@@ -29,13 +29,14 @@ struct SignUpView: View {
                     Spacer()
                     
                     Button("가입하기") {
-                        
+                        print("hihi")
                     }
-                    .tint(.brandWhite)
+                    .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
                     .title2()
-                    .background(.brandInActive)
+                    .background(backgroundForIsActive(store.completeButton))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .disabled(!store.completeButton)
                 }
                 .padding()
                 .navigationBarTitle("회원가입", displayMode: .inline)

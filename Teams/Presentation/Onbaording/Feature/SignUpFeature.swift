@@ -24,6 +24,7 @@ struct SignUpFeature {
         var phoneNumberValid = false
         var passwordValid = false
         var passwordRepeatValid = false
+        var completeButton = false
     }
     
     enum Action {
@@ -41,6 +42,9 @@ struct SignUpFeature {
         case isPhoneNumberValid(String)
         case isPasswordValid(String)
         case isPasswordRepeatValid(String, String)
+        
+        // complete Button
+        case completeButtonActive
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -56,15 +60,19 @@ struct SignUpFeature {
                 
             case let .emailChanged(email):
                 state.emailText = email
-                return .run { [email = state.emailText] send in
-                    await send(.isEmailValid(email))
-                }
+                return .concatenate([
+                    .run { [email = state.emailText] send in
+                        await send(.isEmailValid(email))},
+                    .send(.completeButtonActive)
+                ])
                 
             case let .nicknameChanged(nickname):
                 state.nicknameText = nickname
-                return .run { [nickname = state.nicknameText] send in
-                    await send(.isNicknameValid(nickname))
-                }
+                return .concatenate([
+                    .run { [nickname = state.nicknameText] send in
+                        await send(.isNicknameValid(nickname))},
+                    .send(.completeButtonActive)
+                ])
                 
             case let .phoneNumberChanged(phoneNumber):
                 state.phoneNumberText = phoneNumber
@@ -74,16 +82,21 @@ struct SignUpFeature {
                 
             case let .passwordChanged(password):
                 state.passwordText = password
-                return .run { [password = state.passwordText] send in
-                    await send(.isPasswordValid(password))
-                }
+                return .concatenate([
+                    .run { [password = state.passwordText] send in
+                        await send(.isPasswordValid(password))},
+                    .send(.completeButtonActive)
+                ])
                 
             case let .passwordRepeatChanged(passwordRepeat):
                 state.passwordRepeatText = passwordRepeat
-                return .run { [password = state.passwordText,
-                               passwordRepeat = state.passwordRepeatText] send in
-                    await send(.isPasswordRepeatValid(password, passwordRepeat))
-                }
+                
+                return .concatenate([
+                    .run { [password = state.passwordText,
+                                   passwordRepeat = state.passwordRepeatText] send in
+                        await send(.isPasswordRepeatValid(password, passwordRepeat))},
+                    .send(.completeButtonActive)
+                ])
                 
             case let .isEmailValid(email):
                 state.emailValid = validEmail(email)
@@ -106,8 +119,17 @@ struct SignUpFeature {
             case let .isPasswordRepeatValid(password, passwordRepeat):
                 state.passwordRepeatValid = password == passwordRepeat ? true : false
                 return .none
+                
+            case .completeButtonActive:
+                
+                if !state.emailText.isEmpty && !state.nicknameText.isEmpty && !state.passwordText.isEmpty && !state.passwordRepeatText.isEmpty {
+                    state.completeButton = true
+                } else {
+                    state.completeButton = false
+                }
+                
+                return .none
             }
-            
         }
     }
 }
@@ -157,5 +179,7 @@ extension SignUpFeature {
         
         return passwordPredicate.evaluate(with: password)
     }
+    
+    
 
 }
