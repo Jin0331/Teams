@@ -38,6 +38,7 @@ struct SignUpFeature {
         // text Change
         case binding(BindingAction<State>)
         case phoneNumberChange(String)
+        case completeButtonActive
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -55,11 +56,11 @@ struct SignUpFeature {
                 
             case .binding(\.emailText):
                 state.emailValid = validEmail(state.emailText)
-                return .none
+                return .send(.completeButtonActive)
                 
             case .binding(\.nicknameText):
                 state.nicknameValid = isValidNickname(state.nicknameText)
-                return .none
+                return .send(.completeButtonActive)
                 
             //MARK: - iOS 17 TextField Bug 대응. 하위 버전에서도 문제없이 작동
             case .binding(\.phoneNumberText):
@@ -70,17 +71,25 @@ struct SignUpFeature {
                 
             case .binding(\.passwordText):
                 state.passwordValid = isValidPassword(state.passwordText)
-                return .none
+                return .send(.completeButtonActive)
                 
             case .binding(\.passwordRepeatText):
                 state.passwordValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
-                return .none
+                return .send(.completeButtonActive)
                 
             case let .phoneNumberChange(phoneNumber):
                 let clean = phoneNumber.filter { $0.isNumber }
                 state.phoneNumberText = formatPhoneNumber(clean)
-                return .none
+                return .send(.completeButtonActive)
                 
+            case .completeButtonActive:
+                if !state.emailText.isEmpty && !state.nicknameText.isEmpty && !state.passwordText.isEmpty && !state.passwordRepeatText.isEmpty {
+                    state.completeButton = true
+                } else {
+                    state.completeButton = false
+                }
+                
+                return .none
             default :
                 return .none
             }
