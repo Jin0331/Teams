@@ -22,11 +22,12 @@ struct SignUpFeature {
         var emailValid = false
         var nicknameValid = false
         var phoneNumberValid = false
+        var passwordValid = false
+        var passwordRepeatValid = false
     }
     
     enum Action {
         case dismiss
-        
         // text Change
         case emailChanged(String)
         case nicknameChanged(String)
@@ -38,6 +39,8 @@ struct SignUpFeature {
         case isEmailValid(String)
         case isNicknameValid(String)
         case isPhoneNumberValid(String)
+        case isPasswordValid(String)
+        case isPasswordRepeatValid(String, String)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -71,25 +74,37 @@ struct SignUpFeature {
                 
             case let .passwordChanged(password):
                 state.passwordText = password
-                return .none
+                return .run { [password = state.passwordText] send in
+                    await send(.isPasswordValid(password))
+                }
                 
             case let .passwordRepeatChanged(passwordRepeat):
                 state.passwordRepeatText = passwordRepeat
-                return .none
+                return .run { [password = state.passwordText,
+                               passwordRepeat = state.passwordRepeatText] send in
+                    await send(.isPasswordRepeatValid(password, passwordRepeat))
+                }
                 
             case let .isEmailValid(email):
-                state.emailValid = validEmail(email) ? true : false
+                state.emailValid = validEmail(email)
                 return .none
                 
             case let .isNicknameValid(nickname):
-                state.nicknameValid = isValidNickname(nickname) ? true : false
+                state.nicknameValid = isValidNickname(nickname)
                 return .none
                 
             case let .isPhoneNumberValid(phoneNumber):
-                state.phoneNumberValid = isValidPhoneNumber(phoneNumber) ? true : false
+                state.phoneNumberValid = isValidPhoneNumber(phoneNumber)
                 let clean = phoneNumber.filter { $0.isNumber }
                 state.phoneNumberText = formatPhoneNumber(clean)
+                return .none
                 
+            case let .isPasswordValid(password):
+                state.passwordValid = isValidPassword(password)
+                return .none
+                
+            case let .isPasswordRepeatValid(password, passwordRepeat):
+                state.passwordRepeatValid = password == passwordRepeat ? true : false
                 return .none
             }
             
@@ -134,4 +149,13 @@ extension SignUpFeature {
         }
         return result
     }
+    
+    private func isValidPassword(_ password: String) -> Bool {
+        // 최소 8자 이상, 대소문자, 숫자, 특수문자를 포함하는 정규표현식
+        let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+        
+        return passwordPredicate.evaluate(with: password)
+    }
+
 }

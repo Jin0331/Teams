@@ -20,7 +20,7 @@ struct SignUpView: View {
                     
                     UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", store: $store.nicknameText.sending(\.nicknameChanged))
                     
-                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText.sending(\.phoneNumberChanged))
+                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText.sending(\.phoneNumberChanged), isNumber: true)
                     
                     UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", store: $store.passwordText.sending(\.passwordChanged), isPassword: true)
                     
