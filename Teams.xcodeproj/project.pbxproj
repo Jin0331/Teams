@@ -14,6 +14,11 @@
 		DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B5A2C0E106B00199065 /* AuthView.swift */; };
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
+		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
+		DB4B780D2C105B2C00350F04 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780C2C105B2C00350F04 /* HTTPMethod.swift */; };
+		DB4B78102C105BF600350F04 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780F2C105BF600350F04 /* TargetType.swift */; };
+		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
+		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
 		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
 		DB5A3B2F2C100E0800463E0B /* UserInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2E2C100E0800463E0B /* UserInputView.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
@@ -31,6 +36,11 @@
 		DB085B5A2C0E106B00199065 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
+		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		DB4B780C2C105B2C00350F04 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		DB4B780F2C105BF600350F04 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
+		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		DB5A3B2E2C100E0800463E0B /* UserInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserInputView.swift; path = "../../../../../../Library/CloudStorage/GoogleDrive-sempre813@gmail.com/UserInputView.swift"; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +107,41 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		DB4B78072C10583200350F04 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DB4B78082C105A3600350F04 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		DB4B78082C105A3600350F04 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DB4B78092C105A4500350F04 /* Router */,
+				DB4B780C2C105B2C00350F04 /* HTTPMethod.swift */,
+				DB4B78112C105C3100350F04 /* HTTPHeader.swift */,
+				DB4B78132C105C4F00350F04 /* APIKey.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DB4B78092C105A4500350F04 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				DB4B780A2C105A8100350F04 /* UserRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		DB4B780E2C105BDC00350F04 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				DB4B780F2C105BF600350F04 /* TargetType.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		DB5A3B2A2C0EFC0300463E0B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +178,7 @@
 		DBF85C172C0DF5FB00CDFA04 /* Teams */ = {
 			isa = PBXGroup;
 			children = (
+				DB4B78072C10583200350F04 /* Data */,
 				DBF85C2C2C0DF80E00CDFA04 /* App */,
 				DBF85C2D2C0DF82300CDFA04 /* Presentation */,
 				DBF85C2E2C0DF84C00CDFA04 /* Resources */,
@@ -169,6 +215,7 @@
 		DBF85C2E2C0DF84C00CDFA04 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB4B780E2C105BDC00350F04 /* Protocol */,
 				DB5A3B2A2C0EFC0300463E0B /* Extension */,
 				DB085B512C0DFE7D00199065 /* DesignSystem */,
 				DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */,
@@ -254,14 +301,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
+				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
+				DB4B78102C105BF600350F04 /* TargetType.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
+				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DB5A3B2F2C100E0800463E0B /* UserInputView.swift in Sources */,
+				DB4B780D2C105B2C00350F04 /* HTTPMethod.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
+				DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

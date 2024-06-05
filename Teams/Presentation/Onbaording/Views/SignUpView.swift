@@ -10,21 +10,22 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @Perception.Bindable var store : StoreOf<SignUpFeature>
+    @State var store : StoreOf<SignUpFeature>
     
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
                 VStack(spacing : 20) {
-                    UserInputView(title: "이메일", placement: "이메일을 입력하세요", store: $store.emailText.sending(\.emailChanged), isEmail: true, emailValid : store.emailValid)
+                    UserInputView(title: "이메일", placement: "이메일을 입력하세요", store: $store.emailText, isEmail: true, emailValid : store.emailValid)
                     
-                    UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", store: $store.nicknameText.sending(\.nicknameChanged))
+                    UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", store: $store.nicknameText)
                     
-                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText.sending(\.phoneNumberChanged), isNumber: true)
+                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText, isNumber: true)
                     
-                    UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", store: $store.passwordText.sending(\.passwordChanged), isPassword: true)
+                    UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", store: $store.passwordText, isPassword: true)
                     
-                    UserInputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", store: $store.passwordRepeatText.sending(\.passwordRepeatChanged), isPassword: true)
+                    UserInputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", store: $store.passwordRepeatText, isPassword: true)
+                    
                     
                     Spacer()
                     

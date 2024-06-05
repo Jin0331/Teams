@@ -25,31 +25,26 @@ struct SignUpFeature {
         var passwordValid = false
         var passwordRepeatValid = false
         var completeButton = false
+        
+        var focusedField: Field?
     }
     
-    enum Action {
+    enum Field: String, Hashable {
+        case username, password
+    }
+    
+    enum Action : BindableAction {
         case dismiss
         // text Change
-        case emailChanged(String)
-        case nicknameChanged(String)
-        case phoneNumberChanged(String)
-        case passwordChanged(String)
-        case passwordRepeatChanged(String)
-        
-        // valid
-        case isEmailValid(String)
-        case isNicknameValid(String)
-        case isPhoneNumberValid(String)
-        case isPasswordValid(String)
-        case isPasswordRepeatValid(String, String)
-        
-        // complete Button
-        case completeButtonActive
+        case binding(BindingAction<State>)
+        case phoneNumberChange(String)
     }
     
     @Dependency(\.dismiss) var dismiss
     
     var body : some Reducer<State, Action> {
+        BindingReducer()
+        
         Reduce { state, action in
             
             switch action {
@@ -58,76 +53,35 @@ struct SignUpFeature {
                     await self.dismiss()
                 }
                 
-            case let .emailChanged(email):
-                state.emailText = email
-                return .concatenate([
-                    .run { [email = state.emailText] send in
-                        await send(.isEmailValid(email))},
-                    .send(.completeButtonActive)
-                ])
+            case .binding(\.emailText):
+                state.emailValid = validEmail(state.emailText)
+                return .none
                 
-            case let .nicknameChanged(nickname):
-                state.nicknameText = nickname
-                return .concatenate([
-                    .run { [nickname = state.nicknameText] send in
-                        await send(.isNicknameValid(nickname))},
-                    .send(.completeButtonActive)
-                ])
+            case .binding(\.nicknameText):
+                state.nicknameValid = isValidNickname(state.nicknameText)
+                return .none
                 
-            case let .phoneNumberChanged(phoneNumber):
-                state.phoneNumberText = phoneNumber
+            //MARK: - iOS 17 TextField Bug 대응. 하위 버전에서도 문제없이 작동
+            case .binding(\.phoneNumberText):
+                state.phoneNumberValid = isValidPhoneNumber(state.phoneNumberText)
                 return .run { [phoneNumber = state.phoneNumberText] send in
-                    await send(.isPhoneNumberValid(phoneNumber))
+                    await send(.phoneNumberChange(phoneNumber))
                 }
                 
-            case let .passwordChanged(password):
-                state.passwordText = password
-                return .concatenate([
-                    .run { [password = state.passwordText] send in
-                        await send(.isPasswordValid(password))},
-                    .send(.completeButtonActive)
-                ])
-                
-            case let .passwordRepeatChanged(passwordRepeat):
-                state.passwordRepeatText = passwordRepeat
-                
-                return .concatenate([
-                    .run { [password = state.passwordText,
-                                   passwordRepeat = state.passwordRepeatText] send in
-                        await send(.isPasswordRepeatValid(password, passwordRepeat))},
-                    .send(.completeButtonActive)
-                ])
-                
-            case let .isEmailValid(email):
-                state.emailValid = validEmail(email)
+            case .binding(\.passwordText):
+                state.passwordValid = isValidPassword(state.passwordText)
                 return .none
                 
-            case let .isNicknameValid(nickname):
-                state.nicknameValid = isValidNickname(nickname)
+            case .binding(\.passwordRepeatText):
+                state.passwordValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
                 return .none
                 
-            case let .isPhoneNumberValid(phoneNumber):
-                state.phoneNumberValid = isValidPhoneNumber(phoneNumber)
+            case let .phoneNumberChange(phoneNumber):
                 let clean = phoneNumber.filter { $0.isNumber }
                 state.phoneNumberText = formatPhoneNumber(clean)
                 return .none
                 
-            case let .isPasswordValid(password):
-                state.passwordValid = isValidPassword(password)
-                return .none
-                
-            case let .isPasswordRepeatValid(password, passwordRepeat):
-                state.passwordRepeatValid = password == passwordRepeat ? true : false
-                return .none
-                
-            case .completeButtonActive:
-                
-                if !state.emailText.isEmpty && !state.nicknameText.isEmpty && !state.passwordText.isEmpty && !state.passwordRepeatText.isEmpty {
-                    state.completeButton = true
-                } else {
-                    state.completeButton = false
-                }
-                
+            default :
                 return .none
             }
         }
@@ -180,6 +134,10 @@ extension SignUpFeature {
         return passwordPredicate.evaluate(with: password)
     }
     
+    private func isPasswordMatch(_ password: String, _ passwordRepeat: String) -> Bool {
+        return password == passwordRepeat
+    }
     
-
+    
+    
 }
