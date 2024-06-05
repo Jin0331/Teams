@@ -16,21 +16,22 @@ struct SignUpView: View {
         WithPerceptionTracking {
             NavigationStack {
                 VStack(spacing : 20) {
-                    UserInputView(title: "이메일", placement: "이메일을 입력하세요", store: $store.emailText, isEmail: true, emailValid : store.emailValid)
+                    UserInputView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid, isEmail: true, emailValid : store.emailDuplicate)
                     
-                    UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", store: $store.nicknameText)
+                    UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", text: $store.nicknameText, valid: store.nicknameValid)
                     
-                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText, isNumber: true)
+                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", text: $store.phoneNumberText, valid: store.phoneNumberValid, isNumber: true)
                     
-                    UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", store: $store.passwordText, isPassword: true)
+                    UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", text: $store.passwordText, valid: store.passwordValid, isPassword: true)
                     
-                    UserInputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", store: $store.passwordRepeatText, isPassword: true)
+                    UserInputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", text: $store.passwordRepeatText, valid: store.passwordRepeatValid, isPassword: true)
+                    
                     
                     
                     Spacer()
                     
                     Button("가입하기") {
-                        print("hihi")
+                        store.send(.completeButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
