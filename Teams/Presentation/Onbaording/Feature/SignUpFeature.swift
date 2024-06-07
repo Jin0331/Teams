@@ -28,10 +28,10 @@ struct SignUpFeature {
         
         var completeButton : Bool = false
         var focusedField: Field?
-    }
-    
-    enum Field: String, Hashable {
-        case username, password
+        
+        enum Field: String, Hashable, CaseIterable {
+            case email, nickname, phoneNumber, password, passwordRepeat
+        }
     }
     
     enum Action : BindableAction {
@@ -87,6 +87,13 @@ struct SignUpFeature {
                 state.phoneNumberValid = isValidPhoneNumber(state.phoneNumberText)
                 state.passwordValid = isValidPassword(state.passwordText)
                 state.passwordRepeatValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
+                
+                // focuseState
+                if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid].enumerated().first(where: { $0.element == false }) {
+                    state.focusedField = SignUpFeature.State.Field.allCases[field.offset]
+                } else {
+                    state.focusedField = .passwordRepeat
+                }
                 
                 return .none
                 
