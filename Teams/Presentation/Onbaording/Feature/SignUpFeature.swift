@@ -28,9 +28,18 @@ struct SignUpFeature {
         
         var completeButton : Bool = false
         var focusedField: Field?
+        var toastPresent : ToastMessage?
         
         enum Field: String, Hashable, CaseIterable {
             case email, nickname, phoneNumber, password, passwordRepeat
+        }
+        
+        enum ToastMessage : String, Hashable {
+            case email = "이메일 중복 확인을 진행해주세요."
+            case nickname = "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
+            case phoneNumber = "잘못된 전화번호 형식입니다."
+            case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."
+            case passwordRepeat = "작성하신 비밀번호가 일치하지 않습니다. "
         }
     }
     
@@ -40,6 +49,7 @@ struct SignUpFeature {
         case phoneNumberChange(String)
         case completeButtonActive
         case completeButtonTapped
+        case toastPresent(State.ToastMessage)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -89,11 +99,27 @@ struct SignUpFeature {
                 state.passwordRepeatValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
                 
                 // focuseState
-                if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid].enumerated().first(where: { $0.element == false }) {
-                    state.focusedField = SignUpFeature.State.Field.allCases[field.offset]
+                if let email = state.emailValid, !email {
+                    state.focusedField = .email
+                    return .send(.toastPresent(.email))
+                } else if let nickname = state.nicknameValid, !nickname {
+                    state.focusedField = .nickname
+                    return .send(.toastPresent(.nickname))
+                } else if let phoneNumber = state.phoneNumberValid, !phoneNumber {
+                    state.focusedField = .phoneNumber
+                    return .send(.toastPresent(.phoneNumber))
+                } else if let password = state.passwordValid, !password {
+                    state.focusedField = .password
+                    return .send(.toastPresent(.password))
                 } else {
                     state.focusedField = .passwordRepeat
+                    return .send(.toastPresent(.passwordRepeat))
                 }
+                
+                
+            case let .toastPresent(message):
+                
+                state.toastPresent = message
                 
                 return .none
                 

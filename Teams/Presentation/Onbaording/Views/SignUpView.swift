@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import PopupView
 
 struct SignUpView: View {
     
@@ -41,6 +42,11 @@ struct SignUpView: View {
                 }
                 .padding()
                 .bind($store.focusedField, to: $focusedField)
+                .popup(item: $store.toastPresent) { text in
+                    ToastView(text: text.rawValue)
+                } customize: {
+                    $0.autohideIn(2)
+                }
                 .navigationBarTitle("회원가입", displayMode: .inline)
                 .navigationBarItems(
                     leading:
