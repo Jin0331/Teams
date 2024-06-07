@@ -34,7 +34,7 @@ struct SignUpFeature {
             case email, nickname, phoneNumber, password, passwordRepeat
         }
         
-        enum ToastMessage : String, Hashable {
+        enum ToastMessage : String, Hashable, CaseIterable {
             case email = "이메일 중복 확인을 진행해주세요."
             case nickname = "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
             case phoneNumber = "잘못된 전화번호 형식입니다."
@@ -99,29 +99,13 @@ struct SignUpFeature {
                 state.passwordRepeatValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
                 
                 // focuseState
-                if let email = state.emailValid, !email {
-                    state.focusedField = .email
-                    return .send(.toastPresent(.email))
-                } else if let nickname = state.nicknameValid, !nickname {
-                    state.focusedField = .nickname
-                    return .send(.toastPresent(.nickname))
-                } else if let phoneNumber = state.phoneNumberValid, !phoneNumber {
-                    state.focusedField = .phoneNumber
-                    return .send(.toastPresent(.phoneNumber))
-                } else if let password = state.passwordValid, !password {
-                    state.focusedField = .password
-                    return .send(.toastPresent(.password))
-                } else {
-                    state.focusedField = .passwordRepeat
-                    return .send(.toastPresent(.passwordRepeat))
+                if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid, state.passwordRepeatValid].firstIndex(of: false) {
+                    state.focusedField = State.Field.allCases[field]
+                    state.toastPresent = State.ToastMessage.allCases[field]
                 }
                 
-                
-            case let .toastPresent(message):
-                
-                state.toastPresent = message
-                
                 return .none
+                
                 
             default :
                 return .none
