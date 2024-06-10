@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import ComposableArchitecture
 import Alamofire
 
 final class NetworkManager {
     static let shared = NetworkManager()
     
-    private init() { }
+    init() { }
     
     private func requestAPI<T:Decodable>(router : URLRequestConvertible, of type : T.Type) async throws -> T {
         
@@ -20,7 +21,7 @@ final class NetworkManager {
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(urlRequest)
                 .validate(statusCode: 200..<300)
-                .responseDecodable(of: type) { response in
+                .responseDecodable(of: type, emptyResponseCodes: [200]) { response in
                     switch response.result {
                     case let .success(response):
                         continuation.resume(returning: response)
@@ -52,6 +53,7 @@ final class NetworkManager {
             if let apiError = error as? APIError {
                 return .failure(apiError)
             } else {
+                print(error)
                 return .failure(APIError.unknown)
             }
         }

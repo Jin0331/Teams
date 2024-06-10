@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import Alamofire
 
-struct EmailVaidationResponseDTO : Decodable {
-    let success : String
+struct EmailVaidationResponseDTO : EmptyResponse, Decodable {
+    static func emptyValue() -> EmailVaidationResponseDTO {
+        return EmailVaidationResponseDTO.init()
+        
+    }
 }
