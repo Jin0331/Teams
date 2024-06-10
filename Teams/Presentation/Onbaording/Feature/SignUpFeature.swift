@@ -100,8 +100,8 @@ struct SignUpFeature {
                 
                 // focuseState
                 if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid, state.passwordRepeatValid].firstIndex(of: false) {
+                    state.toastPresent = State.ToastMessage.allCases[field]                    
                     state.focusedField = State.Field.allCases[field]
-                    state.toastPresent = State.ToastMessage.allCases[field]
                 }
                 
                 return .none

@@ -22,11 +22,6 @@ struct ToastView: View {
                 .cornerRadius(7)
                 .padding()
                 .offset(x:0, y:250)
-            
         }
     }
-}
-
-#Preview {
-    ToastView(text: "hihi")
 }
