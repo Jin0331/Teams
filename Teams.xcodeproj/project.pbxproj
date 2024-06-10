@@ -25,6 +25,8 @@
 		DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADBE2C16AA73002907B6 /* TargetType.swift */; };
 		DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DB5AADC12C16AB03002907B6 /* Alamofire */; };
 		DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DB5AADC42C16AB9D002907B6 /* Kingfisher */; };
+		DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */; };
+		DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO+Mapping.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		DB5AADBA2C1300DD002907B6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		DB5AADBC2C16AA59002907B6 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		DB5AADBE2C16AA73002907B6 /* TargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmailValidationRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 		DB4B78072C10583200350F04 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				DB5AADC62C16AC74002907B6 /* UserDfeault */,
 				DB4B78082C105A3600350F04 /* Network */,
 			);
 			path = Data;
@@ -126,6 +131,7 @@
 		DB4B78082C105A3600350F04 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DB5AADCB2C16B036002907B6 /* DataMapping */,
 				DB4B78092C105A4500350F04 /* Router */,
 				DB4B78112C105C3100350F04 /* HTTPHeader.swift */,
 				DB4B78132C105C4F00350F04 /* APIKey.swift */,
@@ -165,6 +171,22 @@
 				DB5AADBA2C1300DD002907B6 /* InputView.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		DB5AADC62C16AC74002907B6 /* UserDfeault */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */,
+			);
+			path = UserDfeault;
+			sourceTree = "<group>";
+		};
+		DB5AADCB2C16B036002907B6 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO+Mapping.swift */,
+			);
+			path = DataMapping;
 			sourceTree = "<group>";
 		};
 		DBF85C0C2C0DF5FB00CDFA04 = {
@@ -323,6 +345,7 @@
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
+				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO+Mapping.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
@@ -330,6 +353,7 @@
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
 				DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
+				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

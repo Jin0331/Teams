@@ -1,14 +1,13 @@
 //
 //  TargetType.swift
-//  JustBoard
+//  Teams
 //
-//  Created by JinwooLee on 4/9/24.
+//  Created by JinwooLee on 6/10/24.
 //
 
 import Foundation
 import Alamofire
 
-// www.naver.com/news/api
 protocol TargetType : URLRequestConvertible {
     
     var baseURL : URL { get }
