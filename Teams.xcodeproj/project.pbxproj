@@ -31,6 +31,7 @@
 		DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */; };
 		DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */; };
 		DB5AADD82C172C64002907B6 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD72C172C64002907B6 /* APIError.swift */; };
+		DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADDC2C173DD0002907B6 /* InputFeature.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		DB5AADD42C172617002907B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 		DB5AADD72C172C64002907B6 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		DB5AADDC2C173DD0002907B6 /* InputFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFeature.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -178,8 +180,8 @@
 		DB5A3B2D2C100DE800463E0B /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				DB5AADB82C12ED2E002907B6 /* ToastView.swift */,
-				DB5AADBA2C1300DD002907B6 /* InputView.swift */,
+				DB5AADDA2C173DB4002907B6 /* View */,
+				DB5AADDB2C173DBA002907B6 /* Feature */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -200,6 +202,23 @@
 				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
 			);
 			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		DB5AADDA2C173DB4002907B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADB82C12ED2E002907B6 /* ToastView.swift */,
+				DB5AADBA2C1300DD002907B6 /* InputView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB5AADDB2C173DBA002907B6 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADDC2C173DD0002907B6 /* InputFeature.swift */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		DBF85C0C2C0DF5FB00CDFA04 = {
@@ -367,6 +386,7 @@
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
+				DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
 				DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,

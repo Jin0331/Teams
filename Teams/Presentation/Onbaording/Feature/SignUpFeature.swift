@@ -31,6 +31,8 @@ struct SignUpFeature {
         var focusedField: Field?
         var toastPresent : ToastMessage?
         
+        var inputView = InputFeature.State()
+        
         enum Field: String, Hashable, CaseIterable {
             case email, nickname, phoneNumber, password, passwordRepeat
         }
@@ -40,7 +42,10 @@ struct SignUpFeature {
             case nickname = "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
             case phoneNumber = "잘못된 전화번호 형식입니다."
             case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."
-            case passwordRepeat = "작성하신 비밀번호가 일치하지 않습니다. "
+            case passwordRepeat = "작성하신 비밀번호가 일치하지 않습니다."
+            case emailFormat = "이메일 형식이 올바르지 않습니다."
+            case emailValid = "사용 가능한 이메일입니다."
+            
         }
     }
     
@@ -51,14 +56,19 @@ struct SignUpFeature {
         case completeButtonActive
         case completeButtonTapped
         case toastPresent(State.ToastMessage)
-        case testButtonTapped
-        case userResponse(Result<EmailVaidationRequestDTO, AFError>)
+        case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
+        case inputView(InputFeature.Action)
     }
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
+        Scope(state: \.inputView, action: /Action.inputView) {
+            InputFeature()
+                ._printChanges()
+        }
+        
         BindingReducer()
         
         Reduce { state, action in
@@ -109,22 +119,31 @@ struct SignUpFeature {
                 }
                 
                 return .none
+            
+            case let .inputView(inputView):
                 
-            case .testButtonTapped:
-                
-                return .run { send in
-                    let temp = await networkManager.emailValidation(query: EmailVaidationRequestDTO(email: "sempre813123@naver.com"))
+                switch inputView {
                     
-                    switch temp {
-                    case let .success(response):
-                        print(response)
-                    case let .failure(error):
-                        print(error.errorDescription, "✅")
+                case .emailValidationButtonTapped:
+                    
+                    return .run { [email = state.emailText] send in
+                        await send(.emailValidationResponse(
+                            networkManager.emailValidation(query: EmailVaidationRequestDTO(email: email))
+                        ))
                     }
-                    
-                    
                 }
             
+            case .emailValidationResponse(.success) :
+                
+                state.toastPresent = State.ToastMessage.emailValid
+                
+                return .none
+                
+            case .emailValidationResponse(.failure) :
+                
+                state.toastPresent = State.ToastMessage.emailFormat
+                
+                return .none
                 
             default :
                 return .none
