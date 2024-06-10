@@ -60,3 +60,16 @@ final class NetworkManager {
     }
     
 }
+
+
+private enum NetworkManagerKey: DependencyKey {
+    static var liveValue: NetworkManager = NetworkManager()
+}
+
+extension DependencyValues {
+    var networkManager: NetworkManager {
+        get { self[NetworkManagerKey.self] }
+        set { self[NetworkManagerKey.self] = newValue }
+    }
+}
+

@@ -56,6 +56,7 @@ struct SignUpFeature {
     }
     
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
         BindingReducer()
@@ -112,7 +113,7 @@ struct SignUpFeature {
             case .testButtonTapped:
                 
                 return .run { send in
-                    let temp = await NetworkManager.shared.emailValidation(query: EmailVaidationRequestDTO(email: "sempre813@naver.com"))
+                    let temp = await networkManager.emailValidation(query: EmailVaidationRequestDTO(email: "sempre813123@naver.com"))
                     
                     switch temp {
                     case let .success(response):
