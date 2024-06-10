@@ -40,6 +40,12 @@ struct SignUpView: View {
                     .background(backgroundForIsActive(store.completeButton))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .disabled(!store.completeButton)
+                    
+                    
+                    Button("API 테스트") {
+                        store.send(.testButtonTapped)
+                    } 
+                    
                 }
                 .padding()
                 .bind($store.focusedField, to: $focusedField)

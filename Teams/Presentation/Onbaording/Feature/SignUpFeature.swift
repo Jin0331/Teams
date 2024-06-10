@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Alamofire
 
 @Reducer
 struct SignUpFeature {
@@ -50,6 +51,8 @@ struct SignUpFeature {
         case completeButtonActive
         case completeButtonTapped
         case toastPresent(State.ToastMessage)
+        case testButtonTapped
+        case userResponse(Result<EmailVaidationRequestDTO, AFError>)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -100,12 +103,27 @@ struct SignUpFeature {
                 
                 // focuseState
                 if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid, state.passwordRepeatValid].firstIndex(of: false) {
-                    state.toastPresent = State.ToastMessage.allCases[field]                    
+                    state.toastPresent = State.ToastMessage.allCases[field]
                     state.focusedField = State.Field.allCases[field]
                 }
                 
                 return .none
                 
+            case .testButtonTapped:
+                
+                return .run { send in
+                    let temp = await NetworkManager.shared.emailValidation(query: EmailVaidationRequestDTO(email: "sempre813@naver.com"))
+                    
+                    switch temp {
+                    case let .success(response):
+                        print(response)
+                    case let .failure(error):
+                        print(error.errorDescription, "✅")
+                    }
+                    
+                    
+                }
+            
                 
             default :
                 return .none
