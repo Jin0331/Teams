@@ -48,7 +48,16 @@ extension UserRouter : TargetType {
     }
     
     var body: Data? {
-        return nil
+        
+        switch self {
+        case let .emailValidation(email):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            
+            return try? encoder.encode(email)
+        }
+        
+        
     }
 }
 
