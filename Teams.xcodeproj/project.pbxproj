@@ -33,7 +33,7 @@
 		DB5AADD82C172C64002907B6 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD72C172C64002907B6 /* APIError.swift */; };
 		DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADDC2C173DD0002907B6 /* InputFeature.swift */; };
 		DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADDE2C180E0F002907B6 /* JoinRequestDTO.swift */; };
-		DB5AADE22C180F73002907B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE12C180F73002907B6 /* AppDelegate.swift */; };
+		DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE12C180F73002907B6 /* TeamsAppDelegate.swift */; };
 		DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */; };
 		DB5AADE72C181427002907B6 /* Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE62C181427002907B6 /* Join.swift */; };
 		DB5AADE92C1818ED002907B6 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE82C1818ED002907B6 /* Token.swift */; };
@@ -69,10 +69,11 @@
 		DB5AADD72C172C64002907B6 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		DB5AADDC2C173DD0002907B6 /* InputFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFeature.swift; sourceTree = "<group>"; };
 		DB5AADDE2C180E0F002907B6 /* JoinRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRequestDTO.swift; sourceTree = "<group>"; };
-		DB5AADE12C180F73002907B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB5AADE12C180F73002907B6 /* TeamsAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsAppDelegate.swift; sourceTree = "<group>"; };
 		DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB5AADE62C181427002907B6 /* Join.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		DB5AADE82C1818ED002907B6 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		DB5AADEA2C1821C6002907B6 /* Teams.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teams.entitlements; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		DBF85C172C0DF5FB00CDFA04 /* Teams */ = {
 			isa = PBXGroup;
 			children = (
+				DB5AADEA2C1821C6002907B6 /* Teams.entitlements */,
 				DB5AADD42C172617002907B6 /* Info.plist */,
 				DB4B78072C10583200350F04 /* Data */,
 				DBF85C2C2C0DF80E00CDFA04 /* App */,
@@ -293,7 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */,
-				DB5AADE12C180F73002907B6 /* AppDelegate.swift */,
+				DB5AADE12C180F73002907B6 /* TeamsAppDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -414,7 +416,7 @@
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
-				DB5AADE22C180F73002907B6 /* AppDelegate.swift in Sources */,
+				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
@@ -559,6 +561,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Teams/Teams.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Teams/Preview Content\"";
@@ -594,6 +597,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Teams/Teams.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Teams/Preview Content\"";

@@ -10,6 +10,7 @@ import Alamofire
 
 enum UserRouter {
     case emailValidation(query : EmailVaidationRequestDTO)
+//    case join(query : JoinRequestDTO)
 }
 
 extension UserRouter : TargetType {

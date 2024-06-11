@@ -17,6 +17,9 @@ import SwiftUI
 
 @main
 struct TeamsApp: App {
+    
+    @UIApplicationDelegateAdaptor private var appDelegate : TeamsAppDelegate
+    
     var body: some Scene {
         WindowGroup {
             OnboardingView(store: Store(initialState: OnboardingFeature.State(), reducer: {
