@@ -10,7 +10,7 @@ import Alamofire
 
 enum UserRouter {
     case emailValidation(query : EmailVaidationRequestDTO)
-//    case join(query : JoinRequestDTO)
+    case join(query : JoinRequestDTO)
 }
 
 extension UserRouter : TargetType {
@@ -20,7 +20,7 @@ extension UserRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation :
+        case .emailValidation, .join:
             return .post
         }
     }
@@ -29,12 +29,14 @@ extension UserRouter : TargetType {
         switch self {
         case .emailValidation:
             return "/users/validation/email"
+        case .join:
+            return "/users/join"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .emailValidation :
+        case .emailValidation , .join:
             return [HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
         }
@@ -56,6 +58,12 @@ extension UserRouter : TargetType {
             encoder.keyEncodingStrategy = .convertToSnakeCase
             
             return try? encoder.encode(email)
+            
+        case let .join(join):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            
+            return try? encoder.encode(join)
         }
         
         
