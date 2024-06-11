@@ -58,13 +58,15 @@ struct SignUpView: View {
                             Image("Vector")
                         }
                 )
+                .navigationBarColor(backgroundColor: .brandWhite, titleColor: .brandBlack)
+                .navigationViewStyle(StackNavigationViewStyle())
             }
         }
     }
 }
 
-#Preview {
-    SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {
-        SignUpFeature()
-    }))
-}
+//#Preview {
+//    SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {
+//        SignUpFeature()
+//    }))
+//}
