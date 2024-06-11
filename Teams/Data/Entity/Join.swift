@@ -8,8 +8,8 @@
 import Foundation
 
 struct Join {
-    let userID, email, nickname, profileImage: String
-    let phone, provider: String?
+    let userID, email, nickname: String
+    let profileImage, phone, provider: String?
     let createdAt: String
     let token: Token
 }

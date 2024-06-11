@@ -35,7 +35,7 @@ struct SignUpFeature {
         var inputView = InputFeature.State()
         
         enum Field: String, Hashable, CaseIterable {
-            case email, nickname, phoneNumber, password, passwordRepeat
+            case email, nickname, phoneNumber, password, passwordRepeat, emailDuplicate
         }
         
         enum ToastMessage : String, Hashable, CaseIterable {
@@ -59,6 +59,7 @@ struct SignUpFeature {
         case completeButtonTapped
         case toastPresent(State.ToastMessage)
         case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
+        case joinResponse(Result<Join, APIError>)
         case inputView(InputFeature.Action)
     }
     
@@ -114,13 +115,31 @@ struct SignUpFeature {
                 state.passwordValid = isValidPassword(state.passwordText)
                 state.passwordRepeatValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
                 
-                // focuseState
+                // 유효성 검증
                 if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid, state.passwordRepeatValid].firstIndex(of: false) {
                     state.toastPresent = State.ToastMessage.allCases[field]
                     state.focusedField = State.Field.allCases[field]
+                    
+                    return .none
                 }
                 
-                return .none
+                if !state.emailDuplicate {
+                    state.toastPresent = State.ToastMessage.email
+                
+                    return .none
+                }
+
+                let joinRequest = JoinRequestDTO(email: state.emailText,
+                                                 password: state.passwordText,
+                                                 nickname: state.nicknameText,
+                                                 phone: state.phoneNumberText,
+                                                 deviceToken: UserDefaultManager.shared.deviceToken!)
+                
+                return .run { send in
+                    await send(.joinResponse(
+                        networkManager.join(query:joinRequest)
+                    ))
+                }
             
             case let .inputView(inputView):
                 
@@ -156,7 +175,19 @@ struct SignUpFeature {
                 }
                 
                 return .none
+            
+            case let .joinResponse(.success(response)):
                 
+                print(response)
+                
+                return .none
+                
+            case let .joinResponse(.failure(error)):
+                
+                print(error)
+                
+                return .none
+
             default :
                 return .none
             }
