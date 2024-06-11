@@ -45,7 +45,9 @@ struct AuthView: View {
                 .cornerRadius(6)
                 
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    store.send(.emailLoginButtonTapped)
+                }, label: {
                     HStack {
                         Image(.email)
                         Text("이메일로 시작하기")
@@ -56,6 +58,11 @@ struct AuthView: View {
                 .title2()
                 .background(.brandGreen)
                 .cornerRadius(6)
+                .tint(.brandGreen)
+                .sheet(item: $store.scope(state: \.emailLogin, action: \.emailLogin)) { store in
+                    EmailLoginView(store: store)
+                        .presentationDragIndicator(.visible)
+                }
                 
                 HStack {
                     Text("또는")
