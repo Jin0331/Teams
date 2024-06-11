@@ -64,9 +64,3 @@ struct SignUpView: View {
         }
     }
 }
-
-//#Preview {
-//    SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {
-//        SignUpFeature()
-//    }))
-//}

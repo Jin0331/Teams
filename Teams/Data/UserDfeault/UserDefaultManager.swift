@@ -57,6 +57,7 @@ final class UserDefaultManager {
     @UserStatus(key: "email") var email : String?
     @UserStatus(key: "nick") var nick : String?
     @UserStatus(key: "profile") var profile : String?
+    @UserStatus(key: "provider") var provider : String?
     @UserLogin(key: "userLogin") var isLogined : Bool
     
     func removeData(forKey key: String) {
@@ -69,13 +70,14 @@ final class UserDefaultManager {
         }
     }
     
-//    func saveAllData(loginResponse : LoginResponse) {
-//        userId = loginResponse.user_id
-//        email = loginResponse.email
-//        nick = loginResponse.nick
-//        profile = loginResponse.profileImage
-//        accessToken = loginResponse.accessToken
-//        refreshToken = loginResponse.refreshToken
-//        isLogined = true
-//    }
+    func saveAllData(login : Join) {
+        userId = login.userID
+        email = login.email
+        nick = login.nickname
+        profile = login.profileImage
+        provider = login.provider
+        accessToken = login.token.accessToken
+        refreshToken = login.token.refreshToken
+        isLogined = true
+    }
 }

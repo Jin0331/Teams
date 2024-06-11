@@ -47,7 +47,7 @@ struct SignUpFeature {
             case emailDuplicate = "이미 등록된 이메일입니다."
             case emailFormat = "이메일 형식이 올바르지 않습니다."
             case emailValid = "사용 가능한 이메일입니다."
-            case none = "알 수 없는 오류입니다."
+            case none = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
         }
     }
     
@@ -178,13 +178,14 @@ struct SignUpFeature {
             
             case let .joinResponse(.success(response)):
                 
-                print(response)
+                UserDefaultManager.shared.saveAllData(login: response)
                 
                 return .none
                 
             case let .joinResponse(.failure(error)):
                 
                 print(error)
+                state.toastPresent = State.ToastMessage.none
                 
                 return .none
 
