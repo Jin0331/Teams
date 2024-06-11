@@ -20,6 +20,7 @@ struct EmailLoginFeature {
         var passwordValid : Bool?
         
         var focusedField: Field?
+        var toastPresent : ToastMessage?
         var completeButton : Bool = false
         
         enum Field: String, Hashable, CaseIterable {
@@ -65,6 +66,20 @@ struct EmailLoginFeature {
                 } else {
                     state.completeButton = false
                 }
+                return .none
+            
+                
+            case .loginButtonTapped:
+                state.emailValid = validEmail(state.emailText)
+                state.passwordValid = isValidPassword(state.passwordText)
+                
+                if let field = [state.emailValid, state.passwordValid].firstIndex(of: false) {
+                    state.toastPresent = State.ToastMessage.allCases[field]
+                    state.focusedField = State.Field.allCases[field]
+                    
+                    return .none
+                }
+                
                 return .none
             
             default :

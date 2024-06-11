@@ -20,9 +20,11 @@ struct EmailLoginView : View {
             NavigationStack {
                 VStack(spacing: 20) {
                     
-                    LoginView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText)
+                    LoginView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid)
+                        .focused($focusedField, equals: .email)
                     
-                    LoginView(title: "비밀번호", placement: "비밀번호를 입력하세요", text: $store.passwordText, isPassword: true)
+                    LoginView(title: "비밀번호", placement: "비밀번호를 입력하세요", text: $store.passwordText, valid: store.passwordValid, isPassword: true)
+                        .focused($focusedField, equals: .password)
                     
                     Spacer()
                     
@@ -39,6 +41,11 @@ struct EmailLoginView : View {
                 }
                 .padding()
                 .bind($store.focusedField, to: $focusedField)
+                .popup(item: $store.toastPresent) { text in
+                    ToastView(text: text.rawValue)
+                } customize: {
+                    $0.autohideIn(2)
+                }
                 .navigationBarTitle("이메일 로그인", displayMode: .inline)
                 .navigationBarItems(
                     leading:
