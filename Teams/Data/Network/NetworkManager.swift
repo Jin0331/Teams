@@ -34,6 +34,8 @@ final class NetworkManager {
                                 continuation.resume(throwing: apiError)
 
                             } catch {
+                                // decoding Error
+                                dump(error)
                                 continuation.resume(throwing: APIError.decodingError)
                             }
                         } else {
@@ -53,7 +55,19 @@ final class NetworkManager {
             if let apiError = error as? APIError {
                 return .failure(apiError)
             } else {
-                print(error)
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func join(query : JoinRequestDTO) async -> Result<Join, APIError> {
+        do {
+            let response = try await requestAPI(router: UserRouter.join(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
                 return .failure(APIError.unknown)
             }
         }

@@ -8,7 +8,7 @@
 import Foundation
 
 enum UserInfo : String {
-    case user_id, email, nick
+    case user_id, email, nick, deviceToken
     case userLogin, accessToken, refreshToken
 }
 
@@ -51,10 +51,13 @@ final class UserDefaultManager {
     // PropertyWrapper 적용
     @UserStatus(key: "accessToken") var accessToken : String?
     @UserStatus(key: "refreshToken") var refreshToken : String?
+    @UserStatus(key: "deviceToken") var deviceToken : String?
+    
     @UserStatus(key: "user_id") var userId : String?
     @UserStatus(key: "email") var email : String?
     @UserStatus(key: "nick") var nick : String?
     @UserStatus(key: "profile") var profile : String?
+    @UserStatus(key: "provider") var provider : String?
     @UserLogin(key: "userLogin") var isLogined : Bool
     
     func removeData(forKey key: String) {
@@ -67,13 +70,14 @@ final class UserDefaultManager {
         }
     }
     
-//    func saveAllData(loginResponse : LoginResponse) {
-//        userId = loginResponse.user_id
-//        email = loginResponse.email
-//        nick = loginResponse.nick
-//        profile = loginResponse.profileImage
-//        accessToken = loginResponse.accessToken
-//        refreshToken = loginResponse.refreshToken
-//        isLogined = true
-//    }
+    func saveAllData(login : Join) {
+        userId = login.userID
+        email = login.email
+        nick = login.nickname
+        profile = login.profileImage
+        provider = login.provider
+        accessToken = login.token.accessToken
+        refreshToken = login.token.refreshToken
+        isLogined = true
+    }
 }
