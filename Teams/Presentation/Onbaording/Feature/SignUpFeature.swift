@@ -43,6 +43,7 @@ struct SignUpFeature {
             case phoneNumber = "잘못된 전화번호 형식입니다."
             case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."
             case passwordRepeat = "작성하신 비밀번호가 일치하지 않습니다."
+            case emailDuplicate = "이미 등록된 이메일입니다."
             case emailFormat = "이메일 형식이 올바르지 않습니다."
             case emailValid = "사용 가능한 이메일입니다."
             
@@ -139,9 +140,15 @@ struct SignUpFeature {
                 
                 return .none
                 
-            case .emailValidationResponse(.failure) :
+            case let .emailValidationResponse(.failure(error)) :
                 
-                state.toastPresent = State.ToastMessage.emailFormat
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                if case .E11 = errorType {
+                    state.toastPresent = State.ToastMessage.emailFormat
+                } else if case .E12 = errorType {
+                    state.toastPresent = State.ToastMessage.emailDuplicate
+                }
                 
                 return .none
                 
