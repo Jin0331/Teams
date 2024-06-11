@@ -14,7 +14,24 @@
 		DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B5A2C0E106B00199065 /* AuthView.swift */; };
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
+		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
+		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
+		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
 		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
+		DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = DB5AADB42C12E4F1002907B6 /* PopupView */; };
+		DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADB82C12ED2E002907B6 /* ToastView.swift */; };
+		DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADBA2C1300DD002907B6 /* InputView.swift */; };
+		DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADBC2C16AA59002907B6 /* AuthManager.swift */; };
+		DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADBE2C16AA73002907B6 /* TargetType.swift */; };
+		DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DB5AADC12C16AB03002907B6 /* Alamofire */; };
+		DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DB5AADC42C16AB9D002907B6 /* Kingfisher */; };
+		DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */; };
+		DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO.swift */; };
+		DB5AADD12C16C4CB002907B6 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD02C16C4CB002907B6 /* NetworkManager.swift */; };
+		DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */; };
+		DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */; };
+		DB5AADD82C172C64002907B6 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADD72C172C64002907B6 /* APIError.swift */; };
+		DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADDC2C173DD0002907B6 /* InputFeature.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -30,7 +47,22 @@
 		DB085B5A2C0E106B00199065 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
+		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
+		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		DB5AADB82C12ED2E002907B6 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		DB5AADBA2C1300DD002907B6 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		DB5AADBC2C16AA59002907B6 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		DB5AADBE2C16AA73002907B6 /* TargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationRequestDTO.swift; sourceTree = "<group>"; };
+		DB5AADD02C16C4CB002907B6 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationResponseDTO.swift; sourceTree = "<group>"; };
+		DB5AADD42C172617002907B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
+		DB5AADD72C172C64002907B6 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		DB5AADDC2C173DD0002907B6 /* InputFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFeature.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,6 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */,
+				DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */,
+				DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */,
 				DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,12 +130,95 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		DB4B78072C10583200350F04 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADC62C16AC74002907B6 /* UserDfeault */,
+				DB4B78082C105A3600350F04 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		DB4B78082C105A3600350F04 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADCB2C16B036002907B6 /* DataMapping */,
+				DB4B78092C105A4500350F04 /* Router */,
+				DB4B78112C105C3100350F04 /* HTTPHeader.swift */,
+				DB4B78132C105C4F00350F04 /* APIKey.swift */,
+				DB5AADBC2C16AA59002907B6 /* AuthManager.swift */,
+				DB5AADBE2C16AA73002907B6 /* TargetType.swift */,
+				DB5AADD02C16C4CB002907B6 /* NetworkManager.swift */,
+				DB5AADD72C172C64002907B6 /* APIError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DB4B78092C105A4500350F04 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				DB4B780A2C105A8100350F04 /* UserRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		DB4B780E2C105BDC00350F04 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		DB5A3B2A2C0EFC0300463E0B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		DB5A3B2D2C100DE800463E0B /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADDA2C173DB4002907B6 /* View */,
+				DB5AADDB2C173DBA002907B6 /* Feature */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		DB5AADC62C16AC74002907B6 /* UserDfeault */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADC72C16AC7F002907B6 /* UserDefaultManager.swift */,
+			);
+			path = UserDfeault;
+			sourceTree = "<group>";
+		};
+		DB5AADCB2C16B036002907B6 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO.swift */,
+				DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */,
+				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		DB5AADDA2C173DB4002907B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADB82C12ED2E002907B6 /* ToastView.swift */,
+				DB5AADBA2C1300DD002907B6 /* InputView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB5AADDB2C173DBA002907B6 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADDC2C173DD0002907B6 /* InputFeature.swift */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		DBF85C0C2C0DF5FB00CDFA04 = {
@@ -123,6 +241,8 @@
 		DBF85C172C0DF5FB00CDFA04 /* Teams */ = {
 			isa = PBXGroup;
 			children = (
+				DB5AADD42C172617002907B6 /* Info.plist */,
+				DB4B78072C10583200350F04 /* Data */,
 				DBF85C2C2C0DF80E00CDFA04 /* App */,
 				DBF85C2D2C0DF82300CDFA04 /* Presentation */,
 				DBF85C2E2C0DF84C00CDFA04 /* Resources */,
@@ -150,6 +270,7 @@
 		DBF85C2D2C0DF82300CDFA04 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DB5A3B2D2C100DE800463E0B /* Custom */,
 				DB085B4A2C0DFAFC00199065 /* Onbaording */,
 			);
 			path = Presentation;
@@ -158,6 +279,7 @@
 		DBF85C2E2C0DF84C00CDFA04 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB4B780E2C105BDC00350F04 /* Protocol */,
 				DB5A3B2A2C0EFC0300463E0B /* Extension */,
 				DB085B512C0DFE7D00199065 /* DesignSystem */,
 				DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */,
@@ -183,6 +305,9 @@
 			name = Teams;
 			packageProductDependencies = (
 				DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */,
+				DB5AADB42C12E4F1002907B6 /* PopupView */,
+				DB5AADC12C16AB03002907B6 /* Alamofire */,
+				DB5AADC42C16AB9D002907B6 /* Kingfisher */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -214,6 +339,9 @@
 			mainGroup = DBF85C0C2C0DF5FB00CDFA04;
 			packageReferences = (
 				DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */,
+				DB5AADC02C16AB03002907B6 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -242,15 +370,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB5AADD12C16C4CB002907B6 /* NetworkManager.swift in Sources */,
+				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
+				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
+				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
+				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
+				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
+				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
+				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
+				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
+				DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
+				DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
+				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
+				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
+				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +529,7 @@
 				DEVELOPMENT_TEAM = SUZFV58S8B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Teams/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -421,6 +564,7 @@
 				DEVELOPMENT_TEAM = SUZFV58S8B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Teams/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -468,6 +612,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.1;
+			};
+		};
+		DB5AADC02C16AB03002907B6 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -479,6 +647,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DB5AADB42C12E4F1002907B6 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
+		DB5AADC12C16AB03002907B6 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB5AADC02C16AB03002907B6 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		DB5AADC42C16AB9D002907B6 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

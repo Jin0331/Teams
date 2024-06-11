@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Alamofire
 
 @Reducer
 struct SignUpFeature {
@@ -19,70 +20,134 @@ struct SignUpFeature {
         var passwordText = ""
         var passwordRepeatText = ""
         
-        var emailValid = false
-        var nicknameValid = false
+        var emailDuplicate : Bool = false
+        var emailValid : Bool?
+        var nicknameValid : Bool?
+        var phoneNumberValid : Bool?
+        var passwordValid : Bool?
+        var passwordRepeatValid : Bool?
+        
+        var completeButton : Bool = false
+        var focusedField: Field?
+        var toastPresent : ToastMessage?
+        
+        var inputView = InputFeature.State()
+        
+        enum Field: String, Hashable, CaseIterable {
+            case email, nickname, phoneNumber, password, passwordRepeat
+        }
+        
+        enum ToastMessage : String, Hashable, CaseIterable {
+            case email = "이메일 중복 확인을 진행해주세요."
+            case nickname = "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
+            case phoneNumber = "잘못된 전화번호 형식입니다."
+            case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."
+            case passwordRepeat = "작성하신 비밀번호가 일치하지 않습니다."
+            case emailFormat = "이메일 형식이 올바르지 않습니다."
+            case emailValid = "사용 가능한 이메일입니다."
+            
+        }
     }
     
-    enum Action {
+    enum Action : BindableAction {
         case dismiss
-        
-        // text Change
-        case emailChanged(String)
-        case nicknameChanged(String)
-        case phoneNumberChanged(String)
-        case passwordChanged(String)
-        case passwordRepeatChanged(String)
-        
-        // valid
-        case isEmailValid(String)
-        case isNicknameValid(String)
+        case binding(BindingAction<State>)
+        case phoneNumberChange(String)
+        case completeButtonActive
+        case completeButtonTapped
+        case toastPresent(State.ToastMessage)
+        case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
+        case inputView(InputFeature.Action)
     }
     
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
-        Reduce { state, action in
+        Scope(state: \.inputView, action: /Action.inputView) {
+            InputFeature()
+                ._printChanges()
+        }
         
+        BindingReducer()
+        
+        Reduce { state, action in
+            
             switch action {
             case .dismiss:
                 return .run { send in
                     await self.dismiss()
                 }
                 
-            case let .emailChanged(email):
-                state.emailText = email
-                return .run { [email = state.emailText] send in
-                    await send(.isEmailValid(email))
+            case .binding(\.emailText):
+                state.emailDuplicate = !state.emailText.isEmpty ? true : false
+                return .send(.completeButtonActive)
+                
+            //MARK: - iOS 17 TextField Bug 대응. 하위 버전에서도 문제없이 작동
+            case .binding(\.phoneNumberText):
+                return .run { [phoneNumber = state.phoneNumberText] send in
+                    await send(.phoneNumberChange(phoneNumber))
                 }
                 
-            case let .nicknameChanged(nickname):
-                state.nicknameText = nickname
-                return .run { [nickname = state.nicknameText] send in
-                    await send(.isNicknameValid(nickname))
+            case let .phoneNumberChange(phoneNumber):
+                let clean = phoneNumber.filter { $0.isNumber }
+                state.phoneNumberText = formatPhoneNumber(clean)
+                return .send(.completeButtonActive)
+            
+            case .binding(\.nicknameText), .binding(\.passwordText), .binding(\.passwordRepeatText):
+                return .send(.completeButtonActive)
+            
+            case .completeButtonActive:
+                if !state.emailText.isEmpty && !state.nicknameText.isEmpty && !state.passwordText.isEmpty && !state.passwordRepeatText.isEmpty {
+                    state.completeButton = true
+                } else {
+                    state.completeButton = false
+                }
+                return .none
+                
+            case .completeButtonTapped:
+                state.emailValid = validEmail(state.emailText)
+                state.nicknameValid = isValidNickname(state.nicknameText)
+                state.phoneNumberValid = isValidPhoneNumber(state.phoneNumberText)
+                state.passwordValid = isValidPassword(state.passwordText)
+                state.passwordRepeatValid = isPasswordMatch(state.passwordText, state.passwordRepeatText)
+                
+                // focuseState
+                if let field = [state.emailValid, state.nicknameValid, state.phoneNumberValid, state.passwordValid, state.passwordRepeatValid].firstIndex(of: false) {
+                    state.toastPresent = State.ToastMessage.allCases[field]
+                    state.focusedField = State.Field.allCases[field]
                 }
                 
-            case let .phoneNumberChanged(phoneNumber):
-                state.phoneNumberText = phoneNumber
+                return .none
+            
+            case let .inputView(inputView):
+                
+                switch inputView {
+                    
+                case .emailValidationButtonTapped:
+                    
+                    return .run { [email = state.emailText] send in
+                        await send(.emailValidationResponse(
+                            networkManager.emailValidation(query: EmailVaidationRequestDTO(email: email))
+                        ))
+                    }
+                }
+            
+            case .emailValidationResponse(.success) :
+                
+                state.toastPresent = State.ToastMessage.emailValid
+                
                 return .none
                 
-            case let .passwordChanged(password):
-                state.passwordText = password
+            case .emailValidationResponse(.failure) :
+                
+                state.toastPresent = State.ToastMessage.emailFormat
+                
                 return .none
                 
-            case let .passwordRepeatChanged(passwordRepeat):
-                state.passwordRepeatText = passwordRepeat
-                return .none
-                
-            case let .isEmailValid(email):
-                state.emailValid = validEmail(email) ? true : false
-                return .none
-                
-            case let .isNicknameValid(nickname):
-                state.nicknameValid = isValidNickname(nickname) ? true : false
-                
+            default :
                 return .none
             }
-            
         }
     }
 }
@@ -102,5 +167,38 @@ extension SignUpFeature {
         
         return nickname.count >= minCharacters && nickname.count <= maxCharacters
     }
-
+    
+    private func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
+        let phoneRegex = "^01\\d{1}-\\d{3,4}-\\d{4}$"
+        let phonePredicate = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        
+        return phonePredicate.evaluate(with: phoneNumber)
+    }
+    
+    private func formatPhoneNumber(_ number: String) -> String {
+        var result = ""
+        let mask = number.count < 11 ? "XXX-XXX-XXXX" : "XXX-XXXX-XXXX"
+        var index = number.startIndex
+        for change in mask where index < number.endIndex {
+            if change == "X" {
+                result.append(number[index])
+                index = number.index(after: index)
+            } else {
+                result.append(change)
+            }
+        }
+        return result
+    }
+    
+    private func isValidPassword(_ password: String) -> Bool {
+        // 최소 8자 이상, 대소문자, 숫자, 특수문자를 포함하는 정규표현식
+        let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+        
+        return passwordPredicate.evaluate(with: password)
+    }
+    
+    private func isPasswordMatch(_ password: String, _ passwordRepeat: String) -> Bool {
+        return password == passwordRepeat
+    }
 }

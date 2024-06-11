@@ -7,37 +7,48 @@
 
 import ComposableArchitecture
 import SwiftUI
+import PopupView
 
 struct SignUpView: View {
     
-    @Perception.Bindable var store : StoreOf<SignUpFeature>
+    @State var store : StoreOf<SignUpFeature>
+    @FocusState var focusedField: SignUpFeature.State.Field?
     
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
                 VStack(spacing : 20) {
-                    UserInputView(title: "이메일", placement: "이메일을 입력하세요", store: $store.emailText.sending(\.emailChanged), isEmail: true, emailValid : store.emailValid)
                     
-                    UserInputView(title: "닉네임", placement: "닉네임을 입력하세요", store: $store.nicknameText.sending(\.nicknameChanged))
+                    InputView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid, isEmail: true, emailValid : store.emailDuplicate, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     
-                    UserInputView(title: "연락처", placement: "연락처를 입력하세요", store: $store.phoneNumberText.sending(\.phoneNumberChanged))
+                    InputView(title: "닉네임", placement: "닉네임을 입력하세요", text: $store.nicknameText, valid: store.nicknameValid, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     
-                    UserInputView(title: "비밀번호", placement: "비밀번호를 입력하세요", store: $store.passwordText.sending(\.passwordChanged), isPassword: true)
+                    InputView(title: "연락처", placement: "연락처를 입력하세요", text: $store.phoneNumberText, valid: store.phoneNumberValid, isNumber: true, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     
-                    UserInputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", store: $store.passwordRepeatText.sending(\.passwordRepeatChanged), isPassword: true)
+                    InputView(title: "비밀번호", placement: "비밀번호를 입력하세요", text: $store.passwordText, valid: store.passwordValid, isPassword: true, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
+                    
+                    InputView(title: "비밀번호 확인", placement: "비밀번호를 한 번 더 입력하세요", text: $store.passwordRepeatText, valid: store.passwordRepeatValid, isPasswordRepeat: true, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     
                     Spacer()
                     
                     Button("가입하기") {
-                        
+                        store.send(.completeButtonTapped)
                     }
-                    .tint(.brandWhite)
+                    .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
                     .title2()
-                    .background(.brandInActive)
+                    .background(backgroundForIsActive(store.completeButton))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .disabled(!store.completeButton)
+                    
                 }
                 .padding()
+                .bind($store.focusedField, to: $focusedField)
+                .popup(item: $store.toastPresent) { text in
+                    ToastView(text: text.rawValue)
+                } customize: {
+                    $0.autohideIn(2)
+                }
                 .navigationBarTitle("회원가입", displayMode: .inline)
                 .navigationBarItems(
                     leading:
@@ -51,59 +62,6 @@ struct SignUpView: View {
         }
     }
 }
-
-
-struct UserInputView: View {
-    
-    var title : String
-    var placement : String
-    var store : Binding<String>
-    var isEmail : Bool = false
-    var isPassword : Bool = false
-    var emailValid : Bool = false
-    
-    var body: some View {
-        VStack(alignment : .leading, spacing: 10) {
-            Text(title)
-                .title2()
-            HStack(spacing : 5) {
-                
-                if isEmail {
-                    TextField(placement, text: store)
-                        .bodyRegular()
-                        .padding()
-                        .frame(width: 233, height: 44)
-                    
-                    Button("중복 확인") {
-                        
-                    }
-                    .frame(width: 100, height: 44)
-                    .title2()
-                    .foregroundStyle(.brandWhite)
-                    .background(backgroundForIsActive(emailValid))
-                    .cornerRadius(8)
-                } else {
-                    
-                    if isPassword {
-                        SecureField(placement, text: store)
-                            .bodyRegular()
-                            .padding()
-                            .frame(width: 345, height: 44)
-                    } else {
-                        TextField(placement, text: store)
-                            .bodyRegular()
-                            .padding()
-                            .frame(width: 345, height: 44)
-                    }
-                    
-
-                }
-            }
-        }
-        .frame(width: 345, height: 76)
-    }
-}
-
 
 #Preview {
     SignUpView(store: Store(initialState: SignUpFeature.State(), reducer: {

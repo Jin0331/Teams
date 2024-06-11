@@ -15,5 +15,14 @@ extension View {
             return Color.brandInActive
         }
     }
+    
+    func ifLet<ContentView: View, Value>(_ opt: Optional<Value>, transform: (Self, Value) -> ContentView) -> some View {
+  
+        if let opt {
+            transform(self, opt) as! Self // 값이 있다면 ForgroundStyle넣어주기
+        } else {
+            self // 없다면 그냥 자기 자신 반환하기
+        }
+    }
 }
 

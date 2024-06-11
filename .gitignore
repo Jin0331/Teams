@@ -6,8 +6,8 @@
 .AppleDouble
 .LSOverride
 
-GoogleService-Info.plist
 API*.swift
+*.plist
 
 
 ### Swift ###
