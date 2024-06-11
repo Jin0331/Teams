@@ -19,7 +19,7 @@ struct SignUpView: View {
             NavigationStack {
                 VStack(spacing : 20) {
                     
-                    InputView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid, isEmail: true, emailValid : store.emailDuplicate, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
+                    InputView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid, isEmail: true, emailValid : store.emailDuplicateButton, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     
                     InputView(title: "닉네임", placement: "닉네임을 입력하세요", text: $store.nicknameText, valid: store.nicknameValid, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
                     

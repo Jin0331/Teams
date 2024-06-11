@@ -19,8 +19,9 @@ struct SignUpFeature {
         var phoneNumberText = ""
         var passwordText = ""
         var passwordRepeatText = ""
-        
+                
         var emailDuplicate : Bool = false
+        var emailDuplicateButton : Bool = false
         var emailValid : Bool?
         var nicknameValid : Bool?
         var phoneNumberValid : Bool?
@@ -46,7 +47,7 @@ struct SignUpFeature {
             case emailDuplicate = "이미 등록된 이메일입니다."
             case emailFormat = "이메일 형식이 올바르지 않습니다."
             case emailValid = "사용 가능한 이메일입니다."
-            
+            case none = "알 수 없는 오류입니다."
         }
     }
     
@@ -81,7 +82,7 @@ struct SignUpFeature {
                 }
                 
             case .binding(\.emailText):
-                state.emailDuplicate = !state.emailText.isEmpty ? true : false
+                state.emailDuplicateButton = !state.emailText.isEmpty ? true : false
                 return .send(.completeButtonActive)
                 
             //MARK: - iOS 17 TextField Bug 대응. 하위 버전에서도 문제없이 작동
@@ -137,17 +138,21 @@ struct SignUpFeature {
             case .emailValidationResponse(.success) :
                 
                 state.toastPresent = State.ToastMessage.emailValid
+                state.emailDuplicate = true
                 
                 return .none
                 
             case let .emailValidationResponse(.failure(error)) :
                 
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
+                state.emailDuplicate = false
                 
                 if case .E11 = errorType {
                     state.toastPresent = State.ToastMessage.emailFormat
                 } else if case .E12 = errorType {
                     state.toastPresent = State.ToastMessage.emailDuplicate
+                } else {
+                    state.toastPresent = State.ToastMessage.none
                 }
                 
                 return .none
