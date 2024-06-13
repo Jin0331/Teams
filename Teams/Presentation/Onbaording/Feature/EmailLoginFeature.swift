@@ -39,6 +39,7 @@ struct EmailLoginFeature {
         case binding(BindingAction<State>)
         case loginButtonActive
         case loginButtonTapped
+        case emailLoginResponse(Result<Join, APIError>)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -79,6 +80,21 @@ struct EmailLoginFeature {
                     
                     return .none
                 }
+                
+                let emailLoginRequest = EmailLoginRequestDTO(email: state.emailText,
+                                                             password: state.passwordText,
+                                                             deviceToken: UserDefaultManager.shared.deviceToken!)
+                
+                
+                return .run { send in
+                    await send(.emailLoginResponse(
+                        networkManager.emailLogin(query: emailLoginRequest)
+                    ))
+                }
+            
+            case let .emailLoginResponse(.success(response)):
+                
+                dump(response)
                 
                 return .none
             
