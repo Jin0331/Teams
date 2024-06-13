@@ -102,6 +102,20 @@ final class NetworkManager {
         }
     }
     
+    func kakaoLogin(query : KakaoLoginRequestDTO) async -> Result<Join, APIError> {
+        
+        do {
+            let response = try await requestAPI(router: UserRouter.kakaoLogin(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     func kakaoLoginWithKakaoTalkCallBack() async -> Result<OAuthToken, Error> {
         await withCheckedContinuation { continuation in
             DispatchQueue.main.async {

@@ -42,7 +42,6 @@ struct AuthFeature {
         case emailLoginButtonTapped
         case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
-        case loginFailure
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -109,16 +108,23 @@ struct AuthFeature {
                     }
                 }
             case let .kakaoLoginUsingApp(.success(oauthToken)):
-                print(oauthToken, "🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟")
-                return .none
+                return .run { send in
+                    await send(.loginResponse(
+                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.idToken ?? "",
+                                                                              deviceToken: UserDefaultManager.shared.deviceToken!))
+                    ))
+                }
+                
+            case let .kakaoLoginUsingWeb(.success(oauthToken)):
+                return .run { send in
+                    await send(.loginResponse(
+                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.idToken ?? "",
+                                                                              deviceToken: UserDefaultManager.shared.deviceToken!))
+                    ))
+                }
                 
             case .kakaoLoginUsingApp(.failure):
                 state.toastPresent = State.ToastMessage.loginFailure
-                return .none
-                
-                
-            case let .kakaoLoginUsingWeb(.success(oauthToken)):
-                print(oauthToken, "🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟")
                 return .none
                 
             case .kakaoLoginUsingWeb(.failure):
@@ -148,11 +154,6 @@ struct AuthFeature {
                 }
                 
                 return .none
-                
-            case .loginFailure:
-                return .none
-            }
-
             
         }
         .ifLet(\.$signUp, action: \.signUp) {
