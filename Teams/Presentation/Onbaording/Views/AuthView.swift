@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import AuthenticationServices
 import SwiftUI
 
 // 코드 리팩토링은 추후. 기능 동작 확인부터 시작
@@ -19,18 +20,26 @@ struct AuthView: View {
             
             VStack(spacing : 20) {
                 
-                Button(action: {}, label: {
-                    HStack {
-                        Image(.apple)
-                        Text("Apple로 계속하기")
-                    }
-                })
-                .tint(.brandWhite)
+                HStack(spacing: 10) {
+                    Image(.apple)
+                    Text("Apple로 계속하기")
+                        .foregroundStyle(.brandWhite)
+                        .title2()
+                }
                 .frame(width: 323, height: 44)
-                .title2()
                 .background(.appleLogin)
                 .cornerRadius(6)
-                
+                .overlay {
+                    SignInWithAppleButton { request in
+                        store.send(.appleLoginRequest(request))
+                    } onCompletion: { result in
+                        if case let .success(authResult) = result {
+                            store.send(.appleLoginCompletion(authResult.credential as! ASAuthorizationAppleIDCredential))
+                        }
+                    }
+                    .blendMode(.overlay)
+
+                }
                 
                 Button(action: {}, label: {
                     HStack {
@@ -45,7 +54,9 @@ struct AuthView: View {
                 .cornerRadius(6)
                 
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    store.send(.emailLoginButtonTapped)
+                }, label: {
                     HStack {
                         Image(.email)
                         Text("이메일로 시작하기")
@@ -56,6 +67,11 @@ struct AuthView: View {
                 .title2()
                 .background(.brandGreen)
                 .cornerRadius(6)
+                .tint(.brandGreen)
+                .sheet(item: $store.scope(state: \.emailLogin, action: \.emailLogin)) { store in
+                    EmailLoginView(store: store)
+                        .presentationDragIndicator(.visible)
+                }
                 
                 HStack {
                     Text("또는")

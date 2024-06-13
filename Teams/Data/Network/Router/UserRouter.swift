@@ -11,6 +11,8 @@ import Alamofire
 enum UserRouter {
     case emailValidation(query : EmailVaidationRequestDTO)
     case join(query : JoinRequestDTO)
+    case emailLogin(query : EmailLoginRequestDTO)
+    case appleLogin(query : AppleLoginRequestDTO)
 }
 
 extension UserRouter : TargetType {
@@ -20,7 +22,7 @@ extension UserRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation, .join:
+        case .emailValidation, .join, .emailLogin, .appleLogin:
             return .post
         }
     }
@@ -31,12 +33,16 @@ extension UserRouter : TargetType {
             return "/users/validation/email"
         case .join:
             return "/users/join"
+        case .emailLogin:
+            return "/users/login"
+        case .appleLogin:
+            return "/users/login/apple"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .emailValidation , .join:
+        case .emailValidation , .join, .emailLogin, .appleLogin:
             return [HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
         }
@@ -64,9 +70,17 @@ extension UserRouter : TargetType {
             encoder.keyEncodingStrategy = .convertToSnakeCase
             
             return try? encoder.encode(join)
+            
+        case let .emailLogin(login):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            
+            return try? encoder.encode(login)
+            
+        case let .appleLogin(login):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(login)
         }
-        
-        
     }
 }
 

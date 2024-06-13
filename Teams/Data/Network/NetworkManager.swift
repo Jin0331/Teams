@@ -32,7 +32,6 @@ final class NetworkManager {
                                 let networkError = try JSONDecoder().decode(ErrorResponseDTO.self, from: errorData)
                                 let apiError = APIError(error: networkError)
                                 continuation.resume(throwing: apiError)
-
                             } catch {
                                 // decoding Error
                                 dump(error)
@@ -63,6 +62,33 @@ final class NetworkManager {
     func join(query : JoinRequestDTO) async -> Result<Join, APIError> {
         do {
             let response = try await requestAPI(router: UserRouter.join(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func emailLogin(query : EmailLoginRequestDTO) async -> Result<Join, APIError> {
+        do {
+            let response = try await requestAPI(router: UserRouter.emailLogin(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func appleLogin(query : AppleLoginRequestDTO) async -> Result<Join, APIError> {
+        
+        do {
+            let response = try await requestAPI(router: UserRouter.appleLogin(query: query), of: JoinResponseDTO.self)
             return .success(response.toDomain())
         } catch {
             if let apiError = error as? APIError {
