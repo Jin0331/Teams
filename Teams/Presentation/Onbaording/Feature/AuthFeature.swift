@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import AuthenticationServices
 import SwiftUI
 
 @Reducer
@@ -15,6 +16,14 @@ struct AuthFeature {
     struct State: Equatable {
         @Presents var signUp : SignUpFeature.State?
         @Presents var emailLogin : EmailLoginFeature.State?
+        var toastPresent : ToastMessage?
+        
+        enum ToastMessage : String, Hashable, CaseIterable {
+            case email = "이메일 형식이 올바르지 않습니다."
+            case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 입력해주세요."
+            case loginFailure = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
+            case none = "알 수 없는 에러"
+        }
     }
     
     enum Action {
@@ -22,11 +31,15 @@ struct AuthFeature {
         case emailLogin(PresentationAction<EmailLoginFeature.Action>)
         case signUpButtonTapped
         case signUpPresentation
+        case appleLoginRequest(ASAuthorizationAppleIDRequest)
+        case appleLoginCompletion(ASAuthorizationAppleIDCredential)
         case emailLoginButtonTapped
         case emailLoginPresentation
+        case loginResponse(Result<Join, APIError>)
     }
     
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
         Reduce { state, action in
@@ -58,16 +71,57 @@ struct AuthFeature {
             case .signUpPresentation:
                 state.signUp = SignUpFeature.State()
                 return .none
-            
+                
+            case let .appleLoginRequest(request):
+                request.requestedScopes = [.fullName, .email]
+                return .none
+                
+            case let .appleLoginCompletion(appleIDCredential):
+                if let identityToken = appleIDCredential.identityToken, let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                    let fullName = appleIDCredential.fullName
+                    let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+                    let request = AppleLoginRequestDTO(idToken: identifyTokenString,
+                                                       nickname: name,
+                                                       deviceToken: UserDefaultManager.shared.deviceToken!)
+                    
+                    print(request)
+                    
+                    return .run { send in
+                        await send(.loginResponse(
+                            networkManager.appleLogin(query: request)
+                        ))
+                    }
+                }
+                
+                return .none
+                
             case .emailLoginButtonTapped:
                 return .run { send in
                     await send(.emailLoginPresentation)
                 }
-            
+                
             case .emailLoginPresentation:
                 state.emailLogin = EmailLoginFeature.State()
                 return .none
+                
+            case let .loginResponse(.success(response)):
+                UserDefaultManager.shared.saveAllData(login: response)
+                return .none
+                
+            case let .loginResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                print(errorType)
+                
+                if case .E03 = errorType {
+                    state.toastPresent = State.ToastMessage.loginFailure
+                } else {
+                    state.toastPresent = State.ToastMessage.none
+                }
+                
+                return .none
             }
+            
         }
         .ifLet(\.$signUp, action: \.signUp) {
             SignUpFeature()

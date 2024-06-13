@@ -79,8 +79,6 @@ extension UserRouter : TargetType {
             
         case let .appleLogin(login):
             let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            
             return try? encoder.encode(login)
         }
     }
