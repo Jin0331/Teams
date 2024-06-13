@@ -30,7 +30,8 @@ struct EmailLoginFeature {
         enum ToastMessage : String, Hashable, CaseIterable {
             case email = "이메일 형식이 올바르지 않습니다."
             case password = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 입력해주세요."
-            case none = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
+            case loginFailure = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
+            case none = "알 수 없는 에러"
         }
     }
     
@@ -94,10 +95,22 @@ struct EmailLoginFeature {
             
             case let .emailLoginResponse(.success(response)):
                 
-                dump(response)
+                UserDefaultManager.shared.saveAllData(login: response)
                 
                 return .none
             
+            case let .emailLoginResponse(.failure(error)):
+                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                if case .E03 = errorType {
+                    state.toastPresent = State.ToastMessage.loginFailure
+                } else {
+                    state.toastPresent = State.ToastMessage.none
+                }
+                
+                return .none
+                
             default :
                 return .none
             }
