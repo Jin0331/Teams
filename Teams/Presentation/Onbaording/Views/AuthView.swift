@@ -41,7 +41,9 @@ struct AuthView: View {
 
                 }
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    store.send(.kakaoLoginButtonTapped)
+                }, label: {
                     HStack {
                         Image(.kakao)
                         Text("카카오톡으로 계속하기")

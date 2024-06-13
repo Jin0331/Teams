@@ -7,6 +7,9 @@
 
 import ComposableArchitecture
 import AuthenticationServices
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 import SwiftUI
 
 @Reducer
@@ -33,9 +36,13 @@ struct AuthFeature {
         case signUpPresentation
         case appleLoginRequest(ASAuthorizationAppleIDRequest)
         case appleLoginCompletion(ASAuthorizationAppleIDCredential)
+        case kakaoLoginButtonTapped
+        case kakaoLoginUsingApp(Result<OAuthToken, Error>)
+        case kakaoLoginUsingWeb
         case emailLoginButtonTapped
         case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
+        case loginFailure
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -83,15 +90,36 @@ struct AuthFeature {
                     let request = AppleLoginRequestDTO(idToken: identifyTokenString,
                                                        nickname: name,
                                                        deviceToken: UserDefaultManager.shared.deviceToken!)
-                    
-                    print(request)
-                    
                     return .run { send in
                         await send(.loginResponse(
                             networkManager.appleLogin(query: request)
                         ))
                     }
                 }
+                
+                return .none
+                
+            case .kakaoLoginButtonTapped:
+                if UserApi.isKakaoTalkLoginAvailable() {
+                    return .run { send in
+                        await send(.kakaoLoginUsingApp(networkManager.kakaoLoginWithKakaoTalkCallBack()))
+                    }
+                } else {
+                    return .none
+                }
+            case let .kakaoLoginUsingApp(.success(oauthToken)):
+                print(oauthToken, "🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                return .none
+                
+            case let .kakaoLoginUsingApp(.failure(error)):
+                
+                print("🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                
+                state.toastPresent = State.ToastMessage.loginFailure
+                return .none
+                
+                
+            case .kakaoLoginUsingWeb:
                 
                 return .none
                 
@@ -118,7 +146,11 @@ struct AuthFeature {
                 }
                 
                 return .none
+                
+            case .loginFailure:
+                return .none
             }
+
             
         }
         .ifLet(\.$signUp, action: \.signUp) {
