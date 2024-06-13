@@ -110,7 +110,7 @@ struct AuthFeature {
             case let .kakaoLoginUsingApp(.success(oauthToken)):
                 return .run { send in
                     await send(.loginResponse(
-                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.idToken ?? "",
+                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
                                                                               deviceToken: UserDefaultManager.shared.deviceToken!))
                     ))
                 }
@@ -118,7 +118,7 @@ struct AuthFeature {
             case let .kakaoLoginUsingWeb(.success(oauthToken)):
                 return .run { send in
                     await send(.loginResponse(
-                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.idToken ?? "",
+                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
                                                                               deviceToken: UserDefaultManager.shared.deviceToken!))
                     ))
                 }
@@ -141,7 +141,7 @@ struct AuthFeature {
                 return .none
                 
             case let .loginResponse(.success(response)):
-                
+                print(response)
                 UserDefaultManager.shared.saveAllData(login: response)
                 return .none
                 
@@ -154,7 +154,7 @@ struct AuthFeature {
                 }
                 
                 return .none
-            
+            }
         }
         .ifLet(\.$signUp, action: \.signUp) {
             SignUpFeature()
