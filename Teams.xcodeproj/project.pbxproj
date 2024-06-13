@@ -44,6 +44,7 @@
 		DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */; };
 		DBC567E12C184E4400444E98 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E02C184E4400444E98 /* LoginView.swift */; };
 		DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */; };
+		DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
 		DBC567E02C184E4400444E98 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginRequestDTO.swift; sourceTree = "<group>"; };
+		DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				DB5AADDE2C180E0F002907B6 /* JoinRequestDTO.swift */,
 				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
 				DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */,
+				DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
+				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,

@@ -86,6 +86,19 @@ final class NetworkManager {
         }
     }
     
+    func emailLogin(query : AppleLoginRequestDTO) async -> Result<Join, APIError> {
+        do {
+            let response = try await requestAPI(router: UserRouter.appleLogin(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
 }
 
 
