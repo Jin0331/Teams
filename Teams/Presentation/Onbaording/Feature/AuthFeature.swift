@@ -38,7 +38,7 @@ struct AuthFeature {
         case appleLoginCompletion(ASAuthorizationAppleIDCredential)
         case kakaoLoginButtonTapped
         case kakaoLoginUsingApp(Result<OAuthToken, Error>)
-        case kakaoLoginUsingWeb
+        case kakaoLoginUsingWeb(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
         case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
@@ -96,7 +96,6 @@ struct AuthFeature {
                         ))
                     }
                 }
-                
                 return .none
                 
             case .kakaoLoginButtonTapped:
@@ -105,22 +104,25 @@ struct AuthFeature {
                         await send(.kakaoLoginUsingApp(networkManager.kakaoLoginWithKakaoTalkCallBack()))
                     }
                 } else {
-                    return .none
+                    return .run { send in
+                        await send(.kakaoLoginUsingWeb(networkManager.kakaoLoginWithKakaoAccountCallBack()))
+                    }
                 }
             case let .kakaoLoginUsingApp(.success(oauthToken)):
                 print(oauthToken, "🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟")
                 return .none
                 
-            case let .kakaoLoginUsingApp(.failure(error)):
-                
-                print("🌟🌟🌟🌟🌟🌟🌟🌟🌟")
-                
+            case .kakaoLoginUsingApp(.failure):
                 state.toastPresent = State.ToastMessage.loginFailure
                 return .none
                 
                 
-            case .kakaoLoginUsingWeb:
+            case let .kakaoLoginUsingWeb(.success(oauthToken)):
+                print(oauthToken, "🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                return .none
                 
+            case .kakaoLoginUsingWeb(.failure):
+                state.toastPresent = State.ToastMessage.loginFailure
                 return .none
                 
             case .emailLoginButtonTapped:
