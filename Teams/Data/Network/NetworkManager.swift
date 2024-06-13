@@ -7,6 +7,9 @@
 
 import Foundation
 import ComposableArchitecture
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 import Alamofire
 
 final class NetworkManager {
@@ -99,6 +102,45 @@ final class NetworkManager {
         }
     }
     
+    func kakaoLogin(query : KakaoLoginRequestDTO) async -> Result<Join, APIError> {
+        
+        do {
+            let response = try await requestAPI(router: UserRouter.kakaoLogin(query: query), of: JoinResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func kakaoLoginCallBack() async -> Result<OAuthToken, Error>{
+        await withCheckedContinuation { continuation in
+            if UserApi.isKakaoTalkLoginAvailable() {
+                DispatchQueue.main.async {
+                    UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                        if let error {
+                            continuation.resume(returning: .failure(error))
+                        } else if let oauthToken {
+                            continuation.resume(returning: .success(oauthToken))
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                        if let error {
+                            continuation.resume(returning: .failure(error))
+                        } else if let oauthToken {
+                            continuation.resume(returning: .success(oauthToken))
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 

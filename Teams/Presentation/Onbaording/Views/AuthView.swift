@@ -7,13 +7,14 @@
 
 import ComposableArchitecture
 import AuthenticationServices
+import PopupView
 import SwiftUI
 
 // 코드 리팩토링은 추후. 기능 동작 확인부터 시작
 
 struct AuthView: View {
     
-    @Perception.Bindable var store : StoreOf<AuthFeature>
+    @State var store : StoreOf<AuthFeature>
     
     var body: some View {
         WithPerceptionTracking {
@@ -41,7 +42,9 @@ struct AuthView: View {
 
                 }
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    store.send(.kakaoLoginButtonTapped)
+                }, label: {
                     HStack {
                         Image(.kakao)
                         Text("카카오톡으로 계속하기")
@@ -90,6 +93,11 @@ struct AuthView: View {
             .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
                 Text("")
                     .frame(maxWidth: .infinity)
+            }
+            .popup(item: $store.toastPresent) { text in
+                ToastView(text: text.rawValue)
+            } customize: {
+                $0.autohideIn(2)
             }
             
             Spacer()

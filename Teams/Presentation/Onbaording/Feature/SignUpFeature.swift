@@ -57,7 +57,6 @@ struct SignUpFeature {
         case phoneNumberChange(String)
         case completeButtonActive
         case completeButtonTapped
-        case toastPresent(State.ToastMessage)
         case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
         case joinResponse(Result<Join, APIError>)
         case inputView(InputFeature.Action)

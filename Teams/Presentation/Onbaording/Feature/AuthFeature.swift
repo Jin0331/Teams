@@ -7,6 +7,9 @@
 
 import ComposableArchitecture
 import AuthenticationServices
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 import SwiftUI
 
 @Reducer
@@ -26,22 +29,28 @@ struct AuthFeature {
         }
     }
     
-    enum Action {
+    enum Action : BindableAction {
         case signUp(PresentationAction<SignUpFeature.Action>)
         case emailLogin(PresentationAction<EmailLoginFeature.Action>)
         case signUpButtonTapped
         case signUpPresentation
         case appleLoginRequest(ASAuthorizationAppleIDRequest)
         case appleLoginCompletion(ASAuthorizationAppleIDCredential)
+        case kakaoLoginButtonTapped
+        case kakaoLogin(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
         case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
+        case binding(BindingAction<State>)
     }
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
+        
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case let .signUp(childAction):
@@ -83,16 +92,30 @@ struct AuthFeature {
                     let request = AppleLoginRequestDTO(idToken: identifyTokenString,
                                                        nickname: name,
                                                        deviceToken: UserDefaultManager.shared.deviceToken!)
-                    
-                    print(request)
-                    
                     return .run { send in
                         await send(.loginResponse(
                             networkManager.appleLogin(query: request)
                         ))
                     }
                 }
+                return .none
+            
+            //MARK: - 리팩토링 필요
+            case .kakaoLoginButtonTapped:
+                return .run { send in
+                    await send(.kakaoLogin(networkManager.kakaoLoginCallBack()))
+                    
+                }
+            case let .kakaoLogin(.success(oauthToken)):
+                return .run { send in
+                    await send(.loginResponse(
+                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
+                                                                              deviceToken: UserDefaultManager.shared.deviceToken!))
+                    ))
+                }
                 
+            case .kakaoLogin(.failure):
+                state.toastPresent = State.ToastMessage.loginFailure
                 return .none
                 
             case .emailLoginButtonTapped:
@@ -105,7 +128,7 @@ struct AuthFeature {
                 return .none
                 
             case let .loginResponse(.success(response)):
-                
+                print(response)
                 UserDefaultManager.shared.saveAllData(login: response)
                 return .none
                 
@@ -118,8 +141,10 @@ struct AuthFeature {
                 }
                 
                 return .none
-            }
             
+            default :
+                return .none
+            }
         }
         .ifLet(\.$signUp, action: \.signUp) {
             SignUpFeature()
