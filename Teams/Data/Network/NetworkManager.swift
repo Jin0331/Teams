@@ -116,34 +116,31 @@ final class NetworkManager {
         }
     }
     
-    func kakaoLoginWithKakaoTalkCallBack() async -> Result<OAuthToken, Error> {
+    func kakaoLoginCallBack() async -> Result<OAuthToken, Error>{
         await withCheckedContinuation { continuation in
-            DispatchQueue.main.async {
-                UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-                    if let error {
-                        continuation.resume(returning: .failure(error))
-                    } else if let oauthToken {
-                        continuation.resume(returning: .success(oauthToken))
+            if UserApi.isKakaoTalkLoginAvailable() {
+                DispatchQueue.main.async {
+                    UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                        if let error {
+                            continuation.resume(returning: .failure(error))
+                        } else if let oauthToken {
+                            continuation.resume(returning: .success(oauthToken))
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                        if let error {
+                            continuation.resume(returning: .failure(error))
+                        } else if let oauthToken {
+                            continuation.resume(returning: .success(oauthToken))
+                        }
                     }
                 }
             }
         }
     }
-    
-    func kakaoLoginWithKakaoAccountCallBack() async -> Result<OAuthToken, Error> {
-        await withCheckedContinuation { continuation in
-            DispatchQueue.main.async {
-                UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-                    if let error {
-                        continuation.resume(returning: .failure(error))
-                    } else if let oauthToken {
-                        continuation.resume(returning: .success(oauthToken))
-                    }
-                }
-            }
-        }
-    }
-    
 }
 
 

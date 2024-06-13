@@ -29,7 +29,7 @@ struct AuthFeature {
         }
     }
     
-    enum Action {
+    enum Action : BindableAction {
         case signUp(PresentationAction<SignUpFeature.Action>)
         case emailLogin(PresentationAction<EmailLoginFeature.Action>)
         case signUpButtonTapped
@@ -37,17 +37,20 @@ struct AuthFeature {
         case appleLoginRequest(ASAuthorizationAppleIDRequest)
         case appleLoginCompletion(ASAuthorizationAppleIDCredential)
         case kakaoLoginButtonTapped
-        case kakaoLoginUsingApp(Result<OAuthToken, Error>)
-        case kakaoLoginUsingWeb(Result<OAuthToken, Error>)
+        case kakaoLogin(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
         case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
+        case binding(BindingAction<State>)
     }
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
+        
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case let .signUp(childAction):
@@ -96,18 +99,14 @@ struct AuthFeature {
                     }
                 }
                 return .none
-                
+            
+            //MARK: - 리팩토링 필요
             case .kakaoLoginButtonTapped:
-                if UserApi.isKakaoTalkLoginAvailable() {
-                    return .run { send in
-                        await send(.kakaoLoginUsingApp(networkManager.kakaoLoginWithKakaoTalkCallBack()))
-                    }
-                } else {
-                    return .run { send in
-                        await send(.kakaoLoginUsingWeb(networkManager.kakaoLoginWithKakaoAccountCallBack()))
-                    }
+                return .run { send in
+                    await send(.kakaoLogin(networkManager.kakaoLoginCallBack()))
+                    
                 }
-            case let .kakaoLoginUsingApp(.success(oauthToken)):
+            case let .kakaoLogin(.success(oauthToken)):
                 return .run { send in
                     await send(.loginResponse(
                         networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
@@ -115,19 +114,7 @@ struct AuthFeature {
                     ))
                 }
                 
-            case let .kakaoLoginUsingWeb(.success(oauthToken)):
-                return .run { send in
-                    await send(.loginResponse(
-                        networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
-                                                                              deviceToken: UserDefaultManager.shared.deviceToken!))
-                    ))
-                }
-                
-            case .kakaoLoginUsingApp(.failure):
-                state.toastPresent = State.ToastMessage.loginFailure
-                return .none
-                
-            case .kakaoLoginUsingWeb(.failure):
+            case .kakaoLogin(.failure):
                 state.toastPresent = State.ToastMessage.loginFailure
                 return .none
                 
@@ -153,6 +140,9 @@ struct AuthFeature {
                     state.toastPresent = State.ToastMessage.none
                 }
                 
+                return .none
+            
+            default :
                 return .none
             }
         }
