@@ -105,14 +105,12 @@ struct AuthFeature {
                 return .none
                 
             case let .loginResponse(.success(response)):
+                
                 UserDefaultManager.shared.saveAllData(login: response)
                 return .none
                 
             case let .loginResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
-                
-                print(errorType)
-                
                 if case .E03 = errorType {
                     state.toastPresent = State.ToastMessage.loginFailure
                 } else {

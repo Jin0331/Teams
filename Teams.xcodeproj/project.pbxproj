@@ -46,6 +46,7 @@
 		DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */; };
 		DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */; };
 		DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E62C1AD3C900444E98 /* Utils.swift */; };
+		DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DBD0758A2C1B273500678DAB /* KakaoSDK */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -105,6 +106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */,
+				DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */,
 				DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */,
 				DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */,
 				DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */,
@@ -392,6 +394,7 @@
 				DB5AADB42C12E4F1002907B6 /* PopupView */,
 				DB5AADC12C16AB03002907B6 /* Alamofire */,
 				DB5AADC42C16AB9D002907B6 /* Kingfisher */,
+				DBD0758A2C1B273500678DAB /* KakaoSDK */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -426,6 +429,7 @@
 				DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */,
 				DB5AADC02C16AB03002907B6 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -736,6 +740,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -761,6 +773,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		DBD0758A2C1B273500678DAB /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
 		};
 		DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
