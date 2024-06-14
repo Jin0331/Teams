@@ -14,7 +14,6 @@
 		DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B5A2C0E106B00199065 /* AuthView.swift */; };
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
-		DB0B9D7B2C1833D200C5C150 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7A2C1833D200C5C150 /* HomeView.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
@@ -48,6 +47,13 @@
 		DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E62C1AD3C900444E98 /* Utils.swift */; };
 		DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DBD0758A2C1B273500678DAB /* KakaoSDK */; };
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
+		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
+		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
+		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
+		DBF3862A2C1C12E900A08152 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386292C1C12E900A08152 /* HomeCoordinator.swift */; };
+		DBF3862C2C1C21BA00A08152 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */; };
+		DBF3862E2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */; };
+		DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
@@ -63,7 +69,6 @@
 		DB085B5A2C0E106B00199065 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
-		DB0B9D7A2C1833D200C5C150 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
@@ -95,6 +100,12 @@
 		DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567E62C1AD3C900444E98 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
+		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DBF386292C1C12E900A08152 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinator.swift; sourceTree = "<group>"; };
+		DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeScreen+StateIdentifiable.swift"; sourceTree = "<group>"; };
+		DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +122,7 @@
 				DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */,
 				DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */,
 				DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */,
+				DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */,
 				DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +133,7 @@
 		DB085B4A2C0DFAFC00199065 /* Onbaording */ = {
 			isa = PBXGroup;
 			children = (
+				DBF3862F2C1C31AD00A08152 /* Coordinator */,
 				DB085B4D2C0DFB2400199065 /* Views */,
 				DB085B4E2C0DFB2800199065 /* Feature */,
 			);
@@ -168,8 +181,8 @@
 		DB0B9D772C18339C00C5C150 /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
-				DB0B9D782C1833C200C5C150 /* View */,
-				DB0B9D792C1833C700C5C150 /* Feature */,
+				DBF386282C1C12DC00A08152 /* Coordinator */,
+				DBF386272C1C12CA00A08152 /* Home */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -177,7 +190,7 @@
 		DB0B9D782C1833C200C5C150 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DB0B9D7A2C1833D200C5C150 /* HomeView.swift */,
+				DBF386252C1C090400A08152 /* HomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -306,6 +319,57 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		DBF386172C1BF6F800A08152 /* RootView */ = {
+			isa = PBXGroup;
+			children = (
+				DBF3861A2C1BF85C00A08152 /* View */,
+				DBF3861B2C1BF86100A08152 /* Feature */,
+			);
+			path = RootView;
+			sourceTree = "<group>";
+		};
+		DBF3861A2C1BF85C00A08152 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DBF386182C1BF70800A08152 /* SplashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DBF3861B2C1BF86100A08152 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		DBF386272C1C12CA00A08152 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DB0B9D782C1833C200C5C150 /* View */,
+				DB0B9D792C1833C700C5C150 /* Feature */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DBF386282C1C12DC00A08152 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */,
+				DBF386292C1C12E900A08152 /* HomeCoordinator.swift */,
+				DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DBF3862F2C1C31AD00A08152 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		DBF85C0C2C0DF5FB00CDFA04 = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +421,7 @@
 		DBF85C2D2C0DF82300CDFA04 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DBF386172C1BF6F800A08152 /* RootView */,
 				DB0B9D772C18339C00C5C150 /* Workspace */,
 				DB5A3B2D2C100DE800463E0B /* Custom */,
 				DB085B4A2C0DFAFC00199065 /* Onbaording */,
@@ -398,6 +463,7 @@
 				DB5AADC12C16AB03002907B6 /* Alamofire */,
 				DB5AADC42C16AB9D002907B6 /* Kingfisher */,
 				DBD0758A2C1B273500678DAB /* KakaoSDK */,
+				DBF386212C1BFAD000A08152 /* TCACoordinators */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -433,6 +499,7 @@
 				DB5AADC02C16AB03002907B6 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -461,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBF3862E2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift in Sources */,
 				DB5AADD12C16C4CB002907B6 /* NetworkManager.swift in Sources */,
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
@@ -469,9 +537,11 @@
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
+				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
+				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
@@ -479,10 +549,10 @@
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
-				DB0B9D7B2C1833D200C5C150 /* HomeView.swift in Sources */,
 				DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
+				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
@@ -495,8 +565,10 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
+				DBF3862C2C1C21BA00A08152 /* MainTabCoordinator.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
+				DBF3862A2C1C12E900A08152 /* HomeCoordinator.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
 			);
@@ -752,6 +824,14 @@
 				kind = branch;
 			};
 		};
+		DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
 		DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -782,6 +862,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDK;
+		};
+		DBF386212C1BFAD000A08152 /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
 		};
 		DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
