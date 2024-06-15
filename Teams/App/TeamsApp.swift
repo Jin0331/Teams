@@ -12,11 +12,11 @@ import KakaoSDKAuth
 import TCACoordinators
 
 /*
-
+ 
  1. UserDefault에서 isLogin 값에 따라 분기처리
  2. 분기처리 값마다 store 설정해서 뿌리기
  
-*/
+ */
 
 @main
 struct TeamsApp: App {
@@ -30,14 +30,15 @@ struct TeamsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingCoordinatorView(store: Store(initialState: .initialState, reducer: {
-                OnboardingCoordinator()
+            MainCoordinatorView(store: Store(initialState: .initialState, reducer: {
+                MainCoordinator()
+                    ._printChanges()
             }))
             .onOpenURL(perform: { url in
-                            if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                                _ = AuthController.handleOpenUrl(url: url)
-                            }
-                        })
+                if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                    _ = AuthController.handleOpenUrl(url: url)
+                }
+            })
         }
     }
 }

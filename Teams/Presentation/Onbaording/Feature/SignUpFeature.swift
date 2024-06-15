@@ -58,6 +58,7 @@ struct SignUpFeature {
         case phoneNumberChange(String)
         case completeButtonActive
         case completeButtonTapped
+        case signUpComplete
         case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
         case joinResponse(Result<Join, APIError>)
         case inputView(InputFeature.Action)
@@ -175,7 +176,7 @@ struct SignUpFeature {
                 
                 UserDefaultManager.shared.saveAllData(login: response)
                 
-                return .none
+                return .send(.signUpComplete)
                 
             case let .joinResponse(.failure(error)):
                 

@@ -11,6 +11,7 @@ import Foundation
 @Reducer
 struct InputFeature {
     
+    @ObservableState
     struct State: Equatable { }
     
     enum Action {
