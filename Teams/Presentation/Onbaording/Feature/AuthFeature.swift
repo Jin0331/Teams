@@ -38,6 +38,7 @@ struct AuthFeature {
         case kakaoLogin(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
         case loginResponse(Result<Join, APIError>)
+        case loginComplete
         case binding(BindingAction<State>)
     }
     
@@ -89,7 +90,6 @@ struct AuthFeature {
                 }
                 return .none
             
-            //MARK: - 리팩토링 필요
             case .kakaoLoginButtonTapped:
                 return .run { send in
                     await send(.kakaoLogin(networkManager.kakaoLoginCallBack()))
@@ -108,9 +108,8 @@ struct AuthFeature {
                 return .none
                 
             case let .loginResponse(.success(response)):
-                print(response)
                 UserDefaultManager.shared.saveAllData(login: response)
-                return .none
+                return .send(.loginComplete)
                 
             case let .loginResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
@@ -121,7 +120,6 @@ struct AuthFeature {
                 }
                 
                 return .none
-            
             default :
                 return .none
             }

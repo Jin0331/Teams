@@ -17,8 +17,10 @@ struct MainCoordinatorView : View {
             VStack {
                 if store.isLogined {
                     SplashView()
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 } else {
                     OnboardingCoordinatorView(store: store.scope(state: \.onboarding, action: \.onboarding))
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
             }
         }
@@ -47,6 +49,10 @@ struct MainCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             case .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete)))):
+                state.isLogined = true
+            case .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete)))):
+                state.isLogined = true
+            case .onboarding(.router(.routeAction(_, action: .auth(.loginComplete)))):
                 state.isLogined = true
             default:
               break

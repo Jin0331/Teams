@@ -15,6 +15,7 @@
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
+		DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
 		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
@@ -70,6 +71,7 @@
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
+		DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -203,6 +205,14 @@
 			path = Feature;
 			sourceTree = "<group>";
 		};
+		DB11F5C22C1D99F800D84619 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		DB4B78072C10583200350F04 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,8 +332,8 @@
 		DBF386172C1BF6F800A08152 /* RootView */ = {
 			isa = PBXGroup;
 			children = (
+				DB11F5C22C1D99F800D84619 /* Coordinator */,
 				DBF3861A2C1BF85C00A08152 /* View */,
-				DBF3861B2C1BF86100A08152 /* Feature */,
 			);
 			path = RootView;
 			sourceTree = "<group>";
@@ -334,13 +344,6 @@
 				DBF386182C1BF70800A08152 /* SplashView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		DBF3861B2C1BF86100A08152 /* Feature */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Feature;
 			sourceTree = "<group>";
 		};
 		DBF386272C1C12CA00A08152 /* Home */ = {
@@ -533,6 +536,7 @@
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
+				DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
