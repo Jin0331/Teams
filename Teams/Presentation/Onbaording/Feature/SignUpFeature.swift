@@ -13,7 +13,8 @@ import Alamofire
 struct SignUpFeature {
     
     @ObservableState
-    struct State: Equatable {
+    struct State : Equatable{
+        let id = UUID()
         var emailText = ""
         var nicknameText = ""
         var phoneNumberText = ""
@@ -75,12 +76,7 @@ struct SignUpFeature {
         
         Reduce { state, action in
             
-            switch action {
-            case .dismiss:
-                return .run { send in
-                    await self.dismiss()
-                }
-                
+            switch action {                
             case .binding(\.emailText):
                 state.emailDuplicateButton = !state.emailText.isEmpty ? true : false
                 return .send(.completeButtonActive)

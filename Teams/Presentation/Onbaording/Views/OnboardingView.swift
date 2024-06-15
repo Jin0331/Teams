@@ -41,11 +41,6 @@ struct OnboardingView: View {
                 .background(.brandGreen)
                 .cornerRadius(8)
                 .padding()
-                .sheet(item: $store.scope(state: \.login, action: \.login)) { store in
-                    AuthView(store: store)
-                        .presentationDetents([.height(290)])
-                        .presentationDragIndicator(.visible)
-                }
             }
             
         }
