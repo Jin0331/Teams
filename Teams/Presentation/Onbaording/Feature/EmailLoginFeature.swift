@@ -14,7 +14,7 @@ struct EmailLoginFeature {
     
     @ObservableState
     struct State : Equatable{
-//        let id = UUID()
+        let id = UUID()
         var emailText = ""
         var passwordText = ""
         var emailValid : Bool?
@@ -41,6 +41,7 @@ struct EmailLoginFeature {
         case binding(BindingAction<State>)
         case loginButtonActive
         case loginButtonTapped
+        case loginComplete
         case emailLoginResponse(Result<Join, APIError>)
     }
     
@@ -92,7 +93,7 @@ struct EmailLoginFeature {
                 
                 UserDefaultManager.shared.saveAllData(login: response)
                 
-                return .none
+                return .send(.loginComplete)
             
             case let .emailLoginResponse(.failure(error)):
                 
