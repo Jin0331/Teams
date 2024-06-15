@@ -9,6 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 import KakaoSDKCommon
 import KakaoSDKAuth
+import TCACoordinators
 
 /*
 
@@ -29,8 +30,8 @@ struct TeamsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingView(store: Store(initialState: OnboardingFeature.State(), reducer: {
-                OnboardingFeature()
+            OnboardingCoordinatorView(store: Store(initialState: .initialState, reducer: {
+                OnboardingCoordinator()
             }))
             .onOpenURL(perform: { url in
                             if (AuthApi.isKakaoTalkLoginUrl(url)) {

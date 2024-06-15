@@ -61,10 +61,3 @@ struct EmailLoginView : View {
         }
     }
 }
-
-
-#Preview {
-    EmailLoginView(store: Store(initialState: EmailLoginFeature.State(), reducer: {
-        EmailLoginFeature()
-    }))
-}

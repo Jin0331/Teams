@@ -12,35 +12,12 @@ import SwiftUI
 struct OnboardingFeature {
     
     @ObservableState
-    struct State {
+    struct State : Equatable{
+        let id = UUID()
         @Presents var login: AuthFeature.State?
     }
     
     enum Action {
-        case login(PresentationAction<AuthFeature.Action>)
         case loginButtonTapped
-        case loginPresentation
-    }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .login:
-                return .none
-                
-            case .loginButtonTapped:
-                return .run { send in
-                    await send(.loginPresentation)
-                }
-                
-            case .loginPresentation:
-                state.login = AuthFeature.State()
-                return .none
-                
-            }
-        }
-        .ifLet(\.$login, action: \.login) {
-            AuthFeature()
-        }
     }
 }

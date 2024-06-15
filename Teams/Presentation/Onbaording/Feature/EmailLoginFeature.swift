@@ -13,7 +13,8 @@ import Alamofire
 struct EmailLoginFeature {
     
     @ObservableState
-    struct State : Equatable {
+    struct State : Equatable{
+//        let id = UUID()
         var emailText = ""
         var passwordText = ""
         var emailValid : Bool?
@@ -43,7 +44,6 @@ struct EmailLoginFeature {
         case emailLoginResponse(Result<Join, APIError>)
     }
     
-    @Dependency(\.dismiss) var dismiss
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
@@ -53,11 +53,6 @@ struct EmailLoginFeature {
         Reduce { state, action in
                 
             switch action {
-                
-            case .dismiss:
-                return .run { send in
-                    await self.dismiss()
-                }
                 
             case .binding(\.emailText), .binding(\.passwordText):
                 return .send(.loginButtonActive)

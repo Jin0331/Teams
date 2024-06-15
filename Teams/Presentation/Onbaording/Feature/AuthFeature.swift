@@ -16,9 +16,8 @@ import SwiftUI
 struct AuthFeature {
     
     @ObservableState
-    struct State: Equatable {
-        @Presents var signUp : SignUpFeature.State?
-        @Presents var emailLogin : EmailLoginFeature.State?
+    struct State : Equatable{
+        let id = UUID()
         var toastPresent : ToastMessage?
         
         enum ToastMessage : String, Hashable, CaseIterable {
@@ -33,13 +32,11 @@ struct AuthFeature {
         case signUp(PresentationAction<SignUpFeature.Action>)
         case emailLogin(PresentationAction<EmailLoginFeature.Action>)
         case signUpButtonTapped
-        case signUpPresentation
         case appleLoginRequest(ASAuthorizationAppleIDRequest)
         case appleLoginCompletion(ASAuthorizationAppleIDCredential)
         case kakaoLoginButtonTapped
         case kakaoLogin(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
-        case emailLoginPresentation
         case loginResponse(Result<Join, APIError>)
         case binding(BindingAction<State>)
     }
@@ -72,14 +69,6 @@ struct AuthFeature {
                 default:
                     return .none
                 }
-                
-            case .signUpButtonTapped:
-                return .run { send in
-                    await send(.signUpPresentation)
-                }
-            case .signUpPresentation:
-                state.signUp = SignUpFeature.State()
-                return .none
                 
             case let .appleLoginRequest(request):
                 request.requestedScopes = [.fullName, .email]
@@ -118,15 +107,6 @@ struct AuthFeature {
                 state.toastPresent = State.ToastMessage.loginFailure
                 return .none
                 
-            case .emailLoginButtonTapped:
-                return .run { send in
-                    await send(.emailLoginPresentation)
-                }
-                
-            case .emailLoginPresentation:
-                state.emailLogin = EmailLoginFeature.State()
-                return .none
-                
             case let .loginResponse(.success(response)):
                 print(response)
                 UserDefaultManager.shared.saveAllData(login: response)
@@ -146,13 +126,6 @@ struct AuthFeature {
                 return .none
             }
         }
-        .ifLet(\.$signUp, action: \.signUp) {
-            SignUpFeature()
-        }
-        .ifLet(\.$emailLogin, action: \.emailLogin) {
-            EmailLoginFeature()
-        }
-        
     }
     
 }
