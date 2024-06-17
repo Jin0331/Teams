@@ -141,6 +141,8 @@ final class NetworkManager {
             }
         }
     }
+    
+//    func meProfile() async -> Result<>
 }
 
 

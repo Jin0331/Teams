@@ -1,8 +1,37 @@
+////
+////  HomeCoordinator.swift
+////  Teams
+////
+////  Created by JinwooLee on 6/14/24.
+////
 //
-//  HomeCoordinator.swift
-//  Teams
+//import ComposableArchitecture
+//import SwiftUI
+//import TCACoordinators
 //
-//  Created by JinwooLee on 6/14/24.
+//@Reducer(state: .equatable)
+//enum HomeScreen {
+//    case home(HomeFeature)
+//}
 //
-
-import Foundation
+//@Reducer
+//struct HomeCoordinator {
+//    @ObservableState
+//    struct State : Equatable {
+//        static let initialState = HomeCoordinator.State(
+//            routes: [.root(.home(.init()), embedInNavigationView: true)]
+//        )
+//        var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
+//    }
+//    
+//    enum Action {
+//        case router(IndexedRouterActionOf<HomeScreen>)
+//    }
+//    
+//    var body : some Reducer<State, Action> {
+//        Reduce { state, action in
+//            switch action {
+//            }
+//        }
+//    }
+//}

@@ -1,24 +1,31 @@
+////
+////  HomeView.swift
+////  Teams
+////
+////  Created by JinwooLee on 6/14/24.
+////
 //
-//  HomeView.swift
-//  Teams
+//import ComposableArchitecture
+//import SwiftUI
 //
-//  Created by JinwooLee on 6/14/24.
+//struct HomeView: View {
+//    
+//    let store : StoreOf<HomeFeature>
+//    
+//    var body: some View {
+//        VStack {
+//          Text("Welcome").font(.headline)
+//          Button("Log in") {
+//            store.send(.logInTapped)
+//          }
+//        }
+//        .navigationTitle("Welcome")
+//      }
+//    }
+//}
 //
-
-import ComposableArchitecture
-import SwiftUI
-
-struct HomeView: View {
-    
-    let store : StoreOf<HomeFeature>
-    
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    HomeView(store: Store(initialState: HomeFeature.State(), reducer: {
-        HomeFeature()
-    }))
-}
+//#Preview {
+//    HomeView(store: Store(initialState: HomeFeature.State(), reducer: {
+//        HomeFeature()
+//    }))
+//}
