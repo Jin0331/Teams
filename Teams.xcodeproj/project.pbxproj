@@ -51,6 +51,8 @@
 		DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E62C1AD3C900444E98 /* Utils.swift */; };
 		DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DBD0758A2C1B273500678DAB /* KakaoSDK */; };
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
+		DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */; };
+		DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
@@ -108,6 +110,8 @@
 		DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567E62C1AD3C900444E98 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
+		DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RefreshResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRequestDTO.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DBF386292C1C12E900A08152 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -316,14 +320,8 @@
 		DB5AADE02C180E16002907B6 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO.swift */,
-				DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */,
-				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
-				DB5AADDE2C180E0F002907B6 /* JoinRequestDTO.swift */,
-				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
-				DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */,
-				DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */,
-				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
+				DBEA520F2C207DD200026926 /* Response */,
+				DBEA520E2C207DCD00026926 /* Request */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -335,6 +333,30 @@
 				DB5AADE82C1818ED002907B6 /* Token.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		DBEA520E2C207DCD00026926 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADCC2C16B0BC002907B6 /* EmailValidationRequestDTO.swift */,
+				DB5AADDE2C180E0F002907B6 /* JoinRequestDTO.swift */,
+				DBC567E22C1A9AD400444E98 /* EmailLoginRequestDTO.swift */,
+				DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */,
+				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
+				DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		DBEA520F2C207DD200026926 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADD22C16DCAB002907B6 /* EmailValidationResponseDTO.swift */,
+				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
+				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
+				DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		DBF386172C1BF6F800A08152 /* RootView */ = {
@@ -557,6 +579,7 @@
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
+				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
@@ -584,6 +607,7 @@
 				DBF3862C2C1C21BA00A08152 /* MainTabCoordinator.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
+				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DBF3862A2C1C12E900A08152 /* HomeCoordinator.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,

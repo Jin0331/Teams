@@ -15,6 +15,7 @@ enum UserRouter {
     case appleLogin(query : AppleLoginRequestDTO)
     case kakaoLogin(query : KakaoLoginRequestDTO)
     case meProfile
+    case refresh(query : RefreshRequestDTO)
 }
 
 extension UserRouter : TargetType {
@@ -26,7 +27,7 @@ extension UserRouter : TargetType {
         switch self {
         case .emailValidation, .join, .emailLogin, .appleLogin, .kakaoLogin:
             return .post
-        case .meProfile:
+        case .meProfile, .refresh:
             return .get
         }
     }
@@ -45,6 +46,8 @@ extension UserRouter : TargetType {
             return "/users/login/kakao"
         case .meProfile:
             return "/users/me"
+        case .refresh:
+            return "/auth/refresh"
         }
     }
     
@@ -59,6 +62,13 @@ extension UserRouter : TargetType {
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
+            
+        case .refresh(let token):
+            return [HTTPHeader.authorization.rawValue : token.accessToken,
+                    HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue,
+                    HTTPHeader.refresh.rawValue : token.refreshToken
+            ]
+        
         }
     }
     
