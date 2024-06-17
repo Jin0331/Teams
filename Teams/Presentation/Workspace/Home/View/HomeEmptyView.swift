@@ -5,14 +5,17 @@
 //  Created by JinwooLee on 6/17/24.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 struct HomeEmptyView: View {
+    
+    let store : StoreOf<HomeEmptyFeature>
+    
     var body: some View {
         NavigationStack {
             VStack {
                 VStack(spacing : 25) {
-                    
                     Text("워크스페이스를 찾을 수 없어요.")
                         .title1()
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -23,14 +26,13 @@ struct HomeEmptyView: View {
                 }
                 .frame(height: 150)
                 
-                
                 Image(.workspaceEmpty)
                     .frame(width: 368, height: 368)
                 
                 Spacer()
                 
                 Button("워크스페이스 생성") {
-                    
+                    store.send(.createWorkspaceTapped)
                 }
                 .tint(.brandWhite)
                 .frame(width: 345, height: 44)
@@ -38,8 +40,6 @@ struct HomeEmptyView: View {
                 .background(.brandGreen)
                 .cornerRadius(8)
                 .padding()
-                
-                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         HStack {
@@ -51,7 +51,7 @@ struct HomeEmptyView: View {
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
-                            print("Profile button tapped")
+                            store.send(.profileButtonTapped)
                         }) {
                             Image(systemName: "person.circle")
                                 .frame(width: 32, height: 32)
@@ -65,6 +65,6 @@ struct HomeEmptyView: View {
     }
 }
 
-#Preview {
-    HomeEmptyView()
-}
+//#Preview {
+//    HomeEmptyView()
+//}
