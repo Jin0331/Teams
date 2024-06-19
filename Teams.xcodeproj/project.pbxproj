@@ -56,12 +56,10 @@
 		DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */; };
 		DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52142C208FF900026926 /* HomeInitialView.swift */; };
 		DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52162C23004000026926 /* HomeInitialFeature.swift */; };
+		DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
-		DBF3862A2C1C12E900A08152 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386292C1C12E900A08152 /* HomeCoordinator.swift */; };
-		DBF3862C2C1C21BA00A08152 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */; };
-		DBF3862E2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */; };
 		DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */; };
 		DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */; };
 		DBF85C1D2C0DF5FC00CDFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */; };
@@ -118,11 +116,9 @@
 		DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBEA52142C208FF900026926 /* HomeInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialView.swift; sourceTree = "<group>"; };
 		DBEA52162C23004000026926 /* HomeInitialFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialFeature.swift; sourceTree = "<group>"; };
+		DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialCoordinator.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		DBF386292C1C12E900A08152 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinator.swift; sourceTree = "<group>"; };
-		DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeScreen+StateIdentifiable.swift"; sourceTree = "<group>"; };
 		DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		DBF85C152C0DF5FB00CDFA04 /* Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF85C182C0DF5FB00CDFA04 /* TeamsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsApp.swift; sourceTree = "<group>"; };
@@ -398,9 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */,
-				DBF3862B2C1C21BA00A08152 /* MainTabCoordinator.swift */,
-				DBF386292C1C12E900A08152 /* HomeCoordinator.swift */,
-				DBF3862D2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift */,
+				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -571,7 +565,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBF3862E2C1C27E900A08152 /* HomeScreen+StateIdentifiable.swift in Sources */,
 				DB5AADD12C16C4CB002907B6 /* NetworkManager.swift in Sources */,
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
@@ -594,6 +587,7 @@
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */,
+				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
@@ -616,11 +610,9 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
-				DBF3862C2C1C21BA00A08152 /* MainTabCoordinator.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
-				DBF3862A2C1C12E900A08152 /* HomeCoordinator.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
 			);

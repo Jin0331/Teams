@@ -58,7 +58,7 @@ struct SignUpFeature {
         case phoneNumberChange(String)
         case completeButtonActive
         case completeButtonTapped
-        case signUpComplete
+        case signUpComplete(String)
         case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
         case joinResponse(Result<Join, APIError>)
         case inputView(InputFeature.Action)
@@ -70,7 +70,6 @@ struct SignUpFeature {
     var body : some Reducer<State, Action> {
         Scope(state: \.inputView, action: /Action.inputView) {
             InputFeature()
-                ._printChanges()
         }
         
         BindingReducer()
@@ -176,7 +175,7 @@ struct SignUpFeature {
                 
                 UserDefaultManager.shared.saveAllData(login: response)
                 
-                return .send(.signUpComplete)
+                return .send(.signUpComplete(response.nickname))
                 
             case let .joinResponse(.failure(error)):
                 

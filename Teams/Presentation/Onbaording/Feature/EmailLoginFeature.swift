@@ -41,7 +41,7 @@ struct EmailLoginFeature {
         case binding(BindingAction<State>)
         case loginButtonActive
         case loginButtonTapped
-        case loginComplete
+        case loginComplete(String)
         case emailLoginResponse(Result<Join, APIError>)
     }
     
@@ -93,7 +93,7 @@ struct EmailLoginFeature {
                 
                 UserDefaultManager.shared.saveAllData(login: response)
                 
-                return .send(.loginComplete)
+                return .send(.loginComplete(response.nickname))
             
             case let .emailLoginResponse(.failure(error)):
                 
