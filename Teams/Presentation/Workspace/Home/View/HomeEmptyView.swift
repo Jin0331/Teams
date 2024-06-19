@@ -65,6 +65,8 @@ struct HomeEmptyView: View {
     }
 }
 
-//#Preview {
-//    HomeEmptyView()
-//}
+#Preview {
+    HomeEmptyView(store: Store(initialState: HomeEmptyFeature.State(), reducer: {
+        HomeEmptyFeature()
+    }))
+}

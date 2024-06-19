@@ -53,6 +53,9 @@
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
 		DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */; };
 		DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */; };
+		DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */; };
+		DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52142C208FF900026926 /* HomeInitialView.swift */; };
+		DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52162C23004000026926 /* HomeInitialFeature.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
@@ -112,6 +115,9 @@
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RefreshResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRequestDTO.swift; sourceTree = "<group>"; };
+		DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DBEA52142C208FF900026926 /* HomeInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialView.swift; sourceTree = "<group>"; };
+		DBEA52162C23004000026926 /* HomeInitialFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialFeature.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DBF386292C1C12E900A08152 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 			children = (
 				DBF386252C1C090400A08152 /* HomeView.swift */,
 				DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */,
+				DBEA52142C208FF900026926 /* HomeInitialView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -213,6 +220,7 @@
 			children = (
 				DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */,
 				DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */,
+				DBEA52162C23004000026926 /* HomeInitialFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -355,6 +363,7 @@
 				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
 				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
 				DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */,
+				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -568,6 +577,7 @@
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
 				DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
+				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
 				DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
@@ -581,7 +591,9 @@
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
+				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
+				DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
