@@ -18,6 +18,6 @@ struct HomeInitialFeature {
     
     enum Action {
         case createWorkspaceTapped
-        case goToHomeView
+        case dismiss
     }
 }

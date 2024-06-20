@@ -20,7 +20,7 @@ struct MainCoordinatorView : View {
                         HomeInitialCoordinatorView(store: store.scope(state: \.homeInitial, action: \.homeInitial))
                             .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     } else {
-                        SplashView()
+                        WorkspaceCoordinatorView(store: store.scope(state: \.workspace, action: \.workspace))
                             .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     }
                 } else {
@@ -36,9 +36,10 @@ struct MainCoordinatorView : View {
 struct MainCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(onboarding: .initialState, homeInitial: .initialState(), isLogined: false, isSignUp: false)
+        static let initialState = State(onboarding: .initialState, homeInitial: .initialState(), workspace: .initialState, isLogined: false, isSignUp: false)
         var onboarding : OnboardingCoordinator.State
         var homeInitial : HomeInitialCoordinator.State
+        var workspace : WorkspaceCoordinator.State
         var isLogined : Bool
         var isSignUp : Bool
     }
@@ -46,6 +47,7 @@ struct MainCoordinator {
     enum Action {
         case onboarding(OnboardingCoordinator.Action)
         case homeInitial(HomeInitialCoordinator.Action)
+        case workspace(WorkspaceCoordinator.Action)
     }
     
     var body : some ReducerOf<Self> {
@@ -56,6 +58,10 @@ struct MainCoordinator {
         Scope(state: \.homeInitial, action: \.homeInitial) {
             HomeInitialCoordinator()
         }
+        Scope(state: \.workspace, action: \.workspace) {
+            WorkspaceCoordinator()
+        }
+        
         
         Reduce<State, Action> { state, action in
             switch action {
@@ -68,6 +74,10 @@ struct MainCoordinator {
                 state.homeInitial = .initialState(nickname: nickname)
             case .onboarding(.router(.routeAction(_, action: .auth(.loginComplete)))):
                 state.isLogined = true
+                state.isSignUp = false
+            case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
+                state.isLogined = true
+                state.isSignUp = false
             default:
               break
             }

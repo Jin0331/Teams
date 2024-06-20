@@ -59,8 +59,9 @@
 		DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */; };
 		DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */; };
 		DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */; };
-		DBEA52222C23FA9100026926 /* WorkspaceAddCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */; };
 		DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52232C23FCA200026926 /* ValidTest.swift */; };
+		DBEA52262C241AF200026926 /* HomeEmptyViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52252C241AF200026926 /* HomeEmptyViewCoordinator.swift */; };
+		DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52272C241B0000026926 /* WorkspaceTabCoordinator.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
@@ -123,8 +124,9 @@
 		DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialCoordinator.swift; sourceTree = "<group>"; };
 		DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddView.swift; sourceTree = "<group>"; };
 		DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddFeature.swift; sourceTree = "<group>"; };
-		DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddCoordinator.swift; sourceTree = "<group>"; };
 		DBEA52232C23FCA200026926 /* ValidTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidTest.swift; sourceTree = "<group>"; };
+		DBEA52252C241AF200026926 /* HomeEmptyViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyViewCoordinator.swift; sourceTree = "<group>"; };
+		DBEA52272C241B0000026926 /* WorkspaceTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTabCoordinator.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
@@ -428,8 +430,9 @@
 			isa = PBXGroup;
 			children = (
 				DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */,
+				DBEA52272C241B0000026926 /* WorkspaceTabCoordinator.swift */,
+				DBEA52252C241AF200026926 /* HomeEmptyViewCoordinator.swift */,
 				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
-				DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -612,9 +615,11 @@
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
+				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
+				DBEA52262C241AF200026926 /* HomeEmptyViewCoordinator.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
@@ -636,7 +641,6 @@
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
-				DBEA52222C23FA9100026926 /* WorkspaceAddCoordinator.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,

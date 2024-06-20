@@ -46,7 +46,7 @@ struct HomeInitialView: View {
                     .navigationBarItems(
                         leading:
                             Button {
-                                store.send(.goToHomeView)
+                                store.send(.dismiss)
                             } label : {
                                 Image("Vector")
                             }

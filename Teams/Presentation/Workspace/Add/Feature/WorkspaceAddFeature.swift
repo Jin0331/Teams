@@ -14,6 +14,7 @@ struct WorkspaceAddFeature {
     
     @ObservableState
     struct State : Equatable {
+        let id = UUID()
         var workspaceName : String = ""
         var workspaceNameValid : Bool = false
         var workspaceDescription : String = ""
@@ -30,6 +31,7 @@ struct WorkspaceAddFeature {
         case binding(BindingAction<State>)
         case createButtonActive
         case createButtonTapped
+        case dismiss
     }
     
     @Dependency(\.validTest) var validTest
