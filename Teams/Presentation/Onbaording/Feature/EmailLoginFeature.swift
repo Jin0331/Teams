@@ -46,6 +46,7 @@ struct EmailLoginFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.validTest) var validTest
     
     var body : some Reducer<State, Action> {
         
@@ -68,8 +69,8 @@ struct EmailLoginFeature {
             
                 
             case .loginButtonTapped:
-                state.emailValid = validEmail(state.emailText)
-                state.passwordValid = isValidPassword(state.passwordText)
+                state.emailValid = validTest.validEmail(state.emailText)
+                state.passwordValid = validTest.isValidPassword(state.passwordText)
                 
                 if let field = [state.emailValid, state.passwordValid].firstIndex(of: false) {
                     state.toastPresent = State.ToastMessage.allCases[field]
@@ -112,23 +113,5 @@ struct EmailLoginFeature {
             }
             
         }
-    }
-}
-
-//MARK: - 유효성 검증 함수
-extension EmailLoginFeature {
-    private func validEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        
-        return emailPredicate.evaluate(with: email)
-    }
-    
-    private func isValidPassword(_ password: String) -> Bool {
-        // 최소 8자 이상, 대소문자, 숫자, 특수문자를 포함하는 정규표현식
-        let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}$"
-        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
-        
-        return passwordPredicate.evaluate(with: password)
     }
 }

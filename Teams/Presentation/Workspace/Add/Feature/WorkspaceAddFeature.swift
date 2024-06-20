@@ -15,8 +15,15 @@ struct WorkspaceAddFeature {
     @ObservableState
     struct State : Equatable {
         var workspaceName : String = ""
+        var workspaceNameValid : Bool = false
         var workspaceDescription : String = ""
         var createButton : Bool = false
+        var toastPresent : ToastMessage?
+        
+        enum ToastMessage : String, Hashable, CaseIterable {
+            case name = "워크스페이스 이름은 1~30자로 설정해주세요"
+            case image = "워크스페이스 이미지를 등록해주세요."
+        }
     }
     
     enum Action : BindableAction {
@@ -24,6 +31,8 @@ struct WorkspaceAddFeature {
         case createButtonActive
         case createButtonTapped
     }
+    
+    @Dependency(\.validTest) var validTest
     
     var body : some Reducer<State, Action> {
         
@@ -42,11 +51,15 @@ struct WorkspaceAddFeature {
                 }
                 return .none
             
+            case .createButtonTapped:
+                state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
+                
+                
+                return .none
+                
             default :
                 return .none
             }
-            
         }
-        
     }
 }

@@ -59,6 +59,8 @@
 		DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */; };
 		DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */; };
 		DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */; };
+		DBEA52222C23FA9100026926 /* WorkspaceAddCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */; };
+		DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52232C23FCA200026926 /* ValidTest.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
@@ -121,6 +123,8 @@
 		DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInitialCoordinator.swift; sourceTree = "<group>"; };
 		DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddView.swift; sourceTree = "<group>"; };
 		DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddFeature.swift; sourceTree = "<group>"; };
+		DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddCoordinator.swift; sourceTree = "<group>"; };
+		DBEA52232C23FCA200026926 /* ValidTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidTest.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
@@ -199,9 +203,9 @@
 		DB0B9D772C18339C00C5C150 /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
-				DBEA521A2C231D4A00026926 /* Add */,
 				DBF386282C1C12DC00A08152 /* Coordinator */,
 				DBF386272C1C12CA00A08152 /* Home */,
+				DBEA521A2C231D4A00026926 /* Add */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -425,6 +429,7 @@
 			children = (
 				DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */,
 				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
+				DBEA52212C23FA9100026926 /* WorkspaceAddCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 				DB085B512C0DFE7D00199065 /* DesignSystem */,
 				DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */,
 				DBC567E62C1AD3C900444E98 /* Utils.swift */,
+				DBEA52232C23FCA200026926 /* ValidTest.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -630,6 +636,7 @@
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
+				DBEA52222C23FA9100026926 /* WorkspaceAddCoordinator.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,
@@ -642,6 +649,7 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
+				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
