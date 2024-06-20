@@ -80,18 +80,3 @@ struct OnboardingCoordinatorView : View {
         }
     }
 }
-
-//extension OnboardingScreen.State: Identifiable {
-//  var id: UUID {
-//    switch self {
-//    case let .onboarding(state):
-//        state.id
-//    case let .auth(state):
-//        state.id
-//    case let .signUp(state):
-//        state.id
-//    case let .emailLogin(state):
-//        state.id
-//    }
-//  }
-//}

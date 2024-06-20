@@ -16,8 +16,13 @@ struct MainCoordinatorView : View {
         WithPerceptionTracking {
             VStack {
                 if store.isLogined {
-                    SplashView()
-                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    if store.isSignUp { // 회원가입시
+                        HomeInitialCoordinatorView(store: store.scope(state: \.homeInitial, action: \.homeInitial))
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    } else {
+                        WorkspaceCoordinatorView(store: store.scope(state: \.workspace, action: \.workspace))
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    }
                 } else {
                     OnboardingCoordinatorView(store: store.scope(state: \.onboarding, action: \.onboarding))
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
@@ -31,13 +36,18 @@ struct MainCoordinatorView : View {
 struct MainCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(onboarding: .initialState, isLogined: false)
+        static let initialState = State(onboarding: .initialState, homeInitial: .initialState(), workspace: .initialState, isLogined: false, isSignUp: false)
         var onboarding : OnboardingCoordinator.State
+        var homeInitial : HomeInitialCoordinator.State
+        var workspace : WorkspaceCoordinator.State
         var isLogined : Bool
+        var isSignUp : Bool
     }
     
     enum Action {
         case onboarding(OnboardingCoordinator.Action)
+        case homeInitial(HomeInitialCoordinator.Action)
+        case workspace(WorkspaceCoordinator.Action)
     }
     
     var body : some ReducerOf<Self> {
@@ -45,15 +55,29 @@ struct MainCoordinator {
         Scope(state: \.onboarding, action: \.onboarding) {
             OnboardingCoordinator()
         }
+        Scope(state: \.homeInitial, action: \.homeInitial) {
+            HomeInitialCoordinator()
+        }
+        Scope(state: \.workspace, action: \.workspace) {
+            WorkspaceCoordinator()
+        }
+        
         
         Reduce<State, Action> { state, action in
             switch action {
-            case .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete)))):
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(nickname))))):
                 state.isLogined = true
-            case .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete)))):
+                state.isSignUp = false
+            case let .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete(nickname))))):
                 state.isLogined = true
+                state.isSignUp = true
+                state.homeInitial = .initialState(nickname: nickname)
             case .onboarding(.router(.routeAction(_, action: .auth(.loginComplete)))):
                 state.isLogined = true
+                state.isSignUp = false
+            case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
+                state.isLogined = true
+                state.isSignUp = false
             default:
               break
             }
