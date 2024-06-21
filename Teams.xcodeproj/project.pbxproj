@@ -42,6 +42,9 @@
 		DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */; };
 		DB5AADE72C181427002907B6 /* Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE62C181427002907B6 /* Join.swift */; };
 		DB5AADE92C1818ED002907B6 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE82C1818ED002907B6 /* Token.swift */; };
+		DBABF0252C25430300A3CB37 /* CustomImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF0242C25430300A3CB37 /* CustomImagePickerView.swift */; };
+		DBABF0272C25433A00A3CB37 /* CustomImagePickerFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF0262C25433A00A3CB37 /* CustomImagePickerFeature.swift */; };
+		DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */; };
 		DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */; };
 		DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DC2C184C0100444E98 /* EmailLoginView.swift */; };
 		DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */; };
@@ -111,6 +114,9 @@
 		DB5AADE62C181427002907B6 /* Join.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		DB5AADE82C1818ED002907B6 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		DB5AADEA2C1821C6002907B6 /* Teams.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teams.entitlements; sourceTree = "<group>"; };
+		DBABF0242C25430300A3CB37 /* CustomImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerView.swift; sourceTree = "<group>"; };
+		DBABF0262C25433A00A3CB37 /* CustomImagePickerFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerFeature.swift; sourceTree = "<group>"; };
+		DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifierView.swift; sourceTree = "<group>"; };
 		DBC567DC2C184C0100444E98 /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
@@ -291,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */,
+				DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -323,6 +330,7 @@
 		DB5AADDA2C173DB4002907B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DBABF0242C25430300A3CB37 /* CustomImagePickerView.swift */,
 				DB5AADB82C12ED2E002907B6 /* ToastView.swift */,
 				DB5AADBA2C1300DD002907B6 /* InputView.swift */,
 				DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */,
@@ -335,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				DB5AADDC2C173DD0002907B6 /* InputFeature.swift */,
+				DBABF0262C25433A00A3CB37 /* CustomImagePickerFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -618,6 +627,7 @@
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
 				DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
+				DBABF0272C25433A00A3CB37 /* CustomImagePickerFeature.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
 				DBEA522C2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift in Sources */,
@@ -627,9 +637,11 @@
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
+				DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */,
 				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
+				DBABF0252C25430300A3CB37 /* CustomImagePickerView.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyViewCoordinator.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
