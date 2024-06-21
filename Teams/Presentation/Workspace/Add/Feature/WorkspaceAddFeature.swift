@@ -20,6 +20,7 @@ struct WorkspaceAddFeature {
         var workspaceDescription : String = ""
         var createButton : Bool = false
         var toastPresent : ToastMessage?
+        var selectedImageData: Data?
         
         enum ToastMessage : String, Hashable, CaseIterable {
             case name = "워크스페이스 이름은 1~30자로 설정해주세요"
@@ -29,6 +30,7 @@ struct WorkspaceAddFeature {
     
     enum Action : BindableAction {
         case binding(BindingAction<State>)
+        case pickedImage(Data?)
         case createButtonActive
         case createButtonTapped
         case dismiss
@@ -44,7 +46,14 @@ struct WorkspaceAddFeature {
             switch action {
             case .binding(\.workspaceName):
                 return .send(.createButtonActive)
-                                
+
+            case let .pickedImage(image):
+                state.selectedImageData = image
+                
+                print(state.selectedImageData )
+                
+                return .none
+                
             case .createButtonActive:
                 if !state.workspaceName.isEmpty {
                     state.createButton = true
@@ -55,8 +64,6 @@ struct WorkspaceAddFeature {
             
             case .createButtonTapped:
                 state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
-                
-                
                 return .none
                 
             default :
