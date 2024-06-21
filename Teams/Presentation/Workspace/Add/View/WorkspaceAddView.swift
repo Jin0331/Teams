@@ -76,7 +76,7 @@ struct WorkspaceAddView : View {
                 .navigationBarItems(
                     leading:
                         Button {
-
+                            store.send(.dismiss)
                         } label : {
                             Image("Vector")
                         }

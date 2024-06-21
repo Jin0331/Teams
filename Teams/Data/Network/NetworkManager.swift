@@ -48,7 +48,7 @@ final class NetworkManager {
         }
         
     }
-    
+    //MARK: - User
     func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmailVaidationResponseDTO, APIError> {
         do {
             let response = try await requestAPI(router: UserRouter.emailValidation(query: query), of: EmailVaidationResponseDTO.self)
@@ -142,7 +142,22 @@ final class NetworkManager {
         }
     }
     
-//    func meProfile() async -> Result<>
+    //MARK: - Workspace
+    func getWorkspaceList() async -> Result<[Workspace], APIError> {
+        
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.myWorkspaces, of: [WorkspaceResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
 }
 
 

@@ -42,7 +42,10 @@ struct WorkspaceCoordinator {
     enum Action {
         case homeEmpty(HomeEmptyViewCoordinator.Action)
         case onAppear
+        case myWorkspaceResponse(Result<[Workspace], APIError>)
     }
+    
+    @Dependency(\.networkManager) var networkManager
     
     var body : some ReducerOf<Self> {
         Scope(state : \.homeEmpty, action: \.homeEmpty) {
@@ -54,8 +57,25 @@ struct WorkspaceCoordinator {
                 
             //TODO: - Workspace count API 호출
             case .onAppear:
-                state.workspaceCount = 0
+                print("Workspace Coordinator 뿅 🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                return .run { send in
+                    await send(.myWorkspaceResponse(
+                        networkManager.getWorkspaceList()
+                    ))
+                }
+            
+            case let .myWorkspaceResponse(.success(response)):
+                print(response, "🌟 success")
+                state.workspaceCount = response.count
                 return .none
+                
+            case let .myWorkspaceResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                print(errorType)
+                
+                return .none
+                
                 
             default :
                 break

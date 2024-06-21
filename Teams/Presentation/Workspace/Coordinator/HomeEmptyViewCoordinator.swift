@@ -12,6 +12,7 @@ import TCACoordinators
 @Reducer(state : .equatable)
 enum HomeEmptyScreen {
     case emptyView(HomeEmptyFeature)
+    case workspaceAdd(WorkspaceAddFeature)
 }
 
 struct HomeEmptyViewCoordinatorView : View {
@@ -22,6 +23,8 @@ struct HomeEmptyViewCoordinatorView : View {
             switch screen.case {
             case let .emptyView(store):
                 HomeEmptyView(store: store)
+            case let .workspaceAdd(store):
+                WorkspaceAddView(store: store)
             }
         }
     }
@@ -38,5 +41,23 @@ struct HomeEmptyViewCoordinator {
     
     enum Action {
         case router(IndexedRouterActionOf<HomeEmptyScreen>)
+    }
+    
+    var body : some ReducerOf<Self> {
+        Reduce<State, Action> { state, action in
+            switch action {
+                
+            case .router(.routeAction(_, action: .emptyView(.createWorkspaceTapped))):
+                state.routes.presentSheet(.workspaceAdd(.init()))
+            
+            case .router(.routeAction(_, action: .workspaceAdd(.dismiss))):
+                state.routes.dismiss()
+                
+            default:
+              break
+            }
+            return .none
+        }
+        .forEachRoute(\.routes, action: \.router)
     }
 }
