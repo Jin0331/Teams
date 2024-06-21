@@ -17,6 +17,7 @@ struct WorkspaceAddFeature {
         let id = UUID()
         var workspaceName : String = ""
         var workspaceNameValid : Bool = false
+        var workspaceImageValid : Bool = false
         var workspaceDescription : String = ""
         var createButton : Bool = false
         var toastPresent : ToastMessage?
@@ -49,9 +50,7 @@ struct WorkspaceAddFeature {
 
             case let .pickedImage(image):
                 state.selectedImageData = image
-                
-                print(state.selectedImageData )
-                
+                state.workspaceImageValid = true
                 return .none
                 
             case .createButtonActive:
@@ -64,6 +63,12 @@ struct WorkspaceAddFeature {
             
             case .createButtonTapped:
                 state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
+                
+                if let field = [state.workspaceNameValid, state.workspaceImageValid].firstIndex(of: false) {
+                    state.toastPresent = State.ToastMessage.allCases[field]
+                    return .none
+                }
+                
                 return .none
                 
             default :

@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 import PhotosUI
+import PopupView
 
 struct WorkspaceAddView : View {
     
@@ -49,7 +50,6 @@ struct WorkspaceAddView : View {
                         }
                         .onChange(of: selectedItem) { newItem in
                             Task {
-                                // Retrieve selected asset in the form of Data
                                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
                                     store.send(.pickedImage(data))
                                 }
@@ -90,6 +90,11 @@ struct WorkspaceAddView : View {
                     
                     Spacer()
                     
+                }
+                .popup(item: $store.toastPresent) { text in
+                    ToastView(text: text.rawValue)
+                } customize: {
+                    $0.autohideIn(2)
                 }
                 .navigationBarTitle("워크스페이스 생성", displayMode: .inline)
                 .navigationBarItems(
