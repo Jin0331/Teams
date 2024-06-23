@@ -51,7 +51,9 @@ struct WorkspaceAddView : View {
                         .onChange(of: selectedItem) { newItem in
                             Task {
                                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                    store.send(.pickedImage(data))
+                                    if let image = UIImage(data: data) {
+                                        store.send(.pickedImage(image.compressImage(to: 0.95)))
+                                    }
                                 }
                             }
                         }

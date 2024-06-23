@@ -34,9 +34,11 @@ struct WorkspaceAddFeature {
         case pickedImage(Data?)
         case createButtonActive
         case createButtonTapped
+        case createWorkspaceResponse(Result<Workspace, APIError>)
         case dismiss
     }
     
+    @Dependency(\.networkManager) var networkManager
     @Dependency(\.validTest) var validTest
     
     var body : some Reducer<State, Action> {
@@ -69,7 +71,17 @@ struct WorkspaceAddFeature {
                     return .none
                 }
                 
-                return .none
+                guard let imageData = state.selectedImageData else { return .none}
+                
+                let createWorkspaceRequest = WorkspaceCreateRequestDTO(name: state.workspaceName,
+                                                                       description: state.workspaceDescription,
+                                                                       image: imageData)
+                
+                return .run { send in
+                    await send(.createWorkspaceResponse(
+                        networkManager.createWorkspace(query: createWorkspaceRequest)
+                    ))
+                }
                 
             default :
                 return .none
