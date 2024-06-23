@@ -26,7 +26,6 @@ struct EmailLoginView : View {
                     LoginView(title: "비밀번호", placement: "비밀번호를 입력하세요", text: $store.passwordText, valid: store.passwordValid, isPassword: true)
                         .focused($focusedField, equals: .password)
                     
-                    Spacer()
                     
                     Button("로그인") {
                         store.send(.loginButtonTapped)
@@ -37,6 +36,8 @@ struct EmailLoginView : View {
                     .background(backgroundForIsActive(store.completeButton))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .disabled(!store.completeButton)
+                    
+                    Spacer()
                     
                 }
                 .padding()

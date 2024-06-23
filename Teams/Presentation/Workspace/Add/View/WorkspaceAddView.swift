@@ -7,35 +7,54 @@
 
 import ComposableArchitecture
 import SwiftUI
+import PhotosUI
+import PopupView
 
 struct WorkspaceAddView : View {
     
     @State var store : StoreOf<WorkspaceAddFeature>
+    @State private var selectedItem: PhotosPickerItem?
     
     var body: some View {
         
         WithPerceptionTracking {
             NavigationStack {
                 VStack(spacing: 20) {
-                    
-                    Button(action: {
-                        
-                    }, label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(.brandGreen)
-                                .frame(width: 70, height: 70)
-                                .padding()
-                            Image(.workspace)
-                                .resizable()
-                                .frame(width: 48, height: 60)
-                                .offset(y: 5)
-                            Image(.camera)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .offset(x: 30, y: 30)
+                    PhotosPicker( //https://swiftsenpai.com/development/swiftui-photos-picker/
+                        selection: $selectedItem,
+                        matching: .images,
+                        photoLibrary: .shared()) {
+                            ZStack {
+                                if let image = store.selectedImageData, let uiImage = UIImage(data: image) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .frame(width: 70, height: 70)
+                                        .cornerRadius(8)
+                                        .padding()
+                                } else {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 70, height: 70)
+                                        .padding()
+                                    Image(.workspace)
+                                        .resizable()
+                                        .frame(width: 48, height: 60)
+                                        .offset(y: 5)
+                                }
+                                
+                                Image(.camera)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .offset(x: 30, y: 30)
+                            }
                         }
-                    })
+                        .onChange(of: selectedItem) { newItem in
+                            Task {
+                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                    store.send(.pickedImage(data))
+                                }
+                            }
+                        }
                     
                     Text("워크스페이스 이름")
                         .title2()
@@ -72,11 +91,16 @@ struct WorkspaceAddView : View {
                     Spacer()
                     
                 }
+                .popup(item: $store.toastPresent) { text in
+                    ToastView(text: text.rawValue)
+                } customize: {
+                    $0.autohideIn(2)
+                }
                 .navigationBarTitle("워크스페이스 생성", displayMode: .inline)
                 .navigationBarItems(
                     leading:
                         Button {
-
+                            store.send(.dismiss)
                         } label : {
                             Image("Vector")
                         }
