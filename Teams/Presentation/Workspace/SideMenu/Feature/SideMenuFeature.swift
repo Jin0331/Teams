@@ -1,21 +1,22 @@
 //
-//  HomeFeature.swift
+//  SideMenuFeature.swift
 //  Teams
 //
-//  Created by JinwooLee on 6/11/24.
+//  Created by JinwooLee on 6/24/24.
 //
 
 import ComposableArchitecture
 import SwiftUI
 
+
 @Reducer
-struct HomeFeature {
+struct SideMenuFeature {
     @ObservableState
     struct State : Equatable {
-        let id = UUID()
+        
     }
-
+    
     enum Action {
-
+        case createWorkspaceTapped
     }
 }
