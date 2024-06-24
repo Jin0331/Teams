@@ -15,8 +15,8 @@ enum HomeEmptyScreen {
     case workspaceAdd(WorkspaceAddFeature)
 }
 
-struct HomeEmptyViewCoordinatorView : View {
-    let store : StoreOf<HomeEmptyViewCoordinator>
+struct HomeEmptyCoordinatorView : View {
+    let store : StoreOf<HomeEmptyCoordinator>
     
     var body: some View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
@@ -32,7 +32,7 @@ struct HomeEmptyViewCoordinatorView : View {
 }
 
 @Reducer
-struct HomeEmptyViewCoordinator {
+struct HomeEmptyCoordinator {
     @ObservableState
     struct State : Equatable {
         static let initialState = State(routes: [.root(.emptyView(.init()))])

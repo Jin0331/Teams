@@ -61,6 +61,16 @@ struct HomeEmptyView: View {
                     }
                 }
             }
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 100 {
+                            store.send(.openSideMenu)
+                        } else if value.translation.width < -100 {
+                            store.send(.closeSideMenu)
+                        }
+                    }
+            )
         }
     }
 }

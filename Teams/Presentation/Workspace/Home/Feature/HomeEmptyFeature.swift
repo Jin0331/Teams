@@ -20,5 +20,8 @@ struct HomeEmptyFeature {
     enum Action {
         case createWorkspaceTapped
         case profileButtonTapped
+        case toggleSideMenu
+        case openSideMenu
+        case closeSideMenu
     }
 }
