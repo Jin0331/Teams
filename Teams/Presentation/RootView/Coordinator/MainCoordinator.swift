@@ -29,6 +29,9 @@ struct MainCoordinatorView : View {
                 }
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .resetLogin)) { notification in
+            store.send(.refreshTokenExposed)
+        }
     }
 }
 
@@ -48,6 +51,7 @@ struct MainCoordinator {
         case onboarding(OnboardingCoordinator.Action)
         case homeInitial(HomeInitialCoordinator.Action)
         case workspace(WorkspaceCoordinator.Action)
+        case refreshTokenExposed
     }
     
     var body : some ReducerOf<Self> {
@@ -77,6 +81,9 @@ struct MainCoordinator {
                 state.isSignUp = false
             case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
                 state.isLogined = true
+                state.isSignUp = false
+            case .refreshTokenExposed:
+                state.isLogined = false
                 state.isSignUp = false
             default:
               break

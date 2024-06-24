@@ -10,6 +10,7 @@ import Alamofire
 
 enum WorkspaceRouter {
     case myWorkspaces
+    case createWorkspace(request : WorkspaceCreateRequestDTO)
 }
 
 extension WorkspaceRouter : TargetType {
@@ -21,12 +22,14 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces:
             return .get
+        case .createWorkspace:
+            return .post
         }
     }
     
     var path : String {
         switch self {
-        case .myWorkspaces:
+        case .myWorkspaces, .createWorkspace:
             return "/workspaces"
         }
     }
@@ -35,7 +38,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { return [:] }
         
         switch self {
-        case .myWorkspaces:
+        case .myWorkspaces, .createWorkspace:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -51,10 +54,28 @@ extension WorkspaceRouter : TargetType {
     }
     
     var body: Data? {
-        
         switch self {
         default :
             return nil
+        }
+    }
+    
+    var multipart: MultipartFormData {
+        switch self {
+        case let .createWorkspace(request):
+            let multiPart = MultipartFormData()
+            multiPart.append(request.name.data(using: .utf8)!, withName: "name")
+            
+            if let description = request.description {
+                multiPart.append(description.data(using: .utf8)!, withName: "description")
+            }
+            
+            multiPart.append(request.image, withName: "image", fileName: request.name + "_workspaceImage.jpeg", mimeType: "image/jpeg")
+            
+            return multiPart
+            
+        default :
+            return MultipartFormData()
         }
     }
 }

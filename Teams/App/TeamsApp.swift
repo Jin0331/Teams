@@ -32,7 +32,7 @@ struct TeamsApp: App {
         WindowGroup {
             MainCoordinatorView(store: Store(initialState: .initialState, reducer: {
                 MainCoordinator()
-                    ._printChanges()
+//                    ._printChanges()
             }))
             .onOpenURL(perform: { url in
                 if (AuthApi.isKakaoTalkLoginUrl(url)) {
