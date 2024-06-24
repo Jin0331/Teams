@@ -26,6 +26,8 @@ struct WorkspaceAddFeature {
         enum ToastMessage : String, Hashable, CaseIterable {
             case name = "워크스페이스 이름은 1~30자로 설정해주세요"
             case image = "워크스페이스 이미지를 등록해주세요."
+            case duplicate = "워크스페이스 명은 고유한 데이터로 중복될 수 없습니다."
+            case none = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
         }
     }
     
@@ -36,6 +38,7 @@ struct WorkspaceAddFeature {
         case createButtonTapped
         case createWorkspaceResponse(Result<Workspace, APIError>)
         case dismiss
+        case createWorkspaceComplete
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -82,6 +85,26 @@ struct WorkspaceAddFeature {
                         networkManager.createWorkspace(query: createWorkspaceRequest)
                     ))
                 }
+            case let .createWorkspaceResponse(.success(response)):
+                
+                dump(response)
+                
+                return .send(.createWorkspaceComplete)
+                
+            case let .createWorkspaceResponse(.failure(error)):
+                
+                dump(error)
+                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                if case .E12 = errorType {
+                    state.toastPresent = State.ToastMessage.duplicate
+                } else {
+                    state.toastPresent = State.ToastMessage.none
+                }
+                
+                return .none
+
                 
             default :
                 return .none
