@@ -79,6 +79,37 @@ final class NetworkManager {
         }
     }
     
+    private func requestAPIWithRefresh<T:Decodable>(router : URLRequestConvertible, of type : T.Type, multipart : MultipartFormData) async throws -> T {
+        
+        let urlRequest = try router.asURLRequest()
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.upload(multipartFormData: multipart, to: urlRequest.url!, method: urlRequest.method!, headers: urlRequest.headers, interceptor: AuthManager())
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: type, emptyResponseCodes: [200]) { response in
+                    switch response.result {
+                    case let .success(response):
+                        continuation.resume(returning: response)
+                    case let .failure(error):
+                        
+                        if let errorData = response.data {
+                            do {
+                                let networkError = try JSONDecoder().decode(ErrorResponseDTO.self, from: errorData)
+                                let apiError = APIError(error: networkError)
+                                continuation.resume(throwing: apiError)
+                            } catch {
+                                // decoding Error
+                                dump(error)
+                                continuation.resume(throwing: APIError.decodingError)
+                            }
+                        } else {
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
+        }
+    }
+    
     //MARK: - User
     func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmailVaidationResponseDTO, APIError> {
         do {
@@ -192,8 +223,10 @@ final class NetworkManager {
     
     func createWorkspace(query : WorkspaceCreateRequestDTO) async -> Result<Workspace, APIError> {
         
+        let router = WorkspaceRouter.createWorkspace(request: query)
+        
         do {
-            let response = try await requestAPIWithRefresh(router: WorkspaceRouter.createWorkspace(request: query), of: WorkspaceResponseDTO.self)
+            let response = try await requestAPIWithRefresh(router: router, of: WorkspaceResponseDTO.self, multipart: router.multipart)
             return .success(response.toDomain())
         } catch {
             if let apiError = error as? APIError {

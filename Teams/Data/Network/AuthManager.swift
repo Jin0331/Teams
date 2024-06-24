@@ -65,14 +65,14 @@ final class AuthManager : RequestInterceptor {
                         completion(.doNotRetry)
                         
                         //TODO: - Notification Center를 이용해서 AppCoordinator
-//                        NotificationCenter.default.post(name: .resetLogin, object: nil)
+                        NotificationCenter.default.post(name: .resetLogin, object: nil)
                     }
                 }
         } catch { 
             
             print("알수없는 에러")
             
-        } // 어떤 에러가 발생할 수 있을까....?
+        }
         
     }
 }
