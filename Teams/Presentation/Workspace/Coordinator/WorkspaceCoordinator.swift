@@ -106,7 +106,7 @@ struct WorkspaceCoordinator {
             case .closeSideMenu:
                 state.sidemenuOpen = false
                 
-            case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
+            case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))), .sideMenu(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
                 print("workspace add compete 🌟🌟🌟🌟")
                 state.workspaceCount += 1
             
