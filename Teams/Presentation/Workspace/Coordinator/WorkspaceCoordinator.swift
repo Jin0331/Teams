@@ -26,7 +26,7 @@ struct WorkspaceCoordinatorView : View {
                 .zIndex(1)
                 
                 if store.sidemenuOpen {
-                    SideMenuView()
+                    SideMenuCoordinatorView(store: store.scope(state: \.sideMenu, action: \.sideMenu))
                         .frame(width: 317)
                         .transition(.move(edge: .leading))
                         .zIndex(3)
@@ -38,7 +38,6 @@ struct WorkspaceCoordinatorView : View {
                             store.send(.closeSideMenu)
                         }
                 }
-                
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
@@ -54,8 +53,9 @@ struct WorkspaceCoordinatorView : View {
 struct WorkspaceCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(homeEmpty: .initialState, workspaceCount: 0)
+        static let initialState = State(homeEmpty: .initialState, sideMenu: .initialState, workspaceCount: 0)
         var homeEmpty : HomeEmptyCoordinator.State
+        var sideMenu : SideMenuCoordinator.State
         var workspaceCount : Int
         var sidemenuOpen : Bool = false
         
@@ -63,6 +63,7 @@ struct WorkspaceCoordinator {
     
     enum Action {
         case homeEmpty(HomeEmptyCoordinator.Action)
+        case sideMenu(SideMenuCoordinator.Action)
         case onAppear
         case myWorkspaceResponse(Result<[Workspace], APIError>)
         case closeSideMenu
@@ -73,6 +74,10 @@ struct WorkspaceCoordinator {
     var body : some ReducerOf<Self> {
         Scope(state : \.homeEmpty, action: \.homeEmpty) {
             HomeEmptyCoordinator()
+        }
+        
+        Scope(state : \.sideMenu, action : \.sideMenu) {
+            SideMenuCoordinator()
         }
         
         Reduce<State, Action> { state, action in

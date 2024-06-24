@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct SideMenuView: View {
+    
+    @State var store : StoreOf<SideMenuFeature>
+    
     var body: some View {
         
         NavigationStack {
@@ -24,7 +28,7 @@ struct SideMenuView: View {
                     .frame(width: 269, height: 75, alignment: .center)
                 
                 Button("워크스페이스 생성") {
-                    
+                    store.send(.createWorkspaceTapped)
                 }
                 .tint(.brandWhite)
                 .frame(width: 269, height: 44)
@@ -37,7 +41,9 @@ struct SideMenuView: View {
                 Spacer()
                 
                 VStack(spacing : 0) {
-                    Button(action: {}, label: {
+                    Button(action: {
+                        store.send(.createWorkspaceTapped)
+                    }, label: {
                         HStack {
                             Image(.plus)
                             Text("워크스페이스 추가")
@@ -92,5 +98,7 @@ struct RoundedCornerShape: Shape {
 }
 
 #Preview {
-    SideMenuView()
+    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
+        SideMenuFeature()
+    }))
 }

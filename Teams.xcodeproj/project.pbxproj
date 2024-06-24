@@ -44,6 +44,8 @@
 		DB5AADE92C1818ED002907B6 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE82C1818ED002907B6 /* Token.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
+		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
+		DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */; };
 		DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */; };
 		DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */; };
 		DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */; };
@@ -117,6 +119,8 @@
 		DB5AADEA2C1821C6002907B6 /* Teams.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teams.entitlements; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
+		DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinator.swift; sourceTree = "<group>"; };
 		DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCreateRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifierView.swift; sourceTree = "<group>"; };
@@ -389,6 +393,7 @@
 		DB717EE52C293D1E003C59ED /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				DB717EE62C299E71003C59ED /* SideMenuFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				DBEA52272C241B0000026926 /* WorkspaceTabCoordinator.swift */,
 				DBEA52252C241AF200026926 /* HomeEmptyCoordinator.swift */,
 				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
+				DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -667,6 +673,7 @@
 				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
+				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
@@ -708,6 +715,7 @@
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
+				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
