@@ -19,6 +19,7 @@
 		DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */; };
 		DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */; };
 		DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */; };
+		DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37633B2C29C664009A201B /* HomeCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
 		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
@@ -95,6 +96,7 @@
 		DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
 		DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyFeature.swift; sourceTree = "<group>"; };
+		DB37633B2C29C664009A201B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -259,6 +261,24 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		DB37633E2C29CADA009A201B /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA52252C241AF200026926 /* HomeEmptyCoordinator.swift */,
+				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
+				DB37633B2C29C664009A201B /* HomeCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DB37633F2C29CAE2009A201B /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		DB4B78072C10583200350F04 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +396,7 @@
 		DB717EE12C293D08003C59ED /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				DB37633F2C29CAE2009A201B /* Coordinator */,
 				DB717EE42C293D17003C59ED /* View */,
 				DB717EE52C293D1E003C59ED /* Feature */,
 			);
@@ -470,6 +491,7 @@
 		DBF386272C1C12CA00A08152 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				DB37633E2C29CADA009A201B /* Coordinator */,
 				DB0B9D782C1833C200C5C150 /* View */,
 				DB0B9D792C1833C700C5C150 /* Feature */,
 			);
@@ -481,9 +503,6 @@
 			children = (
 				DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */,
 				DBEA52272C241B0000026926 /* WorkspaceTabCoordinator.swift */,
-				DBEA52252C241AF200026926 /* HomeEmptyCoordinator.swift */,
-				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
-				DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -702,6 +721,7 @@
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
+				DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */,
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
 				DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */,

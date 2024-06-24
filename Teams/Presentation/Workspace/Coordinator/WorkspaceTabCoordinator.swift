@@ -5,4 +5,63 @@
 //  Created by JinwooLee on 6/20/24.
 //
 
-import Foundation
+import ComposableArchitecture
+import SwiftUI
+import TCACoordinators
+
+struct WorkspaceTabCoordinatorView : View {
+    @Perception.Bindable var store : StoreOf<WorkspaceTabCoordinator>
+
+    var body: some View {
+        WithPerceptionTracking {
+            TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
+                HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
+                    .tabItem { Text("Indexed") }
+                    .tag(WorkspaceTabCoordinator.Tab.home)
+            }
+
+        }
+    }
+}
+
+@Reducer
+struct WorkspaceTabCoordinator {
+    enum Tab : Hashable {
+        case home
+    }
+
+    enum Action {
+        case home(HomeCoordinator.Action)
+        case tabSelected(Tab)
+    }
+    
+    @ObservableState
+    struct State : Equatable {
+        static let initialState = State(home: .initialState, selectedTab: .home)
+
+        var home : HomeCoordinator.State
+        var selectedTab: Tab
+    }
+
+
+
+    var body : some ReducerOf<Self> {
+        
+        Scope(state : \.home, action: \.home) {
+            HomeCoordinator()
+        }
+
+        Reduce<State, Action> { state, action in
+            switch action {
+            case let .tabSelected(tab):
+              state.selectedTab = tab
+            default:
+              break
+            }
+            return .none
+        }
+    }
+    
+
+}
+
