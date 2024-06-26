@@ -16,9 +16,14 @@ struct WorkspaceTabCoordinatorView : View {
         WithPerceptionTracking {
             TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
                 HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
-                    .tabItem { Text("Indexed") }
+                    .tabItem {
+                        Image(.homeTab)
+                        Text("홈")
+                            .bodyRegular()
+                    }
                     .tag(WorkspaceTabCoordinator.Tab.home)
             }
+            .accentColor(Color.brandBlack)
 
         }
     }
@@ -42,8 +47,6 @@ struct WorkspaceTabCoordinator {
         var home : HomeCoordinator.State
         var selectedTab: Tab
     }
-
-
 
     var body : some ReducerOf<Self> {
         
