@@ -47,6 +47,7 @@
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
 		DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */; };
+		DB9A7E1F2C2D3710007C4E3F /* Formatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9A7E1E2C2D3710007C4E3F /* Formatter+Extension.swift */; };
 		DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */; };
 		DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */; };
 		DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */; };
@@ -123,6 +124,7 @@
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
 		DB717EE82C299F1B003C59ED /* SideMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinator.swift; sourceTree = "<group>"; };
+		DB9A7E1E2C2D3710007C4E3F /* Formatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Formatter+Extension.swift"; sourceTree = "<group>"; };
 		DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCreateRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifierView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */,
 				DBABF0282C25440100A3CB37 /* UIImage+Extension.swift */,
 				DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */,
+				DB9A7E1E2C2D3710007C4E3F /* Formatter+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
 				DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */,
 				DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */,
+				DB9A7E1F2C2D3710007C4E3F /* Formatter+Extension.swift in Sources */,
 				DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,

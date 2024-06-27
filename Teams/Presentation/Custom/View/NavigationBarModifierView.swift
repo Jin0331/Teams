@@ -11,6 +11,7 @@ struct NavigationBarModifier: ViewModifier {
 
     var backgroundColor: UIColor?
     var titleColor: UIColor?
+    var height : Double?
     
 
     init(backgroundColor: Color, titleColor: UIColor?) {
@@ -44,11 +45,37 @@ struct NavigationBarModifier: ViewModifier {
     }
 }
 
+struct CustomNavigationBarModifier: ViewModifier {
+    var title: String
+    var height: CGFloat
+
+    func body(content: Content) -> some View {
+        VStack(spacing: 0) {
+            HStack {
+                Text(title)
+                    .title1()
+                    .foregroundColor(.brandBlack)
+                Spacer()
+            }
+            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+            .padding()
+            .background(.brandPrimary)
+            .frame(height: height)
+
+            content
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
+}
+
 extension View {
 
     func navigationBarColor(backgroundColor: Color, titleColor: UIColor?) -> some View {
         self.modifier(NavigationBarModifier(backgroundColor: backgroundColor, titleColor: titleColor))
     }
-
+    
+    func customNavigationBar(title: String, height: CGFloat) -> some View {
+        self.modifier(CustomNavigationBarModifier(title: title, height: height))
+    }
 }
 
