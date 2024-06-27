@@ -16,7 +16,7 @@ struct WorkspaceCoordinatorView : View {
         WithPerceptionTracking {
             ZStack(alignment:.leading) {
                 VStack {
-                    if store.workspaceCount > 0 {
+                    if !store.workspaceList.isEmpty {
                         WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
@@ -41,9 +41,9 @@ struct WorkspaceCoordinatorView : View {
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
-            .onAppear {
-                store.send(.onAppear)
-            }
+//            .onAppear {
+//                store.send(.onAppear)
+//            }
         }
     }
     
@@ -53,11 +53,12 @@ struct WorkspaceCoordinatorView : View {
 struct WorkspaceCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState, workspaceCount: 0)
+        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState, workspaceList : [], workspaceCount: 0)
         var tab : WorkspaceTabCoordinator.State
         var homeEmpty : HomeEmptyCoordinator.State
         var sideMenu : SideMenuCoordinator.State
-        var workspaceCount : Int
+        var workspaceList : [Workspace] = []
+        var workspaceCount : Int = 0
         var sidemenuOpen : Bool = false
         
     }

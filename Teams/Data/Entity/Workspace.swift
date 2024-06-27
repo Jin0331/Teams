@@ -7,7 +7,19 @@
 
 import Foundation
 
-struct Workspace {
+struct Workspace : Equatable, Identifiable {
     let workspaceID, name, description, coverImage: String
     let ownerID, createdAt: String
+    
+    var id : String { return workspaceID }
+}
+
+extension Workspace {
+    var profileImageToUrl : URL {
+        return URL(string: APIKey.baseURLWithVersion() + coverImage)!
+    }
+    
+    var createdAtToString : String {
+        return createdAt.toDateRaw()!.toString(dateFormat: "yy.MM.dd")
+    }
 }

@@ -69,7 +69,8 @@ struct MainCoordinator {
         
         Reduce<State, Action> { state, action in
             switch action {
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(nickname))))):
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))):
+                state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState, workspaceList: response, workspaceCount: response.count)
                 state.isLogined = true
                 state.isSignUp = false
             case let .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete(nickname))))):
