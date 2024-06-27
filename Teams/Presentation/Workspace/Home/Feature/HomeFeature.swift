@@ -16,6 +16,7 @@ struct HomeFeature {
     }
 
     enum Action {
-
+        case openSideMenu
+        case closeSideMenu
     }
 }

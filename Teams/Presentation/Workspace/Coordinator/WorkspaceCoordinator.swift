@@ -117,12 +117,12 @@ struct WorkspaceCoordinator {
                 print("workspace add compete 🌟🌟🌟🌟")
                 state.workspaceCount += 1
             
-            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))):
+            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 state.sidemenuOpen = true
             
-            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))):
+            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.closeSideMenu))))):
                 state.sidemenuOpen = false
-                
+            
             default :
                 break
             }
