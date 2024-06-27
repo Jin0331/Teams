@@ -32,7 +32,7 @@ final class AuthManager : RequestInterceptor {
         
         //TODO: - 401 이 발생할 가능성이 있을까??? -> 서버가 리셋 즉, 회원가입이 안 된 유저
         let request = request.task?.response as? HTTPURLResponse
-        guard let response = request, response.statusCode == 419 else {
+        guard let response = request, response.statusCode == 400 else {
             print("Forbidden or Unknown or Success: \(request?.statusCode)")
             completion(.doNotRetryWithError(error))
             return
