@@ -55,7 +55,7 @@ struct SideMenuFeature {
                 
                 state.workspaceCount = response.count
                 
-                if state.workspaceCount > 10 {
+                if state.workspaceCount > 7 {
                     state.listScroll = false
                 }
                 
