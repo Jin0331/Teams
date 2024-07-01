@@ -41,7 +41,7 @@ struct WorkspaceTabCoordinator {
     
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(home: .initialState, selectedTab: .home, sideMenu: .initialState)
+        static let initialState = State(home: .initialState, selectedTab: .home, sideMenu: .initialState())
         
         var home : HomeCoordinator.State
         var selectedTab: Tab

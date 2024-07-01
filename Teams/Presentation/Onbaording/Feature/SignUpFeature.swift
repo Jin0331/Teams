@@ -66,7 +66,7 @@ struct SignUpFeature {
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.networkManager) var networkManager
-    @Dependency(\.validTest) var validTest
+    @Dependency(\.utilitiesFunction) var validTest
     
     var body : some Reducer<State, Action> {
         Scope(state: \.inputView, action: /Action.inputView) {
@@ -161,6 +161,8 @@ struct SignUpFeature {
                 
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 state.emailDuplicate = false
+                
+                print(error)
                 
                 if case .E11 = errorType {
                     state.toastPresent = State.ToastMessage.emailFormat

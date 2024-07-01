@@ -34,7 +34,13 @@ struct SideMenuCoordinatorView : View {
 struct SideMenuCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(routes: [.root(.sidemenu(.init()))])
+        
+        static func initialState(workspaceIdCurrent: String = "") -> Self {
+          Self(
+            routes: [.root(.sidemenu(.init(workspaceIdCurrent: workspaceIdCurrent)))]
+          )
+        }
+        
         var routes : [Route<SideMenuScreen.State>]
     }
     

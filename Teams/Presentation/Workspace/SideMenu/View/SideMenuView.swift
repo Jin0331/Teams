@@ -17,33 +17,22 @@ struct SideMenuView: View {
         
         WithPerceptionTracking {
             VStack {
-                if store.workspaceCount > 0 {
+                switch store.showList {
+                case .success :
                     List {
                         ForEach(store.workspaceList, id: \.id) { response in
-                            HStack {
-                                KFImage.url(response.profileImageToUrl)
-                                    .requestModifier(AuthManager.kingfisherAuth())
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 44, height: 44) //resize
-                                    .cornerRadius(8)
-                                    .padding(.leading, 10)
-                                VStack(alignment:.leading, spacing : 5) {
-                                    Text(response.name)
-                                        .bodyBold()
-                                    Text(response.createdAtToString)
-                                        .bodyRegular()
-                                        .foregroundStyle(Color.secondary)
+                            WorkspaceListItemView(response: response, userID: UserDefaultManager.shared.userId!, store: store)
+                                .onTapGesture {
+                                    print("", UserDefaultManager.shared.userId!, response.ownerID)
                                 }
-                            }
                         }
                         .listRowSeparator(.hidden)
-                        .frame(width: 305, height: 55, alignment: .leading)
                         .cornerRadius(8)
                     }
+
                     .listStyle(.plain)
                     .scrollDisabled(store.listScroll)
-                } else {
+                case .failed:
                     Text("워크스페이스를 찾을 수 없어요.")
                         .title1()
                         .multilineTextAlignment(.center)
@@ -64,6 +53,15 @@ struct SideMenuView: View {
                     .background(.brandGreen)
                     .cornerRadius(8)
                     .backgroundStyle(.brandWhite)
+                case .loading :
+                    VStack {
+                        Spacer()
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.2, anchor: .center)
+                            .padding()
+                        Spacer()
+                    }
                 }
                 
                 Spacer()
@@ -100,7 +98,9 @@ struct SideMenuView: View {
             .background(.brandWhite)
         }
         .onAppear {
-            store.send(.onAppear)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                store.send(.onAppear)
+            }
         }
     }
 }
@@ -120,8 +120,8 @@ struct RoundedCornerShape: Shape {
     }
 }
 
-#Preview {
-    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
-        SideMenuFeature()
-    }))
-}
+//#Preview {
+//    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
+//        SideMenuFeature()
+//    }))
+//}

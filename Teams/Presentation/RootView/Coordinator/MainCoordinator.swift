@@ -54,6 +54,8 @@ struct MainCoordinator {
         case refreshTokenExposed
     }
     
+    @Dependency(\.utilitiesFunction) var utilitiesFunction
+    
     var body : some ReducerOf<Self> {
         
         Scope(state: \.onboarding, action: \.onboarding) {
@@ -70,7 +72,11 @@ struct MainCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))):
-                state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState, workspaceList: response, workspaceCount: response.count)
+                
+                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
+                    state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
+                }
+                
                 state.isLogined = true
                 state.isSignUp = false
             case let .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete(nickname))))):

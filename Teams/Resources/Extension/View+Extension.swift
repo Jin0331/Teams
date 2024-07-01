@@ -26,12 +26,6 @@ extension View {
     }
 }
 
-extension View {
-    func asButton(action: @escaping () -> Void ) -> some View {
-        modifier(ButtonWrapper(action: action))
-    }
-}
-
 struct ButtonWrapper: ViewModifier {
     
     let action: () -> Void
@@ -41,5 +35,11 @@ struct ButtonWrapper: ViewModifier {
             action:action,
             label: { content }
         )
+    }
+}
+
+extension View {
+    func asButton(action: @escaping () -> Void ) -> some View {
+        modifier(ButtonWrapper(action: action))
     }
 }

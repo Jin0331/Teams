@@ -22,4 +22,18 @@ extension Workspace {
     var createdAtToString : String {
         return createdAt.toDateRaw()!.toString(dateFormat: "yy.MM.dd")
     }
+    
+    var createdAtDate: Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from: createdAt)
+    }
+}
+
+typealias WorkspaceList = [Workspace]
+extension WorkspaceList {
+    func getMostRecentWorkspace(from workspaces: [Workspace]) -> Workspace? {
+        return workspaces.sorted(by: {
+            ($0.createdAtDate ?? Date.distantPast) > ($1.createdAtDate ?? Date.distantPast)
+        }).first
+    }
 }

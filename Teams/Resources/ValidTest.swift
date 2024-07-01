@@ -8,8 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-final class ValidTest {
-    static let shared = ValidTest()
+final class UtilitiesFunction {
+    static let shared = UtilitiesFunction()
     
     init() { }
     
@@ -60,16 +60,22 @@ final class ValidTest {
     func isPasswordMatch(_ password: String, _ passwordRepeat: String) -> Bool {
         return password == passwordRepeat
     }
+    
+    func getMostRecentWorkspace(from workspaces: [Workspace]) -> Workspace? {
+        return workspaces.sorted(by: {
+            ($0.createdAtDate ?? Date.distantPast) > ($1.createdAtDate ?? Date.distantPast)
+        }).first
+    }
 }
 
-private enum ValidTestKey: DependencyKey {
-    static var liveValue: ValidTest = ValidTest()
+private enum UtilitiesFunctionKey: DependencyKey {
+    static var liveValue: UtilitiesFunction = UtilitiesFunction()
 }
 
 extension DependencyValues {
-    var validTest: ValidTest {
-        get { self[ValidTestKey.self] }
-        set { self[ValidTestKey.self] = newValue }
+    var utilitiesFunction: UtilitiesFunction {
+        get { self[UtilitiesFunctionKey.self] }
+        set { self[UtilitiesFunctionKey.self] = newValue }
     }
 }
 

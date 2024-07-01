@@ -14,14 +14,26 @@ struct SideMenuFeature {
     @ObservableState
     struct State : Equatable {
         var workspaceCount : Int = 0
+        var showList : viewState = .loading
+        var workspaceIdCurrent : String = ""
+        var workspaceOwnerID : String = ""
         var listScroll = true
         var workspaceList : [Workspace] = []
+        
+        enum viewState  {
+            case loading
+            case success
+            case failed
+        }
     }
     
-    enum Action {
+    enum Action : BindableAction {
         case createWorkspaceTapped
         case onAppear
         case myWorkspaceResponse(Result<[Workspace], APIError>)
+        case workspaceRemoveButtonTapped
+        case workspaceExitButtonTapped
+        case binding(BindingAction<State>)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -32,7 +44,9 @@ struct SideMenuFeature {
             
             switch action {
             case .onAppear:
-                print("Workspace Coordinator 뿅 🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                
+                print(state.workspaceIdCurrent)
+                
                 return .run { send in
                     await send(.myWorkspaceResponse(
                         networkManager.getWorkspaceList()
@@ -47,6 +61,12 @@ struct SideMenuFeature {
                     state.listScroll = false
                 }
                 
+                if state.workspaceCount > 0 {
+                    state.showList = .success
+                } else {
+                    state.showList = .failed
+                }
+                
                 state.workspaceList = response
                 
                 return .none
@@ -55,6 +75,11 @@ struct SideMenuFeature {
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 
                 print(errorType)
+                
+                return .none
+                
+            case .workspaceExitButtonTapped:
+                print("exit")
                 
                 return .none
                 
