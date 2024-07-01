@@ -177,7 +177,7 @@ struct SignUpFeature {
             case let .joinResponse(.success(response)):
                 
                 UserDefaultManager.shared.saveAllData(login: response)
-                
+//                return .concatenate([.send(.signUpComplete(response.nickname)), .send(.dismiss)])
                 return .send(.signUpComplete(response.nickname))
                 
             case let .joinResponse(.failure(error)):

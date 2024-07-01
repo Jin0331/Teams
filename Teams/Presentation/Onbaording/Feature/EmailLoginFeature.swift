@@ -104,6 +104,7 @@ struct EmailLoginFeature {
             
             case let .myWorkspaceResponse(.success(response)):
                 print(response, "🌟 success")
+//                return .concatenate([.send(.loginComplete(response)), .send(.dismiss)])
                 return .send(.loginComplete(response))
                 
             case let .myWorkspaceResponse(.failure(error)):
