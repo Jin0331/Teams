@@ -12,7 +12,6 @@ import Kingfisher
 struct SideMenuView: View {
     
     @State var store : StoreOf<SideMenuFeature>
-    @State var showingSheet = false
     
     var body: some View {
         
@@ -22,7 +21,10 @@ struct SideMenuView: View {
                 case .success :
                     List {
                         ForEach(store.workspaceList, id: \.id) { response in
-                            WorkspaceListItemView(response: response, store: store, showingSheet: $showingSheet)
+                            WorkspaceListItemView(response: response, userID: UserDefaultManager.shared.userId!, store: store)
+                                .onTapGesture {
+                                    print("", UserDefaultManager.shared.userId!, response.ownerID)
+                                }
                         }
                         .listRowSeparator(.hidden)
                         .cornerRadius(8)
@@ -95,7 +97,7 @@ struct SideMenuView: View {
             .background(.brandWhite)
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 store.send(.onAppear)
             }
         }

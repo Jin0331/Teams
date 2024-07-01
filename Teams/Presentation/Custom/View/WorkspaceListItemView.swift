@@ -11,8 +11,9 @@ import Kingfisher
 
 struct WorkspaceListItemView: View {
     let response: Workspace
+    let userID : String
     @Perception.Bindable var store: StoreOf<SideMenuFeature>
-    @Binding var showingSheet : Bool
+    @State private var showingSheet : Bool = false
     
     var body: some View {
         WithPerceptionTracking {
@@ -34,19 +35,20 @@ struct WorkspaceListItemView: View {
                 }
                 .frame(width: 192, alignment: .leading)
                 
-                if response.id == store.workspaceIdCurrent {
+//                if response.id == store.workspaceIdCurrent {
                     Image(.listEdit)
                         .resizable()
                         .frame(width: 20, height: 20)
                         .onTapGesture {
                             showingSheet = true
                         }
-                }
+//                }
             }
             .frame(width: 305, height: 72, alignment: .leading)
             .background(response.id == store.workspaceIdCurrent ? .brandGray : .brandWhite)
             .confirmationDialog("", isPresented: $showingSheet) {
-                if response.ownerID == UserDefaultManager.shared.userId! {
+                //TODO: - Button 선택에 따른 기능 구현 필요
+                if response.ownerID == userID {
                     Button("워크스페이스 편집") {}
                     Button("워크스페이스 나가기") {}
                     Button("워크스페이스 관리자 변경") {}
