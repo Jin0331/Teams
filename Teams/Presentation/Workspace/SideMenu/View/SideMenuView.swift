@@ -12,6 +12,7 @@ import Kingfisher
 struct SideMenuView: View {
     
     @State var store : StoreOf<SideMenuFeature>
+    @State var showingSheet = false
     
     var body: some View {
         
@@ -21,35 +22,7 @@ struct SideMenuView: View {
                 case .success :
                     List {
                         ForEach(store.workspaceList, id: \.id) { response in
-                            HStack {
-                                KFImage.url(response.profileImageToUrl)
-                                    .requestModifier(AuthManager.kingfisherAuth())
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 44, height: 44) //resize
-                                    .cornerRadius(8)
-                                    .padding(.leading, 10)
-                                VStack(alignment:.leading, spacing : 5) {
-                                    Text(response.name)
-                                        .bodyBold()
-                                    Text(response.createdAtToString)
-                                        .bodyRegular()
-                                        .foregroundStyle(Color.secondary)
-                                }
-                                .frame(width: 192, alignment: .leading)
-
-                                WithPerceptionTracking {
-                                    if response.id == store.workspaceIdCurrent {
-                                        Image(.listEdit)
-                                            .resizable()
-                                            .frame(width: 20, height: 20)
-                                            .asButton {
-                                                print("hi")
-                                            }
-                                    }
-                                }
-                            }
-                            .frame(width: 305, height: 72, alignment: .leading)
+                            WorkspaceListItemView(response: response, store: store, showingSheet: $showingSheet)
                         }
                         .listRowSeparator(.hidden)
                         .cornerRadius(8)
@@ -62,12 +35,12 @@ struct SideMenuView: View {
                         .multilineTextAlignment(.center)
                         .frame(width: 269, height: 60, alignment: .center)
                         .padding(.top, 100)
-
+                    
                     Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요.")
                         .bodyRegular()
                         .multilineTextAlignment(.center)
                         .frame(width: 269, height: 75, alignment: .center)
-
+                    
                     Button("워크스페이스 생성") {
                         store.send(.createWorkspaceTapped)
                     }

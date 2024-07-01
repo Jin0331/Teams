@@ -15,7 +15,9 @@ struct SideMenuFeature {
     struct State : Equatable {
         var workspaceCount : Int = 0
         var showList : viewState = .loading
+        var showSheet = false
         var workspaceIdCurrent : String = ""
+        var workspaceOwnerID : String = ""
         var listScroll = true
         var workspaceList : [Workspace] = []
         
@@ -28,6 +30,7 @@ struct SideMenuFeature {
     
     enum Action {
         case createWorkspaceTapped
+        case workspaceExitButtonTapped
         case onAppear
         case myWorkspaceResponse(Result<[Workspace], APIError>)
     }
@@ -71,6 +74,11 @@ struct SideMenuFeature {
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 
                 print(errorType)
+                
+                return .none
+                
+            case .workspaceExitButtonTapped:
+                print("exit")
                 
                 return .none
                 
