@@ -235,7 +235,19 @@ final class NetworkManager {
                 return .failure(APIError.unknown)
             }
         }
-        
+    }
+    
+    func removeWorkspace(id : String) async -> Result<WorkspaceRemoveResponseDTO, APIError> {
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.removeWorkspace(id: id), of: WorkspaceRemoveResponseDTO.self)
+            return .success(response)
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
     }
 }
 

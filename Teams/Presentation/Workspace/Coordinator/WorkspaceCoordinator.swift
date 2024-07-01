@@ -18,6 +18,7 @@ struct WorkspaceCoordinatorView : View {
             ZStack(alignment:.leading) {
                 VStack {
                     if store.workspaceCount > 0 {
+                        Text("\(store.workspaceCount)")
                         WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
@@ -68,8 +69,8 @@ struct WorkspaceCoordinator {
         var sidemenuOpen : Bool = false
         var popupPresent : CustomPopup?
         enum CustomPopup : Equatable {
-//            case workspaceExit
-//            case workspaceExitManager
+            //            case workspaceExit
+            //            case workspaceExitManager
             case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String, id:String)
         }
     }
@@ -83,6 +84,7 @@ struct WorkspaceCoordinator {
         case closeSideMenu
         case dismissPopupView
         case workspaceRemoveOnPopupView(String)
+        case workspaceRemoveResponse(Result<WorkspaceRemoveResponseDTO, APIError>)
         case binding(BindingAction<State>)
         
     }
@@ -128,11 +130,12 @@ struct WorkspaceCoordinator {
                 return .none
                 
             case .closeSideMenu:
+                state.popupPresent = nil
                 state.sidemenuOpen = false
                 
             case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))), .sideMenu(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
-                print("workspace add compete 🌟🌟🌟🌟")
-                state.workspaceCount += 1
+                print("workspace add complete 🌟🌟🌟🌟")
+                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 if let workspaceCurrent = state.workspaceCurrent {
@@ -141,7 +144,7 @@ struct WorkspaceCoordinator {
                 state.sidemenuOpen = true
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.closeSideMenu))))):
-                state.sidemenuOpen = false
+                return .send(.closeSideMenu)
                 
             case let .sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceRemove(workspaceID))))):
                 state.popupPresent = .workspaceRemove(titleText: "워크스페이스 삭제", bodyText: "정말 이 워크스페이스를 삭제하시겠습니까? 삭제 시 채널/멤버/채팅 등 워크스페이스 내의 모든 정보가 삭제되며 복구할 수 없습니다.", buttonTitle: "삭제", id:workspaceID)
@@ -150,8 +153,22 @@ struct WorkspaceCoordinator {
                 state.popupPresent = nil
                 
             case let .workspaceRemoveOnPopupView(removeWorkspaceID):
+                return .run { send in
+                    await send(.workspaceRemoveResponse(
+                        networkManager.removeWorkspace(id: removeWorkspaceID)
+                    ))
+                }
+            
+            case .workspaceRemoveResponse(.success(_)):
+                print("workspace remove complete 🔆")
+                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
                 
-                print(removeWorkspaceID)
+            case let .workspaceRemoveResponse(.failure(error)) :
+                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
+                
+                return .none
                 
             default :
                 break
