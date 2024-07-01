@@ -14,8 +14,16 @@ struct SideMenuFeature {
     @ObservableState
     struct State : Equatable {
         var workspaceCount : Int = 0
+        var showList : viewState = .loading
+        var workspaceIdCurrent : String = ""
         var listScroll = true
         var workspaceList : [Workspace] = []
+        
+        enum viewState  {
+            case loading
+            case success
+            case failed
+        }
     }
     
     enum Action {
@@ -32,7 +40,9 @@ struct SideMenuFeature {
             
             switch action {
             case .onAppear:
-                print("Workspace Coordinator 뿅 🌟🌟🌟🌟🌟🌟🌟🌟🌟")
+                
+                print(state.workspaceIdCurrent)
+                
                 return .run { send in
                     await send(.myWorkspaceResponse(
                         networkManager.getWorkspaceList()
@@ -45,6 +55,12 @@ struct SideMenuFeature {
                 
                 if state.workspaceCount > 10 {
                     state.listScroll = false
+                }
+                
+                if state.workspaceCount > 0 {
+                    state.showList = .success
+                } else {
+                    state.showList = .failed
                 }
                 
                 state.workspaceList = response

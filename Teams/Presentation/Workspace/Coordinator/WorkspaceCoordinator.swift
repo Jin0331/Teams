@@ -16,7 +16,7 @@ struct WorkspaceCoordinatorView : View {
         WithPerceptionTracking {
             ZStack(alignment:.leading) {
                 VStack {
-                    if !store.workspaceList.isEmpty {
+                    if store.workspaceCount > 0 {
                         WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
@@ -41,9 +41,6 @@ struct WorkspaceCoordinatorView : View {
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
-//            .onAppear {
-//                store.send(.onAppear)
-//            }
         }
     }
     
@@ -53,11 +50,11 @@ struct WorkspaceCoordinatorView : View {
 struct WorkspaceCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState, workspaceList : [], workspaceCount: 0)
+        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent : nil, workspaceCount: 0)
         var tab : WorkspaceTabCoordinator.State
         var homeEmpty : HomeEmptyCoordinator.State
         var sideMenu : SideMenuCoordinator.State
-        var workspaceList : [Workspace] = []
+        var workspaceCurrent : Workspace?
         var workspaceCount : Int = 0
         var sidemenuOpen : Bool = false
         
@@ -103,11 +100,10 @@ struct WorkspaceCoordinator {
             case let .myWorkspaceResponse(.success(response)):
                 print(response, "🌟 success")
                 state.workspaceCount = response.count
+                state.workspaceCurrent = response.getMostRecentWorkspace(from: response)
                 
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
-                
-                print(errorType)
                 
                 return .none
             
@@ -119,6 +115,9 @@ struct WorkspaceCoordinator {
                 state.workspaceCount += 1
             
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
+                if let workspaceCurrent = state.workspaceCurrent {
+                    state.sideMenu = .initialState(workspaceIdCurrent: workspaceCurrent.id)
+                }
                 state.sidemenuOpen = true
             
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.closeSideMenu))))):

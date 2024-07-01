@@ -42,7 +42,7 @@ struct WorkspaceAddFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
-    @Dependency(\.validTest) var validTest
+    @Dependency(\.utilitiesFunction) var validTest
     
     var body : some Reducer<State, Action> {
         

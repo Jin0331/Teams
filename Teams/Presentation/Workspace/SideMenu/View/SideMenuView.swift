@@ -17,7 +17,8 @@ struct SideMenuView: View {
         
         WithPerceptionTracking {
             VStack {
-                if store.workspaceCount > 0 {
+                switch store.showList {
+                case .success :
                     List {
                         ForEach(store.workspaceList, id: \.id) { response in
                             HStack {
@@ -35,26 +36,38 @@ struct SideMenuView: View {
                                         .bodyRegular()
                                         .foregroundStyle(Color.secondary)
                                 }
+                                .frame(width: 192, alignment: .leading)
+
+                                WithPerceptionTracking {
+                                    if response.id == store.workspaceIdCurrent {
+                                        Image(.listEdit)
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .asButton {
+                                                print("hi")
+                                            }
+                                    }
+                                }
                             }
+                            .frame(width: 305, height: 72, alignment: .leading)
                         }
                         .listRowSeparator(.hidden)
-                        .frame(width: 305, height: 55, alignment: .leading)
                         .cornerRadius(8)
                     }
                     .listStyle(.plain)
                     .scrollDisabled(store.listScroll)
-                } else {
+                case .failed:
                     Text("워크스페이스를 찾을 수 없어요.")
                         .title1()
                         .multilineTextAlignment(.center)
                         .frame(width: 269, height: 60, alignment: .center)
                         .padding(.top, 100)
-                    
+
                     Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요.")
                         .bodyRegular()
                         .multilineTextAlignment(.center)
                         .frame(width: 269, height: 75, alignment: .center)
-                    
+
                     Button("워크스페이스 생성") {
                         store.send(.createWorkspaceTapped)
                     }
@@ -64,6 +77,15 @@ struct SideMenuView: View {
                     .background(.brandGreen)
                     .cornerRadius(8)
                     .backgroundStyle(.brandWhite)
+                case .loading :
+                    VStack {
+                        Spacer()
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.2, anchor: .center)
+                            .padding()
+                        Spacer()
+                    }
                 }
                 
                 Spacer()
@@ -100,7 +122,9 @@ struct SideMenuView: View {
             .background(.brandWhite)
         }
         .onAppear {
-            store.send(.onAppear)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                store.send(.onAppear)
+            }
         }
     }
 }
