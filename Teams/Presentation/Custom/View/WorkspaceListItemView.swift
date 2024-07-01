@@ -35,14 +35,14 @@ struct WorkspaceListItemView: View {
                 }
                 .frame(width: 192, alignment: .leading)
                 
-//                if response.id == store.workspaceIdCurrent {
+                if response.id == store.workspaceIdCurrent {
                     Image(.listEdit)
                         .resizable()
                         .frame(width: 20, height: 20)
                         .onTapGesture {
                             showingSheet = true
                         }
-//                }
+                }
             }
             .frame(width: 305, height: 72, alignment: .leading)
             .background(response.id == store.workspaceIdCurrent ? .brandGray : .brandWhite)
@@ -52,7 +52,9 @@ struct WorkspaceListItemView: View {
                     Button("워크스페이스 편집") {}
                     Button("워크스페이스 나가기") {}
                     Button("워크스페이스 관리자 변경") {}
-                    Button("워크스페이스 삭제") {}
+                    Button("워크스페이스 삭제") {
+                        store.send(.workspaceRemoveButtonTapped)
+                    }
                 } else {
                     Button("워크스페이스 나가기") {}
                 }

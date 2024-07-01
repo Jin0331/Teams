@@ -29,6 +29,7 @@ struct SideMenuView: View {
                         .listRowSeparator(.hidden)
                         .cornerRadius(8)
                     }
+
                     .listStyle(.plain)
                     .scrollDisabled(store.listScroll)
                 case .failed:
@@ -119,8 +120,8 @@ struct RoundedCornerShape: Shape {
     }
 }
 
-#Preview {
-    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
-        SideMenuFeature()
-    }))
-}
+//#Preview {
+//    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
+//        SideMenuFeature()
+//    }))
+//}

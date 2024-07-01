@@ -15,7 +15,6 @@ struct SideMenuFeature {
     struct State : Equatable {
         var workspaceCount : Int = 0
         var showList : viewState = .loading
-        var showSheet = false
         var workspaceIdCurrent : String = ""
         var workspaceOwnerID : String = ""
         var listScroll = true
@@ -28,11 +27,13 @@ struct SideMenuFeature {
         }
     }
     
-    enum Action {
+    enum Action : BindableAction {
         case createWorkspaceTapped
-        case workspaceExitButtonTapped
         case onAppear
         case myWorkspaceResponse(Result<[Workspace], APIError>)
+        case workspaceRemoveButtonTapped
+        case workspaceExitButtonTapped
+        case binding(BindingAction<State>)
     }
     
     @Dependency(\.networkManager) var networkManager
