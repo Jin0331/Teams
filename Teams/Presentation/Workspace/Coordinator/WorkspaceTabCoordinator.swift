@@ -11,15 +11,19 @@ import TCACoordinators
 
 struct WorkspaceTabCoordinatorView : View {
     @Perception.Bindable var store : StoreOf<WorkspaceTabCoordinator>
-
+    
     var body: some View {
         WithPerceptionTracking {
             TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
                 HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
-                    .tabItem { Text("Indexed") }
+                    .tabItem {
+                        Image(.homeTab)
+                        Text("홈")
+                            .bodyRegular()
+                    }
                     .tag(WorkspaceTabCoordinator.Tab.home)
             }
-
+            .accentColor(Color.brandBlack)
         }
     }
 }
@@ -29,7 +33,7 @@ struct WorkspaceTabCoordinator {
     enum Tab : Hashable {
         case home
     }
-
+    
     enum Action {
         case home(HomeCoordinator.Action)
         case tabSelected(Tab)
@@ -37,31 +41,32 @@ struct WorkspaceTabCoordinator {
     
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(home: .initialState, selectedTab: .home)
-
+        static let initialState = State(home: .initialState, selectedTab: .home, sideMenu: .initialState)
+        
         var home : HomeCoordinator.State
         var selectedTab: Tab
+        var sideMenu : SideMenuCoordinator.State
+        var sidemenuOpen : Bool = false
     }
-
-
-
+    
     var body : some ReducerOf<Self> {
         
         Scope(state : \.home, action: \.home) {
             HomeCoordinator()
         }
-
+        
         Reduce<State, Action> { state, action in
             switch action {
             case let .tabSelected(tab):
-              state.selectedTab = tab
+                state.selectedTab = tab
+                
             default:
-              break
+                break
             }
             return .none
         }
     }
     
-
+    
 }
 

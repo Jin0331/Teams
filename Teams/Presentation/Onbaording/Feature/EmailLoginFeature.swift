@@ -41,8 +41,9 @@ struct EmailLoginFeature {
         case binding(BindingAction<State>)
         case loginButtonActive
         case loginButtonTapped
-        case loginComplete(String)
         case emailLoginResponse(Result<Join, APIError>)
+        case myWorkspaceResponse(Result<[Workspace], APIError>)
+        case loginComplete([Workspace])
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -94,8 +95,24 @@ struct EmailLoginFeature {
                 
                 UserDefaultManager.shared.saveAllData(login: response)
                 
-                return .send(.loginComplete(response.nickname))
+                //TODO: - Workspace 조ㅓ회
+                return .run { send in
+                    await send(.myWorkspaceResponse(
+                        networkManager.getWorkspaceList()
+                    ))
+                }
             
+            case let .myWorkspaceResponse(.success(response)):
+                print(response, "🌟 success")
+                return .send(.loginComplete(response))
+                
+            case let .myWorkspaceResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                print(errorType)
+                
+                return .none
+                
             case let .emailLoginResponse(.failure(error)):
                 
                 let errorType = APIError.networkErrorType(error: error.errorDescription)

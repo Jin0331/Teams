@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Kingfisher
 
 struct SideMenuView: View {
     
@@ -14,33 +15,60 @@ struct SideMenuView: View {
     
     var body: some View {
         
-        NavigationStack {
-            VStack(spacing: 10) {
-                Text("워크스페이스를 찾을 수 없어요.")
-                    .title1()
-                    .multilineTextAlignment(.center)
-                    .frame(width: 269, height: 60, alignment: .center)
-                    .padding(.top, 100)
-                
-                Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요.")
-                    .bodyRegular()
-                    .multilineTextAlignment(.center)
-                    .frame(width: 269, height: 75, alignment: .center)
-                
-                Button("워크스페이스 생성") {
-                    store.send(.createWorkspaceTapped)
+        WithPerceptionTracking {
+            VStack {
+                if store.workspaceCount > 0 {
+                    List {
+                        ForEach(store.workspaceList, id: \.id) { response in
+                            HStack {
+                                KFImage.url(response.profileImageToUrl)
+                                    .requestModifier(AuthManager.kingfisherAuth())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 44, height: 44) //resize
+                                    .cornerRadius(8)
+                                    .padding(.leading, 10)
+                                VStack(alignment:.leading, spacing : 5) {
+                                    Text(response.name)
+                                        .bodyBold()
+                                    Text(response.createdAtToString)
+                                        .bodyRegular()
+                                        .foregroundStyle(Color.secondary)
+                                }
+                            }
+                        }
+                        .listRowSeparator(.hidden)
+                        .frame(width: 305, height: 55, alignment: .leading)
+                        .cornerRadius(8)
+                    }
+                    .listStyle(.plain)
+                    .scrollDisabled(store.listScroll)
+                } else {
+                    Text("워크스페이스를 찾을 수 없어요.")
+                        .title1()
+                        .multilineTextAlignment(.center)
+                        .frame(width: 269, height: 60, alignment: .center)
+                        .padding(.top, 100)
+                    
+                    Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요.")
+                        .bodyRegular()
+                        .multilineTextAlignment(.center)
+                        .frame(width: 269, height: 75, alignment: .center)
+                    
+                    Button("워크스페이스 생성") {
+                        store.send(.createWorkspaceTapped)
+                    }
+                    .tint(.brandWhite)
+                    .frame(width: 269, height: 44)
+                    .title2()
+                    .background(.brandGreen)
+                    .cornerRadius(8)
+                    .backgroundStyle(.brandWhite)
                 }
-                .tint(.brandWhite)
-                .frame(width: 269, height: 44)
-                .title2()
-                .background(.brandGreen)
-                .cornerRadius(8)
-                .backgroundStyle(.brandWhite)
-                
                 
                 Spacer()
                 
-                VStack(spacing : 0) {
+                VStack {
                     Button(action: {
                         store.send(.createWorkspaceTapped)
                     }, label: {
@@ -68,20 +96,15 @@ struct SideMenuView: View {
                     .padding(.leading, 20)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        Text("워크스페이스")
-                            .title1()
-                            .padding()
-                        Spacer()
-                    }
-                }
-            }
+            .customNavigationBar(title: "워크스페이스", height: 98)
+            .background(.brandWhite)
         }
-        
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 }
+
 
 struct RoundedCornerShape: Shape {
     var corners: UIRectCorner

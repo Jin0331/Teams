@@ -16,8 +16,8 @@ struct WorkspaceCoordinatorView : View {
         WithPerceptionTracking {
             ZStack(alignment:.leading) {
                 VStack {
-                    if store.workspaceCount > 0 {
-                        Text("hihi")
+                    if !store.workspaceList.isEmpty {
+                        WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
                             .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
@@ -41,9 +41,9 @@ struct WorkspaceCoordinatorView : View {
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
-            .onAppear {
-                store.send(.onAppear)
-            }
+//            .onAppear {
+//                store.send(.onAppear)
+//            }
         }
     }
     
@@ -53,15 +53,18 @@ struct WorkspaceCoordinatorView : View {
 struct WorkspaceCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(homeEmpty: .initialState, sideMenu: .initialState, workspaceCount: 0)
+        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState, workspaceList : [], workspaceCount: 0)
+        var tab : WorkspaceTabCoordinator.State
         var homeEmpty : HomeEmptyCoordinator.State
         var sideMenu : SideMenuCoordinator.State
-        var workspaceCount : Int
+        var workspaceList : [Workspace] = []
+        var workspaceCount : Int = 0
         var sidemenuOpen : Bool = false
         
     }
     
     enum Action {
+        case tab(WorkspaceTabCoordinator.Action)
         case homeEmpty(HomeEmptyCoordinator.Action)
         case sideMenu(SideMenuCoordinator.Action)
         case onAppear
@@ -72,6 +75,11 @@ struct WorkspaceCoordinator {
     @Dependency(\.networkManager) var networkManager
     
     var body : some ReducerOf<Self> {
+        
+        Scope(state : \.tab, action: \.tab) {
+            WorkspaceTabCoordinator()
+        }
+        
         Scope(state : \.homeEmpty, action: \.homeEmpty) {
             HomeEmptyCoordinator()
         }
@@ -110,12 +118,12 @@ struct WorkspaceCoordinator {
                 print("workspace add compete 🌟🌟🌟🌟")
                 state.workspaceCount += 1
             
-            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))):
+            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 state.sidemenuOpen = true
             
-            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))):
+            case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.closeSideMenu))))):
                 state.sidemenuOpen = false
-                
+            
             default :
                 break
             }

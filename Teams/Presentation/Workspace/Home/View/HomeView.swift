@@ -9,13 +9,26 @@ import ComposableArchitecture
 import SwiftUI
 
 struct HomeView: View {
-
+    
     let store : StoreOf<HomeFeature>
-
+    
     var body: some View {
-        VStack {
-            Text("hi")
-      }
+        
+        WithPerceptionTracking {
+            VStack {
+                Text("hi")
+            }
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 100 {
+                            store.send(.openSideMenu)
+                        } else if value.translation.width < -100 {
+                            store.send(.closeSideMenu)
+                        }
+                    }
+            )
+        }
     }
 }
 
