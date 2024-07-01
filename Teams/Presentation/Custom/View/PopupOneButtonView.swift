@@ -48,12 +48,12 @@ struct PopupOneButtonView: View {
     @ViewBuilder
     private func actionView(for action: WorkspaceCoordinator.State.CustomPopup) -> some View {
         switch action {
-        case .workspaceExit:
-            Text("Workspace Exit")
-        case .workspaceExitManager:
-            Text("Workspace Exit Manager")
-        case .workspaceRemove(let titleText, let bodyText, let buttonTitle):
-            VStack {
+//        case .workspaceExit:
+//            Text("Workspace Exit")
+//        case .workspaceExitManager:
+//            Text("Workspace Exit Manager")
+        case let .workspaceRemove(titleText, bodyText, _, _):
+            VStack(spacing : 10) {
                 Text(titleText)
                     .title2()
                 Text(bodyText)
@@ -66,19 +66,19 @@ struct PopupOneButtonView: View {
 
     private func actionButtonTitle(for action: WorkspaceCoordinator.State.CustomPopup) -> String {
         switch action {
-        case .workspaceExit:
-            return "Exit"
-        case .workspaceExitManager:
-            return "Exit Manager"
-        case .workspaceRemove(_, _, let buttonTitle):
+//        case .workspaceExit:
+//            return "Exit"
+//        case .workspaceExitManager:
+//            return "Exit Manager"
+        case let .workspaceRemove(_, _, buttonTitle, _):
             return buttonTitle
         }
     }
 
     private func handleAction(for action: WorkspaceCoordinator.State.CustomPopup) {
         switch action {
-        case .workspaceExit, .workspaceExitManager, .workspaceRemove:
-            store.send(.workspaceRemove)
+        case let .workspaceRemove(_,_,_,removeWorkspaceID):
+            store.send(.workspaceRemoveOnPopupView(removeWorkspaceID))
         }
     }
 }
