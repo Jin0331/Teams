@@ -89,7 +89,7 @@ struct WorkspaceAddFeature {
                 
                 dump(response)
                 
-                return .send(.createWorkspaceComplete)
+                return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
                 
             case let .createWorkspaceResponse(.failure(error)):
                 

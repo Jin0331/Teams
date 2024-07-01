@@ -113,9 +113,3 @@ struct WorkspaceAddView : View {
         }
     }
 }
-
-#Preview {
-    WorkspaceAddView(store: Store(initialState: WorkspaceAddFeature.State(), reducer: {
-        WorkspaceAddFeature()
-    }))
-}
