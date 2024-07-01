@@ -22,4 +22,9 @@ extension Workspace {
     var createdAtToString : String {
         return createdAt.toDateRaw()!.toString(dateFormat: "yy.MM.dd")
     }
+    
+    var createdAtDate: Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from: createdAt)
+    }
 }

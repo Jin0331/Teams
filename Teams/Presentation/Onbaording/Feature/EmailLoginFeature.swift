@@ -47,7 +47,7 @@ struct EmailLoginFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
-    @Dependency(\.validTest) var validTest
+    @Dependency(\.utilitiesFunction) var validTest
     
     var body : some Reducer<State, Action> {
         
@@ -115,8 +115,7 @@ struct EmailLoginFeature {
                 
             case let .emailLoginResponse(.failure(error)):
                 
-                let errorType = APIError.networkErrorType(error: error.errorDescription)
-                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)                
                 if case .E03 = errorType {
                     state.toastPresent = State.ToastMessage.loginFailure
                 } else {
