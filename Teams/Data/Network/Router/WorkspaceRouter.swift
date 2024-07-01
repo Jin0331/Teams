@@ -11,6 +11,7 @@ import Alamofire
 enum WorkspaceRouter {
     case myWorkspaces
     case createWorkspace(request : WorkspaceCreateRequestDTO)
+    case removeWorkspace(id : String)
 }
 
 extension WorkspaceRouter : TargetType {
@@ -24,6 +25,8 @@ extension WorkspaceRouter : TargetType {
             return .get
         case .createWorkspace:
             return .post
+        case .removeWorkspace:
+            return .delete
         }
     }
     
@@ -31,6 +34,8 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces, .createWorkspace:
             return "/workspaces"
+        case let .removeWorkspace(id):
+            return "/workspaces/" + id
         }
     }
     
@@ -38,7 +43,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]

@@ -16,6 +16,7 @@
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
 		DB119BAB2C32E85500E47A53 /* PopupOneButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupOneButtonView.swift */; };
+		DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */; };
 		DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */; };
 		DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */; };
 		DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */; };
@@ -96,6 +97,7 @@
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
 		DB119BAA2C32E85500E47A53 /* PopupOneButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupOneButtonView.swift; sourceTree = "<group>"; };
+		DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRemoveResponseDTO.swift; sourceTree = "<group>"; };
 		DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
@@ -259,6 +261,33 @@
 			path = Feature;
 			sourceTree = "<group>";
 		};
+		DB119BAC2C33066100E47A53 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				DB119BAD2C33066800E47A53 /* Response */,
+				DB119BAE2C33066E00E47A53 /* Request */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
+		DB119BAD2C33066800E47A53 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */,
+				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
+				DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		DB119BAE2C33066E00E47A53 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		DB11F5C22C1D99F800D84619 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +386,7 @@
 		DB5AADCB2C16B036002907B6 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				DB119BAC2C33066100E47A53 /* Workspace */,
 				DB5AADE02C180E16002907B6 /* User */,
 			);
 			path = DataMapping;
@@ -437,7 +467,6 @@
 				DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */,
 				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
 				DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */,
-				DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -449,8 +478,6 @@
 				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
 				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
 				DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */,
-				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
-				DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -744,6 +771,7 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
+				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
