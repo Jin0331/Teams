@@ -93,7 +93,10 @@ struct EmailLoginFeature {
             
             case let .emailLoginResponse(.success(response)):
                 
+                print(UserDefaultManager.shared.accessToken, UserDefaultManager.shared.refreshToken)
                 UserDefaultManager.shared.saveAllData(login: response)
+                print(UserDefaultManager.shared.accessToken, UserDefaultManager.shared.refreshToken)
+                                
                 
                 //TODO: - Workspace 조ㅓ회
                 return .run { send in
