@@ -15,9 +15,8 @@
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
-		DB119BAB2C32E85500E47A53 /* PopupTwoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupTwoButtonView.swift */; };
+		DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */; };
 		DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */; };
-		DB119BB22C3396A800E47A53 /* PopupOneButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BB12C3396A800E47A53 /* PopupOneButtonView.swift */; };
 		DB119BB42C33AF5800E47A53 /* WorkspaceIDDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */; };
 		DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */; };
 		DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */; };
@@ -98,9 +97,8 @@
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
-		DB119BAA2C32E85500E47A53 /* PopupTwoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTwoButtonView.swift; sourceTree = "<group>"; };
+		DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonView.swift; sourceTree = "<group>"; };
 		DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRemoveResponseDTO.swift; sourceTree = "<group>"; };
-		DB119BB12C3396A800E47A53 /* PopupOneButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupOneButtonView.swift; sourceTree = "<group>"; };
 		DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceIDDTO.swift; sourceTree = "<group>"; };
 		DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
@@ -405,8 +403,7 @@
 				DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */,
 				DBC567E02C184E4400444E98 /* LoginView.swift */,
 				DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */,
-				DB119BAA2C32E85500E47A53 /* PopupTwoButtonView.swift */,
-				DB119BB12C3396A800E47A53 /* PopupOneButtonView.swift */,
+				DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -727,7 +724,6 @@
 				DBEA522C2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift in Sources */,
 				DB2FB0A52C329AD70091B6CE /* WorkspaceListItemView.swift in Sources */,
 				DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */,
-				DB119BB22C3396A800E47A53 /* PopupOneButtonView.swift in Sources */,
 				DBEA522E2C2534E700026926 /* Workspace.swift in Sources */,
 				DBEA522A2C2428DB00026926 /* WorkspaceRouter.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
@@ -754,7 +750,7 @@
 				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
-				DB119BAB2C32E85500E47A53 /* PopupTwoButtonView.swift in Sources */,
+				DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,

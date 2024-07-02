@@ -33,7 +33,9 @@ struct SideMenuFeature {
         case myWorkspaceResponse(Result<[Workspace], APIError>)
         case workspaceRemoveButtonTapped
         case workspaceRemove(String)
-        case workspaceExitButtonTapped(String)
+        case workspaceExitButtonTapped
+        case workspaceExit(String)
+        case workspaceExitManager
         case binding(BindingAction<State>)
     }
     
@@ -75,6 +77,9 @@ struct SideMenuFeature {
                 
             case .workspaceRemoveButtonTapped:
                 return .send(.workspaceRemove(state.workspaceIdCurrent))
+                
+            case .workspaceExitButtonTapped:
+                return .send(.workspaceExit(state.workspaceIdCurrent))
                 
             default :
                 return .none
