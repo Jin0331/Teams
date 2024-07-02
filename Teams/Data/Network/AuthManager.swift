@@ -11,6 +11,9 @@ import Foundation
 
 //MARK: - Access Token 갱신을 위한 Alamorefire RequestInterceptor protocol
 final class AuthManager : RequestInterceptor {
+    
+    let retryLimit = 3
+    
  
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         // Token이 없는 상황, 즉 로그인을 새롭게 시도하는 상황
@@ -22,20 +25,19 @@ final class AuthManager : RequestInterceptor {
         }
         print("adpat ✅")
         var urlRequest = urlRequest
-        urlRequest.headers.add(name: HTTPHeader.authorization.rawValue, value: accessToken)
+//        urlRequest.headers.add(name: HTTPHeader.authorization.rawValue, value: accessToken)
+        urlRequest.setValue(accessToken, forHTTPHeaderField: HTTPHeader.authorization.rawValue)
         completion(.success(urlRequest))
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
         print("✅ retry")
-        
-        //TODO: - 401 이 발생할 가능성이 있을까??? -> 서버가 리셋 즉, 회원가입이 안 된 유저
-        let request = request.task?.response as? HTTPURLResponse
-        guard let response = request, response.statusCode == 400 else {
-            print("Forbidden or Unknown or Success: \(request?.statusCode)")
-            completion(.doNotRetryWithError(error))
-            return
+        let response = request.task?.response as? HTTPURLResponse
+        if let statusCode = response?.statusCode, statusCode == 400, request.retryCount < retryLimit {
+            completion(.retryWithDelay(1))
+        } else {
+            completion(.doNotRetry)
         }
         
         guard let accessToken = UserDefaultManager.shared.accessToken, let refreshToken = UserDefaultManager.shared.refreshToken else {

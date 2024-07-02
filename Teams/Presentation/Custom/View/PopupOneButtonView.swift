@@ -2,85 +2,17 @@
 //  PopupOneButtonView.swift
 //  Teams
 //
-//  Created by JinwooLee on 7/1/24.
+//  Created by JinwooLee on 7/2/24.
 //
 
-import ComposableArchitecture
 import SwiftUI
 
-
 struct PopupOneButtonView: View {
-    @Perception.Bindable var store : StoreOf<WorkspaceCoordinator>
-    let action : WorkspaceCoordinator.State.CustomPopup
-    
     var body: some View {
-        VStack(spacing : 10) {
-            
-            actionView(for: action)
-            
-            HStack {
-                Button("취소") {
-                    store.send(.dismissPopupView)
-                }
-                .foregroundStyle(.brandWhite)
-                .frame(width: 152, height: 44)
-                .title2()
-                .background(.brandInActive)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                
-                Button(actionButtonTitle(for: action)) {
-                    handleAction(for: action)
-                }
-                .foregroundStyle(.brandWhite)
-                .frame(width: 152, height: 44)
-                .title2()
-                .background(.brandGreen)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            }
-            .padding(.top, 15)
-        }
-        .padding()
-        .background(Color.white.cornerRadius(16))
-        .padding(.horizontal, 16)
-        
-    }
-    
-    @ViewBuilder
-    private func actionView(for action: WorkspaceCoordinator.State.CustomPopup) -> some View {
-        switch action {
-//        case .workspaceExit:
-//            Text("Workspace Exit")
-//        case .workspaceExitManager:
-//            Text("Workspace Exit Manager")
-        case let .workspaceRemove(titleText, bodyText, _, _):
-            VStack(spacing : 10) {
-                Text(titleText)
-                    .title2()
-                Text(bodyText)
-                    .multilineTextAlignment(.center)
-                    .bodyRegular()
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    private func actionButtonTitle(for action: WorkspaceCoordinator.State.CustomPopup) -> String {
-        switch action {
-//        case .workspaceExit:
-//            return "Exit"
-//        case .workspaceExitManager:
-//            return "Exit Manager"
-        case let .workspaceRemove(_, _, buttonTitle, _):
-            return buttonTitle
-        }
-    }
-
-    private func handleAction(for action: WorkspaceCoordinator.State.CustomPopup) {
-        switch action {
-        case let .workspaceRemove(_,_,_,removeWorkspaceID):
-            store.send(.workspaceRemoveOnPopupView(removeWorkspaceID))
-        }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-
+#Preview {
+    PopupOneButtonView()
+}

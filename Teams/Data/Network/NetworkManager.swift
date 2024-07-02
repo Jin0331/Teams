@@ -60,7 +60,6 @@ final class NetworkManager {
                     case let .success(response):
                         continuation.resume(returning: response)
                     case let .failure(error):
-                        
                         if let errorData = response.data {
                             do {
                                 let networkError = try JSONDecoder().decode(ErrorResponseDTO.self, from: errorData)
@@ -237,10 +236,31 @@ final class NetworkManager {
         }
     }
     
-    func removeWorkspace(id : String) async -> Result<WorkspaceRemoveResponseDTO, APIError> {
+    func removeWorkspace(query : WorkspaceIDDTO) async -> Result<WorkspaceRemoveResponseDTO, APIError> {
+        
+        let router = WorkspaceRouter.removeWorkspace(request: query)
+        
         do {
-            let response = try await requestAPI(router: WorkspaceRouter.removeWorkspace(id: id), of: WorkspaceRemoveResponseDTO.self)
+            let response = try await requestAPIWithRefresh(router: router, of: WorkspaceRemoveResponseDTO.self)
             return .success(response)
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func exitWorkspace(query : WorkspaceIDDTO) async -> Result<[Workspace], APIError> {
+        
+        let router = WorkspaceRouter.exitWorkspace(request: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [WorkspaceResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
         } catch {
             if let apiError = error as? APIError {
                 return .failure(apiError)
