@@ -40,7 +40,7 @@
 
 ## 트러블슈팅
 
-### 1. Coordinaotr에 속한 View 간 Action 전달
+### 1. Coordinator에 속한 View 간 Action 전달
 
 * **문제 상황**
 
