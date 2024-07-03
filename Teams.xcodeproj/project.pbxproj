@@ -22,6 +22,8 @@
 		DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */; };
 		DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */; };
 		DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */; };
+		DB25660F2C33D04400D34BEB /* WorkspaceEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */; };
+		DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */; };
 		DB2FB0A52C329AD70091B6CE /* WorkspaceListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */; };
 		DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37633B2C29C664009A201B /* HomeCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
@@ -104,6 +106,8 @@
 		DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
 		DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyFeature.swift; sourceTree = "<group>"; };
+		DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditView.swift; sourceTree = "<group>"; };
+		DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditFeature.swift; sourceTree = "<group>"; };
 		DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListItemView.swift; sourceTree = "<group>"; };
 		DB37633B2C29C664009A201B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				DB717EE12C293D08003C59ED /* SideMenu */,
 				DBF386272C1C12CA00A08152 /* Home */,
 				DBEA521A2C231D4A00026926 /* Add */,
+				DB25660B2C33CFEF00D34BEB /* Edit */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -297,6 +302,31 @@
 				DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DB25660B2C33CFEF00D34BEB /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				DB25660C2C33D01500D34BEB /* View */,
+				DB25660D2C33D01800D34BEB /* Feature */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		DB25660C2C33D01500D34BEB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB25660D2C33D01800D34BEB /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		DB37633E2C29CADA009A201B /* Coordinator */ = {
@@ -754,6 +784,7 @@
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
+				DB25660F2C33D04400D34BEB /* WorkspaceEditView.swift in Sources */,
 				DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */,
 				DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */,
 				DB9A7E1F2C2D3710007C4E3F /* Formatter+Extension.swift in Sources */,
@@ -782,6 +813,7 @@
 				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
+				DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,6 +36,7 @@ struct SideMenuFeature {
         case workspaceExitButtonTapped
         case workspaceExit(String)
         case workspaceExitManager
+        case workspaceEdit(Workspace)
         case binding(BindingAction<State>)
     }
     

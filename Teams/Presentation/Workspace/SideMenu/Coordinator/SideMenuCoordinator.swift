@@ -8,11 +8,13 @@
 import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
+import Kingfisher
 
 @Reducer(state: .equatable)
 enum SideMenuScreen {
     case sidemenu(SideMenuFeature)
     case workspaceAdd(WorkspaceAddFeature)
+    case workspaceEdit(WorkspaceEditFeature)
 }
 
 struct SideMenuCoordinatorView : View {
@@ -25,6 +27,8 @@ struct SideMenuCoordinatorView : View {
                 SideMenuView(store: store)
             case let .workspaceAdd(store):
                 WorkspaceAddView(store: store)
+            case let .workspaceEdit(store):
+                WorkspaceEditView(store:store)
             }
         }
     }
@@ -55,9 +59,13 @@ struct SideMenuCoordinator {
             case .router(.routeAction(_, action: .sidemenu(.createWorkspaceTapped))):
                 state.routes.presentSheet(.workspaceAdd(.init()))
                 
-            case .router(.routeAction(_, action: .workspaceAdd(.dismiss))):
-                state.routes.dismiss()
+            case let .router(.routeAction(_, action: .sidemenu(.workspaceEdit(workspace)))):
                 
+                state.routes.presentSheet(.workspaceEdit(.init(workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
+                
+            case .router(.routeAction(_, action: .workspaceAdd(.dismiss))), .router(.routeAction(_, action: .workspaceEdit(.dismiss))):
+                state.routes.dismiss()
+                            
             default:
                 break
             }
@@ -65,4 +73,5 @@ struct SideMenuCoordinator {
         }
         .forEachRoute(\.routes, action: \.router)
     }
+
 }
