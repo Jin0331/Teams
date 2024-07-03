@@ -43,11 +43,8 @@ struct OnboardingCoordinator {
                 
             case .router(.routeAction(_, action: .auth(.signUpButtonTapped))):
                 state.routes.presentSheet(.signUp(.init()))
-                
-            case .router(.routeAction(_, action: .emailLogin(.dismiss))):
-                state.routes.dismiss()
-                
-            case .router(.routeAction(_, action: .signUp(.dismiss))):
+                                
+            case .router(.routeAction(_, action: .signUp(.dismiss))), .router(.routeAction(_, action: .emailLogin(.dismiss))):
                 state.routes.dismiss()
                 
             default:

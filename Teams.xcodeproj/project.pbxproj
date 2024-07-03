@@ -15,11 +15,15 @@
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
-		DB119BAB2C32E85500E47A53 /* PopupOneButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupOneButtonView.swift */; };
+		DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */; };
+		DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */; };
+		DB119BB42C33AF5800E47A53 /* WorkspaceIDDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */; };
 		DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */; };
 		DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */; };
 		DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */; };
 		DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */; };
+		DB25660F2C33D04400D34BEB /* WorkspaceEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */; };
+		DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */; };
 		DB2FB0A52C329AD70091B6CE /* WorkspaceListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */; };
 		DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37633B2C29C664009A201B /* HomeCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
@@ -95,11 +99,15 @@
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
-		DB119BAA2C32E85500E47A53 /* PopupOneButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupOneButtonView.swift; sourceTree = "<group>"; };
+		DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonView.swift; sourceTree = "<group>"; };
+		DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRemoveResponseDTO.swift; sourceTree = "<group>"; };
+		DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceIDDTO.swift; sourceTree = "<group>"; };
 		DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFB2C2062C000A9C193 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
 		DB23BCFD2C20638300A9C193 /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
 		DB23BCFF2C206F9100A9C193 /* HomeEmptyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyFeature.swift; sourceTree = "<group>"; };
+		DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditView.swift; sourceTree = "<group>"; };
+		DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditFeature.swift; sourceTree = "<group>"; };
 		DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListItemView.swift; sourceTree = "<group>"; };
 		DB37633B2C29C664009A201B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -235,6 +243,7 @@
 				DB717EE12C293D08003C59ED /* SideMenu */,
 				DBF386272C1C12CA00A08152 /* Home */,
 				DBEA521A2C231D4A00026926 /* Add */,
+				DB25660B2C33CFEF00D34BEB /* Edit */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -259,12 +268,65 @@
 			path = Feature;
 			sourceTree = "<group>";
 		};
+		DB119BAC2C33066100E47A53 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				DB119BAD2C33066800E47A53 /* Response */,
+				DB119BAE2C33066E00E47A53 /* Request */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
+		DB119BAD2C33066800E47A53 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */,
+				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
+				DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		DB119BAE2C33066E00E47A53 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */,
+				DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		DB11F5C22C1D99F800D84619 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DB25660B2C33CFEF00D34BEB /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				DB25660C2C33D01500D34BEB /* View */,
+				DB25660D2C33D01800D34BEB /* Feature */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		DB25660C2C33D01500D34BEB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB25660D2C33D01800D34BEB /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		DB37633E2C29CADA009A201B /* Coordinator */ = {
@@ -357,6 +419,7 @@
 		DB5AADCB2C16B036002907B6 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				DB119BAC2C33066100E47A53 /* Workspace */,
 				DB5AADE02C180E16002907B6 /* User */,
 			);
 			path = DataMapping;
@@ -370,7 +433,7 @@
 				DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */,
 				DBC567E02C184E4400444E98 /* LoginView.swift */,
 				DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */,
-				DB119BAA2C32E85500E47A53 /* PopupOneButtonView.swift */,
+				DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -437,7 +500,6 @@
 				DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */,
 				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
 				DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */,
-				DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -449,8 +511,6 @@
 				DB5AADD52C172AF7002907B6 /* ErrorResponseDTO.swift */,
 				DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */,
 				DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */,
-				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
-				DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -687,6 +747,7 @@
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
 				DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */,
+				DB119BB42C33AF5800E47A53 /* WorkspaceIDDTO.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
@@ -719,10 +780,11 @@
 				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
-				DB119BAB2C32E85500E47A53 /* PopupOneButtonView.swift in Sources */,
+				DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
+				DB25660F2C33D04400D34BEB /* WorkspaceEditView.swift in Sources */,
 				DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */,
 				DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */,
 				DB9A7E1F2C2D3710007C4E3F /* Formatter+Extension.swift in Sources */,
@@ -744,12 +806,14 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
+				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
+				DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

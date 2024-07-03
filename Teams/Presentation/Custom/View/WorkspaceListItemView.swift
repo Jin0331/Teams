@@ -49,14 +49,20 @@ struct WorkspaceListItemView: View {
             .confirmationDialog("", isPresented: $showingSheet) {
                 //TODO: - Button 선택에 따른 기능 구현 필요
                 if response.ownerID == userID {
-                    Button("워크스페이스 편집") {}
-                    Button("워크스페이스 나가기") {}
+                    Button("워크스페이스 편집") {
+                        store.send(.workspaceEdit(response))
+                    }
+                    Button("워크스페이스 나가기") {
+                        store.send(.workspaceExitManager)
+                    }
                     Button("워크스페이스 관리자 변경") {}
                     Button("워크스페이스 삭제") {
                         store.send(.workspaceRemoveButtonTapped)
                     }
                 } else {
-                    Button("워크스페이스 나가기") {}
+                    Button("워크스페이스 나가기") {
+                        store.send(.workspaceExitButtonTapped)
+                    }
                 }
                 
                 Button("취소", role: .cancel) {}

@@ -32,7 +32,11 @@ struct SideMenuFeature {
         case onAppear
         case myWorkspaceResponse(Result<[Workspace], APIError>)
         case workspaceRemoveButtonTapped
+        case workspaceRemove(String)
         case workspaceExitButtonTapped
+        case workspaceExit(String)
+        case workspaceExitManager
+        case workspaceEdit(Workspace)
         case binding(BindingAction<State>)
     }
     
@@ -44,9 +48,6 @@ struct SideMenuFeature {
             
             switch action {
             case .onAppear:
-                
-                print(state.workspaceIdCurrent)
-                
                 return .run { send in
                     await send(.myWorkspaceResponse(
                         networkManager.getWorkspaceList()
@@ -57,7 +58,7 @@ struct SideMenuFeature {
                 
                 state.workspaceCount = response.count
                 
-                if state.workspaceCount > 10 {
+                if state.workspaceCount > 7 {
                     state.listScroll = false
                 }
                 
@@ -73,15 +74,13 @@ struct SideMenuFeature {
                 
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
-                
-                print(errorType)
-                
                 return .none
+                
+            case .workspaceRemoveButtonTapped:
+                return .send(.workspaceRemove(state.workspaceIdCurrent))
                 
             case .workspaceExitButtonTapped:
-                print("exit")
-                
-                return .none
+                return .send(.workspaceExit(state.workspaceIdCurrent))
                 
             default :
                 return .none

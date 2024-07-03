@@ -1,18 +1,19 @@
 //
-//  WorkspaceAddView.swift
+//  WorkspaceEditView.swift
 //  Teams
 //
-//  Created by JinwooLee on 6/20/24.
+//  Created by JinwooLee on 7/2/24.
 //
 
 import ComposableArchitecture
 import SwiftUI
 import PhotosUI
 import PopupView
+import Kingfisher
 
-struct WorkspaceAddView : View {
+struct WorkspaceEditView : View {
     
-    @State var store : StoreOf<WorkspaceAddFeature>
+    @State var store : StoreOf<WorkspaceEditFeature>
     @State private var selectedItem: PhotosPickerItem?
     
     var body: some View {
@@ -98,7 +99,7 @@ struct WorkspaceAddView : View {
                 } customize: {
                     $0.autohideIn(2)
                 }
-                .navigationBarTitle("워크스페이스 생성", displayMode: .inline)
+                .navigationBarTitle("워크스페이스 편집", displayMode: .inline)
                 .navigationBarItems(
                     leading:
                         Button {
@@ -109,6 +110,9 @@ struct WorkspaceAddView : View {
                 )
                 .navigationBarColor(backgroundColor: .brandWhite, titleColor: .brandBlack)
                 .navigationViewStyle(StackNavigationViewStyle())
+            }
+            .onAppear {
+                store.send(.onApear)
             }
         }
     }

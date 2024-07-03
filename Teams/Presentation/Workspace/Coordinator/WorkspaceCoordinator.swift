@@ -18,6 +18,7 @@ struct WorkspaceCoordinatorView : View {
             ZStack(alignment:.leading) {
                 VStack {
                     if store.workspaceCount > 0 {
+                        Text("\(store.workspaceCount)")
                         WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
@@ -41,7 +42,7 @@ struct WorkspaceCoordinatorView : View {
                 }
             }
             .popup(item: $store.popupPresent) { popup in
-                PopupOneButtonView(store: store, action: popup)
+                PopupButtonView(store: store, action: popup)
             } customize: {
                 $0
                     .closeOnTap(false)
@@ -68,9 +69,9 @@ struct WorkspaceCoordinator {
         var sidemenuOpen : Bool = false
         var popupPresent : CustomPopup?
         enum CustomPopup : Equatable {
-            case workspaceExit
-            case workspaceExitManager
-            case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String)
+            case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
+            case workspaceExit(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
+            case workspaceExitManager(titleText:String, bodyText:String, buttonTitle:String, twoButton:Bool)
         }
     }
     
@@ -82,7 +83,10 @@ struct WorkspaceCoordinator {
         case myWorkspaceResponse(Result<[Workspace], APIError>)
         case closeSideMenu
         case dismissPopupView
-        case workspaceRemove
+        case workspaceRemoveOnPopupView(String)
+        case workspaceExitOnPopupView(String)
+        case workspaceRemoveResponse(Result<WorkspaceRemoveResponseDTO, APIError>)
+        case workspaceExitResponse(Result<[Workspace], APIError>)
         case binding(BindingAction<State>)
         
     }
@@ -128,11 +132,12 @@ struct WorkspaceCoordinator {
                 return .none
                 
             case .closeSideMenu:
+                state.popupPresent = nil
                 state.sidemenuOpen = false
                 
             case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))), .sideMenu(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
-                print("workspace add compete 🌟🌟🌟🌟")
-                state.workspaceCount += 1
+                print("workspace add complete 🌟🌟🌟🌟")
+                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 if let workspaceCurrent = state.workspaceCurrent {
@@ -141,13 +146,60 @@ struct WorkspaceCoordinator {
                 state.sidemenuOpen = true
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.closeSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.closeSideMenu))))):
-                state.sidemenuOpen = false
+                return .send(.closeSideMenu)
                 
-            case .sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceRemoveButtonTapped)))):
-                state.popupPresent = .workspaceRemove(titleText: "gg", bodyText: "gg", buttonTitle: "gg")
+            case let .sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceRemove(workspaceID))))):
+                state.popupPresent = .workspaceRemove(titleText: "워크스페이스 삭제", bodyText: "정말 이 워크스페이스를 삭제하시겠습니까? 삭제 시 채널/멤버/채팅 등 워크스페이스 내의 모든 정보가 삭제되며 복구할 수 없습니다.", buttonTitle: "삭제", id:workspaceID, twoButton: true)
+            
+            case let .sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceExit(workspaceID))))):
+                state.popupPresent = .workspaceExit(titleText: "워크스페이스 나가기", bodyText: "정말 이 워크스페이스를 떠나시겠습니까?", buttonTitle: "나가기", id:workspaceID, twoButton: true)
+            
+            case .sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceExitManager)))):
+                state.popupPresent = .workspaceExitManager(titleText: "워크스페이스 관리자 변경 불가", bodyText: "워크스페이스 멤버가 없어 관리자 변경을 할 수 없습니다.새로운 멤버를 워크스페이스에 초대해보세요. ", buttonTitle: "확인", twoButton: false)
                 
             case .dismissPopupView:
                 state.popupPresent = nil
+                
+            case let .workspaceRemoveOnPopupView(removeWorkspaceID):
+                
+                let query = WorkspaceIDDTO(workspace_id: removeWorkspaceID)
+                
+                return .run { send in
+                    await send(.workspaceRemoveResponse(
+                        networkManager.removeWorkspace(query: query)
+                    ))
+                }
+            
+            case .workspaceRemoveResponse(.success(_)):
+                print("workspace remove complete 🔆")
+                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
+                
+            case let .workspaceRemoveResponse(.failure(error)) :
+                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
+                
+                return .none
+            
+            case let .workspaceExitOnPopupView(exitWorkspaceID):
+                let query = WorkspaceIDDTO(workspace_id: exitWorkspaceID)
+                
+                return .run { send in
+                    await send(.workspaceExitResponse(
+                        networkManager.exitWorkspace(query: query)
+                    ))
+                }
+                
+            case .workspaceExitResponse(.success(_)):
+                print("workspace exit complete 🔆")
+                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
+                
+            case let .workspaceExitResponse(.failure(error)) :
+                
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
+                
+                return .none
                 
             default :
                 break
