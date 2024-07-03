@@ -38,11 +38,11 @@ struct WorkspaceEditFeature {
         case binding(BindingAction<State>)
         case onApear
         case pickedImage(Data?)
-        case createButtonActive
-        case createButtonTapped
-        case createWorkspaceResponse(Result<Workspace, APIError>)
+        case editButtonActive
+        case editButtonTapped
+        case editWorkspaceResponse(Result<Workspace, APIError>)
         case dismiss
-        case createWorkspaceComplete
+        case editWorkspaceComplete
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -61,14 +61,14 @@ struct WorkspaceEditFeature {
                 }
                 
             case .binding(\.workspaceName):
-                return .send(.createButtonActive)
+                return .send(.editButtonActive)
 
             case let .pickedImage(image):
                 state.selectedImageData = image
                 state.workspaceImageValid = true
                 return .none
                 
-            case .createButtonActive:
+            case .editButtonActive:
                 if !state.workspaceName.isEmpty {
                     state.createButton = true
                 } else {
@@ -76,7 +76,7 @@ struct WorkspaceEditFeature {
                 }
                 return .none
             
-            case .createButtonTapped:
+            case .editButtonTapped:
                 state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
                 
                 if let field = [state.workspaceNameValid, state.workspaceImageValid].firstIndex(of: false) {
@@ -91,17 +91,17 @@ struct WorkspaceEditFeature {
                                                                        image: imageData)
                 
                 return .run { [workspaceID = state.workspaceID] send in
-                    await send(.createWorkspaceResponse(
+                    await send(.editWorkspaceResponse(
                         networkManager.editWorkspace(request: WorkspaceIDDTO(workspace_id: workspaceID), query: createWorkspaceRequest)
                     ))
                 }
-            case let .createWorkspaceResponse(.success(response)):
+            case let .editWorkspaceResponse(.success(response)):
                 
                 dump(response)
                 
-                return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
+                return .concatenate([.send(.editWorkspaceComplete), .send(.dismiss)])
                 
-            case let .createWorkspaceResponse(.failure(error)):
+            case let .editWorkspaceResponse(.failure(error)):
                 
                 dump(error)
                 

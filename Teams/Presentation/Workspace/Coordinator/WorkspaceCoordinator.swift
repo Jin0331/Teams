@@ -201,6 +201,9 @@ struct WorkspaceCoordinator {
                 
                 return .none
                 
+//            case .sideMenu(.router(.routeAction(_, action: .workspaceEdit(.editWorkspaceComplete)))):
+//                return .send(.sideMenu(.router(.routeAction(id: .sidemenu, action: .sidemenu(.onAppear)))))
+                
             default :
                 break
             }

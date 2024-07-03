@@ -82,8 +82,8 @@ struct WorkspaceEditView : View {
                         .padding()
                         .frame(width: 345, height: 44, alignment: .leading)
                     
-                    Button("완료") {
-                        store.send(.createButtonTapped)
+                    Button("저장") {
+                        store.send(.editButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
