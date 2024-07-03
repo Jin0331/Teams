@@ -29,6 +29,7 @@ struct WorkspaceEditView : View {
                                 if let image = store.selectedImageData, let uiImage = UIImage(data: image) {
                                     Image(uiImage: uiImage)
                                         .resizable()
+                                        .aspectRatio(contentMode: .fill)
                                         .frame(width: 70, height: 70)
                                         .cornerRadius(8)
                                         .padding()
@@ -81,8 +82,8 @@ struct WorkspaceEditView : View {
                         .padding()
                         .frame(width: 345, height: 44, alignment: .leading)
                     
-                    Button("완료") {
-                        store.send(.createButtonTapped)
+                    Button("저장") {
+                        store.send(.editButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)

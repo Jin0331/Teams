@@ -16,6 +16,7 @@ struct WorkspaceEditFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        var workspaceID : String = ""
         var workspaceImage : URL?
         var workspaceName : String = ""
         var workspaceNameValid : Bool = false
@@ -37,12 +38,11 @@ struct WorkspaceEditFeature {
         case binding(BindingAction<State>)
         case onApear
         case pickedImage(Data?)
-        case createButtonActive
-        case createButtonTapped
-        case createWorkspaceResponse(Result<Workspace, APIError>)
-        case urlToSelectedImage(Data?)
+        case editButtonActive
+        case editButtonTapped
+        case editWorkspaceResponse(Result<Workspace, APIError>)
         case dismiss
-        case createWorkspaceComplete
+        case editWorkspaceComplete
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -57,18 +57,18 @@ struct WorkspaceEditFeature {
             
             case .onApear:
                 return .run { [imageURL = state.workspaceImage] send in
-                    await send(.urlToSelectedImage(loadImage(from: imageURL)))
+                    await send(.pickedImage(loadImage(from: imageURL)))
                 }
                 
             case .binding(\.workspaceName):
-                return .send(.createButtonActive)
+                return .send(.editButtonActive)
 
             case let .pickedImage(image):
                 state.selectedImageData = image
                 state.workspaceImageValid = true
                 return .none
                 
-            case .createButtonActive:
+            case .editButtonActive:
                 if !state.workspaceName.isEmpty {
                     state.createButton = true
                 } else {
@@ -76,7 +76,7 @@ struct WorkspaceEditFeature {
                 }
                 return .none
             
-            case .createButtonTapped:
+            case .editButtonTapped:
                 state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
                 
                 if let field = [state.workspaceNameValid, state.workspaceImageValid].firstIndex(of: false) {
@@ -90,18 +90,18 @@ struct WorkspaceEditFeature {
                                                                        description: state.workspaceDescription,
                                                                        image: imageData)
                 
-                return .run { send in
-                    await send(.createWorkspaceResponse(
-                        networkManager.createWorkspace(query: createWorkspaceRequest)
+                return .run { [workspaceID = state.workspaceID] send in
+                    await send(.editWorkspaceResponse(
+                        networkManager.editWorkspace(request: WorkspaceIDDTO(workspace_id: workspaceID), query: createWorkspaceRequest)
                     ))
                 }
-            case let .createWorkspaceResponse(.success(response)):
+            case let .editWorkspaceResponse(.success(response)):
                 
                 dump(response)
                 
-                return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
+                return .concatenate([.send(.editWorkspaceComplete), .send(.dismiss)])
                 
-            case let .createWorkspaceResponse(.failure(error)):
+            case let .editWorkspaceResponse(.failure(error)):
                 
                 dump(error)
                 
@@ -114,12 +114,6 @@ struct WorkspaceEditFeature {
                 }
                 
                 return .none
-                
-            case let .urlToSelectedImage(imageData):
-                state.selectedImageData = imageData
-                
-                return .none
-                                
             default :
                 return .none
             }

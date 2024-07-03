@@ -10,13 +10,6 @@ import SwiftUI
 import TCACoordinators
 import Kingfisher
 
-@Reducer(state: .equatable)
-enum SideMenuScreen {
-    case sidemenu(SideMenuFeature)
-    case workspaceAdd(WorkspaceAddFeature)
-    case workspaceEdit(WorkspaceEditFeature)
-}
-
 struct SideMenuCoordinatorView : View {
     let store : StoreOf<SideMenuCoordinator>
     
@@ -40,16 +33,16 @@ struct SideMenuCoordinator {
     struct State : Equatable {
         
         static func initialState(workspaceIdCurrent: String = "") -> Self {
-          Self(
-            routes: [.root(.sidemenu(.init(workspaceIdCurrent: workspaceIdCurrent)))]
-          )
+            Self(
+                routes: [.root(.sidemenu(.init(workspaceIdCurrent: workspaceIdCurrent)))]
+            )
         }
         
-        var routes : [Route<SideMenuScreen.State>]
+        var routes: IdentifiedArrayOf<Route<SideMenuScreen.State>>
     }
     
     enum Action {
-        case router(IndexedRouterActionOf<SideMenuScreen>)
+        case router(IdentifiedRouterActionOf<SideMenuScreen>)
     }
     
     var body : some ReducerOf<Self> {
@@ -60,12 +53,14 @@ struct SideMenuCoordinator {
                 state.routes.presentSheet(.workspaceAdd(.init()))
                 
             case let .router(.routeAction(_, action: .sidemenu(.workspaceEdit(workspace)))):
-                
-                state.routes.presentSheet(.workspaceEdit(.init(workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
+                state.routes.presentSheet(.workspaceEdit(.init(workspaceID: workspace.id, workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
                 
             case .router(.routeAction(_, action: .workspaceAdd(.dismiss))), .router(.routeAction(_, action: .workspaceEdit(.dismiss))):
                 state.routes.dismiss()
-                            
+            
+            case .router(.routeAction(_, action: .workspaceEdit(.editWorkspaceComplete))):
+                return .send(.router(.routeAction(id: .sidemenu, action: .sidemenu(.onAppear))))
+                
             default:
                 break
             }
@@ -73,5 +68,5 @@ struct SideMenuCoordinator {
         }
         .forEachRoute(\.routes, action: \.router)
     }
-
+    
 }

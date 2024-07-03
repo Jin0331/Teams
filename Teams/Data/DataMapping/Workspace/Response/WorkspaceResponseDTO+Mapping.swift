@@ -17,6 +17,16 @@ struct WorkspaceResponseDTO: Decodable {
         case ownerID = "owner_id"
         case createdAt
     }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.workspaceID = try container.decode(String.self, forKey: .workspaceID)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.description = (try? container.decode(String.self, forKey: .description)) ?? ""
+        self.coverImage = try container.decode(String.self, forKey: .coverImage)
+        self.ownerID = try container.decode(String.self, forKey: .ownerID)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+    }
 }
 
 typealias WorkspaceListResponseDTO = [WorkspaceResponseDTO]
