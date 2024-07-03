@@ -17,7 +17,7 @@ struct OnboardingView: View {
         WithPerceptionTracking {
             VStack {
                 VStack {
-                    Text("새싹톡을 사용하면 어디서나")
+                    Text("Teams을 사용하면 어디서나")
                         .title1()
                         .frame(maxWidth: .infinity, alignment: .center)
                     Text("팀을 모을 수 있습니다")

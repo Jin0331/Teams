@@ -21,7 +21,7 @@ struct HomeInitialView: View {
                         Text("출시 준비 완료!")
                             .title1()
                             .frame(maxWidth: .infinity, alignment: .center)
-                        Text(store.nickname + "님의 조직을 위해 새로운 새싹톡 워크스페이스를 시작할 준비가 완료되었어요!")
+                        Text(store.nickname + "님의 조직을 위해 새로운 Teams 워크스페이스를 시작할 준비가 완료되었어요!")
                             .multilineTextAlignment(.center)
                             .bodyRegular()
                             .frame(maxWidth: .infinity, alignment: .center)
