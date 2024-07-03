@@ -92,9 +92,6 @@ struct WorkspaceAddFeature {
                 return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
                 
             case let .createWorkspaceResponse(.failure(error)):
-                
-                dump(error)
-                
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 
                 if case .E12 = errorType {

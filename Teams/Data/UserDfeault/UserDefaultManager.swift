@@ -52,6 +52,7 @@ final class UserDefaultManager {
     @UserStatus(key: "accessToken") var accessToken : String?
     @UserStatus(key: "refreshToken") var refreshToken : String?
     @UserStatus(key: "deviceToken") var deviceToken : String?
+    @UserStatus(key: "errorCode") var errorCode : String?
     
     @UserStatus(key: "user_id") var userId : String?
     @UserStatus(key: "email") var email : String?
