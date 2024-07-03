@@ -101,17 +101,12 @@ struct EmailLoginFeature {
                         networkManager.getWorkspaceList()
                     ))
                 }
-                
-                return .none
             
             case let .myWorkspaceResponse(.success(response)):
-//                print(response, "🌟 success")
-//                return .concatenate([.send(.loginComplete(response)), .send(.dismiss)])
                 return .send(.loginComplete(response))
                 
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
-                
                 return .none
                 
             case let .emailLoginResponse(.failure(error)):

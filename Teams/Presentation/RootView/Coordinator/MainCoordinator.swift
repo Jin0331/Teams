@@ -28,6 +28,9 @@ struct MainCoordinatorView : View {
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
             }
+            .onAppear {
+                store.send(.onApper)
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .resetLogin)) { notification in
             store.send(.refreshTokenExposed)
@@ -39,7 +42,7 @@ struct MainCoordinatorView : View {
 struct MainCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(onboarding: .initialState, homeInitial: .initialState(), workspace: .initialState, isLogined: false, isSignUp: false)
+        static let initialState = State(onboarding: .initialState, homeInitial: .initialState(), workspace: .initialState, isLogined: UserDefaultManager.shared.isLogined, isSignUp: false)
         var onboarding : OnboardingCoordinator.State
         var homeInitial : HomeInitialCoordinator.State
         var workspace : WorkspaceCoordinator.State
@@ -48,12 +51,15 @@ struct MainCoordinator {
     }
     
     enum Action {
+        case onApper
         case onboarding(OnboardingCoordinator.Action)
         case homeInitial(HomeInitialCoordinator.Action)
         case workspace(WorkspaceCoordinator.Action)
         case refreshTokenExposed
+        case myWorkspaceResponse(Result<[Workspace], APIError>)
     }
     
+    @Dependency(\.networkManager) var networkManager
     @Dependency(\.utilitiesFunction) var utilitiesFunction
     
     var body : some ReducerOf<Self> {
@@ -68,30 +74,51 @@ struct MainCoordinator {
             WorkspaceCoordinator()
         }
         
-        
         Reduce<State, Action> { state, action in
             switch action {
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))):
                 
+            case .onApper:
+                if UserDefaultManager.shared.isLogined {
+                    return .run { send in
+                        await send(.myWorkspaceResponse(
+                            networkManager.getWorkspaceList()
+                        ))}
+                }
+                
+            case let .myWorkspaceResponse(.success(response)):
                 if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
                     state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
                 }
                 
+            case let .myWorkspaceResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(errorType)
+                
+                
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))):
+                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
+                    state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
+                }
                 state.isLogined = true
                 state.isSignUp = false
+                
             case let .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete(nickname))))):
                 state.isLogined = true
                 state.isSignUp = true
                 state.homeInitial = .initialState(nickname: nickname)
+                
             case .onboarding(.router(.routeAction(_, action: .auth(.loginComplete)))):
                 state.isLogined = true
                 state.isSignUp = false
+                
             case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
                 state.isLogined = true
                 state.isSignUp = false
+                
             case .refreshTokenExposed:
                 state.isLogined = false
                 state.isSignUp = false
+                
             default:
               break
             }
