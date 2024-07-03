@@ -16,6 +16,7 @@ struct WorkspaceEditFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        var workspaceID : String = ""
         var workspaceImage : URL?
         var workspaceName : String = ""
         var workspaceNameValid : Bool = false
@@ -40,7 +41,6 @@ struct WorkspaceEditFeature {
         case createButtonActive
         case createButtonTapped
         case createWorkspaceResponse(Result<Workspace, APIError>)
-        case urlToSelectedImage(Data?)
         case dismiss
         case createWorkspaceComplete
     }
@@ -57,7 +57,7 @@ struct WorkspaceEditFeature {
             
             case .onApear:
                 return .run { [imageURL = state.workspaceImage] send in
-                    await send(.urlToSelectedImage(loadImage(from: imageURL)))
+                    await send(.pickedImage(loadImage(from: imageURL)))
                 }
                 
             case .binding(\.workspaceName):
@@ -90,9 +90,9 @@ struct WorkspaceEditFeature {
                                                                        description: state.workspaceDescription,
                                                                        image: imageData)
                 
-                return .run { send in
+                return .run { [workspaceID = state.workspaceID] send in
                     await send(.createWorkspaceResponse(
-                        networkManager.createWorkspace(query: createWorkspaceRequest)
+                        networkManager.editWorkspace(request: WorkspaceIDDTO(workspace_id: workspaceID), query: createWorkspaceRequest)
                     ))
                 }
             case let .createWorkspaceResponse(.success(response)):
@@ -114,12 +114,6 @@ struct WorkspaceEditFeature {
                 }
                 
                 return .none
-                
-            case let .urlToSelectedImage(imageData):
-                state.selectedImageData = imageData
-                
-                return .none
-                                
             default :
                 return .none
             }

@@ -13,6 +13,7 @@ enum WorkspaceRouter {
     case createWorkspace(request : WorkspaceCreateRequestDTO)
     case removeWorkspace(request : WorkspaceIDDTO)
     case exitWorkspace(request : WorkspaceIDDTO)
+    case editWorkspace(request : WorkspaceIDDTO, body : WorkspaceCreateRequestDTO)
 }
 
 extension WorkspaceRouter : TargetType {
@@ -28,6 +29,8 @@ extension WorkspaceRouter : TargetType {
             return .post
         case .removeWorkspace:
             return .delete
+        case .editWorkspace:
+            return .put
         }
     }
     
@@ -35,7 +38,7 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces, .createWorkspace:
             return "/workspaces"
-        case let .removeWorkspace(workspaceID):
+        case let .removeWorkspace(workspaceID), let .editWorkspace(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id
         case let .exitWorkspace(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/exit"
@@ -46,7 +49,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -70,7 +73,7 @@ extension WorkspaceRouter : TargetType {
     
     var multipart: MultipartFormData {
         switch self {
-        case let .createWorkspace(request):
+        case let .createWorkspace(request), let .editWorkspace(_, request):
             let multiPart = MultipartFormData()
             multiPart.append(request.name.data(using: .utf8)!, withName: "name")
             

@@ -40,9 +40,9 @@ struct SideMenuCoordinator {
     struct State : Equatable {
         
         static func initialState(workspaceIdCurrent: String = "") -> Self {
-          Self(
-            routes: [.root(.sidemenu(.init(workspaceIdCurrent: workspaceIdCurrent)))]
-          )
+            Self(
+                routes: [.root(.sidemenu(.init(workspaceIdCurrent: workspaceIdCurrent)))]
+            )
         }
         
         var routes : [Route<SideMenuScreen.State>]
@@ -60,12 +60,11 @@ struct SideMenuCoordinator {
                 state.routes.presentSheet(.workspaceAdd(.init()))
                 
             case let .router(.routeAction(_, action: .sidemenu(.workspaceEdit(workspace)))):
-                
-                state.routes.presentSheet(.workspaceEdit(.init(workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
+                state.routes.presentSheet(.workspaceEdit(.init(workspaceID: workspace.id, workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
                 
             case .router(.routeAction(_, action: .workspaceAdd(.dismiss))), .router(.routeAction(_, action: .workspaceEdit(.dismiss))):
                 state.routes.dismiss()
-                            
+            
             default:
                 break
             }
@@ -73,5 +72,5 @@ struct SideMenuCoordinator {
         }
         .forEachRoute(\.routes, action: \.router)
     }
-
+    
 }

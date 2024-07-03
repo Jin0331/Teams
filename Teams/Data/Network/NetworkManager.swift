@@ -269,6 +269,22 @@ final class NetworkManager {
             }
         }
     }
+    
+    func editWorkspace(request : WorkspaceIDDTO, query : WorkspaceCreateRequestDTO) async -> Result<Workspace, APIError> {
+        
+        let router = WorkspaceRouter.editWorkspace(request: request, body: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: WorkspaceResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
 }
 
 

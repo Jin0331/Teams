@@ -28,6 +28,7 @@ struct WorkspaceAddView : View {
                                 if let image = store.selectedImageData, let uiImage = UIImage(data: image) {
                                     Image(uiImage: uiImage)
                                         .resizable()
+                                        .aspectRatio(contentMode: .fill)
                                         .frame(width: 70, height: 70)
                                         .cornerRadius(8)
                                         .padding()
