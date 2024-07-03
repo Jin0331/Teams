@@ -34,6 +34,8 @@
 
 ***Alamofire***
 
+***Socket.IO***
+
 ***PopupView***
 
 <br>
