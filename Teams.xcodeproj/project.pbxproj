@@ -26,6 +26,7 @@
 		DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */; };
 		DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566122C352B8800D34BEB /* SideMenuScreen.swift */; };
 		DB2566152C352BB200D34BEB /* SideMenuScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566142C352BB200D34BEB /* SideMenuScreen+Identifiable.swift */; };
+		DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */; };
 		DB2FB0A52C329AD70091B6CE /* WorkspaceListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */; };
 		DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37633B2C29C664009A201B /* HomeCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
@@ -67,6 +68,7 @@
 		DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567E62C1AD3C900444E98 /* Utils.swift */; };
 		DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DBD0758A2C1B273500678DAB /* KakaoSDK */; };
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
+		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
 		DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */; };
 		DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */; };
 		DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */; };
@@ -112,6 +114,7 @@
 		DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditFeature.swift; sourceTree = "<group>"; };
 		DB2566122C352B8800D34BEB /* SideMenuScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuScreen.swift; sourceTree = "<group>"; };
 		DB2566142C352BB200D34BEB /* SideMenuScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SideMenuScreen+Identifiable.swift"; sourceTree = "<group>"; };
+		DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListItemView.swift; sourceTree = "<group>"; };
 		DB37633B2C29C664009A201B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567E62C1AD3C900444E98 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
+		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RefreshResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRequestDTO.swift; sourceTree = "<group>"; };
 		DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -287,6 +291,7 @@
 				DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */,
 				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 				DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */,
+				DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -467,6 +472,7 @@
 				DB5AADE62C181427002907B6 /* Join.swift */,
 				DB5AADE82C1818ED002907B6 /* Token.swift */,
 				DBEA522D2C2534E700026926 /* Workspace.swift */,
+				DBE1CCAB2C36AEAE00B627BD /* Channel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -770,6 +776,8 @@
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
 				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
+				DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */,
+				DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
