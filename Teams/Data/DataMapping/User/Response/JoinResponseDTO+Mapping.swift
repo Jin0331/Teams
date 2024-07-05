@@ -20,7 +20,7 @@ struct JoinResponseDTO: Decodable {
 }
 
 extension JoinResponseDTO {
-    struct TokenDTO: Codable {
+    struct TokenDTO: Decodable {
         let accessToken, refreshToken: String
     }
 }

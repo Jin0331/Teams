@@ -41,7 +41,8 @@ struct WorkspaceTabCoordinator {
     
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(home: .initialState, selectedTab: .home, sideMenu: .initialState())
+        //TODO: - current Workspace ID 초기화
+        static let initialState = State(home: .initialState(), selectedTab: .home, sideMenu: .initialState())
         
         var home : HomeCoordinator.State
         var selectedTab: Tab

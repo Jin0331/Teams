@@ -14,6 +14,8 @@ enum WorkspaceRouter {
     case removeWorkspace(request : WorkspaceIDDTO)
     case exitWorkspace(request : WorkspaceIDDTO)
     case editWorkspace(request : WorkspaceIDDTO, body : WorkspaceCreateRequestDTO)
+    
+    case myChannels(request : WorkspaceIDDTO)
 }
 
 extension WorkspaceRouter : TargetType {
@@ -23,7 +25,7 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace:
+        case .myWorkspaces, .exitWorkspace, .myChannels:
             return .get
         case .createWorkspace:
             return .post
@@ -42,6 +44,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id
         case let .exitWorkspace(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/exit"
+        case let .myChannels(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
         }
     }
     
@@ -49,7 +53,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]

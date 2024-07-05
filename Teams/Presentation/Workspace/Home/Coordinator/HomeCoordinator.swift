@@ -33,7 +33,12 @@ struct HomeCoordinatorView : View {
 struct HomeCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(routes: [.root(.home(.init()), embedInNavigationView: true)])
+//        static let initialState = State(routes: [.root(.home(.init()), embedInNavigationView: true)])
+        static func initialState(workspaceCurrent: Workspace? = nil) -> Self {
+            Self(
+                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))]
+            )
+        }
         var routes : [Route<HomeScreen.State>]
     }
 
