@@ -22,7 +22,7 @@ struct ChannelResponseDTO : Decodable {
         self.channelID = try container.decode(String.self, forKey: .channelID)
         self.name = try container.decode(String.self, forKey: .name)
         self.description = (try? container.decode(String.self, forKey: .description)) ?? ""
-        self.coverImage = try container.decode(String.self, forKey: .coverImage)
+        self.coverImage = (try? container.decode(String.self, forKey: .coverImage)) ?? ""
         self.ownerID = try container.decode(String.self, forKey: .ownerID)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
     }

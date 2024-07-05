@@ -18,7 +18,6 @@ struct WorkspaceCoordinatorView : View {
             ZStack(alignment:.leading) {
                 VStack {
                     if store.workspaceCount > 0 {
-                        Text("\(store.workspaceCount)")
                         WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     } else {
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
