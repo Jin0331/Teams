@@ -13,7 +13,7 @@ extension View {
     }
     
     func title2() -> some View {
-        self.font(.system(size: 14).weight(.bold))
+        self.font(.system(size: 16).weight(.bold))
     }
     
     func bodyBold() -> some View {

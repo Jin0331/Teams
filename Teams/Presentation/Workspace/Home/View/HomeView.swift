@@ -12,17 +12,125 @@ import Kingfisher
 struct HomeView: View {
     
     @State var store : StoreOf<HomeFeature>
+    @State private var expanded: Bool = false
     
     var body: some View {
         
         WithPerceptionTracking {
-            
             NavigationStack {
-                
                 VStack {
-
+                    
+                    //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
+                    DisclosureGroup(isExpanded: $expanded) {
+                        VStack {
+                            ForEach(store.channelList, id: \.id) { response in
+                                HStack {
+                                    Image(systemName: "number")
+                                        .resizable()
+                                        .frame(width: 18, height: 18)
+                                    Text(response.name)
+                                        .bodyRegular()
+                                }
+                                .padding()
+                                .frame(width: 393, height: 41, alignment: .leading)
+                                .padding(.leading, 15)
+                                .onTapGesture {
+                                    print("hi")
+                                }
+                            }
+                            
+                            HStack {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                Text("채널 추가")
+                                    .bodyRegular()
+                            }
+                            .padding()
+                            .frame(width: 393, height: 41, alignment: .leading)
+                            .padding(.leading, 15)
+                            .onTapGesture {
+                                print("hi")
+                            }
+                            
+                        }
+                        
+                    } label: {
+                        Text("채널")
+                            .title2()
+                            .foregroundColor(.brandBlack)
+                            .frame(height: 56)
+                    }
+                    .tint(.brandBlack)
+                    .padding()
+                    
+                    Divider()
+                        .background(Color.viewSeperator)
+                    
+                    DisclosureGroup(isExpanded: $expanded) {
+                        VStack {
+                            ForEach(store.dmList, id: \.id) { response in
+                                HStack {
+                                    Image(systemName: "number")
+                                        .resizable()
+                                        .frame(width: 18, height: 18)
+                                    Text(response.roomID)
+                                        .bodyRegular()
+                                }
+                                .padding()
+                                .frame(width: 393, height: 41, alignment: .leading)
+                                .padding(.leading, 15)
+                                .onTapGesture {
+                                    print("hi")
+                                }
+                            }
+                            
+                            HStack {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                Text("새 메세지 시작")
+                                    .bodyRegular()
+                            }
+                            .padding()
+                            .frame(width: 393, height: 41, alignment: .leading)
+                            .padding(.leading, 15)
+                            .onTapGesture {
+                                print("hi")
+                            }
+                            
+                        }
+                        
+                    } label: {
+                        Text("다이렉트 메세지")
+                            .title2()
+                            .foregroundColor(.brandBlack)
+                            .frame(height: 56)
+                    }
+                    .tint(.brandBlack)
+                    .padding()
+                    
+                    Divider()
+                        .background(Color.viewSeperator)
+                    
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                        Text("팀원 추가")
+                            .bodyRegular()
+                    }
+                    .padding()
+                    .frame(width: 393, height: 41, alignment: .leading)
+                    .padding(.leading, 15)
+                    .onTapGesture {
+                        print("hi")
+                    }
+                    
+                    Spacer()
+                    
                 }
-             
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         HStack {
