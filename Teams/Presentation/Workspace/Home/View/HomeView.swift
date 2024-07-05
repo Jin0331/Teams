@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    let store : StoreOf<HomeFeature>
+    @State var store : StoreOf<HomeFeature>
     
     var body: some View {
         
@@ -28,12 +28,15 @@ struct HomeView: View {
                         }
                     }
             )
+            .onAppear {
+                print(store.workspaceCurrent, "히히")
+            }
         }
     }
 }
 
 #Preview {
-    HomeView(store: Store(initialState: HomeFeature.State(), reducer: {
+    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: nil), reducer: {
         HomeFeature()
     }))
 }

@@ -56,7 +56,7 @@ struct MainCoordinator {
         case homeInitial(HomeInitialCoordinator.Action)
         case workspace(WorkspaceCoordinator.Action)
         case refreshTokenExposed
-        case myWorkspaceResponse(Result<[Workspace], APIError>)
+        case autoLogin(Result<[Workspace], APIError>)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -76,28 +76,27 @@ struct MainCoordinator {
         
         Reduce<State, Action> { state, action in
             switch action {
-                
+            
+            //MARK: - 자동로그인에서 사용되는 부분
             case .onApper:
                 if UserDefaultManager.shared.isLogined {
                     return .run { send in
-                        await send(.myWorkspaceResponse(
+                        await send(.autoLogin(
                             networkManager.getWorkspaceList()
                         ))}
+                } else {
+                    return .none
                 }
-                
-            case let .myWorkspaceResponse(.success(response)):
-                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
-                    state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
-                }
-                
-            case let .myWorkspaceResponse(.failure(error)):
+            
+            //TODO: - 초기에 initalState로 초기화되었다가, 비동기 action으로 state가 초기화되면서 ,땅->땅 으로 뷰가 전환됨. Progress View 필요할듯
+            case let .autoLogin(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType)
                 
                 
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))):
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))), let .autoLogin(.success(response)):
                 if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
-                    state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
+                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace), selectedTab: .home, sideMenu: .initialState()), homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
                 }
                 state.isLogined = true
                 state.isSignUp = false

@@ -13,6 +13,7 @@ struct HomeFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        let workspaceCurrent : Workspace?
     }
 
     enum Action {

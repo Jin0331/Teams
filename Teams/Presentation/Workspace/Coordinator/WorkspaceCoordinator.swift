@@ -112,20 +112,6 @@ struct WorkspaceCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
                 
-                //TODO: - Workspace count API 호출
-            case .onAppear:
-                print("Workspace Coordinator 뿅 🌟🌟🌟🌟🌟🌟🌟🌟🌟")
-                return .run { send in
-                    await send(.myWorkspaceResponse(
-                        networkManager.getWorkspaceList()
-                    ))
-                }
-                
-            case let .myWorkspaceResponse(.success(response)):
-                print(response, "🌟 success")
-                state.workspaceCount = response.count
-                state.workspaceCurrent = response.getMostRecentWorkspace(from: response)
-                
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 
