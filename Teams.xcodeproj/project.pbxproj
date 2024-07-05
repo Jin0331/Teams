@@ -69,6 +69,9 @@
 		DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DBD0758A2C1B273500678DAB /* KakaoSDK */; };
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
 		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
+		DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */; };
+		DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB12C37CBBF00B627BD /* DM.swift */; };
+		DBE1CCB42C37CBE500B627BD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB32C37CBE500B627BD /* User.swift */; };
 		DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */; };
 		DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */; };
 		DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */; };
@@ -155,6 +158,9 @@
 		DBC567E62C1AD3C900444E98 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DBE1CCB12C37CBBF00B627BD /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
+		DBE1CCB32C37CBE500B627BD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DBEA520C2C207DA200026926 /* RefreshResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RefreshResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRequestDTO.swift; sourceTree = "<group>"; };
 		DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 				DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */,
 				DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */,
+				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -473,6 +480,8 @@
 				DB5AADE82C1818ED002907B6 /* Token.swift */,
 				DBEA522D2C2534E700026926 /* Workspace.swift */,
 				DBE1CCAB2C36AEAE00B627BD /* Channel.swift */,
+				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
+				DBE1CCB32C37CBE500B627BD /* User.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -775,6 +784,7 @@
 				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
+				DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */,
 				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
 				DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */,
 				DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */,
@@ -795,6 +805,7 @@
 				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
+				DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */,
 				DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
@@ -821,6 +832,7 @@
 				DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */,
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
+				DBE1CCB42C37CBE500B627BD /* User.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
 				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,

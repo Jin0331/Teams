@@ -33,8 +33,6 @@ struct HomeFeature {
                 
                 guard let workspace = state.workspaceCurrent else { return .none }
                 
-                print(workspace.id, UserDefaultManager.shared.accessToken)
-                
                 return .run { send in
                     await send(.myChannelResponse(
                         networkManager.getMyChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))
