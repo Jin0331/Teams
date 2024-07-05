@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct DM : Equatable {
+struct DM : Equatable, Identifiable {
     let roomID, createdAt : String
     let user : User
+    
+    var id : String { return roomID }
 }
+
+typealias DMList = [DM]
