@@ -17,10 +17,14 @@ struct HomeView: View {
     var body: some View {
         
         WithPerceptionTracking {
+            
+            //TODO: - scroll View
+            
             NavigationStack {
                 VStack {
-                    
                     //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
+                    Divider().background(.brandWhite).padding(.top, 10)
+                    
                     DisclosureGroup(isExpanded: $expanded) {
                         VStack {
                             ForEach(store.channelList, id: \.id) { response in
@@ -31,9 +35,8 @@ struct HomeView: View {
                                     Text(response.name)
                                         .bodyRegular()
                                 }
-                                .padding()
+                                .padding(.horizontal, 15)
                                 .frame(width: 393, height: 41, alignment: .leading)
-                                .padding(.leading, 15)
                                 .onTapGesture {
                                     print("hi")
                                 }
@@ -43,12 +46,12 @@ struct HomeView: View {
                                 Image(systemName: "plus")
                                     .resizable()
                                     .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
                                 Text("채널 추가")
                                     .bodyRegular()
                             }
-                            .padding()
+                            .padding(.horizontal, 15)
                             .frame(width: 393, height: 41, alignment: .leading)
-                            .padding(.leading, 15)
                             .onTapGesture {
                                 print("hi")
                             }
@@ -62,10 +65,9 @@ struct HomeView: View {
                             .frame(height: 56)
                     }
                     .tint(.brandBlack)
-                    .padding()
+                    .padding(.horizontal, 15)
                     
-                    Divider()
-                        .background(Color.viewSeperator)
+                    Divider().background(Color.viewSeperator)
                     
                     DisclosureGroup(isExpanded: $expanded) {
                         VStack {
@@ -77,9 +79,8 @@ struct HomeView: View {
                                     Text(response.roomID)
                                         .bodyRegular()
                                 }
-                                .padding()
-                                .frame(width: 393, height: 41, alignment: .leading)
                                 .padding(.leading, 15)
+                                .frame(width: 393, height: 41, alignment: .leading)
                                 .onTapGesture {
                                     print("hi")
                                 }
@@ -89,12 +90,12 @@ struct HomeView: View {
                                 Image(systemName: "plus")
                                     .resizable()
                                     .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
                                 Text("새 메세지 시작")
                                     .bodyRegular()
                             }
-                            .padding()
-                            .frame(width: 393, height: 41, alignment: .leading)
                             .padding(.leading, 15)
+                            .frame(width: 393, height: 41, alignment: .leading)
                             .onTapGesture {
                                 print("hi")
                             }
@@ -108,21 +109,21 @@ struct HomeView: View {
                             .frame(height: 56)
                     }
                     .tint(.brandBlack)
-                    .padding()
+                    .padding(.horizontal, 15)
                     
-                    Divider()
-                        .background(Color.viewSeperator)
+                    Divider().background(Color.viewSeperator)
                     
                     HStack {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
                         Text("팀원 추가")
                             .bodyRegular()
                     }
                     .padding()
                     .frame(width: 393, height: 41, alignment: .leading)
-                    .padding(.leading, 15)
+                    .padding(.horizontal, 15)
                     .onTapGesture {
                         print("hi")
                     }
