@@ -17,55 +17,16 @@ struct HomeView: View {
     var body: some View {
         
         WithPerceptionTracking {
+            
+            //TODO: - scroll View
             NavigationStack {
                 VStack {
-                    
                     //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
-                    DisclosureGroup(isExpanded: $expanded) {
-                        VStack {
-                            ForEach(store.channelList, id: \.id) { response in
-                                HStack {
-                                    Image(systemName: "number")
-                                        .resizable()
-                                        .frame(width: 18, height: 18)
-                                    Text(response.name)
-                                        .bodyRegular()
-                                }
-                                .padding()
-                                .frame(width: 393, height: 41, alignment: .leading)
-                                .padding(.leading, 15)
-                                .onTapGesture {
-                                    print("hi")
-                                }
-                            }
-                            
-                            HStack {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
-                                Text("채널 추가")
-                                    .bodyRegular()
-                            }
-                            .padding()
-                            .frame(width: 393, height: 41, alignment: .leading)
-                            .padding(.leading, 15)
-                            .onTapGesture {
-                                print("hi")
-                            }
-                            
-                        }
-                        
-                    } label: {
-                        Text("채널")
-                            .title2()
-                            .foregroundColor(.brandBlack)
-                            .frame(height: 56)
-                    }
-                    .tint(.brandBlack)
-                    .padding()
+                    Divider().background(.brandWhite).padding(.top, 10)
                     
-                    Divider()
-                        .background(Color.viewSeperator)
+                    CustomDisclosureGroupView(store: store)
+                    
+                    Divider().background(Color.viewSeperator)
                     
                     DisclosureGroup(isExpanded: $expanded) {
                         VStack {
@@ -77,9 +38,8 @@ struct HomeView: View {
                                     Text(response.roomID)
                                         .bodyRegular()
                                 }
-                                .padding()
-                                .frame(width: 393, height: 41, alignment: .leading)
                                 .padding(.leading, 15)
+                                .frame(width: 393, height: 41, alignment: .leading)
                                 .onTapGesture {
                                     print("hi")
                                 }
@@ -89,12 +49,12 @@ struct HomeView: View {
                                 Image(systemName: "plus")
                                     .resizable()
                                     .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
                                 Text("새 메세지 시작")
                                     .bodyRegular()
                             }
-                            .padding()
-                            .frame(width: 393, height: 41, alignment: .leading)
                             .padding(.leading, 15)
+                            .frame(width: 393, height: 41, alignment: .leading)
                             .onTapGesture {
                                 print("hi")
                             }
@@ -108,21 +68,21 @@ struct HomeView: View {
                             .frame(height: 56)
                     }
                     .tint(.brandBlack)
-                    .padding()
+                    .padding(.horizontal, 15)
                     
-                    Divider()
-                        .background(Color.viewSeperator)
+                    Divider().background(Color.viewSeperator)
                     
                     HStack {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
                         Text("팀원 추가")
                             .bodyRegular()
                     }
                     .padding()
                     .frame(width: 393, height: 41, alignment: .leading)
-                    .padding(.leading, 15)
+                    .padding(.horizontal, 15)
                     .onTapGesture {
                         print("hi")
                     }
@@ -166,13 +126,13 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: Workspace(workspaceID: "4e93033c-bedf-4a36-b16b-e16f37f93ae7",
-                                                                                      name: "천장zxc",
-                                                                                      description: "",
-                                                                                      coverImage: "/static/workspaceCoverImages/1720011671324.jpeg",
-                                                                                      ownerID: "e1b47086-a781-4885-a9a3-3998ec818fa8",
-                                                                                      createdAt: "2024-07-03T12:44:24.083Z")), reducer: {
-        HomeFeature()
-    }))
-}
+//#Preview {
+//    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: Workspace(workspaceID: "4e93033c-bedf-4a36-b16b-e16f37f93ae7",
+//                                                                                      name: "천장zxc",
+//                                                                                      description: "",
+//                                                                                      coverImage: "/static/workspaceCoverImages/1720011671324.jpeg",
+//                                                                                      ownerID: "e1b47086-a781-4885-a9a3-3998ec818fa8",
+//                                                                                      createdAt: "2024-07-03T12:44:24.083Z")), reducer: {
+//        HomeFeature()
+//    }))
+//}

@@ -9,11 +9,6 @@ import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
 
-@Reducer(state: .equatable)
-enum HomeScreen {
-    case home(HomeFeature)
-}
-
 struct HomeCoordinatorView : View {
     let store : StoreOf<HomeCoordinator>
 
@@ -22,6 +17,8 @@ struct HomeCoordinatorView : View {
             switch screen.case {
             case let .home(store):
                 HomeView(store: store)
+            case let .channelAdd(store):
+                ChannelAddView(store: store)
             }
         }
     }
@@ -33,22 +30,32 @@ struct HomeCoordinatorView : View {
 struct HomeCoordinator {
     @ObservableState
     struct State : Equatable {
-//        static let initialState = State(routes: [.root(.home(.init()), embedInNavigationView: true)])
         static func initialState(workspaceCurrent: Workspace? = nil) -> Self {
             Self(
-                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))]
+                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))],
+                currentWorkspace: workspaceCurrent
             )
         }
-        var routes : [Route<HomeScreen.State>]
+        var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
+        var currentWorkspace : Workspace?
     }
 
     enum Action {
-        case router(IndexedRouterActionOf<HomeScreen>)
+        case router(IdentifiedRouterActionOf<HomeScreen>)
     }
 
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
+            case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
+                state.routes.presentSheet(.channelAdd(.init(currentWorkspace: state.currentWorkspace)))
+                
+            case .router(.routeAction(_, action: .channelAdd(.dismiss))):
+                state.routes.dismiss()
+                
+            case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):
+                return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
+                
             default :
                 break
             }

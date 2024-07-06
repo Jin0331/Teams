@@ -61,10 +61,16 @@ final class UtilitiesFunction {
         return password == passwordRepeat
     }
     
-    func getMostRecentWorkspace(from workspaces: [Workspace]) -> Workspace? {
+    func getMostRecentWorkspace(from workspaces: WorkspaceList) -> Workspace? {
         return workspaces.sorted(by: {
             ($0.createdAtDate ?? Date.distantPast) > ($1.createdAtDate ?? Date.distantPast)
         }).first
+    }
+    
+    func getSortedChannelList(from channels: ChannelList) -> ChannelList {
+        return channels.sorted(by: {
+            ($0.createdAtDate ?? Date.distantPast) < ($1.createdAtDate ?? Date.distantPast)
+        })
     }
 }
 

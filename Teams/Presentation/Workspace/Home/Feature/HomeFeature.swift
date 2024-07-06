@@ -16,28 +16,37 @@ struct HomeFeature {
         var workspaceCurrent : Workspace?
         var channelList : ChannelList = []
         var dmList : DMList = []
+        var showingChannelActionSheet : Bool = false
+        var channelListExpanded : Bool = true
+        var dmlListExpanded : Bool = true
     }
 
-    enum Action {
+    enum Action : BindableAction{
         case onAppear
         case openSideMenu
         case closeSideMenu
-        
+        case channelAddButtonTapped
+        case channelCreateButtonTapped
+        case channelSearchButtonTapped
+        case binding(BindingAction<State>)
         case channeListlResponse(Result<[Channel], APIError>)
-        case dmListResponse(Result<[DM], APIError>)
-        
+        case dmListResponse(Result<[DM], APIError>)   
     }
     
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.utilitiesFunction) var utils
     
     var body : some ReducerOf<Self> {
+        
+        BindingReducer()
+        
         Reduce<State, Action> { state, action in
             switch action {
             
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
                 
-                print(UserDefaultManager.shared.accessToken, workspace.id)
+                print(workspace.id, UserDefaultManager.shared.accessToken)
                 
                 return .merge([
                     .run { send in
@@ -49,14 +58,11 @@ struct HomeFeature {
                 ])
                 
             case let .channeListlResponse(.success(response)):
-                
-                state.channelList = response
+                state.channelList = utils.getSortedChannelList(from: response)
                 
                 return .none
                 
             case let .dmListResponse(.success(response)):
-                
-                print(response, "🌟")
                 
                 return .none
 
@@ -74,6 +80,10 @@ struct HomeFeature {
                     state.dmList = []
                 }
                 
+                return .none
+                
+            case .channelAddButtonTapped:
+                state.showingChannelActionSheet = true
                 return .none
                 
             default :
