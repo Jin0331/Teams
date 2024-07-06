@@ -32,6 +32,7 @@ struct HomeView: View {
                                     Image(systemName: "number")
                                         .resizable()
                                         .frame(width: 18, height: 18)
+                                        .padding(.leading, 5)
                                     Text(response.name)
                                         .bodyRegular()
                                 }
@@ -53,7 +54,7 @@ struct HomeView: View {
                             .padding(.horizontal, 15)
                             .frame(width: 393, height: 41, alignment: .leading)
                             .onTapGesture {
-                                print("hi")
+                                store.send(.channelCreateButtonTapped)
                             }
                             
                         }

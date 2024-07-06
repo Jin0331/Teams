@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB04EF682C38EA6D007F0CBB /* ChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */; };
+		DB04EF6A2C38EAFC007F0CBB /* ChannelAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */; };
+		DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF6B2C38EEF2007F0CBB /* HomeScreen.swift */; };
+		DB04EF6E2C38EF43007F0CBB /* HomeScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF6D2C38EF43007F0CBB /* HomeScreen+Identifiable.swift */; };
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
 		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
@@ -98,6 +102,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddView.swift; sourceTree = "<group>"; };
+		DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddFeature.swift; sourceTree = "<group>"; };
+		DB04EF6B2C38EEF2007F0CBB /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		DB04EF6D2C38EF43007F0CBB /* HomeScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -351,6 +359,8 @@
 				DBEA52252C241AF200026926 /* HomeEmptyCoordinator.swift */,
 				DBEA52182C23085E00026926 /* HomeInitialCoordinator.swift */,
 				DB37633B2C29C664009A201B /* HomeCoordinator.swift */,
+				DB04EF6B2C38EEF2007F0CBB /* HomeScreen.swift */,
+				DB04EF6D2C38EF43007F0CBB /* HomeScreen+Identifiable.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -549,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */,
+				DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -557,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */,
+				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -779,6 +791,7 @@
 				DBEA522A2C2428DB00026926 /* WorkspaceRouter.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
+				DB04EF6A2C38EAFC007F0CBB /* ChannelAddFeature.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
 				DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */,
 				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
@@ -791,6 +804,7 @@
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
+				DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
@@ -808,6 +822,7 @@
 				DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */,
 				DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
+				DB04EF682C38EA6D007F0CBB /* ChannelAddView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DB2566152C352BB200D34BEB /* SideMenuScreen+Identifiable.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
@@ -825,6 +840,7 @@
 				DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */,
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
+				DB04EF6E2C38EF43007F0CBB /* HomeScreen+Identifiable.swift in Sources */,
 				DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */,
 				DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,

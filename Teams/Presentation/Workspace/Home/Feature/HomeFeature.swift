@@ -22,6 +22,7 @@ struct HomeFeature {
         case onAppear
         case openSideMenu
         case closeSideMenu
+        case channelCreateButtonTapped
         
         case channeListlResponse(Result<[Channel], APIError>)
         case dmListResponse(Result<[DM], APIError>)
@@ -36,9 +37,6 @@ struct HomeFeature {
             
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-                
-                print(UserDefaultManager.shared.accessToken, workspace.id)
-                
                 return .merge([
                     .run { send in
                         await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))))
