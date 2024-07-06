@@ -53,6 +53,9 @@ struct HomeCoordinator {
             case .router(.routeAction(_, action: .channelAdd(.dismiss))):
                 state.routes.dismiss()
                 
+            case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):
+                return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
+                
             default :
                 break
             }
