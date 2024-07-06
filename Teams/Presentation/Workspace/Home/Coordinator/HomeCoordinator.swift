@@ -32,10 +32,12 @@ struct HomeCoordinator {
     struct State : Equatable {
         static func initialState(workspaceCurrent: Workspace? = nil) -> Self {
             Self(
-                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))]
+                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))],
+                currentWorkspace: workspaceCurrent
             )
         }
         var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
+        var currentWorkspace : Workspace?
     }
 
     enum Action {
@@ -46,7 +48,7 @@ struct HomeCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
-                state.routes.presentSheet(.channelAdd(.init()))
+                state.routes.presentSheet(.channelAdd(.init(currentWorkspace: state.currentWorkspace)))
                 
             case .router(.routeAction(_, action: .channelAdd(.dismiss))):
                 state.routes.dismiss()

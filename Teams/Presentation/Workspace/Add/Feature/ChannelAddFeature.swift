@@ -15,6 +15,7 @@ struct ChannelAddFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        var currentWorkspace : Workspace?
         var channelName : String = ""
         var channelNameValid : Bool = false
         var channelDescription : String = ""
@@ -30,7 +31,7 @@ struct ChannelAddFeature {
         case binding(BindingAction<State>)
         case createButtonActive
         case createButtonTapped
-        case createChannelResponse(Result<Workspace, APIError>)
+        case createChannelResponse(Result<Channel, APIError>)
         case dismiss
         case createChannelComplete
     }
@@ -55,41 +56,39 @@ struct ChannelAddFeature {
                 }
                 return .none
             
-//            case .createButtonTapped:
-//                state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
-//                
-//                if let field = [state.workspaceNameValid, state.workspaceImageValid].firstIndex(of: false) {
-//                    state.toastPresent = State.ToastMessage.allCases[field]
-//                    return .none
-//                }
-//                
-//                guard let imageData = state.selectedImageData else { return .none}
-//                
-//                let createWorkspaceRequest = WorkspaceCreateRequestDTO(name: state.workspaceName,
-//                                                                       description: state.workspaceDescription,
-//                                                                       image: imageData)
-//                
-//                return .run { send in
-//                    await send(.createWorkspaceResponse(
-//                        networkManager.createWorkspace(query: createWorkspaceRequest)
-//                    ))
-//                }
-//            case let .createWorkspaceResponse(.success(response)):
-//                
-//                dump(response)
-//                
-//                return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
-//                
-//            case let .createWorkspaceResponse(.failure(error)):
-//                let errorType = APIError.networkErrorType(error: error.errorDescription)
-//                
-//                if case .E12 = errorType {
-//                    state.toastPresent = State.ToastMessage.duplicate
-//                } else {
-//                    state.toastPresent = State.ToastMessage.none
-//                }
-//                
-//                return .none
+            case .createButtonTapped:
+                state.channelNameValid = validTest.isValidNickname(state.channelName)
+                
+                if let field = [state.channelNameValid].firstIndex(of: false) {
+                    state.toastPresent = State.ToastMessage.allCases[field]
+                    return .none
+                }
+                
+                guard let workspace = state.currentWorkspace else { return .none }
+                let createChannelRequest = ChannelCreateRequestDTO(name: state.channelName,
+                                                                       description: state.channelDescription,
+                                                                       image: nil)
+
+                return .run { send in
+                    await send(.createChannelResponse(
+                        networkManager.createChannel(request: WorkspaceIDDTO(workspace_id: workspace.id), query: createChannelRequest)
+                    ))
+                }
+                
+            case let .createChannelResponse(.success(response)):
+                
+                dump(response)
+                
+                return .concatenate([.send(.createChannelComplete), .send(.dismiss)])
+                
+            case let .createChannelResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                
+                if case .E12 = errorType {
+                    state.toastPresent = State.ToastMessage.duplicate
+                }
+                
+                return .none
 
                 
             default :

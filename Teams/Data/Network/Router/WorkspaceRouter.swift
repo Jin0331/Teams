@@ -15,6 +15,8 @@ enum WorkspaceRouter {
     case exitWorkspace(request : WorkspaceIDDTO)
     case editWorkspace(request : WorkspaceIDDTO, body : WorkspaceCreateRequestDTO)
     
+    case createChannel(request : WorkspaceIDDTO, body : ChannelCreateRequestDTO)
+    
     case myChannels(request : WorkspaceIDDTO)
     case dmList(request : WorkspaceIDDTO)
     
@@ -29,7 +31,7 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces, .exitWorkspace, .myChannels, .dmList:
             return .get
-        case .createWorkspace:
+        case .createWorkspace, .createChannel:
             return .post
         case .removeWorkspace:
             return .delete
@@ -49,7 +51,9 @@ extension WorkspaceRouter : TargetType {
         case let .myChannels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
         case let .dmList(workspaceID):
-            return "/workspaces/" + workspaceID.workspace_id + "dms"
+            return "/workspaces/" + workspaceID.workspace_id + "/dms"
+        case let .createChannel(workspaceID, _):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels"
         }
     }
     
@@ -60,6 +64,11 @@ extension WorkspaceRouter : TargetType {
         case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
+                    HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
+            
+        case .createChannel:
+            return [HTTPHeader.authorization.rawValue : token,
+                    HTTPHeader.contentType.rawValue : HTTPHeader.multipart.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
         }
     }
@@ -90,6 +99,20 @@ extension WorkspaceRouter : TargetType {
             }
             
             multiPart.append(request.image, withName: "image", fileName: request.name + "_workspaceImage.jpeg", mimeType: "image/jpeg")
+            
+            return multiPart
+            
+        case let .createChannel(_, request):
+            let multiPart = MultipartFormData()
+            multiPart.append(request.name.data(using: .utf8)!, withName: "name")
+            
+            if let description = request.description {
+                multiPart.append(description.data(using: .utf8)!, withName: "description")
+            }
+            
+            if let image = request.image {
+                multiPart.append(image, withName: "image", fileName: request.name + "_channelImage.jpeg", mimeType: "image/jpeg")
+            }
             
             return multiPart
             
