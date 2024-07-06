@@ -13,4 +13,19 @@ struct Channel : Equatable, Identifiable {
     var id : String { return channelID}
 }
 
+extension Channel {
+    var profileImageToUrl : URL {
+        return URL(string: APIKey.baseURLWithVersion() + coverImage)!
+    }
+    
+    var createdAtToString : String {
+        return createdAt.toDateRaw()!.toString(dateFormat: "yy.MM.dd")
+    }
+    
+    var createdAtDate: Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from: createdAt)
+    }
+}
+
 typealias ChannelList = [Channel]
