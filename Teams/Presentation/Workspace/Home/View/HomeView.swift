@@ -19,54 +19,12 @@ struct HomeView: View {
         WithPerceptionTracking {
             
             //TODO: - scroll View
-            
             NavigationStack {
                 VStack {
                     //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
                     Divider().background(.brandWhite).padding(.top, 10)
                     
-                    DisclosureGroup(isExpanded: $expanded) {
-                        VStack {
-                            ForEach(store.channelList, id: \.id) { response in
-                                HStack {
-                                    Image(systemName: "number")
-                                        .resizable()
-                                        .frame(width: 18, height: 18)
-                                        .padding(.leading, 15)
-                                    Text(response.name)
-                                        .bodyRegular()
-                                }
-                                .padding(.horizontal, 15)
-                                .frame(width: 393, height: 41, alignment: .leading)
-                                .onTapGesture {
-                                    print("hi")
-                                }
-                            }
-                            
-                            HStack {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
-                                    .padding(.leading, 15)
-                                Text("채널 추가")
-                                    .bodyRegular()
-                            }
-                            .padding(.horizontal, 15)
-                            .frame(width: 393, height: 41, alignment: .leading)
-                            .onTapGesture {
-                                store.send(.channelCreateButtonTapped)
-                            }
-                            
-                        }
-                        
-                    } label: {
-                        Text("채널")
-                            .title2()
-                            .foregroundColor(.brandBlack)
-                            .frame(height: 56)
-                    }
-                    .tint(.brandBlack)
-                    .padding(.horizontal, 15)
+                    CustomDisclosureGroupView(store: store)
                     
                     Divider().background(Color.viewSeperator)
                     
@@ -168,13 +126,13 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: Workspace(workspaceID: "4e93033c-bedf-4a36-b16b-e16f37f93ae7",
-                                                                                      name: "천장zxc",
-                                                                                      description: "",
-                                                                                      coverImage: "/static/workspaceCoverImages/1720011671324.jpeg",
-                                                                                      ownerID: "e1b47086-a781-4885-a9a3-3998ec818fa8",
-                                                                                      createdAt: "2024-07-03T12:44:24.083Z")), reducer: {
-        HomeFeature()
-    }))
-}
+//#Preview {
+//    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: Workspace(workspaceID: "4e93033c-bedf-4a36-b16b-e16f37f93ae7",
+//                                                                                      name: "천장zxc",
+//                                                                                      description: "",
+//                                                                                      coverImage: "/static/workspaceCoverImages/1720011671324.jpeg",
+//                                                                                      ownerID: "e1b47086-a781-4885-a9a3-3998ec818fa8",
+//                                                                                      createdAt: "2024-07-03T12:44:24.083Z")), reducer: {
+//        HomeFeature()
+//    }))
+//}

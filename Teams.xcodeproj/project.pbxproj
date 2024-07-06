@@ -12,6 +12,7 @@
 		DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF6B2C38EEF2007F0CBB /* HomeScreen.swift */; };
 		DB04EF6E2C38EF43007F0CBB /* HomeScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF6D2C38EF43007F0CBB /* HomeScreen+Identifiable.swift */; };
 		DB04EF702C38F260007F0CBB /* ChannelCreateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF6F2C38F260007F0CBB /* ChannelCreateRequestDTO.swift */; };
+		DB04EF722C3905B2007F0CBB /* CustomDisclosureGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */; };
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
 		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
@@ -108,6 +109,7 @@
 		DB04EF6B2C38EEF2007F0CBB /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		DB04EF6D2C38EF43007F0CBB /* HomeScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB04EF6F2C38F260007F0CBB /* ChannelCreateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCreateRequestDTO.swift; sourceTree = "<group>"; };
+		DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroupView.swift; sourceTree = "<group>"; };
 		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				DBC567E02C184E4400444E98 /* LoginView.swift */,
 				DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */,
 				DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */,
+				DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */,
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
 				DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */,
+				DB04EF722C3905B2007F0CBB /* CustomDisclosureGroupView.swift in Sources */,
 				DB119BB42C33AF5800E47A53 /* WorkspaceIDDTO.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
