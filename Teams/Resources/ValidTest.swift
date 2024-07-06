@@ -69,7 +69,7 @@ final class UtilitiesFunction {
     
     func getSortedChannelList(from channels: ChannelList) -> ChannelList {
         return channels.sorted(by: {
-            ($0.createdAtDate ?? Date.distantPast) > ($1.createdAtDate ?? Date.distantPast)
+            ($0.createdAtDate ?? Date.distantPast) < ($1.createdAtDate ?? Date.distantPast)
         })
     }
 }

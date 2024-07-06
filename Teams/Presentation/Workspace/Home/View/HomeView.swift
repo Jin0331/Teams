@@ -32,7 +32,7 @@ struct HomeView: View {
                                     Image(systemName: "number")
                                         .resizable()
                                         .frame(width: 18, height: 18)
-                                        .padding(.leading, 5)
+                                        .padding(.leading, 15)
                                     Text(response.name)
                                         .bodyRegular()
                                 }

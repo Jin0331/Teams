@@ -30,6 +30,7 @@ struct HomeFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.utilitiesFunction) var utils
     
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
@@ -50,8 +51,7 @@ struct HomeFeature {
                 ])
                 
             case let .channeListlResponse(.success(response)):
-                
-                state.channelList = response
+                state.channelList = utils.getSortedChannelList(from: response)
                 
                 return .none
                 
