@@ -14,6 +14,14 @@ struct WorkspaceUserResponseDTO : Decodable {
         case userID = "user_id"
         case email, nickname, profileImage
     }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.userID = try container.decode(String.self, forKey: .userID)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.nickname = try container.decode(String.self, forKey: .nickname)
+        self.profileImage = (try? container.decode(String.self, forKey: .profileImage)) ?? ""
+    }
 }
 
 extension WorkspaceUserResponseDTO {
