@@ -236,7 +236,7 @@ final class NetworkManager {
         }
     }
     
-    func removeWorkspace(query : WorkspaceIDDTO) async -> Result<WorkspaceRemoveResponseDTO, APIError> {
+    func removeWorkspace(query : WorkspaceIDRequestDTO) async -> Result<WorkspaceRemoveResponseDTO, APIError> {
         
         let router = WorkspaceRouter.removeWorkspace(request: query)
         
@@ -252,7 +252,7 @@ final class NetworkManager {
         }
     }
     
-    func exitWorkspace(query : WorkspaceIDDTO) async -> Result<[Workspace], APIError> {
+    func exitWorkspace(query : WorkspaceIDRequestDTO) async -> Result<[Workspace], APIError> {
         
         let router = WorkspaceRouter.exitWorkspace(request: query)
         
@@ -270,7 +270,7 @@ final class NetworkManager {
         }
     }
     
-    func editWorkspace(request : WorkspaceIDDTO, query : WorkspaceCreateRequestDTO) async -> Result<Workspace, APIError> {
+    func editWorkspace(request : WorkspaceIDRequestDTO, query : WorkspaceCreateRequestDTO) async -> Result<Workspace, APIError> {
         
         let router = WorkspaceRouter.editWorkspace(request: request, body: query)
         
@@ -286,7 +286,20 @@ final class NetworkManager {
         }
     }
     
-    func getMyChannels(request : WorkspaceIDDTO) async -> Result<[Channel], APIError> {
+    func inviteMember(request : WorkspaceIDRequestDTO, query : WorkspaceEmailRequestDTO) async -> Result<User, APIError> {
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.inviteWorkspace(request: request, body : query), of: WorkspaceUserResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getMyChannels(request : WorkspaceIDRequestDTO) async -> Result<[Channel], APIError> {
         
         let router = WorkspaceRouter.myChannels(request: request)
         
@@ -304,7 +317,25 @@ final class NetworkManager {
         }
     }
     
-    func getDMList(request : WorkspaceIDDTO) async -> Result<[DM], APIError> {
+    func getChannels(request : WorkspaceIDRequestDTO) async -> Result<[Channel], APIError> {
+        
+        let router = WorkspaceRouter.channels(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [ChannelResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getDMList(request : WorkspaceIDRequestDTO) async -> Result<[DM], APIError> {
         
         let router = WorkspaceRouter.dmList(request: request)
         
@@ -323,7 +354,7 @@ final class NetworkManager {
         }
     }
     
-    func createChannel(request : WorkspaceIDDTO, query : ChannelCreateRequestDTO) async -> Result<Channel, APIError> {
+    func createChannel(request : WorkspaceIDRequestDTO, query : ChannelCreateRequestDTO) async -> Result<Channel, APIError> {
         
         let router = WorkspaceRouter.createChannel(request: request, body: query)
         

@@ -12,3 +12,9 @@ struct User : Equatable, Identifiable {
     
     var id : String { return userID }
 }
+
+extension User {
+    var profileImageToUrl : URL {
+        return URL(string: APIKey.baseURLWithVersion() + profileImage)!
+    }
+}

@@ -6,18 +6,24 @@
 //
 
 extension HomeScreen.State: Identifiable {
-  var id: ID {
-    switch self {
-    case .home:
-            .home
-    case .channelAdd:
-            .channelAdd
+    var id: ID {
+        switch self {
+        case .home:
+                .home
+        case .inviteMember:
+                .inviteMember
+        case .channelAdd:
+                .channelAdd
+        case .channelSearch:
+                .channelSearch
+        }
     }
-  }
-
-  enum ID: Identifiable {
-    case home
-    case channelAdd
-    var id: ID { self }
-  }
+    
+    enum ID: Identifiable {
+        case home
+        case inviteMember
+        case channelAdd
+        case channelSearch
+        var id: ID { self }
+    }
 }

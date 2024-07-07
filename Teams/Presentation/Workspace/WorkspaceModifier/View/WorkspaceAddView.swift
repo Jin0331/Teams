@@ -1,25 +1,25 @@
 //
-//  WorkspaceEditView.swift
+//  WorkspaceAddView.swift
 //  Teams
 //
-//  Created by JinwooLee on 7/2/24.
+//  Created by JinwooLee on 6/20/24.
 //
 
 import ComposableArchitecture
 import SwiftUI
 import PhotosUI
 import PopupView
-import Kingfisher
 
-struct WorkspaceEditView : View {
+struct WorkspaceAddView : View {
     
-    @State var store : StoreOf<WorkspaceEditFeature>
+    @State var store : StoreOf<WorkspaceAddFeature>
     @State private var selectedItem: PhotosPickerItem?
     
     var body: some View {
         
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack(spacing: 20) {
                     PhotosPicker( //https://swiftsenpai.com/development/swiftui-photos-picker/
                         selection: $selectedItem,
@@ -82,8 +82,8 @@ struct WorkspaceEditView : View {
                         .padding()
                         .frame(width: 345, height: 44, alignment: .leading)
                     
-                    Button("저장") {
-                        store.send(.editButtonTapped)
+                    Button("완료") {
+                        store.send(.createButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
@@ -100,7 +100,7 @@ struct WorkspaceEditView : View {
                 } customize: {
                     $0.autohideIn(2)
                 }
-                .navigationBarTitle("워크스페이스 편집", displayMode: .inline)
+                .navigationBarTitle("워크스페이스 생성", displayMode: .inline)
                 .navigationBarItems(
                     leading:
                         Button {
@@ -111,9 +111,6 @@ struct WorkspaceEditView : View {
                 )
                 .navigationBarColor(backgroundColor: .brandWhite, titleColor: .brandBlack)
                 .navigationViewStyle(StackNavigationViewStyle())
-            }
-            .onAppear {
-                store.send(.onApear)
             }
         }
     }

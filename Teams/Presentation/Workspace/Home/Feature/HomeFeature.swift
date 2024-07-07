@@ -28,6 +28,7 @@ struct HomeFeature {
         case channelAddButtonTapped
         case channelCreateButtonTapped
         case channelSearchButtonTapped
+        case inviteMemberButtonTapped
         case binding(BindingAction<State>)
         case channeListlResponse(Result<[Channel], APIError>)
         case dmListResponse(Result<[DM], APIError>)   
@@ -45,15 +46,12 @@ struct HomeFeature {
             
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-                
-                print(workspace.id, UserDefaultManager.shared.accessToken)
-                
                 return .merge([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))))
+                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
                     },
                     .run { send in
-                        await send(.dmListResponse(networkManager.getDMList(request: WorkspaceIDDTO(workspace_id: workspace.id))))
+                        await send(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
                     }
                 ])
                 

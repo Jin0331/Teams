@@ -62,7 +62,7 @@ struct CustomDisclosureGroupView : View {
                     store.send(.channelCreateButtonTapped)
                 }
                 Button("채널 탐색") {
-//                            store.send(.workspaceExitManager)
+                    store.send(.channelSearchButtonTapped)
                 }
                 Button("취소", role: .cancel) {}
             }

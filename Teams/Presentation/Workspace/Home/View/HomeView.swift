@@ -84,7 +84,7 @@ struct HomeView: View {
                     .frame(width: 393, height: 41, alignment: .leading)
                     .padding(.horizontal, 15)
                     .onTapGesture {
-                        print("hi")
+                        store.send(.inviteMemberButtonTapped)
                     }
                     
                     Spacer()

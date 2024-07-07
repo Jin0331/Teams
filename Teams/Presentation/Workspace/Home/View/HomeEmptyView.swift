@@ -16,6 +16,7 @@ struct HomeEmptyView: View {
         
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack {
                     VStack(spacing : 25) {
                         Text("워크스페이스를 찾을 수 없어요.")

@@ -11,14 +11,16 @@ import Alamofire
 enum WorkspaceRouter {
     case myWorkspaces
     case createWorkspace(request : WorkspaceCreateRequestDTO)
-    case removeWorkspace(request : WorkspaceIDDTO)
-    case exitWorkspace(request : WorkspaceIDDTO)
-    case editWorkspace(request : WorkspaceIDDTO, body : WorkspaceCreateRequestDTO)
+    case removeWorkspace(request : WorkspaceIDRequestDTO)
+    case exitWorkspace(request : WorkspaceIDRequestDTO)
+    case editWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceCreateRequestDTO)
+    case inviteWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceEmailRequestDTO)
     
-    case createChannel(request : WorkspaceIDDTO, body : ChannelCreateRequestDTO)
+    case createChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
     
-    case myChannels(request : WorkspaceIDDTO)
-    case dmList(request : WorkspaceIDDTO)
+    case myChannels(request : WorkspaceIDRequestDTO)
+    case channels(request : WorkspaceIDRequestDTO)
+    case dmList(request : WorkspaceIDRequestDTO)
     
 }
 
@@ -29,9 +31,9 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .myChannels, .dmList:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList:
             return .get
-        case .createWorkspace, .createChannel:
+        case .createWorkspace, .createChannel, .inviteWorkspace:
             return .post
         case .removeWorkspace:
             return .delete
@@ -52,8 +54,10 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
         case let .dmList(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
-        case let .createChannel(workspaceID, _):
+        case let .createChannel(workspaceID, _), let .channels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
+        case let .inviteWorkspace(workspaceID,_):
+            return "/workspaces/" + workspaceID.workspace_id + "/members"
         }
     }
     
@@ -61,7 +65,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -83,6 +87,11 @@ extension WorkspaceRouter : TargetType {
     
     var body: Data? {
         switch self {
+        case let .inviteWorkspace(_,email):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            
+            return try? encoder.encode(email)
         default :
             return nil
         }

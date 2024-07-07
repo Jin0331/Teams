@@ -1,54 +1,42 @@
 //
-//  ChannelAddView.swift
+//  WorkspaceInviteView.swift
 //  Teams
 //
-//  Created by JinwooLee on 7/6/24.
+//  Created by JinwooLee on 7/7/24.
 //
 
 import ComposableArchitecture
 import SwiftUI
 import PopupView
 
-struct ChannelAddView : View {
+struct WorkspaceInviteView: View {
     
-    @State var store : StoreOf<ChannelAddFeature>
+    @State var store : StoreOf<WorkspaceInviteFeature>
     
     var body: some View {
-        
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite)
                 VStack(spacing: 20) {
-                    Text("채널 이름")
+                    Text("이메일")
                         .title2()
                         .foregroundStyle(.brandBlack)
-                        .padding()
                         .frame(width: 345, height: 24, alignment: .leading)
+                        .padding(.top, 10)
                     
-                    TextField("채널 이름을 입력하세요 (필수)", text: $store.channelName)
+                    TextField("초대하려는 팀원의 이메일을 입력하세요.", text: $store.email)
                         .bodyRegular()
-                        .padding()
                         .frame(width: 345, height: 44, alignment: .leading)
                     
-                    Text("채널 설명")
-                        .title2()
-                        .foregroundStyle(.brandBlack)
-                        .padding()
-                        .frame(width: 345, height: 24, alignment: .leading)
-                    
-                    TextField("채널을 설명하세요 (옵션)", text: $store.channelDescription)
-                        .bodyRegular()
-                        .padding()
-                        .frame(width: 345, height: 44, alignment: .leading)
-                    
-                    Button("생성") {
-                        store.send(.createButtonTapped)
+                    Button("초대 보내기") {
+                        store.send(.inviteButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 345, height: 44)
                     .title2()
-                    .background(backgroundForIsActive(store.createButton))
+                    .background(backgroundForIsActive(store.inviteButton))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .disabled(!store.createButton)
+                    .disabled(!store.inviteButton)
                     
                     Spacer()
                     
@@ -58,7 +46,7 @@ struct ChannelAddView : View {
                 } customize: {
                     $0.autohideIn(2)
                 }
-                .navigationBarTitle("채널 생성", displayMode: .inline)
+                .navigationBarTitle("팀원 초대", displayMode: .inline)
                 .navigationBarItems(
                     leading:
                         Button {
@@ -74,3 +62,8 @@ struct ChannelAddView : View {
     }
 }
 
+#Preview {
+    WorkspaceInviteView(store: Store(initialState: WorkspaceInviteFeature.State(), reducer: {
+        WorkspaceInviteFeature()
+    }))
+}
