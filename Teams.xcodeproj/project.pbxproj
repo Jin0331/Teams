@@ -214,6 +214,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB04EF732C3AC4FD007F0CBB /* ChannelModifier */ = {
+			isa = PBXGroup;
+			children = (
+				DB04EF742C3AC514007F0CBB /* View */,
+				DB04EF752C3AC519007F0CBB /* Feature */,
+			);
+			path = ChannelModifier;
+			sourceTree = "<group>";
+		};
+		DB04EF742C3AC514007F0CBB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB04EF752C3AC519007F0CBB /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
 		DB085B4A2C0DFAFC00199065 /* Onbaording */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,10 +291,10 @@
 			isa = PBXGroup;
 			children = (
 				DBF386282C1C12DC00A08152 /* Coordinator */,
-				DB717EE12C293D08003C59ED /* SideMenu */,
 				DBF386272C1C12CA00A08152 /* Home */,
-				DBEA521A2C231D4A00026926 /* Add */,
-				DB25660B2C33CFEF00D34BEB /* Edit */,
+				DB717EE12C293D08003C59ED /* SideMenu */,
+				DBEA521A2C231D4A00026926 /* WorkspaceModifier */,
+				DB04EF732C3AC4FD007F0CBB /* ChannelModifier */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -331,31 +356,6 @@
 				DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		DB25660B2C33CFEF00D34BEB /* Edit */ = {
-			isa = PBXGroup;
-			children = (
-				DB25660C2C33D01500D34BEB /* View */,
-				DB25660D2C33D01800D34BEB /* Feature */,
-			);
-			path = Edit;
-			sourceTree = "<group>";
-		};
-		DB25660C2C33D01500D34BEB /* View */ = {
-			isa = PBXGroup;
-			children = (
-				DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		DB25660D2C33D01800D34BEB /* Feature */ = {
-			isa = PBXGroup;
-			children = (
-				DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */,
-			);
-			path = Feature;
 			sourceTree = "<group>";
 		};
 		DB37633E2C29CADA009A201B /* Coordinator */ = {
@@ -552,20 +552,20 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		DBEA521A2C231D4A00026926 /* Add */ = {
+		DBEA521A2C231D4A00026926 /* WorkspaceModifier */ = {
 			isa = PBXGroup;
 			children = (
 				DBEA521B2C231D5E00026926 /* View */,
 				DBEA521C2C231D6200026926 /* Feature */,
 			);
-			path = Add;
+			path = WorkspaceModifier;
 			sourceTree = "<group>";
 		};
 		DBEA521B2C231D5E00026926 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */,
-				DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */,
+				DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -574,7 +574,7 @@
 			isa = PBXGroup;
 			children = (
 				DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */,
-				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
+				DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";

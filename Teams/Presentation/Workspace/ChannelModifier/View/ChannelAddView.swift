@@ -16,8 +16,8 @@ struct ChannelAddView : View {
     var body: some View {
         
         WithPerceptionTracking {
-            Divider().background(.brandWhite).padding(.top, 10)
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack(spacing: 20) {
                     Text("채널 이름")
                         .title2()
