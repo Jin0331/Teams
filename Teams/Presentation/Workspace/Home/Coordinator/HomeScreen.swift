@@ -11,6 +11,7 @@ import Foundation
 @Reducer(state: .equatable)
 enum HomeScreen {
     case home(HomeFeature)
+    case inviteMember(WorkspaceInviteFeature)
     case channelAdd(ChannelAddFeature)
     case channelSearch(ChannelSearchFeature)
 }

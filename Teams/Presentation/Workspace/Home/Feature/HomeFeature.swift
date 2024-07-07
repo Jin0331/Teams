@@ -28,6 +28,7 @@ struct HomeFeature {
         case channelAddButtonTapped
         case channelCreateButtonTapped
         case channelSearchButtonTapped
+        case inviteMemberButtonTapped
         case binding(BindingAction<State>)
         case channeListlResponse(Result<[Channel], APIError>)
         case dmListResponse(Result<[DM], APIError>)   

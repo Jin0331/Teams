@@ -15,6 +15,8 @@
 		DB04EF722C3905B2007F0CBB /* CustomDisclosureGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */; };
 		DB04EF772C3AC5B2007F0CBB /* ChannelSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF762C3AC5B2007F0CBB /* ChannelSearchView.swift */; };
 		DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */; };
+		DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7A2C3AD2CE007F0CBB /* WorkspaceInviteView.swift */; };
+		DB04EF7D2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */; };
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
 		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
@@ -114,6 +116,8 @@
 		DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroupView.swift; sourceTree = "<group>"; };
 		DB04EF762C3AC5B2007F0CBB /* ChannelSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearchView.swift; sourceTree = "<group>"; };
 		DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearchFeature.swift; sourceTree = "<group>"; };
+		DB04EF7A2C3AD2CE007F0CBB /* WorkspaceInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInviteView.swift; sourceTree = "<group>"; };
+		DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInviteFeature.swift; sourceTree = "<group>"; };
 		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -572,6 +576,7 @@
 			children = (
 				DBEA521D2C23EB9800026926 /* WorkspaceAddView.swift */,
 				DB25660E2C33D04400D34BEB /* WorkspaceEditView.swift */,
+				DB04EF7A2C3AD2CE007F0CBB /* WorkspaceInviteView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 			children = (
 				DBEA521F2C23EBA500026926 /* WorkspaceAddFeature.swift */,
 				DB2566102C33D06800D34BEB /* WorkspaceEditFeature.swift */,
+				DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -812,6 +818,7 @@
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
 				DB04EF702C38F260007F0CBB /* ChannelCreateRequestDTO.swift in Sources */,
+				DB04EF7D2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift in Sources */,
 				DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */,
 				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
 				DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */,
@@ -825,6 +832,7 @@
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
+				DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,

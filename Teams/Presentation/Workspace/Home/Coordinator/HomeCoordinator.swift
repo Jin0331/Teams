@@ -17,6 +17,8 @@ struct HomeCoordinatorView : View {
             switch screen.case {
             case let .home(store):
                 HomeView(store: store)
+            case let .inviteMember(store):
+                WorkspaceInviteView(store: store)
             case let .channelAdd(store):
                 ChannelAddView(store: store)
             case let .channelSearch(store):
@@ -52,10 +54,13 @@ struct HomeCoordinator {
             case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
                 state.routes.presentSheet(.channelAdd(.init(currentWorkspace: state.currentWorkspace)))
                 
+            case .router(.routeAction(_, action: .home(.inviteMemberButtonTapped))):
+                state.routes.presentSheet(.inviteMember(.init(currentWorkspace: state.currentWorkspace)))
+                
             case .router(.routeAction(_, action: .home(.channelSearchButtonTapped))):
                 state.routes.presentCover(.channelSearch(.init(workspaceCurrent: state.currentWorkspace)))
                 
-            case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))):
+            case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))), .router(.routeAction(_, action: .inviteMember(.dismiss))):
                 state.routes.dismiss()
                 
             case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):
