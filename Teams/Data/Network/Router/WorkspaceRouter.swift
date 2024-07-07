@@ -14,6 +14,7 @@ enum WorkspaceRouter {
     case removeWorkspace(request : WorkspaceIDDTO)
     case exitWorkspace(request : WorkspaceIDDTO)
     case editWorkspace(request : WorkspaceIDDTO, body : WorkspaceCreateRequestDTO)
+    case inviteWorkspace(request : WorkspaceEmailDTO)
     
     case createChannel(request : WorkspaceIDDTO, body : ChannelCreateRequestDTO)
     
@@ -32,7 +33,7 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList:
             return .get
-        case .createWorkspace, .createChannel:
+        case .createWorkspace, .createChannel, .inviteWorkspace:
             return .post
         case .removeWorkspace:
             return .delete
@@ -55,6 +56,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
         case let .createChannel(workspaceID, _), let .channels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
+        case let .inviteWorkspace(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/members"
         }
     }
     
@@ -62,7 +65,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -84,6 +87,11 @@ extension WorkspaceRouter : TargetType {
     
     var body: Data? {
         switch self {
+        case let .inviteWorkspace(email):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            
+            return try? encoder.encode(email)
         default :
             return nil
         }

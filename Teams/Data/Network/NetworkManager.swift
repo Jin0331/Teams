@@ -286,6 +286,19 @@ final class NetworkManager {
         }
     }
     
+    func inviteMember(query : WorkspaceEmailDTO) async -> Result<User, APIError> {
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.inviteWorkspace(request: query), of: WorkspaceUserResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     func getMyChannels(request : WorkspaceIDDTO) async -> Result<[Channel], APIError> {
         
         let router = WorkspaceRouter.myChannels(request: request)

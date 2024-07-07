@@ -17,6 +17,8 @@
 		DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */; };
 		DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7A2C3AD2CE007F0CBB /* WorkspaceInviteView.swift */; };
 		DB04EF7D2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */; };
+		DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7E2C3ADC32007F0CBB /* WorkspaceEmailDTO.swift */; };
+		DB04EF812C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF802C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift */; };
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
 		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
@@ -118,6 +120,8 @@
 		DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearchFeature.swift; sourceTree = "<group>"; };
 		DB04EF7A2C3AD2CE007F0CBB /* WorkspaceInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInviteView.swift; sourceTree = "<group>"; };
 		DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInviteFeature.swift; sourceTree = "<group>"; };
+		DB04EF7E2C3ADC32007F0CBB /* WorkspaceEmailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEmailDTO.swift; sourceTree = "<group>"; };
+		DB04EF802C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkspaceUserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB085B4B2C0DFB2000199065 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		DB085B562C0E05CD00199065 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */,
 				DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */,
 				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
+				DB04EF802C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				DB119BB32C33AF5700E47A53 /* WorkspaceIDDTO.swift */,
 				DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */,
 				DB04EF6F2C38F260007F0CBB /* ChannelCreateRequestDTO.swift */,
+				DB04EF7E2C3ADC32007F0CBB /* WorkspaceEmailDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -856,6 +862,7 @@
 				DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
+				DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailDTO.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
@@ -881,6 +888,7 @@
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
+				DB04EF812C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift in Sources */,
 				DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,
 			);
