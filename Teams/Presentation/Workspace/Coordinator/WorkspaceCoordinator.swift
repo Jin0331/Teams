@@ -147,7 +147,7 @@ struct WorkspaceCoordinator {
                 
             case let .workspaceRemoveOnPopupView(removeWorkspaceID):
                 
-                let query = WorkspaceIDDTO(workspace_id: removeWorkspaceID)
+                let query = WorkspaceIDRequestDTO(workspace_id: removeWorkspaceID)
                 
                 return .run { send in
                     await send(.workspaceRemoveResponse(
@@ -167,7 +167,7 @@ struct WorkspaceCoordinator {
                 return .none
             
             case let .workspaceExitOnPopupView(exitWorkspaceID):
-                let query = WorkspaceIDDTO(workspace_id: exitWorkspaceID)
+                let query = WorkspaceIDRequestDTO(workspace_id: exitWorkspaceID)
                 
                 return .run { send in
                     await send(.workspaceExitResponse(

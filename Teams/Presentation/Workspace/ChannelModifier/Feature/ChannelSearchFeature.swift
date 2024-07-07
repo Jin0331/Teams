@@ -39,10 +39,10 @@ struct ChannelSearchFeature {
                 
                 return .concatenate([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))))
+                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
                     },
                     .run { send in
-                        await send(.myChanneListlResponse(networkManager.getChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))))
+                        await send(.myChanneListlResponse(networkManager.getChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
                     }
                 ])
                 

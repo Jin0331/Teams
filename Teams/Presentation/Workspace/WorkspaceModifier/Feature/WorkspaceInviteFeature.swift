@@ -66,17 +66,11 @@ struct WorkspaceInviteFeature {
                 }
                 
                 guard let workspace = state.currentWorkspace else { return .none }
-//                let createChannelRequest = ChannelCreateRequestDTO(name: state.channelName,
-//                                                                       description: state.channelDescription,
-//                                                                       image: nil)
-
-//                return .run { send in
-//                    await send(.createChannelResponse(
-//                        networkManager.createChannel(request: WorkspaceIDDTO(workspace_id: workspace.id), query: createChannelRequest)
-//                    ))
-//                }
-                
-                return .none
+                return .run { [email = state.email ]send in
+                    await send(.inviteResponse(
+                        networkManager.inviteMember(request: WorkspaceIDRequestDTO(workspace_id: workspace.id), query: WorkspaceEmailRequestDTO(email: email))
+                    ))
+                }
             
             default :
                 return .none
