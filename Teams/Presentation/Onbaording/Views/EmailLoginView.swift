@@ -18,6 +18,7 @@ struct EmailLoginView : View {
         
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack(spacing: 20) {
                     
                     LoginView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid)

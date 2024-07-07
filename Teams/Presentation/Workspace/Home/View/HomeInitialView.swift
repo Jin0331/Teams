@@ -16,6 +16,7 @@ struct HomeInitialView: View {
         
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack {
                     VStack(spacing : 25) {
                         Text("출시 준비 완료!")

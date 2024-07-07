@@ -89,6 +89,7 @@ struct MainCoordinator {
                 }
             
             //TODO: - 초기에 initalState로 초기화되었다가, 비동기 action으로 state가 초기화되면서 ,땅->땅 으로 뷰가 전환됨. Progress View 필요할듯
+            //MARK: - Workspace가 지정되는 부분
             case let .autoLogin(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType)

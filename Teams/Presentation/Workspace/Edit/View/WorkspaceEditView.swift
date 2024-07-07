@@ -20,6 +20,7 @@ struct WorkspaceEditView : View {
         
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack(spacing: 20) {
                     PhotosPicker( //https://swiftsenpai.com/development/swiftui-photos-picker/
                         selection: $selectedItem,

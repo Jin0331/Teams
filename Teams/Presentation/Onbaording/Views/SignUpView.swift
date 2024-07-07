@@ -17,6 +17,7 @@ struct SignUpView: View {
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
+                Divider().background(.brandWhite).padding(.top, 10)
                 VStack(spacing : 20) {
                     
                     InputView(title: "이메일", placement: "이메일을 입력하세요", text: $store.emailText, valid: store.emailValid, isEmail: true, emailValid : store.emailDuplicateButton, focusState: $focusedField, store: store.scope(state: \.inputView, action: \.inputView))
