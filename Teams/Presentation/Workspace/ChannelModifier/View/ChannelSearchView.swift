@@ -17,7 +17,7 @@ struct ChannelSearchView: View {
         WithPerceptionTracking {
             NavigationStack {
                 Divider().background(.brandWhite).padding(.top, 10)
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     ForEach(store.channelList, id: \.id) { response in
                         HStack {
                             Image(systemName: "number")
@@ -25,7 +25,7 @@ struct ChannelSearchView: View {
                                 .frame(width: 18, height: 18)
                                 .padding(.leading, 15)
                             Text(response.name)
-                                .bodyRegular()
+                                .bodyBold()
                         }
                         .padding(.horizontal, 15)
                         .frame(width: 393, height: 41, alignment: .leading)
@@ -33,7 +33,7 @@ struct ChannelSearchView: View {
                             print("hi")
                         }
                     }
-                    
+                    Spacer()
                 }
                 .navigationBarTitle("채널 탐색", displayMode: .inline)
                 .navigationBarItems(

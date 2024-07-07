@@ -45,9 +45,6 @@ struct HomeFeature {
             
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-                
-                print(workspace.id, UserDefaultManager.shared.accessToken)
-                
                 return .merge([
                     .run { send in
                         await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDDTO(workspace_id: workspace.id))))

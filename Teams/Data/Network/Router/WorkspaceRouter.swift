@@ -18,6 +18,7 @@ enum WorkspaceRouter {
     case createChannel(request : WorkspaceIDDTO, body : ChannelCreateRequestDTO)
     
     case myChannels(request : WorkspaceIDDTO)
+    case channels(request : WorkspaceIDDTO)
     case dmList(request : WorkspaceIDDTO)
     
 }
@@ -29,7 +30,7 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .myChannels, .dmList:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList:
             return .get
         case .createWorkspace, .createChannel:
             return .post
@@ -52,7 +53,7 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
         case let .dmList(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
-        case let .createChannel(workspaceID, _):
+        case let .createChannel(workspaceID, _), let .channels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
         }
     }
@@ -61,7 +62,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]

@@ -304,6 +304,24 @@ final class NetworkManager {
         }
     }
     
+    func getChannels(request : WorkspaceIDDTO) async -> Result<[Channel], APIError> {
+        
+        let router = WorkspaceRouter.channels(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [ChannelResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     func getDMList(request : WorkspaceIDDTO) async -> Result<[DM], APIError> {
         
         let router = WorkspaceRouter.dmList(request: request)

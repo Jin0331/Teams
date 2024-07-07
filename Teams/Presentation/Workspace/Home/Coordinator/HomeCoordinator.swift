@@ -19,6 +19,8 @@ struct HomeCoordinatorView : View {
                 HomeView(store: store)
             case let .channelAdd(store):
                 ChannelAddView(store: store)
+            case let .channelSearch(store):
+                ChannelSearchView(store: store)
             }
         }
     }
@@ -50,7 +52,10 @@ struct HomeCoordinator {
             case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
                 state.routes.presentSheet(.channelAdd(.init(currentWorkspace: state.currentWorkspace)))
                 
-            case .router(.routeAction(_, action: .channelAdd(.dismiss))):
+            case .router(.routeAction(_, action: .home(.channelSearchButtonTapped))):
+                state.routes.presentCover(.channelSearch(.init(workspaceCurrent: state.currentWorkspace)))
+                
+            case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))):
                 state.routes.dismiss()
                 
             case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):

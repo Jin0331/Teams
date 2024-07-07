@@ -12,4 +12,5 @@ import Foundation
 enum HomeScreen {
     case home(HomeFeature)
     case channelAdd(ChannelAddFeature)
+    case channelSearch(ChannelSearchFeature)
 }
