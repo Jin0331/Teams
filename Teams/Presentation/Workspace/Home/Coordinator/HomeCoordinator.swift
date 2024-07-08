@@ -70,6 +70,9 @@ struct HomeCoordinator {
                 state.routes.dismiss()
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
                 
+            case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channelID)))):
+                print("channel Enter 🌟", channelID)
+                
             default :
                 break
             }

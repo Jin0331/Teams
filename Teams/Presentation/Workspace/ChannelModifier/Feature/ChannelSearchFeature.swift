@@ -28,7 +28,7 @@ struct ChannelSearchFeature {
         case onAppear
         case channeListlResponse(Result<[Channel], APIError>)
         case myChanneListlResponse(Result<[Channel], APIError>)
-        case channelListTapped
+        case channelListTapped(id:String, name:String)
         case dismissPopupView
         case channelEnter(String)
         case binding(BindingAction<State>)
@@ -74,14 +74,8 @@ struct ChannelSearchFeature {
                 return .none
                 
                 //TODO: - Channel List tapped 했을때 Action
-            case .channelListTapped:
-                state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "정말 이 워크스페이스를 떠나시겠습니까?", buttonTitle: "참여", id: "", twoButton: true)
-                return .none
-                
-            case let .channelEnter(channelID):
-                //                state.routes.push(<#T##screen: HomeScreen.State##HomeScreen.State#>)
-                print("channel Enter 🌟")
-                
+            case let .channelListTapped(id, name):
+                state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "[\(name)] 채널에 참여하시겠습니까?", buttonTitle: "참여", id: id, twoButton: true)
                 return .none
                 
             case .dismissPopupView:
