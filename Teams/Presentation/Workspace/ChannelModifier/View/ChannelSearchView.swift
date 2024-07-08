@@ -30,7 +30,7 @@ struct ChannelSearchView: View {
                         .padding(.horizontal, 15)
                         .frame(width: 393, height: 41, alignment: .leading)
                         .onTapGesture {
-                            print("hi")
+                            store.send(.channelListTapped)
                         }
                     }
                     Spacer()
@@ -49,6 +49,14 @@ struct ChannelSearchView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+            }
+            .popup(item: $store.popupPresent) { popup in
+                PopupButtonChannelView(store: store, action: popup)
+            } customize: {
+                $0
+                    .closeOnTap(false)
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.4))
             }
         }
     }

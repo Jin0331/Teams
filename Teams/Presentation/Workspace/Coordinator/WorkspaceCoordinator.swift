@@ -41,7 +41,7 @@ struct WorkspaceCoordinatorView : View {
                 }
             }
             .popup(item: $store.popupPresent) { popup in
-                PopupButtonView(store: store, action: popup)
+                PopupButtonWorkspaceView(store: store, action: popup)
             } customize: {
                 $0
                     .closeOnTap(false)

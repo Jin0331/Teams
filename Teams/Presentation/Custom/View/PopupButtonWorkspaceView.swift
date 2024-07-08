@@ -1,5 +1,5 @@
 //
-//  PopupTwoButtonView.swift
+//  PopupButtonWorkspaceView.swift
 //  Teams
 //
 //  Created by JinwooLee on 7/1/24.
@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 
-struct PopupButtonView: View {
+struct PopupButtonWorkspaceView: View {
     @Perception.Bindable var store : StoreOf<WorkspaceCoordinator>
     let action : WorkspaceCoordinator.State.CustomPopup
     
@@ -107,5 +107,3 @@ struct PopupButtonView: View {
         }
     }
 }
-
-

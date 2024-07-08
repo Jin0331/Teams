@@ -19,6 +19,8 @@
 		DB04EF7D2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7C2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift */; };
 		DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF7E2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift */; };
 		DB04EF812C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04EF802C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift */; };
+		DB04EF842C3B7BD4007F0CBB /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DB04EF832C3B7BD4007F0CBB /* Realm */; };
+		DB04EF862C3B7BD4007F0CBB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DB04EF852C3B7BD4007F0CBB /* RealmSwift */; };
 		DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4B2C0DFB2000199065 /* OnboardingView.swift */; };
 		DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B4F2C0DFB9F00199065 /* OnboardingFeature.swift */; };
 		DB085B572C0E05CD00199065 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B562C0E05CD00199065 /* Font.swift */; };
@@ -27,7 +29,6 @@
 		DB085B622C0ED09700199065 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B612C0ED09700199065 /* SignUpView.swift */; };
 		DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB085B632C0ED0A500199065 /* SignUpFeature.swift */; };
 		DB0B9D7D2C1833D800C5C150 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */; };
-		DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */; };
 		DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */; };
 		DB119BB42C33AF5800E47A53 /* WorkspaceIDRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB119BB32C33AF5700E47A53 /* WorkspaceIDRequestDTO.swift */; };
 		DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */; };
@@ -107,6 +108,8 @@
 		DBF85C202C0DF5FC00CDFA04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */; };
 		DBF85C282C0DF68D00CDFA04 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DBF85C272C0DF68D00CDFA04 /* .gitignore */; };
 		DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */; };
+		DBFB53E62C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */; };
+		DBFB53E82C3C333C00ADE1E7 /* PopupButtonChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,7 +133,6 @@
 		DB085B612C0ED09700199065 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DB085B632C0ED0A500199065 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		DB0B9D7C2C1833D800C5C150 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
-		DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonView.swift; sourceTree = "<group>"; };
 		DB119BAF2C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRemoveResponseDTO.swift; sourceTree = "<group>"; };
 		DB119BB32C33AF5700E47A53 /* WorkspaceIDRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceIDRequestDTO.swift; sourceTree = "<group>"; };
 		DB11F5C32C1D9A1000D84619 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -207,6 +209,8 @@
 		DBF85C1C2C0DF5FC00CDFA04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBF85C1F2C0DF5FC00CDFA04 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DBF85C272C0DF68D00CDFA04 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButtonWorkspaceView.swift; sourceTree = "<group>"; };
+		DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonChannelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +218,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB04EF862C3B7BD4007F0CBB /* RealmSwift in Frameworks */,
+				DB04EF842C3B7BD4007F0CBB /* Realm in Frameworks */,
 				DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */,
 				DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */,
 				DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */,
@@ -482,7 +488,8 @@
 				DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */,
 				DBC567E02C184E4400444E98 /* LoginView.swift */,
 				DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */,
-				DB119BAA2C32E85500E47A53 /* PopupButtonView.swift */,
+				DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */,
+				DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */,
 				DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */,
 			);
 			path = View;
@@ -736,6 +743,8 @@
 				DB5AADC42C16AB9D002907B6 /* Kingfisher */,
 				DBD0758A2C1B273500678DAB /* KakaoSDK */,
 				DBF386212C1BFAD000A08152 /* TCACoordinators */,
+				DB04EF832C3B7BD4007F0CBB /* Realm */,
+				DB04EF852C3B7BD4007F0CBB /* RealmSwift */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -772,6 +781,7 @@
 				DB5AADC32C16AB9D002907B6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				DB04EF822C3B7BD3007F0CBB /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -807,6 +817,7 @@
 				DB04EF722C3905B2007F0CBB /* CustomDisclosureGroupView.swift in Sources */,
 				DB119BB42C33AF5800E47A53 /* WorkspaceIDRequestDTO.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
+				DBFB53E62C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
 				DBEA522C2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift in Sources */,
@@ -821,6 +832,7 @@
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
 				DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */,
 				DBEA52282C241B0000026926 /* WorkspaceTabCoordinator.swift in Sources */,
+				DBFB53E82C3C333C00ADE1E7 /* PopupButtonChannelView.swift in Sources */,
 				DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */,
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
 				DB04EF702C38F260007F0CBB /* ChannelCreateRequestDTO.swift in Sources */,
@@ -849,7 +861,6 @@
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
 				DB085B502C0DFB9F00199065 /* OnboardingFeature.swift in Sources */,
 				DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */,
-				DB119BAB2C32E85500E47A53 /* PopupButtonView.swift in Sources */,
 				DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */,
 				DB04EF682C38EA6D007F0CBB /* ChannelAddView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
@@ -1112,6 +1123,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DB04EF822C3B7BD3007F0CBB /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.45.0;
+			};
+		};
 		DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/exyte/PopupView.git";
@@ -1163,6 +1182,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DB04EF832C3B7BD4007F0CBB /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB04EF822C3B7BD3007F0CBB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		DB04EF852C3B7BD4007F0CBB /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB04EF822C3B7BD3007F0CBB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		DB5AADB42C12E4F1002907B6 /* PopupView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DB5AADB32C12E4F1002907B6 /* XCRemoteSwiftPackageReference "PopupView" */;
