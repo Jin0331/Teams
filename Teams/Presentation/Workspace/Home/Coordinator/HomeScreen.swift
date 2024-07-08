@@ -14,4 +14,5 @@ enum HomeScreen {
     case inviteMember(WorkspaceInviteFeature)
     case channelAdd(ChannelAddFeature)
     case channelSearch(ChannelSearchFeature)
+    case channelChat(ChannelChatFeature)
 }

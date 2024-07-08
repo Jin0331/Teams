@@ -23,6 +23,8 @@ struct HomeCoordinatorView : View {
                 ChannelAddView(store: store)
             case let .channelSearch(store):
                 ChannelSearchView(store: store)
+            case let .channelChat(store):
+                ChannelChatView(store: store)
             }
         }
     }
@@ -36,7 +38,7 @@ struct HomeCoordinator {
     struct State : Equatable {
         static func initialState(workspaceCurrent: Workspace? = nil) -> Self {
             Self(
-                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))],
+                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)), embedInNavigationView: true)],
                 currentWorkspace: workspaceCurrent
             )
         }
@@ -72,6 +74,9 @@ struct HomeCoordinator {
                 
             case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channelID)))):
                 print("channel Enter 🌟", channelID)
+                state.routes.dismiss()
+                state.routes.push(.channelChat(.init()))
+                
                 
             default :
                 break

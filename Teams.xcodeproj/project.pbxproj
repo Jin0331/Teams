@@ -110,6 +110,8 @@
 		DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DBF85C2A2C0DF71300CDFA04 /* ComposableArchitecture */; };
 		DBFB53E62C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */; };
 		DBFB53E82C3C333C00ADE1E7 /* PopupButtonChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */; };
+		DBFB53EA2C3C44BF00ADE1E7 /* ChannelChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E92C3C44BF00ADE1E7 /* ChannelChatView.swift */; };
+		DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +213,8 @@
 		DBF85C272C0DF68D00CDFA04 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButtonWorkspaceView.swift; sourceTree = "<group>"; };
 		DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonChannelView.swift; sourceTree = "<group>"; };
+		DBFB53E92C3C44BF00ADE1E7 /* ChannelChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatView.swift; sourceTree = "<group>"; };
+		DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +250,7 @@
 			children = (
 				DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */,
 				DB04EF762C3AC5B2007F0CBB /* ChannelSearchView.swift */,
+				DBFB53E92C3C44BF00ADE1E7 /* ChannelChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			children = (
 				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
 				DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */,
+				DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -848,6 +854,7 @@
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
+				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */,
@@ -882,6 +889,7 @@
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
 				DB04EF6E2C38EF43007F0CBB /* HomeScreen+Identifiable.swift in Sources */,
+				DBFB53EA2C3C44BF00ADE1E7 /* ChannelChatView.swift in Sources */,
 				DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */,
 				DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
