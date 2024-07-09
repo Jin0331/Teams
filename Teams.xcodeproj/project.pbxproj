@@ -112,6 +112,8 @@
 		DBFB53E82C3C333C00ADE1E7 /* PopupButtonChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */; };
 		DBFB53EA2C3C44BF00ADE1E7 /* ChannelChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53E92C3C44BF00ADE1E7 /* ChannelChatView.swift */; };
 		DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */; };
+		DBFB53EF2C3CF5AC00ADE1E7 /* ExyteChat in Frameworks */ = {isa = PBXBuildFile; productRef = DBFB53EE2C3CF5AC00ADE1E7 /* ExyteChat */; };
+		DBFB53F22C3CF5CC00ADE1E7 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = DBFB53F12C3CF5CC00ADE1E7 /* SocketIO */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -225,8 +227,10 @@
 				DB04EF862C3B7BD4007F0CBB /* RealmSwift in Frameworks */,
 				DB04EF842C3B7BD4007F0CBB /* Realm in Frameworks */,
 				DB5AADC52C16AB9D002907B6 /* Kingfisher in Frameworks */,
+				DBFB53F22C3CF5CC00ADE1E7 /* SocketIO in Frameworks */,
 				DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */,
 				DB5AADB52C12E4F1002907B6 /* PopupView in Frameworks */,
+				DBFB53EF2C3CF5AC00ADE1E7 /* ExyteChat in Frameworks */,
 				DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */,
 				DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */,
 				DBF85C2B2C0DF71300CDFA04 /* ComposableArchitecture in Frameworks */,
@@ -751,6 +755,8 @@
 				DBF386212C1BFAD000A08152 /* TCACoordinators */,
 				DB04EF832C3B7BD4007F0CBB /* Realm */,
 				DB04EF852C3B7BD4007F0CBB /* RealmSwift */,
+				DBFB53EE2C3CF5AC00ADE1E7 /* ExyteChat */,
+				DBFB53F12C3CF5CC00ADE1E7 /* SocketIO */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -788,6 +794,8 @@
 				DBD075892C1B273500678DAB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				DB04EF822C3B7BD3007F0CBB /* XCRemoteSwiftPackageReference "realm-swift" */,
+				DBFB53ED2C3CF5AC00ADE1E7 /* XCRemoteSwiftPackageReference "Chat" */,
+				DBFB53F02C3CF5CC00ADE1E7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -1187,6 +1195,22 @@
 				minimumVersion = 1.10.4;
 			};
 		};
+		DBFB53ED2C3CF5AC00ADE1E7 /* XCRemoteSwiftPackageReference "Chat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/Chat.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
+		DBFB53F02C3CF5CC00ADE1E7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1229,6 +1253,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DBF85C292C0DF71300CDFA04 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		DBFB53EE2C3CF5AC00ADE1E7 /* ExyteChat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBFB53ED2C3CF5AC00ADE1E7 /* XCRemoteSwiftPackageReference "Chat" */;
+			productName = ExyteChat;
+		};
+		DBFB53F12C3CF5CC00ADE1E7 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBFB53F02C3CF5CC00ADE1E7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
