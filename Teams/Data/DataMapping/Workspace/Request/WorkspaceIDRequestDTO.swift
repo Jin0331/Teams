@@ -9,4 +9,5 @@ import Foundation
 
 struct WorkspaceIDRequestDTO : Encodable {
     let workspace_id : String
+    let channel_id : String
 }

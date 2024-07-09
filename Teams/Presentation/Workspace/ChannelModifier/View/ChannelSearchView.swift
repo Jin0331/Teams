@@ -30,7 +30,7 @@ struct ChannelSearchView: View {
                         .padding(.horizontal, 15)
                         .frame(width: 393, height: 41, alignment: .leading)
                         .onTapGesture {
-                            store.send(.channelListTapped(id: response.channelID, name: response.name))
+                            store.send(.channelListTapped(response))
                         }
                     }
                     Spacer()

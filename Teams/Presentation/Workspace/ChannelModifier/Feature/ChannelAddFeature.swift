@@ -71,7 +71,7 @@ struct ChannelAddFeature {
 
                 return .run { send in
                     await send(.createChannelResponse(
-                        networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id), query: createChannelRequest)
+                        networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""), query: createChannelRequest)
                     ))
                 }
                 

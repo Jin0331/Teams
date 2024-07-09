@@ -72,13 +72,11 @@ struct HomeCoordinator {
                 state.routes.dismiss()
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
                 
-            case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channelID)))):
-                print("channel Enter 🌟", channelID)
-                //                state.routes.dismiss()
-                //                state.routes.push(.channelChat(.init()))
+            case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channel)))):
+                print("channel Enter 🌟", channel)
                 return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
                     $0.dismiss()
-                    $0.push(.channelChat(.init()))
+                    $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
                 }
                 
             default :

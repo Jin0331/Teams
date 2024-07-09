@@ -19,7 +19,7 @@ struct ChannelSearchFeature {
         
         var popupPresent : CustomPopup?
         enum CustomPopup : Equatable {
-            case channelEnter(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
+            case channelEnter(titleText:String, bodyText:String, buttonTitle:String, id:Channel, twoButton:Bool)
         }
     }
     
@@ -28,9 +28,9 @@ struct ChannelSearchFeature {
         case onAppear
         case channeListlResponse(Result<[Channel], APIError>)
         case myChanneListlResponse(Result<[Channel], APIError>)
-        case channelListTapped(id:String, name:String)
+        case channelListTapped(Channel)
         case dismissPopupView
-        case channelEnter(String)
+        case channelEnter(Channel)
         case binding(BindingAction<State>)
     }
     
@@ -47,10 +47,10 @@ struct ChannelSearchFeature {
                 guard let workspace = state.workspaceCurrent else { return .none }
                 return .concatenate([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
+                        await send(.channeListlResponse(networkManager.getChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
                     },
                     .run { send in
-                        await send(.myChanneListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id))))
+                        await send(.myChanneListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
                     }
                 ])
                 
@@ -74,13 +74,13 @@ struct ChannelSearchFeature {
                 return .none
                 
                 //TODO: - Channel List tapped 했을때 Action
-            case let .channelListTapped(id, name):
+            case let .channelListTapped(channel):
                 
-                if state.myChannelList.contains(where: { $0.id == id }) {
-                    return .send(.channelEnter(id))
+                if state.myChannelList.contains(where: { $0.id == channel.id }) {
+                    return .send(.channelEnter(channel))
                 }
                 
-                state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "[\(name)] 채널에 참여하시겠습니까?", buttonTitle: "참여", id: id, twoButton: true)
+                state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "[\(channel.name)] 채널에 참여하시겠습니까?", buttonTitle: "참여", id: channel, twoButton: true)
                 return .none
                 
             case .dismissPopupView:
