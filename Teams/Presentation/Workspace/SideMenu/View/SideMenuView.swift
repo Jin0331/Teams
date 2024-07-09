@@ -94,6 +94,7 @@ struct SideMenuView: View {
                     .padding(.leading, 20)
                 }
             }
+            .animation(.default, value: store.showList)
             .customNavigationBar(title: "워크스페이스", height: 98)
             .background(.brandWhite)
         }

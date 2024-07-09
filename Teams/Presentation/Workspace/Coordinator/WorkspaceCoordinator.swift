@@ -12,6 +12,7 @@ import PopupView
 
 struct WorkspaceCoordinatorView : View {
     @State var store : StoreOf<WorkspaceCoordinator>
+    @State var isanimated: Bool = false
     
     var body: some View {
         WithPerceptionTracking {
@@ -61,6 +62,7 @@ struct WorkspaceCoordinatorView : View {
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
+            .animation(.default, value: store.showingView)
         }
     }
     
@@ -77,6 +79,7 @@ struct WorkspaceCoordinator {
         var workspaceCurrent : Workspace?
         var showingView : viewState
         var sidemenuOpen : Bool = false
+        var isAnimation : Bool = false
         var popupPresent : CustomPopup?
         
         enum viewState {
