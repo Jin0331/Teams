@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct HomeCoordinatorView : View {
     let store : StoreOf<HomeCoordinator>
-
+    
     var body: some View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
             switch screen.case {
@@ -23,11 +23,13 @@ struct HomeCoordinatorView : View {
                 ChannelAddView(store: store)
             case let .channelSearch(store):
                 ChannelSearchView(store: store)
+            case let .channelChat(store):
+                ChannelChatView(store: store)
             }
         }
     }
-
-
+    
+    
 }
 
 @Reducer
@@ -36,18 +38,18 @@ struct HomeCoordinator {
     struct State : Equatable {
         static func initialState(workspaceCurrent: Workspace? = nil) -> Self {
             Self(
-                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)))],
+                routes: [.root(.home(.init(workspaceCurrent: workspaceCurrent)), embedInNavigationView: true)],
                 currentWorkspace: workspaceCurrent
             )
         }
         var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
         var currentWorkspace : Workspace?
     }
-
+    
     enum Action {
         case router(IdentifiedRouterActionOf<HomeScreen>)
     }
-
+    
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
@@ -69,6 +71,15 @@ struct HomeCoordinator {
             case .router(.routeAction(_, action: .inviteMember(.inviteComplete))):
                 state.routes.dismiss()
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
+                
+            case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channelID)))):
+                print("channel Enter 🌟", channelID)
+                //                state.routes.dismiss()
+                //                state.routes.push(.channelChat(.init()))
+                return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
+                    $0.dismiss()
+                    $0.push(.channelChat(.init()))
+                }
                 
             default :
                 break

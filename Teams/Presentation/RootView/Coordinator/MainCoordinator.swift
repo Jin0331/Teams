@@ -97,7 +97,7 @@ struct MainCoordinator {
                 
             case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))), let .autoLogin(.success(response)):
                 if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
-                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace), selectedTab: .home, sideMenu: .initialState()), homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, workspaceCount: response.count)
+                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace), selectedTab: .home, sideMenu: .initialState()), homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent: mostRecentWorkspace, showingView: response.count > 0 ? .home : .empty)
                 }
                 state.isLogined = true
                 state.isSignUp = false

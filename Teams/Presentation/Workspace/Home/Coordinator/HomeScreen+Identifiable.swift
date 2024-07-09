@@ -16,6 +16,8 @@ extension HomeScreen.State: Identifiable {
                 .channelAdd
         case .channelSearch:
                 .channelSearch
+        case .channelChat:
+                .channelChat
         }
     }
     
@@ -24,6 +26,7 @@ extension HomeScreen.State: Identifiable {
         case inviteMember
         case channelAdd
         case channelSearch
+        case channelChat
         var id: ID { self }
     }
 }
