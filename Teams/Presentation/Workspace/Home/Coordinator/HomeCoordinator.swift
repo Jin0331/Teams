@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct HomeCoordinatorView : View {
     let store : StoreOf<HomeCoordinator>
-
+    
     var body: some View {
         TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
             switch screen.case {
@@ -28,8 +28,8 @@ struct HomeCoordinatorView : View {
             }
         }
     }
-
-
+    
+    
 }
 
 @Reducer
@@ -45,11 +45,11 @@ struct HomeCoordinator {
         var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
         var currentWorkspace : Workspace?
     }
-
+    
     enum Action {
         case router(IdentifiedRouterActionOf<HomeScreen>)
     }
-
+    
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
@@ -74,9 +74,12 @@ struct HomeCoordinator {
                 
             case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channelID)))):
                 print("channel Enter 🌟", channelID)
-                state.routes.dismiss()
-                state.routes.push(.channelChat(.init()))
-                
+                //                state.routes.dismiss()
+                //                state.routes.push(.channelChat(.init()))
+                return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
+                    $0.dismiss()
+                    $0.push(.channelChat(.init()))
+                }
                 
             default :
                 break

@@ -17,11 +17,22 @@ struct WorkspaceCoordinatorView : View {
         WithPerceptionTracking {
             ZStack(alignment:.leading) {
                 VStack {
-                    if store.workspaceCount > 0 {
-                        WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
-                    } else {
+                    //TODO: - Progress View
+                    switch store.showingView {
+                    case .loading:
+                        VStack {
+                            Spacer()
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .scaleEffect(1.2, anchor: .center)
+                                .padding()
+                            Spacer()
+                        }
+                    case .empty :
                         HomeEmptyCoordinatorView(store: store.scope(state: \.homeEmpty, action: \.homeEmpty))
                             .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    case .home:
+                        WorkspaceTabCoordinatorView(store: store.scope(state: \.tab, action: \.tab))
                     }
                 }
                 .zIndex(1)
@@ -59,19 +70,27 @@ struct WorkspaceCoordinatorView : View {
 struct WorkspaceCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent : nil, workspaceCount: 0)
+        static let initialState = State(tab: .initialState ,homeEmpty: .initialState, sideMenu: .initialState(), workspaceCurrent : nil, showingView : .loading)
         var tab : WorkspaceTabCoordinator.State
         var homeEmpty : HomeEmptyCoordinator.State
         var sideMenu : SideMenuCoordinator.State
         var workspaceCurrent : Workspace?
-        var workspaceCount : Int = 0
+        var showingView : viewState
         var sidemenuOpen : Bool = false
         var popupPresent : CustomPopup?
+        
+        enum viewState {
+            case loading
+            case empty
+            case home
+        }
+        
         enum CustomPopup : Equatable {
             case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
             case workspaceExit(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
             case workspaceExitManager(titleText:String, bodyText:String, buttonTitle:String, twoButton:Bool)
         }
+        
     }
     
     enum Action : BindableAction {
