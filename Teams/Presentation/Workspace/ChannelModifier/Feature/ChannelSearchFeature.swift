@@ -75,6 +75,11 @@ struct ChannelSearchFeature {
                 
                 //TODO: - Channel List tapped 했을때 Action
             case let .channelListTapped(id, name):
+                
+                if state.myChannelList.contains(where: { $0.id == id }) {
+                    return .send(.channelEnter(id))
+                }
+                
                 state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "[\(name)] 채널에 참여하시겠습니까?", buttonTitle: "참여", id: id, twoButton: true)
                 return .none
                 
