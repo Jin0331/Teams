@@ -285,9 +285,6 @@
 				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
 				DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */,
 				DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */,
-				DBBAAEB92C3E69D10015596C /* ChatMessage.swift */,
-				DBBAAEB72C3E69AD0015596C /* ChatUser.swift */,
-				DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -553,6 +550,9 @@
 				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
 				DBE1CCB32C37CBE500B627BD /* User.swift */,
 				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
+				DBBAAEB92C3E69D10015596C /* ChatMessage.swift */,
+				DBBAAEB72C3E69AD0015596C /* ChatUser.swift */,
+				DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";

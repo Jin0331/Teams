@@ -21,6 +21,10 @@ struct ChannelChatView: View {
             .onAppear {
                 store.send(.onAppear)
             }
+            .onDisappear {
+                print("???")
+                store.send(.socketDisconnect)
+            }
             .toolbar(.hidden, for: .tabBar)
         }
     }

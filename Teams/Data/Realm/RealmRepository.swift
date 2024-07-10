@@ -7,6 +7,7 @@
 
 import Foundation
 import ExyteChat
+import ComposableArchitecture
 import RealmSwift
 
 final class RealmRepository {
@@ -67,5 +68,15 @@ final class RealmRepository {
         }
         
     }
-    
+}
+
+private enum RealmRepositoryKey : DependencyKey {
+    static var liveValue: RealmRepository = RealmRepository()
+}
+
+extension DependencyValues {
+    var realmRepository : RealmRepository {
+        get { self[RealmRepositoryKey.self] }
+        set { self[RealmRepositoryKey.self] = newValue }
+    }
 }

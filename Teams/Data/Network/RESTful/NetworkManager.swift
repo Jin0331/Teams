@@ -13,10 +13,7 @@ import KakaoSDKUser
 import Alamofire
 
 final class NetworkManager {
-    static let shared = NetworkManager()
-    
-    init() { }
-    
+
     private func requestAPI<T:Decodable>(router : URLRequestConvertible, of type : T.Type) async throws -> T {
         
         let urlRequest = try router.asURLRequest()
