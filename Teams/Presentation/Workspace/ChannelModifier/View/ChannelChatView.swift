@@ -15,17 +15,26 @@ struct ChannelChatView: View {
     var body: some View {
         
         WithPerceptionTracking {
+            Divider().background(.brandWhite)
             ChatView(messages: store.message, chatType: .conversation) { draft in
                 store.send(.sendMessage(draft))
             }
             .onAppear {
                 store.send(.onAppear)
             }
-            .onDisappear {
-                print("???")
-                store.send(.socketDisconnect)
-            }
+            .navigationBarBackButtonHidden(true)
             .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        store.send(.socket(.socketDisconnect))
+                    }, label: {
+                        Image(.chevron)
+                            .resizable()
+                            .frame(width: 14, height: 19)
+                    })
+                }
+            }
         }
     }
 }
