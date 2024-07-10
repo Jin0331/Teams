@@ -8,9 +8,9 @@
 import Foundation
 
 struct ChannelChatResponseDTO: Decodable {
-    let channelID : Int
+    let channelID : String
     let channelName : String
-    let chatID : Int
+    let chatID : String
     let content, createdAt : String
     let files : [String]
     let user : WorkspaceUserResponseDTO

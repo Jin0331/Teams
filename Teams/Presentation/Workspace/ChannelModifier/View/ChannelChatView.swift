@@ -6,15 +6,23 @@
 //
 
 import SwiftUI
+import ExyteChat
 import ComposableArchitecture
 
 struct ChannelChatView: View {
     @State var store : StoreOf<ChannelChatFeature>
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        WithPerceptionTracking {
+            ChatView(messages: store.message, chatType: .conversation) { draft in
+                store.send(.sendMessage(draft))
+            }
             .onAppear {
                 store.send(.onAppear)
             }
+            .toolbar(.hidden, for: .tabBar)
+        }
     }
 }
 
