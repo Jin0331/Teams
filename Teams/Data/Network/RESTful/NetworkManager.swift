@@ -13,10 +13,7 @@ import KakaoSDKUser
 import Alamofire
 
 final class NetworkManager {
-    static let shared = NetworkManager()
-    
-    init() { }
-    
+
     private func requestAPI<T:Decodable>(router : URLRequestConvertible, of type : T.Type) async throws -> T {
         
         let urlRequest = try router.asURLRequest()
@@ -361,6 +358,23 @@ final class NetworkManager {
         do {
             let response = try await requestAPIWithRefresh(router: router, of: ChannelResponseDTO.self, multipart: router.multipart)
             return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func joinOrSearchChannelChat(request : WorkspaceIDRequestDTO, query : String) async -> Result<ChannelChatList, APIError>{
+        let router = WorkspaceRouter.channelChat(request: request, query: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [ChannelChatResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
         } catch {
             if let apiError = error as? APIError {
                 return .failure(apiError)

@@ -77,7 +77,10 @@
 		DBBAAEAE2C3D0E500015596C /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = DBBAAEAD2C3D0E500015596C /* SocketIO */; };
 		DBBAAEB02C3D0F400015596C /* ChannelChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */; };
 		DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB12C3D14DD0015596C /* UserModel.swift */; };
-		DBBAAEB42C3D18A20015596C /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB32C3D18A20015596C /* Repository.swift */; };
+		DBBAAEB42C3D18A20015596C /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB32C3D18A20015596C /* RealmRepository.swift */; };
+		DBBAAEB82C3E69AD0015596C /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB72C3E69AD0015596C /* ChatUser.swift */; };
+		DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB92C3E69D10015596C /* ChatMessage.swift */; };
+		DBBAAEBC2C3E6A210015596C /* ChatAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */; };
 		DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */; };
 		DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DC2C184C0100444E98 /* EmailLoginView.swift */; };
 		DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */; };
@@ -188,7 +191,10 @@
 		DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCreateRequestDTO.swift; sourceTree = "<group>"; };
 		DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatModel.swift; sourceTree = "<group>"; };
 		DBBAAEB12C3D14DD0015596C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		DBBAAEB32C3D18A20015596C /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		DBBAAEB32C3D18A20015596C /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		DBBAAEB72C3E69AD0015596C /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
+		DBBAAEB92C3E69D10015596C /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAttachment.swift; sourceTree = "<group>"; };
 		DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifierView.swift; sourceTree = "<group>"; };
 		DBC567DC2C184C0100444E98 /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
@@ -544,6 +550,9 @@
 				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
 				DBE1CCB32C37CBE500B627BD /* User.swift */,
 				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
+				DBBAAEB92C3E69D10015596C /* ChatMessage.swift */,
+				DBBAAEB72C3E69AD0015596C /* ChatUser.swift */,
+				DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -769,7 +778,7 @@
 			children = (
 				DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */,
 				DBBAAEB12C3D14DD0015596C /* UserModel.swift */,
-				DBBAAEB32C3D18A20015596C /* Repository.swift */,
+				DBBAAEB32C3D18A20015596C /* RealmRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -875,9 +884,11 @@
 				DB23BD002C206F9100A9C193 /* HomeEmptyFeature.swift in Sources */,
 				DB23BCFE2C20638300A9C193 /* HomeEmptyView.swift in Sources */,
 				DB04EF722C3905B2007F0CBB /* CustomDisclosureGroupView.swift in Sources */,
+				DBBAAEBC2C3E6A210015596C /* ChatAttachment.swift in Sources */,
+				DBBAAEB82C3E69AD0015596C /* ChatUser.swift in Sources */,
 				DB119BB42C33AF5800E47A53 /* WorkspaceIDRequestDTO.swift in Sources */,
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
-				DBBAAEB42C3D18A20015596C /* Repository.swift in Sources */,
+				DBBAAEB42C3D18A20015596C /* RealmRepository.swift in Sources */,
 				DBFB53E62C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,
@@ -920,6 +931,7 @@
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,
+				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */,
@@ -1268,7 +1280,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.10.4;
+				minimumVersion = 1.11.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

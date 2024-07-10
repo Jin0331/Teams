@@ -70,7 +70,7 @@ struct WorkspaceInviteFeature {
                 guard let workspace = state.currentWorkspace else { return .none }
                 return .run { [email = state.email ]send in
                     await send(.inviteResponse(
-                        networkManager.inviteMember(request: WorkspaceIDRequestDTO(workspace_id: workspace.id), query: WorkspaceEmailRequestDTO(email: email))
+                        networkManager.inviteMember(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""), query: WorkspaceEmailRequestDTO(email: email))
                     ))
                 }
                 

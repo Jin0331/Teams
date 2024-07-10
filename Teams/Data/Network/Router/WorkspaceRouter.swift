@@ -17,9 +17,10 @@ enum WorkspaceRouter {
     case inviteWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceEmailRequestDTO)
     
     case createChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
-    
     case myChannels(request : WorkspaceIDRequestDTO)
     case channels(request : WorkspaceIDRequestDTO)
+    case channelChat(request : WorkspaceIDRequestDTO, query : String)
+    
     case dmList(request : WorkspaceIDRequestDTO)
     
 }
@@ -31,7 +32,7 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat:
             return .get
         case .createWorkspace, .createChannel, .inviteWorkspace:
             return .post
@@ -58,6 +59,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
         case let .inviteWorkspace(workspaceID,_):
             return "/workspaces/" + workspaceID.workspace_id + "/members"
+        case let .channelChat(workspaceID, _):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/chats"
         }
     }
     
@@ -65,7 +68,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -78,7 +81,12 @@ extension WorkspaceRouter : TargetType {
     }
     
     var parameter: Parameters? {
-        return nil
+        switch self {
+        case let .channelChat(_, query):
+            return ["cursor_date" : query]
+        default :
+            return nil
+        }
     }
     
     var queryItems: [URLQueryItem]? {
