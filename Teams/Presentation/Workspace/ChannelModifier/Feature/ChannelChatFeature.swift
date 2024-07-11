@@ -7,10 +7,9 @@
 
 import ComposableArchitecture
 import Foundation
-import RealmSwift
 import Alamofire
 import ExyteChat
-import SocketIO
+import RealmSwift
 
 @Reducer
 struct ChannelChatFeature {
@@ -23,28 +22,33 @@ struct ChannelChatFeature {
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel
         var message : [Message] = []
-        var manager : SocketManager
-        var socket : SocketIOClient
     }
     
     enum Action  {
         case onAppear
         case sendMessage(DraftMessage)
         case channelChatResponse(Result<[ChannelChat], APIError>)
+        case socket(SocketAction)
+        case goBack
+    }
+    
+    enum SocketAction {
         case socketConnect
         case socketReceive
         case socketDisconnect
+        case socketRecevieHandling(ChannelChat)
     }
     
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.realmRepository) var realmRepository
+    @Dependency(\.socketManager) var socketManager
     
     var body : some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-  
+                
                 //TODO: - Realm 연결을 통해 가장 마지막 cusur date 추출해야됨
                 
                 realmRepository.realmLocation()
@@ -80,59 +84,53 @@ struct ChannelChatFeature {
                 //TODO: - Realm으로부터 message 조회
                 state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
                 
-                return .send(.socketConnect)
+                return .send(.socket(.socketConnect))
                 
             case let .channelChatResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 
                 return .none
-            
+                
             case let .sendMessage(sendMessage):
                 
                 print(sendMessage)
                 
                 return .none
-            
-            case .socketConnect:
-                state.socket.connect()
-                return .send(.socketReceive)
-            
-            case .socketReceive:
-                state.socket.on(clientEvent: .connect) { data, ack in
-                    print("socket connected", data, ack)
-                }
                 
-                state.socket.on(clientEvent: .disconnect) { data, ack in
-                    print("socket disconnected")
-                }
-                
-                state.socket.on("channel") { dataArray, ack in
-                    if let data = dataArray.first {
-                        
-                        do {
-                            let result = try JSONSerialization.data(withJSONObject: data)
-                            let decodedData = try JSONDecoder().decode(ChannelChatResponseDTO.self, from: result)
-                            let chat = decodedData.toDomain()
-                            
-                            $chatTable.append(ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
-                                                                                 channelName: chat.channelName,
-                                                                                 chatID: chat.chatID,
-                                                                                 content: chat.content,
-                                                                                 createdAt: chat.createdAt,
-                                                                                 files: chat.files,
-                                                                                 user: chat.user)))
-                            
-//                            state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
-                            
-                        } catch { }
+            case .socket(.socketConnect):
+                return .run { [ channelID = state.channelCurrent.channelID ] send in
+                    
+                    let socketStream = await socketManager.connect(to: .channelChat(channelID: channelID), type: ChannelChatResponseDTO.self)
+                    for await stream in socketStream {
+                        switch stream {
+                        case let .success(response):
+                            await send(.socket(.socketRecevieHandling(response.toDomain())))
+                        case let .failure(error):
+                            let errorType = APIError.networkErrorType(error: error.errorDescription)
+                            print(errorType, error)
+                        }
                     }
                 }
                 
+            case let .socket(.socketRecevieHandling(chat)):
+                $chatTable.append(ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
+                                                                     channelName: chat.channelName,
+                                                                     chatID: chat.chatID,
+                                                                     content: chat.content,
+                                                                     createdAt: chat.createdAt,
+                                                                     files: chat.files,
+                                                                     user: chat.user)))
+                
+                state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
+
                 return .none
                 
-            case .socketDisconnect:
-                state.socket.disconnect()
+            case .socket(.socketDisconnect):
+                socketManager.stopAndRemoveSocket()
+                return .send(.goBack)
+                
+            default :
                 return .none
             }
         }

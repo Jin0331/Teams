@@ -75,16 +75,13 @@ struct HomeCoordinator {
                 
             case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channel)))):
                 return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
-                    
-                    let manager = SocketManager(socketURL: URL(string: APIKey.baseURLWithVersion())!, config: [.log(false), .compress])
-                    let socket = manager.socket(forNamespace: "/ws-channel-" + channel.channelID)
-                    
                     $0.dismiss()
                     $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, 
-                                               channelCurrent: channel, 
-                                               manager: manager,
-                                               socket: socket)))
+                                               channelCurrent: channel)))
                 }
+                
+            case .router(.routeAction(_, action: .channelChat(.goBack))):
+                state.routes.goBack()
                 
             default :
                 break
