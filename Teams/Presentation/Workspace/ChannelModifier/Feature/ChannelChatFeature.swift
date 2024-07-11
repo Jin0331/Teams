@@ -7,10 +7,9 @@
 
 import ComposableArchitecture
 import Foundation
-import RealmSwift
 import Alamofire
 import ExyteChat
-import SocketIO
+import RealmSwift
 
 @Reducer
 struct ChannelChatFeature {
@@ -23,8 +22,6 @@ struct ChannelChatFeature {
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel
         var message : [Message] = []
-        var manager = SocketManager(socketURL: URL(string: APIKey.baseURLWithVersion())!, config: [.log(false), .compress])
-        var socket : SocketIOClient?
     }
     
     enum Action  {
@@ -44,6 +41,7 @@ struct ChannelChatFeature {
     
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.realmRepository) var realmRepository
+    @Dependency(\.socketManager) var socketManager
     
     var body : some Reducer<State, Action> {
         Reduce { state, action in
@@ -101,40 +99,19 @@ struct ChannelChatFeature {
                 return .none
                 
             case .socket(.socketConnect):
-                
-                state.socket = state.manager.socket(forNamespace: "/ws-channel-" + state.channelCurrent.channelID)
-                
-                state.socket?.connect()
-                return .send(.socket(.socketReceive))
-                
-            case .socket(.socketReceive):
-                return .run { [socket = state.socket] send in
-                    socket?.on(clientEvent: .connect) { data, ack in
-                        print("socket connected", data, ack)
-                    }
+                return .run { [ channelID = state.channelCurrent.channelID ] send in
                     
-                    socket?.on(clientEvent: .disconnect) { data, ack in
-                        print("socket disconnected")
-                    }
-                    
-                    socket?.on("channel") { dataArray, ack in
-                        Task {
-                            if let data = dataArray.first {
-                                do {
-                                    let result = try JSONSerialization.data(withJSONObject: data)
-                                    let decodedData = try JSONDecoder().decode(ChannelChatResponseDTO.self, from: result)
-                                    let chat = decodedData.toDomain()
-                                    dump(decodedData.toDomain())
-                                    await send(.socket(.socketRecevieHandling(chat)))
-                                    
-                                } catch {
-                                    print("Error decoding data: \(error)")
-                                }
-                            }
+                    let socketStream = await socketManager.connect(to: .channelChat(channelID: channelID), type: ChannelChatResponseDTO.self)
+                    for await stream in socketStream {
+                        switch stream {
+                        case let .success(response):
+                            await send(.socket(.socketRecevieHandling(response.toDomain())))
+                        case let .failure(error):
+                            let errorType = APIError.networkErrorType(error: error.errorDescription)
+                            print(errorType, error)
                         }
                     }
                 }
-                
                 
             case let .socket(.socketRecevieHandling(chat)):
                 $chatTable.append(ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
@@ -150,7 +127,7 @@ struct ChannelChatFeature {
                 return .none
                 
             case .socket(.socketDisconnect):
-                state.socket?.disconnect()
+                socketManager.stopAndRemoveSocket()
                 return .send(.goBack)
                 
             default :
