@@ -118,3 +118,5 @@
             .forEachRoute(\.routes, action: \.router)
         ```
 
+### 2. TCA Action의 run<Effect> 에서 반복적인 send<Effect 호출하기
+
