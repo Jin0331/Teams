@@ -1,30 +1,46 @@
-# Teams
+# Teams - 업무 협업툴
+
+> 출시 기간 : 2024.05.23 - 진행중
+>
+> 기획/디자인/개발 1인 개발
+>
+> 프로젝트 환경 - iPhone 전용(iOS 16.0+), 라이트 모드 고정
+
+---
+
+<br>
+
+## 🔆 **한줄소개**
+
+***우리들의 효율적인 업무 협업을 위한 Teams***
+
+<br>
 
 ## 🔆 **적용 기술**
 
 * ***프레임워크***
 
-  ​	SwiftUI
+    SwiftUI
 
 * ***아키텍쳐***
 
-  ​	TCA
+    The Composable Architecture(TCA)
 
 * ***오픈 소스***
 
     TCACoordinator
-  
-    Realm / Alamofire /	Kingfisher
-  
+
+    Realm / Alamofire /	SocketIO / Kingfisher
+
     PopupView
 
 * ***버전 관리***
 
-  ​	Git / Github
+    Git / Github
 
   <br>
 
-## 🔎 **적용 기술 소개**
+## 🔆 **적용 기술 소개**
 
 ***TCA***
 
@@ -36,11 +52,13 @@
 
 ***Socket.IO***
 
+***Kingfisher***
+
 ***PopupView***
 
 <br>
 
-## 트러블슈팅
+## 🔆 트러블슈팅
 
 ### 1. Coordinator에 속한 View 간 Action 전달
 
@@ -118,6 +136,80 @@
             .forEachRoute(\.routes, action: \.router)
         ```
 
-### 2. TCA Action의 run Effect 에서 반복적인 send Effect 실행하기
+### 2. TCA Action의 Effect에서 Complete 이후 send 추가적인 Action 이벤트 방출
 
+* **문제 상황**
 
+    > - 실시간 채팅 구현을 위해, Action 내부에서 Socket을 연결하고, Socket으로 부터 전달된 데이터를 다른 Action으로 보내는 과정에서 `An action was sent from a completed effect` 에러가 발생
+    >
+    > - Task에서 Socket 연결 직후 Effect(`.run`) 구문이 종료되어, Action(`await send(.socket(.socketRecevieHandling(decodedData.toDomain()))`) 이벤트가 지속적으로 발생되는 비정상적인 과정이 발생
+    > - Effect는 종료되었지만, Socket이 정상적으로 연결되어 있으므로 값을 받아오게 되고, 후처리 로직이 문제없이 수행되지만 TCA에서 관리할 수 없는 상태가 되어 해당 에러가 발생함.
+
+    ```swift
+    case .socketReceive:
+        return .run { [socket = state.socket] send in
+            Task {
+                state.socket.on(clientEvent: .connect) { data, ack in
+                    print("socket connected", data, ack) }
+            
+                state.socket.on(clientEvent: .disconnect) { data, ack in
+                    print("socket disconnected") }
+            
+                state.socket.on("channel") { dataArray, ack in
+                    if let data = dataArray.first {
+                        do {
+                            let result = try JSONSerialization.data(withJSONObject: data)
+                            let decodedData = try JSONDecoder().decode(ChannelChatResponseDTO.self, from: result)
+                            await send(.socket(.socketRecevieHandling(decodedData.toDomain())))
+
+                        } catch { }
+                    }
+                }
+            }
+        }
+    ```
+
+* **해결 방법**
+
+    1.  Effect가 Socket 연결 이후에도 종료되지 않도록, 해당 구문을 `AsyncStream`으로 변경하여 비동기 Sequence로 적용 후 `for await`을 통해 Stream을 지속적으로 받을 수 있는 대기 상태로 변경.
+
+    2. SocketIOManager 구성 후, 반환값을 `AsyncStream<Result<T, APIError>>`으로 설정
+
+    ```swift
+    # SocketIOManager 반환값 예시
+    return AsyncStream { [weak self] continuation in
+        guard let self else {
+            continuation.yield(.failure(.unknown))
+            self?.stopAndRemoveSocket()
+            continuation.finish()
+            return
+        }
+        print("AsyncStream Start")
+        self.setupSocketHandlers(continuation: continuation, type: type, eventName: socketCase.eventName)
+        socket?.connect()
+        
+        continuation.onTermination = { @Sendable _ in
+            print("AsyncStream End")
+            self.stopSocket()
+        }
+    }
+    ```
+
+    3. Effect가 종료되지 않게 `AsyncStream`을 지속적으로 처리 및 대기 상태를 유지하기 위해 `for await`을 통한 비동기 Stream 처리 구문 추가
+
+    ```swift
+    # Effect 내부
+    case .socket(.socketConnect):
+        return .run { [ channelID = state.channelCurrent.channelID ] send in
+            let socketStream = await socketManager.connect(to: .channelChat(channelID: channelID), type: ChannelChatResponseDTO.self)
+            for await stream in socketStream {
+                switch stream {
+                case let .success(response):
+                    await send(.socket(.socketRecevieHandling(response.toDomain())))
+                case let .failure(error):
+                    let errorType = APIError.networkErrorType(error: error.errorDescription)
+                    print(errorType, error)
+                }
+            }
+        }
+    ```
