@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ExyteChat
+import ExyteMediaPicker
 import ComposableArchitecture
 
 struct ChannelChatView: View {
@@ -16,9 +17,19 @@ struct ChannelChatView: View {
         
         WithPerceptionTracking {
             Divider().background(.brandWhite)
+            
             ChatView(messages: store.message, chatType: .conversation) { draft in
                 Task {
                     store.send(.sendMessage(draft))
+                }
+            } messageBuilder: { message, positionInUserGroup, positionInCommentsGroup, showContextMenuClosure, messageActionClosure, showAttachmentClosure in
+                VStack {
+                    Text(message.text)
+                    if !message.attachments.isEmpty {
+                        ForEach(message.attachments, id: \.id) { at in
+                            AsyncImage(url: at.thumbnail)
+                        }
+                    }
                 }
             } inputViewBuilder: { textBinding, attachments, inputViewState, inputViewStyle, inputViewActionClosure, dismissKeyboardClosure in
                 Group {
@@ -31,7 +42,7 @@ struct ChannelChatView: View {
                                     .frame(width: 22, height: 20)
                                     .padding(.horizontal, 5)
                                     .asButton {
-                                        print("hihi")
+                                        inputViewActionClosure(.photo)
                                     }
                                 TextField("메세지를 입력하세요", text: textBinding, axis: .vertical)
                                     .bodyRegular()
@@ -40,30 +51,36 @@ struct ChannelChatView: View {
                                     .frame(width: 24, height: 24)
                                     .padding(.horizontal, 5)
                                     .asButton {
-                                        print("hihi")
+                                        inputViewActionClosure(.send)
                                     }
                             }
                             .padding(/*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                             .background(Color(hex: 0xf6f6f6))
                             .cornerRadius(8)
                             .padding()
-                            
                         }
-                        
-                        
                     case .signature: // input view on photo selection screen
                         VStack {
                             HStack {
-                                Button("Send") { inputViewActionClosure(.send) }
+                                TextField("메세지를 입력하세요", text: textBinding, axis: .vertical)
+                                    .bodyRegular()
+                                Image(.send)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .padding(.horizontal, 5)
+                                    .asButton {
+                                        inputViewActionClosure(.send)
+                                    }
                             }
-                            TextField("Compose a signature for photo", text: textBinding)
-                                .background(Color.green)
+                            .padding(/*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            .background(Color(hex: 0xf6f6f6))
+                            .cornerRadius(8)
+                            .padding()
                         }
                     }
+                    
                 }
             }
-            
-            
             .setAvailableInput(.textAndMedia)
             .assetsPickerLimit(assetsPickerLimit: 5)
             .showNetworkConnectionProblem(true)
@@ -100,6 +117,16 @@ struct ChannelChatView: View {
                     })
                 }
             }
+            .mediaPickerTheme(
+                main: .init(
+                    text: .brandWhite,
+                    albumSelectionBackground: Color.init(hex: 0xD7D7D7),
+                    fullscreenPhotoBackground: Color.init(hex: 0xD7D7D7)
+                ),
+                selection: .init(
+                    selectedTint: .brandGreen
+                )
+            )
         }
     }
 }
