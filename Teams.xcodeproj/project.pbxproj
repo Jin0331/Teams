@@ -82,6 +82,7 @@
 		DBBAAEB82C3E69AD0015596C /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB72C3E69AD0015596C /* ChatUser.swift */; };
 		DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEB92C3E69D10015596C /* ChatMessage.swift */; };
 		DBBAAEBC2C3E6A210015596C /* ChatAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */; };
+		DBC3F8152C4183C300D11D3B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3F8142C4183C300D11D3B /* Color.swift */; };
 		DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */; };
 		DBC567DD2C184C0100444E98 /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DC2C184C0100444E98 /* EmailLoginView.swift */; };
 		DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */; };
@@ -197,6 +198,7 @@
 		DBBAAEB72C3E69AD0015596C /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		DBBAAEB92C3E69D10015596C /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAttachment.swift; sourceTree = "<group>"; };
+		DBC3F8142C4183C300D11D3B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DBC567DA2C184A0300444E98 /* NavigationBarModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifierView.swift; sourceTree = "<group>"; };
 		DBC567DC2C184C0100444E98 /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		DBC567DE2C184DBE00444E98 /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
@@ -326,17 +328,10 @@
 		DB085B512C0DFE7D00199065 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				DB085B532C0DFEB600199065 /* Font */,
+				DB085B562C0E05CD00199065 /* Font.swift */,
+				DBC3F8142C4183C300D11D3B /* Color.swift */,
 			);
 			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		DB085B532C0DFEB600199065 /* Font */ = {
-			isa = PBXGroup;
-			children = (
-				DB085B562C0E05CD00199065 /* Font.swift */,
-			);
-			path = Font;
 			sourceTree = "<group>";
 		};
 		DB0B9D772C18339C00C5C150 /* Workspace */ = {
@@ -905,6 +900,7 @@
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB04EF6A2C38EAFC007F0CBB /* ChannelAddFeature.swift in Sources */,
+				DBC3F8152C4183C300D11D3B /* Color.swift in Sources */,
 				DB085B642C0ED0A500199065 /* SignUpFeature.swift in Sources */,
 				DBABF0292C25440100A3CB37 /* UIImage+Extension.swift in Sources */,
 				DBFB53FB2C3CFD8300ADE1E7 /* ChannelChatResponseDTO+Mapping.swift in Sources */,
@@ -1124,6 +1120,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Teams/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera Usage Description";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library Usage Description";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1160,6 +1158,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Teams/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera Usage Description";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library Usage Description";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
