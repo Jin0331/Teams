@@ -7,11 +7,7 @@
 
 import Foundation
 import SocketIO
-import Combine
 import ComposableArchitecture
-
-import Foundation
-import SocketIO
 
 final class SocketIOManager {
     
@@ -71,18 +67,17 @@ extension SocketIOManager {
         
         return AsyncStream { [weak self] continuation in
             guard let self else {
-                print("소켓에 Weak Self Error")
                 continuation.yield(.failure(.unknown))
                 self?.stopAndRemoveSocket()
                 continuation.finish()
                 return
             }
-            print("소켓 AsyncStream Start")
+            print("AsyncStream Start")
             self.setupSocketHandlers(continuation: continuation, type: type, eventName: socketCase.eventName)
             socket?.connect()
             
             continuation.onTermination = { @Sendable _ in
-                print("소켓 생성자 다이")
+                print("AsyncStream End")
                 self.stopSocket()
             }
         }

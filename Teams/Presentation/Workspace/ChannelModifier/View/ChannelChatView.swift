@@ -18,18 +18,9 @@ struct ChannelChatView: View {
         WithPerceptionTracking {
             Divider().background(.brandWhite)
             
-            ChatView(messages: store.message, chatType: .conversation) { draft in
+            ChatView(messages: store.message, chatType : .conversation) { draft in
                 Task {
                     store.send(.sendMessage(draft))
-                }
-            } messageBuilder: { message, positionInUserGroup, positionInCommentsGroup, showContextMenuClosure, messageActionClosure, showAttachmentClosure in
-                VStack {
-                    Text(message.text)
-                    if !message.attachments.isEmpty {
-                        ForEach(message.attachments, id: \.id) { at in
-                            AsyncImage(url: at.thumbnail)
-                        }
-                    }
                 }
             } inputViewBuilder: { textBinding, attachments, inputViewState, inputViewStyle, inputViewActionClosure, dismissKeyboardClosure in
                 Group {
@@ -84,6 +75,9 @@ struct ChannelChatView: View {
             .setAvailableInput(.textAndMedia)
             .assetsPickerLimit(assetsPickerLimit: 5)
             .showNetworkConnectionProblem(true)
+//            .enableLoadMore(pageSize: 1) { message in
+//                print(message)
+//            }
             .onAppear {
                 store.send(.onAppear)
             }
@@ -124,7 +118,8 @@ struct ChannelChatView: View {
                     fullscreenPhotoBackground: Color.init(hex: 0xD7D7D7)
                 ),
                 selection: .init(
-                    selectedTint: .brandGreen
+                    selectedTint: .brandGreen,
+                    fullscreenTint: .brandWhite
                 )
             )
         }

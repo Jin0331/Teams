@@ -18,7 +18,9 @@ struct ChatImage {
             id: id,
             thumbnail: thumbnail,
             full: full,
-            type: .image
+            type: .image,
+            secretKey: APIKey.secretKey.rawValue,
+            accessToken: UserDefaultManager.shared.accessToken
         )
     }
 }
