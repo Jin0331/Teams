@@ -98,7 +98,9 @@
 		DBD0758D2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */; };
 		DBD3970E2C44EB9000A45D17 /* ExyteChat in Frameworks */ = {isa = PBXBuildFile; productRef = DBD3970D2C44EB9000A45D17 /* ExyteChat */; };
 		DBD397112C44F0FD00A45D17 /* ExyteChat in Frameworks */ = {isa = PBXBuildFile; productRef = DBD397102C44F0FD00A45D17 /* ExyteChat */; };
-		DBD397142C4500C600A45D17 /* ExyteChat in Frameworks */ = {isa = PBXBuildFile; productRef = DBD397132C4500C600A45D17 /* ExyteChat */; };
+		DBD3971D2C4568D200A45D17 /* ExyteChat in Frameworks */ = {isa = PBXBuildFile; productRef = DBD3971C2C4568D200A45D17 /* ExyteChat */; };
+		DBD3971F2C456E3E00A45D17 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD3971E2C456E3E00A45D17 /* ChannelSettingView.swift */; };
+		DBD397212C456E9700A45D17 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397202C456E9700A45D17 /* ChannelSettingFeature.swift */; };
 		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
 		DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */; };
 		DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB12C37CBBF00B627BD /* DM.swift */; };
@@ -216,6 +218,8 @@
 		DBC567E42C1AA54E00444E98 /* AppleLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestDTO.swift; sourceTree = "<group>"; };
 		DBC567E62C1AD3C900444E98 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestDTO.swift; sourceTree = "<group>"; };
+		DBD3971E2C456E3E00A45D17 /* ChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingView.swift; sourceTree = "<group>"; };
+		DBD397202C456E9700A45D17 /* ChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingFeature.swift; sourceTree = "<group>"; };
 		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBE1CCB12C37CBBF00B627BD /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
@@ -264,7 +268,7 @@
 				DB931E8C2C4270A6006DBBE0 /* ExyteChat in Frameworks */,
 				DBD0758B2C1B273500678DAB /* KakaoSDK in Frameworks */,
 				DB5AADC22C16AB03002907B6 /* Alamofire in Frameworks */,
-				DBD397142C4500C600A45D17 /* ExyteChat in Frameworks */,
+				DBD3971D2C4568D200A45D17 /* ExyteChat in Frameworks */,
 				DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */,
 				DBBAAEA92C3D0E310015596C /* Realm in Frameworks */,
 				DB931E922C44E249006DBBE0 /* ExyteChat in Frameworks */,
@@ -300,6 +304,7 @@
 				DB04EF672C38EA6D007F0CBB /* ChannelAddView.swift */,
 				DB04EF762C3AC5B2007F0CBB /* ChannelSearchView.swift */,
 				DBFB53E92C3C44BF00ADE1E7 /* ChannelChatView.swift */,
+				DBD3971E2C456E3E00A45D17 /* ChannelSettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				DB04EF692C38EAFC007F0CBB /* ChannelAddFeature.swift */,
 				DB04EF782C3AC5BE007F0CBB /* ChannelSearchFeature.swift */,
 				DBFB53EB2C3C44CB00ADE1E7 /* ChannelChatFeature.swift */,
+				DBD397202C456E9700A45D17 /* ChannelSettingFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -837,7 +843,7 @@
 				DB931E942C44E291006DBBE0 /* ExyteChat */,
 				DBD3970D2C44EB9000A45D17 /* ExyteChat */,
 				DBD397102C44F0FD00A45D17 /* ExyteChat */,
-				DBD397132C4500C600A45D17 /* ExyteChat */,
+				DBD3971C2C4568D200A45D17 /* ExyteChat */,
 			);
 			productName = Teams;
 			productReference = DBF85C152C0DF5FB00CDFA04 /* Teams.app */;
@@ -876,7 +882,7 @@
 				DBBAAEA72C3D0E310015596C /* XCRemoteSwiftPackageReference "realm-swift" */,
 				DB931E812C4253C2006DBBE0 /* XCRemoteSwiftPackageReference "PopupView" */,
 				DB931E842C4253E0006DBBE0 /* XCRemoteSwiftPackageReference "socket" */,
-				DBD397122C4500C600A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */,
+				DBD3971B2C4568D200A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */,
 			);
 			productRefGroup = DBF85C162C0DF5FB00CDFA04 /* Products */;
 			projectDirPath = "";
@@ -946,6 +952,7 @@
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
+				DBD3971F2C456E3E00A45D17 /* ChannelSettingView.swift in Sources */,
 				DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
@@ -964,6 +971,7 @@
 				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
+				DBD397212C456E9700A45D17 /* ChannelSettingFeature.swift in Sources */,
 				DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */,
 				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
@@ -1287,12 +1295,12 @@
 				kind = branch;
 			};
 		};
-		DBD397122C4500C600A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */ = {
+		DBD3971B2C4568D200A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Jin0331/ChatCustom.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = 418f690ef6e35d6eb80ed1d66b57355226305c6c;
 			};
 		};
 		DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
@@ -1373,9 +1381,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ExyteChat;
 		};
-		DBD397132C4500C600A45D17 /* ExyteChat */ = {
+		DBD3971C2C4568D200A45D17 /* ExyteChat */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DBD397122C4500C600A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */;
+			package = DBD3971B2C4568D200A45D17 /* XCRemoteSwiftPackageReference "ChatCustom" */;
 			productName = ExyteChat;
 		};
 		DBF386212C1BFAD000A08152 /* TCACoordinators */ = {

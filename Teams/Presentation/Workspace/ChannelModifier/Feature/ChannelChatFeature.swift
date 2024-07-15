@@ -31,12 +31,14 @@ struct ChannelChatFeature {
         case channelSendChatResponse(Result<ChannelChat, APIError>)
         case socket(SocketAction)
         case goBack
+        case goChannelSetting((currentWorksapce : Workspace?, currentChannel : Channel))
     }
     
     enum SocketAction {
         case socketConnect
         case socketReceive
-        case socketDisconnect
+        case socketDisconnectAndGoback
+        case socketDisconnectAndGoChannelSetting
         case socketRecevieHandling(ChannelChat)
     }
     
@@ -152,10 +154,14 @@ struct ChannelChatFeature {
 
                 return .none
                 
-            case .socket(.socketDisconnect):
+            case .socket(.socketDisconnectAndGoback):
                 socketManager.stopAndRemoveSocket()
                 return .send(.goBack)
                 
+            case .socket(.socketDisconnectAndGoChannelSetting):
+                socketManager.stopAndRemoveSocket()
+                return .none
+            
             default :
                 return .none
             }
