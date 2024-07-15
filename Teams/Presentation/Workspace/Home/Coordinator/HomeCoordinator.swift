@@ -26,6 +26,8 @@ struct HomeCoordinatorView : View {
                 ChannelSearchView(store: store)
             case let .channelChat(store):
                 ChannelChatView(store: store)
+            case let .channelSetting(store):
+                ChannelSettingView(store: store)
             }
         }
     }
@@ -76,12 +78,16 @@ struct HomeCoordinator {
             case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channel)))):
                 return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
                     $0.dismiss()
-                    $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, 
-                                               channelCurrent: channel)))
+                    $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
                 }
                 
-            case .router(.routeAction(_, action: .channelChat(.goBack))):
+            case .router(.routeAction(_, action: .channelChat(.goBack))), .router(.routeAction(_, action: .channelSetting(.goBack))):
                 state.routes.goBack()
+                
+            case let .router(.routeAction(_, action: .channelChat(.goChannelSetting(worksapceChannel)))):
+                
+                state.routes.push(.channelSetting(.init(workspaceCurrent: worksapceChannel.currentWorksapce, channelCurrent: worksapceChannel.currentChannel)))
+            
                 
             default :
                 break
