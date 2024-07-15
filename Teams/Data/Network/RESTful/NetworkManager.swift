@@ -398,6 +398,28 @@ final class NetworkManager {
             }
         }
     }
+    
+    func getChannelMemebers(request : WorkspaceIDRequestDTO) async -> Result<UserList, APIError> {
+        
+        let router = WorkspaceRouter.channelMember(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [WorkspaceUserResponseDTO].self)
+
+            return .success(response.map({ dto in
+                
+                print(dto)
+                
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
 }
 
 

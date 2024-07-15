@@ -22,6 +22,8 @@ enum WorkspaceRouter {
     case channelChat(request : WorkspaceIDRequestDTO, query : String)
     case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChannelChatRequestDTO)
     
+    case channelMember(request : WorkspaceIDRequestDTO)
+    
     case dmList(request : WorkspaceIDRequestDTO)
     
 }
@@ -33,7 +35,7 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember:
             return .get
         case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat:
             return .post
@@ -62,6 +64,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/members"
         case let .channelChat(workspaceID, _), let .sendChannelChat(workspaceID,_):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/chats"
+        case let .channelMember(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/members"
         }
     }
     
@@ -69,7 +73,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]

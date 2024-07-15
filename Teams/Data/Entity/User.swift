@@ -18,3 +18,5 @@ extension User {
         return URL(string: APIKey.baseURLWithVersion() + profileImage)!
     }
 }
+
+typealias UserList = [User]
