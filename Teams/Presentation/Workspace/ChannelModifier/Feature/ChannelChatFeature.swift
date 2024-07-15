@@ -21,6 +21,7 @@ struct ChannelChatFeature {
         let id = UUID()
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel
+        var channelCurrentMembers : UserList = []
         var message : [Message] = []
     }
     
@@ -28,14 +29,18 @@ struct ChannelChatFeature {
         case onAppear
         case sendMessage(DraftMessage)
         case channelChatResponse(Result<[ChannelChat], APIError>)
+        case channelSendChatResponse(Result<ChannelChat, APIError>)
+        case channelMembersResponse(Result<UserList, APIError>)
         case socket(SocketAction)
         case goBack
+        case goChannelSetting((currentWorksapce : Workspace?, currentChannel : Channel, currentChannelMembers : UserList))
     }
     
     enum SocketAction {
         case socketConnect
         case socketReceive
-        case socketDisconnect
+        case socketDisconnectAndGoback
+        case socketDisconnectAndGoChannelSetting
         case socketRecevieHandling(ChannelChat)
     }
     
@@ -59,10 +64,21 @@ struct ChannelChatFeature {
                 
                 
                 return .run { [channel = state.channelCurrent] send in
+                    
+                    let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id)
+                    
+                    await send(.channelMembersResponse(
+                        networkManager.getChannelMemebers(request: workspaceIDDTO)
+                    ))
+                    
                     await send(.channelChatResponse(
-                        networkManager.joinOrSearchChannelChat(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), query: cursorDate.toStringRaw())
+                        networkManager.joinOrSearchChannelChat(request: workspaceIDDTO, cursorDate: cursorDate.toStringRaw())
                     ))
                 }
+            
+            case let .channelMembersResponse(.success(members)):
+                state.channelCurrentMembers = members
+                return .none
                 
             case let .channelChatResponse(.success(chatList)):
                 
@@ -85,8 +101,9 @@ struct ChannelChatFeature {
                 state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
                 
                 return .send(.socket(.socketConnect))
+            
                 
-            case let .channelChatResponse(.failure(error)):
+            case let .channelChatResponse(.failure(error)), let .channelSendChatResponse(.failure(error)), let .channelMembersResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 
@@ -94,9 +111,29 @@ struct ChannelChatFeature {
                 
             case let .sendMessage(sendMessage):
                 
-                print(sendMessage)
-                
-                return .none
+                guard let workspace = state.workspaceCurrent else { return .none }
+                if sendMessage.text.isEmpty && sendMessage.medias.isEmpty {
+                    print("sendmessage is empty 🥲")
+                    return .none
+                } else {
+                    return .run { [channel = state.channelCurrent] send in
+                        var files : [URL] = []
+                        
+                        if !sendMessage.medias.isEmpty {
+                            for image in sendMessage.medias {
+                                if let fileURL = await image.getURL() {
+                                    files.append(fileURL)
+                                }
+                            }
+                            await send(.channelSendChatResponse(
+                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), body: ChannelChatRequestDTO(content: sendMessage.text, files: files))))
+                        } else {
+                            await send(.channelSendChatResponse(
+                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), body: ChannelChatRequestDTO(content: sendMessage.text, files: []))))
+
+                        }
+                    }
+                }
                 
             case .socket(.socketConnect):
                 return .run { [ channelID = state.channelCurrent.channelID ] send in
@@ -114,22 +151,30 @@ struct ChannelChatFeature {
                 }
                 
             case let .socket(.socketRecevieHandling(chat)):
-                $chatTable.append(ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
-                                                                     channelName: chat.channelName,
-                                                                     chatID: chat.chatID,
-                                                                     content: chat.content,
-                                                                     createdAt: chat.createdAt,
-                                                                     files: chat.files,
-                                                                     user: chat.user)))
                 
-                state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
+                print(chat)
+                
+                let chat = ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
+                                                              channelName: chat.channelName,
+                                                              chatID: chat.chatID,
+                                                              content: chat.content,
+                                                              createdAt: chat.createdAt,
+                                                              files: chat.files,
+                                                              user: chat.user))
+                
+                $chatTable.append(chat)
+                state.message.append(chat.toMessage().toExyteMessage())
 
                 return .none
                 
-            case .socket(.socketDisconnect):
+            case .socket(.socketDisconnectAndGoback):
                 socketManager.stopAndRemoveSocket()
                 return .send(.goBack)
                 
+            case .socket(.socketDisconnectAndGoChannelSetting):
+                socketManager.stopAndRemoveSocket()
+                return .none
+            
             default :
                 return .none
             }

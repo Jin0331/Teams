@@ -15,6 +15,13 @@ struct User : Equatable, Identifiable {
 
 extension User {
     var profileImageToUrl : URL {
-        return URL(string: APIKey.baseURLWithVersion() + profileImage)!
+        
+        if !profileImage.isEmpty {
+            return URL(string: APIKey.baseURLWithVersion() + profileImage)!
+        } else {
+            return URL(string: APIKey.defaultImage.rawValue)!
+        }
     }
 }
+
+typealias UserList = [User]

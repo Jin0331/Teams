@@ -16,7 +16,7 @@ struct ChannelSearchView: View {
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
-                Divider().background(.brandWhite).padding(.top, 10)
+                Divider().background(.brandWhite)
                 VStack(spacing: 10) {
                     ForEach(store.channelList, id: \.id) { response in
                         HStack {

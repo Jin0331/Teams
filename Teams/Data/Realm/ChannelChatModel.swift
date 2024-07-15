@@ -18,8 +18,23 @@ final class ChannelChatModel : Object, ObjectKeyIdentifiable {
     @Persisted var files : List<String>
     @Persisted var user : ChatUserModel?
     
+    //TODO: - Header가 포함된 URL
+    
+    var filesToChatImage : [ChatImage] {
+        
+        var returnValue : [ChatImage] = []
+        
+        files.forEach { image in
+            
+            let imagePath = APIKey.baseURLWithVersion() + image
+            returnValue.append(ChatImage(id: chatID, thumbnail: URL(string: imagePath)!, full:  URL(string: imagePath)!))
+        }
+        
+        return returnValue
+    }
+    
     func toMessage() -> ChatMessage {
-        return ChatMessage(uid: chatID, sender: user!.toUser(), createdAt: createdAt, text: content, images: [])
+        return ChatMessage(uid: chatID, sender: user!.toUser(), createdAt: createdAt, text: content, images: filesToChatImage)
     }
 }
 

@@ -367,12 +367,49 @@ final class NetworkManager {
         }
     }
     
-    func joinOrSearchChannelChat(request : WorkspaceIDRequestDTO, query : String) async -> Result<ChannelChatList, APIError>{
-        let router = WorkspaceRouter.channelChat(request: request, query: query)
+    func joinOrSearchChannelChat(request : WorkspaceIDRequestDTO, cursorDate : String) async -> Result<ChannelChatList, APIError> {
+        let router = WorkspaceRouter.channelChat(request: request, query: cursorDate)
         
         do {
             let response = try await requestAPIWithRefresh(router: router, of: [ChannelChatResponseDTO].self)
             return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func sendChannelMessage(request : WorkspaceIDRequestDTO, body : ChannelChatRequestDTO) async -> Result<ChannelChat, APIError> {
+        let router = WorkspaceRouter.sendChannelChat(request: request, body: body)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelChatResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getChannelMemebers(request : WorkspaceIDRequestDTO) async -> Result<UserList, APIError> {
+        
+        let router = WorkspaceRouter.channelMember(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [WorkspaceUserResponseDTO].self)
+
+            return .success(response.map({ dto in
+                
+                print(dto)
+                
                 return dto.toDomain()
             }))
         } catch {

@@ -54,6 +54,7 @@ struct CustomDisclosureGroupView : View {
                     .title2()
                     .foregroundColor(.brandBlack)
                     .frame(height: 56)
+                    .padding(.leading, 15)
             }
             .tint(.brandBlack)
             .padding(.horizontal, 15)

@@ -20,22 +20,38 @@ struct HomeView: View {
             
             //TODO: - scroll View
             NavigationStack {
-                VStack {
-                    //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
-                    Divider().background(.brandWhite).padding(.top, 10)
-                    
-                    CustomDisclosureGroupView(store: store)
-                    
-                    Divider().background(Color.viewSeperator)
-                    
-                    DisclosureGroup(isExpanded: $expanded) {
-                        VStack {
-                            ForEach(store.dmList, id: \.id) { response in
+                ScrollView {
+                    VStack {
+                        //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
+                        Divider().background(.brandWhite).padding(.top, 10)
+                        
+                        CustomDisclosureGroupView(store: store)
+                        
+                        Divider().background(Color.viewSeperator)
+                        
+                        DisclosureGroup(isExpanded: $expanded) {
+                            VStack {
+                                ForEach(store.dmList, id: \.id) { response in
+                                    HStack {
+                                        Image(systemName: "number")
+                                            .resizable()
+                                            .frame(width: 18, height: 18)
+                                        Text(response.roomID)
+                                            .bodyRegular()
+                                    }
+                                    .padding(.leading, 15)
+                                    .frame(width: 393, height: 41, alignment: .leading)
+                                    .onTapGesture {
+                                        print("hi")
+                                    }
+                                }
+                                
                                 HStack {
-                                    Image(systemName: "number")
+                                    Image(systemName: "plus")
                                         .resizable()
                                         .frame(width: 18, height: 18)
-                                    Text(response.roomID)
+                                        .padding(.leading, 15)
+                                    Text("새 메세지 시작")
                                         .bodyRegular()
                                 }
                                 .padding(.leading, 15)
@@ -43,52 +59,38 @@ struct HomeView: View {
                                 .onTapGesture {
                                     print("hi")
                                 }
+                                
                             }
                             
-                            HStack {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
-                                    .padding(.leading, 15)
-                                Text("새 메세지 시작")
-                                    .bodyRegular()
-                            }
-                            .padding(.leading, 15)
-                            .frame(width: 393, height: 41, alignment: .leading)
-                            .onTapGesture {
-                                print("hi")
-                            }
-                            
+                        } label: {
+                            Text("다이렉트 메세지")
+                                .title2()
+                                .foregroundColor(.brandBlack)
+                                .frame(height: 56)
+                                .padding(.leading, 15)
+                        }
+                        .tint(.brandBlack)
+                        .padding(.horizontal, 15)
+                        
+                        Divider().background(Color.viewSeperator)
+                        
+                        HStack {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 18, height: 18)
+                                .padding(.leading, 15)
+                            Text("팀원 추가")
+                                .bodyRegular()
+                        }
+                        .padding()
+                        .frame(width: 393, height: 41, alignment: .leading)
+                        .padding(.horizontal, 15)
+                        .onTapGesture {
+                            store.send(.inviteMemberButtonTapped)
                         }
                         
-                    } label: {
-                        Text("다이렉트 메세지")
-                            .title2()
-                            .foregroundColor(.brandBlack)
-                            .frame(height: 56)
+                        Spacer()
                     }
-                    .tint(.brandBlack)
-                    .padding(.horizontal, 15)
-                    
-                    Divider().background(Color.viewSeperator)
-                    
-                    HStack {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                            .padding(.leading, 15)
-                        Text("팀원 추가")
-                            .bodyRegular()
-                    }
-                    .padding()
-                    .frame(width: 393, height: 41, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .onTapGesture {
-                        store.send(.inviteMemberButtonTapped)
-                    }
-                    
-                    Spacer()
-                    
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
