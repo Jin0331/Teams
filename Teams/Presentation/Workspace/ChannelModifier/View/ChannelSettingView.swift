@@ -35,6 +35,9 @@ struct ChannelSettingView: View {
                             .padding(.horizontal, 15)
                         
                         memberView()
+                            .padding(.bottom, 15)
+                        
+                        ChannelSettingButtonView(store: store)
                         
                         Spacer()
                     }
@@ -65,7 +68,7 @@ struct ChannelSettingView: View {
 extension ChannelSettingView {
     fileprivate func memberView() -> some View {
         let columns = [
-          //추가 하면 할수록 화면에 보여지는 개수가 변함
+            //추가 하면 할수록 화면에 보여지는 개수가 변함
             GridItem(.flexible()),
             GridItem(.flexible()),
             GridItem(.flexible()),

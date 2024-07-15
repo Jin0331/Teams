@@ -22,6 +22,10 @@ struct ChannelSettingFeature {
     enum Action {
         case onAppear
         case goBack
+        case channelEditButtonTapped
+        case channelExitButtonTapped
+        case channelOwnerButtonTapped
+        case channelRemoveButtonTapped
     }
     
     @Dependency(\.networkManager) var networkManager
