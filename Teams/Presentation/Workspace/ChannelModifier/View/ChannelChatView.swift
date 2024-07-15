@@ -96,7 +96,7 @@ struct ChannelChatView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
-                        Text("# " + store.channelCurrent.name)
+                        Text("# \(store.channelCurrent.name) \(store.channelCurrentMembers.count)" )
                             .title2()
                     }
                 }
@@ -114,7 +114,7 @@ struct ChannelChatView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         store.send(.socket(.socketDisconnectAndGoChannelSetting))
-                        store.send(.goChannelSetting((currentWorksapce: store.workspaceCurrent, currentChannel: store.channelCurrent)))
+                        store.send(.goChannelSetting((currentWorksapce: store.workspaceCurrent, currentChannel: store.channelCurrent, currentChannelMembers: store.channelCurrentMembers)))
                     }, label: {
                         Image(.list)
                             .resizable()

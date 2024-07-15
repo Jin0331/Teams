@@ -16,6 +16,7 @@ struct ChannelSettingFeature {
         let id = UUID()
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel?
+        var channelCurrentMemebers : UserList?
     }
     
     enum Action {
@@ -31,7 +32,7 @@ struct ChannelSettingFeature {
                 
             case .onAppear:
                 
-                print(state.workspaceCurrent, state.channelCurrent)
+                print(state.workspaceCurrent, state.channelCurrent, state.channelCurrentMemebers)
                 
                 return .none
                 

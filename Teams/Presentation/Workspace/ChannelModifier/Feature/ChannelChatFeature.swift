@@ -21,6 +21,7 @@ struct ChannelChatFeature {
         let id = UUID()
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel
+        var channelCurrentMembers : UserList = []
         var message : [Message] = []
     }
     
@@ -29,9 +30,10 @@ struct ChannelChatFeature {
         case sendMessage(DraftMessage)
         case channelChatResponse(Result<[ChannelChat], APIError>)
         case channelSendChatResponse(Result<ChannelChat, APIError>)
+        case channelMembersResponse(Result<UserList, APIError>)
         case socket(SocketAction)
         case goBack
-        case goChannelSetting((currentWorksapce : Workspace?, currentChannel : Channel))
+        case goChannelSetting((currentWorksapce : Workspace?, currentChannel : Channel, currentChannelMembers : UserList))
     }
     
     enum SocketAction {
@@ -62,10 +64,21 @@ struct ChannelChatFeature {
                 
                 
                 return .run { [channel = state.channelCurrent] send in
+                    
+                    let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id)
+                    
+                    await send(.channelMembersResponse(
+                        networkManager.getChannelMemebers(request: workspaceIDDTO)
+                    ))
+                    
                     await send(.channelChatResponse(
-                        networkManager.joinOrSearchChannelChat(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), cursorDate: cursorDate.toStringRaw())
+                        networkManager.joinOrSearchChannelChat(request: workspaceIDDTO, cursorDate: cursorDate.toStringRaw())
                     ))
                 }
+            
+            case let .channelMembersResponse(.success(members)):
+                state.channelCurrentMembers = members
+                return .none
                 
             case let .channelChatResponse(.success(chatList)):
                 
@@ -90,7 +103,7 @@ struct ChannelChatFeature {
                 return .send(.socket(.socketConnect))
             
                 
-            case let .channelChatResponse(.failure(error)), let .channelSendChatResponse(.failure(error)):
+            case let .channelChatResponse(.failure(error)), let .channelSendChatResponse(.failure(error)), let .channelMembersResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 
