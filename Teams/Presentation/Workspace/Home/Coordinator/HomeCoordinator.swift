@@ -57,7 +57,10 @@ struct HomeCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
-                state.routes.presentSheet(.channelAdd(.init(currentWorkspace: state.currentWorkspace)))
+                state.routes.presentSheet(.channelAdd(.init(viewMode: .create, currentWorkspace: state.currentWorkspace)))
+            
+            case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelEdit(channel))))):
+                state.routes.presentSheet(.channelAdd(.init(viewMode: .edit, currentWorkspace: state.currentWorkspace, currentChannel: channel)))
                 
             case .router(.routeAction(_, action: .home(.inviteMemberButtonTapped))):
                 state.routes.presentSheet(.inviteMember(.init(currentWorkspace: state.currentWorkspace)))
@@ -70,6 +73,9 @@ struct HomeCoordinator {
                 
             case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
+                
+            case .router(.routeAction(_, action: .channelAdd(.editChannelComplete))):
+                return .send(.router(.routeAction(id: .channelSetting, action: .channelSetting(.onAppear))))
                 
             case .router(.routeAction(_, action: .inviteMember(.inviteComplete))):
                 state.routes.dismiss()

@@ -367,6 +367,23 @@ final class NetworkManager {
         }
     }
     
+    func editChannel(request : WorkspaceIDRequestDTO, query : ChannelCreateRequestDTO) async -> Result<Channel, APIError> {
+        
+        let router = WorkspaceRouter.editChannel(request: request, body: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    
     func joinOrSearchChannelChat(request : WorkspaceIDRequestDTO, cursorDate : String) async -> Result<ChannelChatList, APIError> {
         let router = WorkspaceRouter.channelChat(request: request, query: cursorDate)
         

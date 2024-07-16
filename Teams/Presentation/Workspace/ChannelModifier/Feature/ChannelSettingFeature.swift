@@ -55,6 +55,7 @@ struct ChannelSettingFeature {
     
     enum PopupComplete {
         case channelRemoveOrExit
+        case channelEdit(Channel)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -68,7 +69,7 @@ struct ChannelSettingFeature {
                 
             case .onAppear:
                 
-                print(state.workspaceCurrent, state.channelCurrent, state.channelCurrentMemebers)
+                print("hihi")
                 
                 return .none
             
@@ -90,6 +91,10 @@ struct ChannelSettingFeature {
                 }
                 
                 return .none
+                
+            case .buttonTapped(.channelEditButtonTapped):
+                guard let channelCurrent = state.channelCurrent else { return .none}
+                return .send(.popupComplete(.channelEdit(channelCurrent)))
                 
             case let .popup(.channelRemove(workspace, channel)):
                 return .run { send in

@@ -45,9 +45,6 @@ struct ChannelSettingView: View {
                 }
                 
             }
-            .onAppear {
-                store.send(.onAppear)
-            }
             .popup(item: $store.popupPresent) { popup in
                 PopupButtonChannelSettingView(store: store, action: popup)
             } customize: {

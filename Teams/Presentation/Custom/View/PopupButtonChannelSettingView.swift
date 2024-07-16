@@ -91,9 +91,6 @@ struct PopupButtonChannelSettingView: View {
         
         case let .channelExit(_,_,_,workspace,channel,_):
             store.send(.popup(.channelExit(workspace: workspace, channel: channel)))
-        
-        default :
-            break
         }
         
     }

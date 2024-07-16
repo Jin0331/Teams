@@ -132,7 +132,7 @@ extension WorkspaceRouter : TargetType {
             
             return multiPart
             
-        case let .createChannel(_, body):
+        case let .createChannel(_, body), let .editChannel(_, body):
             let multiPart = MultipartFormData()
             multiPart.append(body.name.data(using: .utf8)!, withName: "name")
             
