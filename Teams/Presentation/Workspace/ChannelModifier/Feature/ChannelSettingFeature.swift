@@ -43,6 +43,7 @@ struct ChannelSettingFeature {
     }
     
     enum NetworkResponse {
+        case channelSpecificResponse(Result<ChannelSpecific, APIError>)
         case channelRemoveResponse(Result<EmptyResponseDTO, APIError>)
         case channelExitResponse(Result<ChannelList, APIError>)
     }
@@ -68,10 +69,12 @@ struct ChannelSettingFeature {
             switch action {
                 
             case .onAppear:
-                
-                print("hihi")
-                
-                return .none
+                guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
+                return .run { send in
+                    await send(.networkResponse(.channelSpecificResponse(
+                        networkManager.getSpecificChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                    )))
+                }
             
             case .buttonTapped(.channelRemoveButtonTapped):
                 
@@ -110,13 +113,21 @@ struct ChannelSettingFeature {
                     )))
                 }
             
+            case let .networkResponse(.channelSpecificResponse(.success(response))):
+                
+                state.channelCurrent = response.toChannel
+                state.channelCurrentMemebers = response.channelMembers
+                
+                return .none
+                
+                
             case .networkResponse(.channelRemoveResponse(.success(_))), .networkResponse(.channelExitResponse(.success(_))):
                 return .run { send in
                     await send(.popup(.dismissPopupView))
                     await send(.popupComplete(.channelRemoveOrExit))
                 }
                 
-            case let .networkResponse(.channelRemoveResponse(.failure(error))), let .networkResponse(.channelExitResponse(.failure(error))):
+            case let .networkResponse(.channelRemoveResponse(.failure(error))), let .networkResponse(.channelExitResponse(.failure(error))), let .networkResponse(.channelSpecificResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ error")
                 
