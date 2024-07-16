@@ -66,8 +66,10 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
         case let .inviteWorkspace(workspaceID,_):
             return "/workspaces/" + workspaceID.workspace_id + "/members"
-        case let .editChannel(workspaceID, _), let .exitChannel(workspaceID), let .removeChannel(workspaceID):
+        case let .editChannel(workspaceID, _), let .removeChannel(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id
+        case let .exitChannel(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/exit"
         case let .channelChat(workspaceID, _), let .sendChannelChat(workspaceID,_):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/chats"
         case let .channelMember(workspaceID):

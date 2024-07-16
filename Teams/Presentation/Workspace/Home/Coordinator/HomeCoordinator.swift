@@ -87,7 +87,7 @@ struct HomeCoordinator {
             case let .router(.routeAction(_, action: .channelChat(.goChannelSetting(worksapceChannel)))):
                 state.routes.push(.channelSetting(.init(workspaceCurrent: worksapceChannel.currentWorksapce, channelCurrent: worksapceChannel.currentChannel, channelCurrentMemebers: worksapceChannel.currentChannelMembers)))
                 
-            case .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelRemove)))):
+            case .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelRemoveOrExit)))):
                 state.routes.goBackToRoot()
                 
             default :

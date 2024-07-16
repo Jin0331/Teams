@@ -19,11 +19,10 @@ struct ChannelSettingFeature {
         var channelCurrentMemebers : UserList?
         
         var popupPresent : CustomPopup?
-        var popupPresentBool : Bool = false
         enum CustomPopup : Equatable {
             case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+            case channelExit(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
         }
-
     }
     
     enum Action : BindableAction{
@@ -45,16 +44,17 @@ struct ChannelSettingFeature {
     
     enum NetworkResponse {
         case channelRemoveResponse(Result<EmptyResponseDTO, APIError>)
+        case channelExitResponse(Result<ChannelList, APIError>)
     }
     
     enum PopupAction {
         case dismissPopupView
         case channelRemove(workspace:Workspace, channel:Channel)
-        
+        case channelExit(workspace:Workspace, channel:Channel)
     }
     
     enum PopupComplete {
-        case channelRemove
+        case channelRemoveOrExit
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -75,9 +75,19 @@ struct ChannelSettingFeature {
             case .buttonTapped(.channelRemoveButtonTapped):
                 
                 guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
+                state.popupPresent = .channelRemove(titleText: "채널 삭제", bodyText: "정말 이 채널을 삭제하시겠습니까? 삭제 시 멤버/채팅 등 채널 내의 모든 정보가 삭제되며 복구할 수 없습니다.", buttonTitle: "삭제", workspaceID: workspace, channelId: channel, twoButton: true)
                 
-                state.popupPresentBool = true
-                state.popupPresent = .channelRemove(titleText: "채널 삭제", bodyText: "정말 이 채널을 삭제하시겠습니까? 삭제 시 멤버/채팅 등 채널 내의 모든 정보가 삭제되며 복구할 수 없습니다.", buttonTitle: "참여", workspaceID: workspace, channelId: channel, twoButton: true)
+                return .none
+                
+            case .buttonTapped(.channelExitButtonTapped):
+                
+                guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
+                
+                if channel.ownerID == UserDefaultManager.shared.userId {
+                    state.popupPresent = .channelExit(titleText: "채널에서 나가기", bodyText: "회원님은 채널 관리자입니다. 채널 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다.", buttonTitle: "확인", workspaceID: workspace, channelId: channel, twoButton: false)
+                } else {
+                    state.popupPresent = .channelExit(titleText: "채널에서 나가기", bodyText: "나가기를 하면 채널 목록에서 삭제됩니다.", buttonTitle: "나가기", workspaceID: workspace, channelId: channel, twoButton: true)
+                }
                 
                 return .none
                 
@@ -88,13 +98,20 @@ struct ChannelSettingFeature {
                        )))
                 }
             
-            case .networkResponse(.channelRemoveResponse(.success(_))):
+            case let .popup(.channelExit(workspace, channel)):
+                return .run { send in
+                    await send(.networkResponse(.channelExitResponse(
+                        networkManager.exitChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                    )))
+                }
+            
+            case .networkResponse(.channelRemoveResponse(.success(_))), .networkResponse(.channelExitResponse(.success(_))):
                 return .run { send in
                     await send(.popup(.dismissPopupView))
-                    await send(.popupComplete(.channelRemove))
+                    await send(.popupComplete(.channelRemoveOrExit))
                 }
                 
-            case let .networkResponse(.channelRemoveResponse(.failure(error))):
+            case let .networkResponse(.channelRemoveResponse(.failure(error))), let .networkResponse(.channelExitResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ error")
                 

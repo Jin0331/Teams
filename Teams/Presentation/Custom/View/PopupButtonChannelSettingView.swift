@@ -64,21 +64,21 @@ struct PopupButtonChannelSettingView: View {
     @ViewBuilder
     private func actionView(for action: ChannelSettingFeature.State.CustomPopup) -> some View {
         switch action {
-        case let .channelRemove(titleText, bodyText, _, _, _, _):
+        case let .channelRemove(titleText, bodyText, _, _, _, _), let .channelExit(titleText, bodyText, _, _, _, _):
             alertText(titleText, bodyText)
         }
     }
 
     private func actionButtonTitle(for action: ChannelSettingFeature.State.CustomPopup) -> String {
         switch action {
-        case let .channelRemove(_, _, buttonTitle, _, _, _):
+        case let .channelRemove(_, _, buttonTitle, _, _, _), let .channelExit(_, _, buttonTitle, _, _, _):
             return buttonTitle
         }
     }
     
     private func actionButtonType(for action: ChannelSettingFeature.State.CustomPopup) -> Bool {
         switch action {
-        case let .channelRemove(_, _, _, _, _,type):
+        case let .channelRemove(_, _, _, _, _,type), let .channelExit(_, _, _, _, _,type):
             return type
         }
     }
@@ -88,7 +88,14 @@ struct PopupButtonChannelSettingView: View {
         case let .channelRemove(_,_,_,workspace,channel,_):
             store.send(.popup(.channelRemove(workspace: workspace, channel: channel)))
             break
+        
+        case let .channelExit(_,_,_,workspace,channel,_):
+            store.send(.popup(.channelExit(workspace: workspace, channel: channel)))
+        
+        default :
+            break
         }
+        
     }
     
     private func alertText(_ titleText: String, _ bodyText: String) -> VStack<TupleView<(some View, some View)>> {
