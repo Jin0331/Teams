@@ -19,18 +19,18 @@ struct SideMenuView: View {
                 switch store.showList {
                 case .success :
                     List {
-                        ForEach(store.workspaceList, id: \.id) { response in
-                            WorkspaceListItemView(response: response, userID: UserDefaultManager.shared.userId!, store: store)
-                                .onTapGesture {
-                                    print("", UserDefaultManager.shared.userId!, response.ownerID)
-                                }
+                        ScrollView {
+                            ForEach(store.workspaceList, id: \.id) { response in
+                                WorkspaceListItemView(response: response, userID: UserDefaultManager.shared.userId!, store: store)
+                                    .onTapGesture {
+                                        print("", UserDefaultManager.shared.userId!, response.ownerID)
+                                    }
+                            }
+                            .listRowSeparator(.hidden)
+                            .cornerRadius(8)
                         }
-                        .listRowSeparator(.hidden)
-                        .cornerRadius(8)
                     }
-
                     .listStyle(.plain)
-                    .scrollDisabled(store.listScroll)
                 case .failed:
                     Text("워크스페이스를 찾을 수 없어요.")
                         .title1()

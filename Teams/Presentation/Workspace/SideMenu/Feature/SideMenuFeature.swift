@@ -17,7 +17,6 @@ struct SideMenuFeature {
         var showList : viewState = .loading
         var workspaceIdCurrent : String = ""
         var workspaceOwnerID : String = ""
-        var listScroll = true
         var workspaceList : [Workspace] = []
         
         enum viewState  {
@@ -57,10 +56,6 @@ struct SideMenuFeature {
             case let .myWorkspaceResponse(.success(response)):
                 
                 state.workspaceCount = response.count
-                
-                if state.workspaceCount > 7 {
-                    state.listScroll = false
-                }
                 
                 if state.workspaceCount > 0 {
                     state.showList = .success
