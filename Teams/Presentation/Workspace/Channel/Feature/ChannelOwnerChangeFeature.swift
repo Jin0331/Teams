@@ -16,10 +16,17 @@ struct ChannelOwnerChangeFeature {
         let id = UUID()
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel?
-        
+        var channelCurrentMembers : UserList = []
+        var viewMode : ViewType = .none
         var popupPresent : CustomPopup?
+        
         enum CustomPopup : Equatable {
-            case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+            case channelOwnerChange(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+        }
+        
+        enum ViewType {
+            case none
+            case change
         }
     }
     
@@ -28,18 +35,17 @@ struct ChannelOwnerChangeFeature {
         case dismiss
         case listTapped
         case popup(PopupAction)
+        case channelMembersResponse(Result<UserList, APIError>)
         case binding(BindingAction<State>)
     }
     
     enum PopupAction {
         case dismissPopupView
-        case channelRemove(workspace:Workspace, channel:Channel)
-        case channelExit(workspace:Workspace, channel:Channel)
+        case dismissPopupViewWithError
     }
     
     enum PopupComplete {
-        case channelRemoveOrExit
-        case channelEdit(Channel)
+
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -53,9 +59,42 @@ struct ChannelOwnerChangeFeature {
                 
             case .onAppear :
                 
-                print(state.workspaceCurrent, state.channelCurrent)
+                guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none }
+                let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id)
                 
+                return .run { send in
+                    await send(.channelMembersResponse(
+                        networkManager.getChannelMemebers(request: workspaceIDDTO)
+                    ))
+                }
+                
+            case let .channelMembersResponse(.success(members)):
+                
+                guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
+                if members.count < 2 {
+                    state.viewMode = .none
+                    state.popupPresent = .channelOwnerChange(titleText: "채널 관리자 변경 불가", bodyText: "채널 멤버가 없어 관리자 변경을 할 수 없습니다.", buttonTitle: "확인", workspaceID: workspace, channelId: channel, twoButton: false)
+                    
+                    return .none
+                } else {
+                    state.viewMode = .change
+                    state.channelCurrentMembers = members
+                    
+                    return .none
+                }
+                
+            case let .channelMembersResponse(.failure(error)):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(errorType, error, "❗️ error")
                 return .none
+                
+            case .popup(.dismissPopupView):
+                state.popupPresent = nil
+                return .none
+                
+            case .popup(.dismissPopupViewWithError):
+                state.popupPresent = nil
+                return .send(.dismiss)
                 
             default :
                 return .none

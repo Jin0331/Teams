@@ -107,6 +107,7 @@
 		DBD3972D2C4648D100A45D17 /* ChannelSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD3972C2C4648D100A45D17 /* ChannelSpecific.swift */; };
 		DBD3972F2C46506E00A45D17 /* ChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD3972E2C46506E00A45D17 /* ChannelOwnerChangeView.swift */; };
 		DBD397312C46509900A45D17 /* ChannelOwnerChangeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397302C46509900A45D17 /* ChannelOwnerChangeFeature.swift */; };
+		DBD397332C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */; };
 		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
 		DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */; };
 		DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB12C37CBBF00B627BD /* DM.swift */; };
@@ -232,6 +233,7 @@
 		DBD3972C2C4648D100A45D17 /* ChannelSpecific.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSpecific.swift; sourceTree = "<group>"; };
 		DBD3972E2C46506E00A45D17 /* ChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeView.swift; sourceTree = "<group>"; };
 		DBD397302C46509900A45D17 /* ChannelOwnerChangeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeFeature.swift; sourceTree = "<group>"; };
+		DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonChannelOwnerChangeView.swift; sourceTree = "<group>"; };
 		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBE1CCB12C37CBBF00B627BD /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				DBD397242C46108D00A45D17 /* PopupButtonChannelSettingView.swift */,
 				DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */,
 				DBD397222C45904800A45D17 /* ChannelSettingButtonView.swift */,
+				DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -940,6 +943,7 @@
 				DB5AADBB2C1300DD002907B6 /* InputView.swift in Sources */,
 				DBC3F8192C4234C100D11D3B /* String+Extension.swift in Sources */,
 				DBBAAEB42C3D18A20015596C /* RealmRepository.swift in Sources */,
+				DBD397332C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift in Sources */,
 				DBFB53E62C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift in Sources */,
 				DBEA52132C20872D00026926 /* ProfileResponseDTO+Mapping.swift in Sources */,
 				DBC567DF2C184DBE00444E98 /* EmailLoginFeature.swift in Sources */,

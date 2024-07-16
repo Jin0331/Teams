@@ -8,42 +8,78 @@
 import ComposableArchitecture
 import SwiftUI
 import PopupView
+import Kingfisher
 
 struct ChannelOwnerChangeView: View {
     
     @State var store : StoreOf<ChannelOwnerChangeFeature>
-    
     var body: some View {
         
         WithPerceptionTracking {
             
             NavigationStack {
                 Divider().background(.brandWhite)
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 5)
                 
                 ScrollView {
-                    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                }
-            }
-            .onAppear {
-                store.send(.onAppear)
-            }
-//            .popup(item: $store.toastPresent) { text in
-//                ToastView(text: text.rawValue)
-//            } customize: {
-//                $0.autohideIn(2)
-//            }
-            .navigationBarTitle("채널 관리자 변경", displayMode: .inline)
-            .navigationBarItems(
-                leading:
-                    Button {
-                        store.send(.dismiss)
-                    } label : {
-                        Image("Vector")
+                    ForEach(store.channelCurrentMembers, id: \.id) { member in
+                        
+                        if member.userID != store.channelCurrent!.ownerID {
+                            CellView(member)
+                                .onTapGesture {
+                                    print(member.nickname)
+                                }
+                        }
                     }
-            )
-            .navigationBarColor(backgroundColor: .brandWhite, titleColor: .brandBlack)
-            .navigationViewStyle(StackNavigationViewStyle())
+                }
+                .onAppear {
+                    store.send(.onAppear)
+                }
+                .navigationBarTitle("채널 관리자 변경", displayMode: .inline)
+                .navigationBarItems(
+                    leading:
+                        Button {
+                            store.send(.dismiss)
+                        } label : {
+                            Image("Vector")
+                        }
+                )
+                .navigationBarColor(backgroundColor: .brandWhite, titleColor: .brandBlack)
+                .navigationViewStyle(StackNavigationViewStyle())
+            }
+            .popup(item: $store.popupPresent) { popup in
+                PopupButtonChannelOwnerChangeView(store: store, action: popup)
+            } customize: {
+                $0
+                    .isOpaque(true)
+                    .closeOnTap(false)
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.4))
+            }
         }
     }
+}
+
+extension ChannelOwnerChangeView {
+    fileprivate func CellView(_ member: User) -> some View {
+        return HStack {
+            KFImage.url(member.profileImageToUrl)
+                .requestModifier(AuthManager.kingfisherAuth())
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 44, height: 44)
+                .cornerRadius(8)
+                .padding(.leading, 10)
+            
+            VStack(alignment : .leading) {
+                Text(member.nickname)
+                    .bodyBold()
+                Text(member.email)
+                    .bodyRegular()
+            }
+        }
+        .frame(width: 393, height: 60, alignment: .leading)
+        .padding(.leading, 10)
+    }
+    
 }
