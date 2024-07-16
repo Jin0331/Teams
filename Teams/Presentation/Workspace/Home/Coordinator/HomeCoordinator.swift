@@ -28,6 +28,8 @@ struct HomeCoordinatorView : View {
                 ChannelChatView(store: store)
             case let .channelSetting(store):
                 ChannelSettingView(store: store)
+            case let .channelOwnerChange(store):
+                ChannelOwnerChangeView(store: store)
             }
         }
     }
@@ -61,14 +63,18 @@ struct HomeCoordinator {
             
             case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelEdit(channel))))):
                 state.routes.presentSheet(.channelAdd(.init(viewMode: .edit, currentWorkspace: state.currentWorkspace, currentChannel: channel)))
-                
+            
+            case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelOwnerChange(channel))))):
+                state.routes.presentSheet(.channelOwnerChange(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
+            
             case .router(.routeAction(_, action: .home(.inviteMemberButtonTapped))):
                 state.routes.presentSheet(.inviteMember(.init(currentWorkspace: state.currentWorkspace)))
                 
             case .router(.routeAction(_, action: .home(.channelSearchButtonTapped))):
                 state.routes.presentCover(.channelSearch(.init(workspaceCurrent: state.currentWorkspace)))
                 
-            case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))), .router(.routeAction(_, action: .inviteMember(.dismiss))):
+            case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))), 
+                    .router(.routeAction(_, action: .inviteMember(.dismiss))), .router(.routeAction(_, action: .channelOwnerChange(.dismiss))):
                 state.routes.dismiss()
                 
             case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):

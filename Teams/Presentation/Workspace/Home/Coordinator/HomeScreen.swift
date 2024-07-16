@@ -16,4 +16,5 @@ enum HomeScreen {
     case channelSearch(ChannelSearchFeature)
     case channelChat(ChannelChatFeature)
     case channelSetting(ChannelSettingFeature)
+    case channelOwnerChange(ChannelOwnerChangeFeature)
 }

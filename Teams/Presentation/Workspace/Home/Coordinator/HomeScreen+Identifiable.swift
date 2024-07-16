@@ -20,6 +20,8 @@ extension HomeScreen.State: Identifiable {
                 .channelChat
         case .channelSetting:
                 .channelSetting
+        case .channelOwnerChange:
+                .channelOwnerChange
         }
     }
     
@@ -30,6 +32,7 @@ extension HomeScreen.State: Identifiable {
         case channelSearch
         case channelChat
         case channelSetting
+        case channelOwnerChange
         var id: ID { self }
     }
 }

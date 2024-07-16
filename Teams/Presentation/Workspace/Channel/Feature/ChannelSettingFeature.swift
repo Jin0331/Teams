@@ -57,6 +57,7 @@ struct ChannelSettingFeature {
     enum PopupComplete {
         case channelRemoveOrExit
         case channelEdit(Channel)
+        case channelOwnerChange(Channel)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -98,6 +99,10 @@ struct ChannelSettingFeature {
             case .buttonTapped(.channelEditButtonTapped):
                 guard let channelCurrent = state.channelCurrent else { return .none}
                 return .send(.popupComplete(.channelEdit(channelCurrent)))
+                
+            case .buttonTapped(.channelOwnerButtonTapped):
+                guard let channelCurrent = state.channelCurrent else { return .none}
+                return .send(.popupComplete(.channelOwnerChange(channelCurrent)))
                 
             case let .popup(.channelRemove(workspace, channel)):
                 return .run { send in
