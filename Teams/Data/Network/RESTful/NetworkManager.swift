@@ -107,9 +107,9 @@ final class NetworkManager {
     }
     
     //MARK: - User
-    func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmailVaidationResponseDTO, APIError> {
+    func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmptyResponseDTO, APIError> {
         do {
-            let response = try await requestAPI(router: UserRouter.emailValidation(query: query), of: EmailVaidationResponseDTO.self)
+            let response = try await requestAPI(router: UserRouter.emailValidation(query: query), of: EmptyResponseDTO.self)
             return .success(response)
         } catch {
             if let apiError = error as? APIError {
@@ -420,6 +420,20 @@ final class NetworkManager {
             }
         }
     }
+    
+    func removeChannel(request : WorkspaceIDRequestDTO) async -> Result<EmptyResponseDTO, APIError> {
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.removeChannel(request: request), of: EmptyResponseDTO.self)
+            return .success(response)
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
 }
 
 

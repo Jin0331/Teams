@@ -102,6 +102,7 @@
 		DBD3971F2C456E3E00A45D17 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD3971E2C456E3E00A45D17 /* ChannelSettingView.swift */; };
 		DBD397212C456E9700A45D17 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397202C456E9700A45D17 /* ChannelSettingFeature.swift */; };
 		DBD397232C45904800A45D17 /* ChannelSettingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397222C45904800A45D17 /* ChannelSettingButtonView.swift */; };
+		DBD397252C46108D00A45D17 /* PopupButtonChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397242C46108D00A45D17 /* PopupButtonChannelSettingView.swift */; };
 		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
 		DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */; };
 		DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB12C37CBBF00B627BD /* DM.swift */; };
@@ -222,6 +223,7 @@
 		DBD3971E2C456E3E00A45D17 /* ChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingView.swift; sourceTree = "<group>"; };
 		DBD397202C456E9700A45D17 /* ChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingFeature.swift; sourceTree = "<group>"; };
 		DBD397222C45904800A45D17 /* ChannelSettingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingButtonView.swift; sourceTree = "<group>"; };
+		DBD397242C46108D00A45D17 /* PopupButtonChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonChannelSettingView.swift; sourceTree = "<group>"; };
 		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBE1CCB12C37CBBF00B627BD /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */,
 				DBFB53E52C3C31A800ADE1E7 /* PopupButtonWorkspaceView.swift */,
 				DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */,
+				DBD397242C46108D00A45D17 /* PopupButtonChannelSettingView.swift */,
 				DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */,
 				DBD397222C45904800A45D17 /* ChannelSettingButtonView.swift */,
 			);
@@ -1021,6 +1024,7 @@
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
+				DBD397252C46108D00A45D17 /* PopupButtonChannelSettingView.swift in Sources */,
 				DB04EF812C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift in Sources */,
 				DB2566112C33D06800D34BEB /* WorkspaceEditFeature.swift in Sources */,
 				DB5AADDF2C180E0F002907B6 /* JoinRequestDTO.swift in Sources */,

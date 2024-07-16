@@ -18,25 +18,25 @@ struct ChannelSettingButtonView: View {
             if store.channelCurrent!.ownerID == UserDefaultManager.shared.userId {
                 Image(.channelEdit)
                     .asButton {
-                        store.send(.channelEditButtonTapped)
+                        store.send(.buttonTapped(.channelEditButtonTapped))
                     }
                 
                 Image(.channelExit)
                     .asButton {
-                        store.send(.channelExitButtonTapped)
+                        store.send(.buttonTapped(.channelExitButtonTapped))
                     }
                 Image(.channerOwner)
                     .asButton {
-                        store.send(.channelOwnerButtonTapped)
+                        store.send(.buttonTapped(.channelOwnerButtonTapped))
                     }
                 Image(.channelDelete)
                     .asButton {
-                        store.send(.channelRemoveButtonTapped)
+                        store.send(.buttonTapped(.channelRemoveButtonTapped))
                     }
             } else {
                 Image(.channelExit)
                     .asButton {
-                        store.send(.channelExitButtonTapped)
+                        store.send(.buttonTapped(.channelExitButtonTapped))
                     }
             }
         }

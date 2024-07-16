@@ -111,15 +111,17 @@ struct ChannelChatView: View {
                     })
                 }
                 
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        store.send(.socket(.socketDisconnectAndGoChannelSetting))
-                        store.send(.goChannelSetting((currentWorksapce: store.workspaceCurrent, currentChannel: store.channelCurrent, currentChannelMembers: store.channelCurrentMembers)))
-                    }, label: {
-                        Image(.list)
-                            .resizable()
-                            .frame(width: 18, height: 15.92)
-                    })
+                if store.channelCurrent.name != "일반" {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            store.send(.socket(.socketDisconnectAndGoChannelSetting))
+                            store.send(.goChannelSetting((currentWorksapce: store.workspaceCurrent, currentChannel: store.channelCurrent, currentChannelMembers: store.channelCurrentMembers)))
+                        }, label: {
+                            Image(.list)
+                                .resizable()
+                                .frame(width: 18, height: 15.92)
+                        })
+                    }
                 }
             }
         }

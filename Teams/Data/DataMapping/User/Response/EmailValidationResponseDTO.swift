@@ -8,9 +8,9 @@
 import Foundation
 import Alamofire
 
-struct EmailVaidationResponseDTO : EmptyResponse, Decodable {
-    static func emptyValue() -> EmailVaidationResponseDTO {
-        return EmailVaidationResponseDTO.init()
+struct EmptyResponseDTO : EmptyResponse, Decodable {
+    static func emptyValue() -> EmptyResponseDTO {
+        return EmptyResponseDTO.init()
         
     }
 }

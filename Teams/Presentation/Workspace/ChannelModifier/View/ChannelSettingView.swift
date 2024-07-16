@@ -8,10 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 import Kingfisher
+import PopupView
 
 struct ChannelSettingView: View {
     
-    let store : StoreOf<ChannelSettingFeature>
+    @State var store : StoreOf<ChannelSettingFeature>
     @State private var expanded: Bool = false
     
     var body: some View {
@@ -46,6 +47,15 @@ struct ChannelSettingView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+            }
+            .popup(item: $store.popupPresent) { popup in
+                PopupButtonChannelSettingView(store: store, action: popup)
+            } customize: {
+                $0
+                    .isOpaque(true)
+                    .closeOnTap(false)
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.4))
             }
             .navigationBarTitle("채널 설정", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
