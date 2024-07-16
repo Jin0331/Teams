@@ -30,6 +30,7 @@ struct ChannelSettingFeature {
         case onAppear
         case goBack
         case popup(PopupAction)
+        case popupComplete(PopupComplete)
         case buttonTapped(ButtonTappedAction)
         case networkResponse(NetworkResponse)
         case binding(BindingAction<State>)
@@ -42,14 +43,18 @@ struct ChannelSettingFeature {
         case channelRemoveButtonTapped
     }
     
+    enum NetworkResponse {
+        case channelRemoveResponse(Result<EmptyResponseDTO, APIError>)
+    }
+    
     enum PopupAction {
         case dismissPopupView
-        case channelRemove
+        case channelRemove(workspace:Workspace, channel:Channel)
         
     }
     
-    enum NetworkResponse {
-        case channelRemoveResponse(Result<EmptyResponseDTO, APIError>)
+    enum PopupComplete {
+        case channelRemove
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -76,15 +81,19 @@ struct ChannelSettingFeature {
                 
                 return .none
                 
-                
-//                guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
-//                
-//                return .run { send in
-//                    await send(.networkResponse(.channelRemoveResponse(
-//                           networkManager.removeChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
-//                       )))
-//                }
+            case let .popup(.channelRemove(workspace, channel)):
+                return .run { send in
+                    await send(.networkResponse(.channelRemoveResponse(
+                           networkManager.removeChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                       )))
+                }
             
+            case .networkResponse(.channelRemoveResponse(.success(_))):
+                return .run { send in
+                    await send(.popup(.dismissPopupView))
+                    await send(.popupComplete(.channelRemove))
+                }
+                
             case let .networkResponse(.channelRemoveResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ error")
@@ -94,7 +103,6 @@ struct ChannelSettingFeature {
             case .popup(.dismissPopupView):
                 state.popupPresent = nil
                 return .none
-
                 
             default :
                 return .none

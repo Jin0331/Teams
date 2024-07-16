@@ -85,10 +85,8 @@ struct PopupButtonChannelSettingView: View {
 
     private func handleAction(for action: ChannelSettingFeature.State.CustomPopup) {
         switch action {
-        case let .channelRemove(_,_,_,_,channelID, _):
-//            store.send(.channelEnter(channelID))
-            break
-        default :
+        case let .channelRemove(_,_,_,workspace,channel,_):
+            store.send(.popup(.channelRemove(workspace: workspace, channel: channel)))
             break
         }
     }
