@@ -15,7 +15,9 @@ struct ChannelAddFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        var viewMode : ViewType = .create
         var currentWorkspace : Workspace?
+        var currentChannel : Channel?
         var channelName : String = ""
         var channelNameValid : Bool = false
         var channelDescription : String = ""
@@ -24,6 +26,11 @@ struct ChannelAddFeature {
         
         enum ToastMessage : String, Hashable, CaseIterable {
             case duplicate = "워크스페이스에 이미 있는 채널 이름입니다. 다른 이름을 입력해주세요."
+        }
+        
+        enum ViewType {
+            case create
+            case edit
         }
     }
     
@@ -34,6 +41,7 @@ struct ChannelAddFeature {
         case createChannelResponse(Result<Channel, APIError>)
         case dismiss
         case createChannelComplete
+        case editChannelComplete
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -69,17 +77,30 @@ struct ChannelAddFeature {
                                                                        description: state.channelDescription,
                                                                        image: nil)
 
-                return .run { send in
-                    await send(.createChannelResponse(
-                        networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""), query: createChannelRequest)
-                    ))
+                return .run { [viewMode = state.viewMode, currentChannel = state.currentChannel] send in
+                    
+                    if viewMode == .create {
+                        await send(.createChannelResponse(
+                            networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""), query: createChannelRequest)
+                        ))
+                    } else { // edit mode
+                        if let currentChannel {
+                            await send(.createChannelResponse(
+                                networkManager.editChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: currentChannel.channelID), query: createChannelRequest)
+                            ))
+                        }
+                    }
                 }
                 
             case let .createChannelResponse(.success(response)):
                 
                 dump(response)
                 
-                return .concatenate([.send(.createChannelComplete), .send(.dismiss)])
+                if state.viewMode == .create {
+                    return .concatenate([.send(.createChannelComplete), .send(.dismiss)])
+                } else {
+                    return .concatenate([.send(.editChannelComplete), .send(.dismiss)])
+                }
                 
             case let .createChannelResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)

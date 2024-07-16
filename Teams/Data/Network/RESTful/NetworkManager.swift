@@ -107,9 +107,9 @@ final class NetworkManager {
     }
     
     //MARK: - User
-    func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmailVaidationResponseDTO, APIError> {
+    func emailValidation(query : EmailVaidationRequestDTO) async -> Result<EmptyResponseDTO, APIError> {
         do {
-            let response = try await requestAPI(router: UserRouter.emailValidation(query: query), of: EmailVaidationResponseDTO.self)
+            let response = try await requestAPI(router: UserRouter.emailValidation(query: query), of: EmptyResponseDTO.self)
             return .success(response)
         } catch {
             if let apiError = error as? APIError {
@@ -296,7 +296,7 @@ final class NetworkManager {
         }
     }
     
-    func getMyChannels(request : WorkspaceIDRequestDTO) async -> Result<[Channel], APIError> {
+    func getMyChannels(request : WorkspaceIDRequestDTO) async -> Result<ChannelList, APIError> {
         
         let router = WorkspaceRouter.myChannels(request: request)
         
@@ -323,6 +323,21 @@ final class NetworkManager {
             return .success(response.map({ dto in
                 return dto.toDomain()
             }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getSpecificChannel(request : WorkspaceIDRequestDTO) async -> Result<ChannelSpecific, APIError> {
+        let router = WorkspaceRouter.specificChannels(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelSpecificResponseDTO.self)
+            return .success(response.toDomain())
         } catch {
             if let apiError = error as? APIError {
                 return .failure(apiError)
@@ -366,6 +381,23 @@ final class NetworkManager {
             }
         }
     }
+    
+    func editChannel(request : WorkspaceIDRequestDTO, query : ChannelCreateRequestDTO) async -> Result<Channel, APIError> {
+        
+        let router = WorkspaceRouter.editChannel(request: request, body: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     
     func joinOrSearchChannelChat(request : WorkspaceIDRequestDTO, cursorDate : String) async -> Result<ChannelChatList, APIError> {
         let router = WorkspaceRouter.channelChat(request: request, query: cursorDate)
@@ -420,6 +452,38 @@ final class NetworkManager {
             }
         }
     }
+    
+    func removeChannel(request : WorkspaceIDRequestDTO) async -> Result<EmptyResponseDTO, APIError> {
+        do {
+            let response = try await requestAPI(router: WorkspaceRouter.removeChannel(request: request), of: EmptyResponseDTO.self)
+            return .success(response)
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func exitChannel(request : WorkspaceIDRequestDTO) async -> Result<ChannelList, APIError> {
+        
+        let router = WorkspaceRouter.exitChannel(request: request)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [ChannelResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
 }
 
 

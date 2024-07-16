@@ -59,7 +59,7 @@ struct SignUpFeature {
         case completeButtonActive
         case completeButtonTapped
         case signUpComplete(String)
-        case emailValidationResponse(Result<EmailVaidationResponseDTO, APIError>)
+        case emailValidationResponse(Result<EmptyResponseDTO, APIError>)
         case joinResponse(Result<Join, APIError>)
         case inputView(InputFeature.Action)
     }

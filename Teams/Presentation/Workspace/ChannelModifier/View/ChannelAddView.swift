@@ -18,6 +18,7 @@ struct ChannelAddView : View {
         WithPerceptionTracking {
             NavigationStack {
                 Divider().background(.brandWhite)
+                    .padding(.bottom, 15)
                 VStack(spacing: 20) {
                     Text("채널 이름")
                         .title2()
@@ -41,7 +42,7 @@ struct ChannelAddView : View {
                         .padding()
                         .frame(width: 345, height: 44, alignment: .leading)
                     
-                    Button("생성") {
+                    Button(store.viewMode == .create ? "생성" : "완료") {
                         store.send(.createButtonTapped)
                     }
                     .foregroundStyle(.brandWhite)
@@ -59,7 +60,7 @@ struct ChannelAddView : View {
                 } customize: {
                     $0.autohideIn(2)
                 }
-                .navigationBarTitle("채널 생성", displayMode: .inline)
+                .navigationBarTitle(store.viewMode == .create ? "채널 생성" : "채널 편집", displayMode: .inline)
                 .navigationBarItems(
                     leading:
                         Button {
