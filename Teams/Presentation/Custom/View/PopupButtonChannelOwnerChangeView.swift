@@ -64,29 +64,30 @@ struct PopupButtonChannelOwnerChangeView: View {
     @ViewBuilder
     private func actionView(for action: ChannelOwnerChangeFeature.State.CustomPopup) -> some View {
         switch action {
-        case let .channelOwnerChange(titleText, bodyText, _, _, _, _):
+        case let .channelOwnerChange(titleText, bodyText, _, _, _, _, _):
             alertText(titleText, bodyText)
         }
     }
 
     private func actionButtonTitle(for action: ChannelOwnerChangeFeature.State.CustomPopup) -> String {
         switch action {
-        case let .channelOwnerChange(_, _, buttonTitle, _, _, _):
+        case let .channelOwnerChange(_, _, buttonTitle, _, _, _, _):
             return buttonTitle
         }
     }
     
     private func actionButtonType(for action: ChannelOwnerChangeFeature.State.CustomPopup) -> Bool {
         switch action {
-        case let .channelOwnerChange(_, _, _, _, _,type):
+        case let .channelOwnerChange(_, _, _, _, _, _,type):
             return type
         }
     }
 
     private func handleAction(for action: ChannelOwnerChangeFeature.State.CustomPopup) {
         switch action {
-        case let .channelOwnerChange(_,_,_,workspace,channel,_):
-//            store.send(.popup(.channelRemove(workspace: workspace, channel: channel)))
+        case let .channelOwnerChange(_,_,_,workspace,channel,member,_):
+            guard let member else { return }
+            store.send(.popup(.channelChangeOwner(workspace: workspace, channel: channel, memeber: member)))
             break
         }
         

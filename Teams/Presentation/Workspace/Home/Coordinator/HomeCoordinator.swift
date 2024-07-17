@@ -80,7 +80,7 @@ struct HomeCoordinator {
             case .router(.routeAction(_, action: .channelAdd(.createChannelComplete))):
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
                 
-            case .router(.routeAction(_, action: .channelAdd(.editChannelComplete))):
+            case .router(.routeAction(_, action: .channelAdd(.editChannelComplete))), .router(.routeAction(_, action: .channelOwnerChange(.popupComplete(.channelOwnerChange)))):
                 return .send(.router(.routeAction(id: .channelSetting, action: .channelSetting(.onAppear))))
                 
             case .router(.routeAction(_, action: .inviteMember(.inviteComplete))):

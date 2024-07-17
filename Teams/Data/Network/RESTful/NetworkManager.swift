@@ -484,6 +484,22 @@ final class NetworkManager {
         }
     }
     
+    func changeChannelOwner(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO) async -> Result<Channel, APIError> {
+        
+        let router = WorkspaceRouter.channelOwnerChange(request: request, body: body)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
 }
 
 

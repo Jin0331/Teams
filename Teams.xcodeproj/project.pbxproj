@@ -108,6 +108,7 @@
 		DBD3972F2C46506E00A45D17 /* ChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD3972E2C46506E00A45D17 /* ChannelOwnerChangeView.swift */; };
 		DBD397312C46509900A45D17 /* ChannelOwnerChangeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397302C46509900A45D17 /* ChannelOwnerChangeFeature.swift */; };
 		DBD397332C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */; };
+		DBD397352C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD397342C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift */; };
 		DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAB2C36AEAE00B627BD /* Channel.swift */; };
 		DBE1CCAE2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */; };
 		DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1CCB12C37CBBF00B627BD /* DM.swift */; };
@@ -234,6 +235,7 @@
 		DBD3972E2C46506E00A45D17 /* ChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeView.swift; sourceTree = "<group>"; };
 		DBD397302C46509900A45D17 /* ChannelOwnerChangeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeFeature.swift; sourceTree = "<group>"; };
 		DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonChannelOwnerChangeView.swift; sourceTree = "<group>"; };
+		DBD397342C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnershipRequestDTO.swift; sourceTree = "<group>"; };
 		DBE1CCAB2C36AEAE00B627BD /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBE1CCB12C37CBBF00B627BD /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				DB04EF7E2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift */,
 				DB04EF6F2C38F260007F0CBB /* ChannelCreateRequestDTO.swift */,
 				DBC3F8162C419D8600D11D3B /* ChannelChatRequestDTO.swift */,
+				DBD397342C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1021,6 +1024,7 @@
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
+				DBD397352C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift in Sources */,
 				DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */,
 				DBC567DB2C184A0300444E98 /* NavigationBarModifierView.swift in Sources */,
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,

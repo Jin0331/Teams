@@ -27,7 +27,7 @@ struct ChannelOwnerChangeView: View {
                         if member.userID != store.channelCurrent!.ownerID {
                             CellView(member)
                                 .onTapGesture {
-                                    print(member.nickname)
+                                    store.send(.listTapped(member))
                                 }
                         }
                     }
