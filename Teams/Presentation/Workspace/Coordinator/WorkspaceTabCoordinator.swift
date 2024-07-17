@@ -14,31 +14,28 @@ struct WorkspaceTabCoordinatorView : View {
     
     var body: some View {
         WithPerceptionTracking {
-            TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
-                HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
-                    .tabItem {
-                        Image(store.selectedTab == .home ? .tabhomeActive : .tabhomeInactive)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                        Text("홈")
-                            .bodyRegular()
-                    }
-                    .tag(WorkspaceTabCoordinator.Tab.home)
-                
-                DMCoordinatorView(store: store.scope(state: \.dm, action: \.dm))
-                    .tabItem {
-                        Image(store.selectedTab == .dm ? .tabdmActive : .tabdmInactive)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                        Text("DM")
-                            .bodyRegular()
-                    }
-                    .tag(WorkspaceTabCoordinator.Tab.dm)
-            }
-            
-            
-            
-            .accentColor(Color.brandBlack)
+                TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
+                    HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
+                        .tabItem {
+                            Image(store.selectedTab == .home ? .tabhomeActive : .tabhomeInactive)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            Text("홈")
+                                .bodyRegular()
+                        }
+                        .tag(WorkspaceTabCoordinator.Tab.home)
+                    
+                    DMCoordinatorView(store: store.scope(state: \.dm, action: \.dm))
+                        .tabItem {
+                            Image(store.selectedTab == .dm ? .tabdmActive : .tabdmInactive)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            Text("DM")
+                                .bodyRegular()
+                        }
+                        .tag(WorkspaceTabCoordinator.Tab.dm)
+                }
+                .accentColor(Color.brandBlack)
         }
     }
 }
