@@ -53,12 +53,21 @@ struct WorkspaceCoordinatorView : View {
                 }
             }
             .popup(item: $store.popupPresent) { popup in
-                PopupButtonWorkspaceView(store: store, action: popup)
+                switch popup {
+                case .workspaceRemove, .workspaceExit, .workspaceExitManager:
+                    PopupButtonWorkspaceView(store: store, action: popup)
+                case .ownerChange, .workspaceChange, .channelCreate:
+                    ToastView(text: popup.toastMessage)
+                }
             } customize: {
-                $0
-                    .closeOnTap(false)
-                    .closeOnTapOutside(true)
-                    .backgroundColor(.black.opacity(0.4))
+                if let popup = store.popupPresent, popup == .ownerChange || popup == .workspaceChange || popup == .channelCreate {
+                    $0.autohideIn(3.5)
+                } else {
+                    
+                    $0.closeOnTap(false)
+                        .closeOnTapOutside(true)
+                        .backgroundColor(.black.opacity(0.4))
+                }
             }
             .statusBar(hidden: store.sidemenuOpen)
             .animation(.default, value: store.sidemenuOpen)
@@ -81,19 +90,6 @@ struct WorkspaceCoordinator {
         var sidemenuOpen : Bool = false
         var isAnimation : Bool = false
         var popupPresent : CustomPopup?
-        
-        enum viewState {
-            case loading
-            case empty
-            case home
-        }
-        
-        enum CustomPopup : Equatable {
-            case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
-            case workspaceExit(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
-            case workspaceExitManager(titleText:String, bodyText:String, buttonTitle:String, twoButton:Bool)
-        }
-        
     }
     
     enum Action : BindableAction {
@@ -208,13 +204,39 @@ struct WorkspaceCoordinator {
                 
                 return .none
                 
-//            case .sideMenu(.router(.routeAction(_, action: .workspaceEdit(.editWorkspaceComplete)))):
-//                return .send(.sideMenu(.router(.routeAction(id: .sidemenu, action: .sidemenu(.onAppear)))))
-                
             default :
                 break
             }
             return .none
+        }
+    }
+}
+
+extension WorkspaceCoordinator {
+    
+    enum viewState {
+        case loading
+        case empty
+        case home
+    }
+    
+    enum CustomPopup : Equatable {
+        case workspaceRemove(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
+        case workspaceExit(titleText:String, bodyText:String, buttonTitle:String, id:String, twoButton:Bool)
+        case workspaceExitManager(titleText:String, bodyText:String, buttonTitle:String, twoButton:Bool)
+        case ownerChange, workspaceChange, channelCreate
+        
+        var toastMessage : String {
+            switch self {
+            case .ownerChange:
+                return "채널 관리자가 변경되었습니다."
+            case .workspaceChange:
+                return "워크스페이스가 편집되었습니다"
+            case .channelCreate:
+                return "채널이 생성되었습니다"
+            default :
+                return ""
+            }
         }
     }
 }

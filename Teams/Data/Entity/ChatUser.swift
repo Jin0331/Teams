@@ -28,7 +28,11 @@ extension ChatUser {
 
 extension ChatUser {
     func toChatUser() -> ExyteChat.User {
-        ExyteChat.User(id: uid, name: name, avatarURL: avatar, isCurrentUser: isCurrentUser)
+        ExyteChat.User(id: uid, name: name, 
+                       avatarURL: avatar,
+                       isCurrentUser: isCurrentUser,
+                       secretKey: APIKey.secretKey.rawValue,
+                       accessToken: UserDefaultManager.shared.accessToken)
     }
 }
 

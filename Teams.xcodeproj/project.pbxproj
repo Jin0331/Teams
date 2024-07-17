@@ -384,6 +384,7 @@
 			children = (
 				DBF386282C1C12DC00A08152 /* Coordinator */,
 				DBF386272C1C12CA00A08152 /* Home */,
+				DB5EDC112C47A6B9008F1A13 /* DM */,
 				DB717EE12C293D08003C59ED /* SideMenu */,
 				DBEA521A2C231D4A00026926 /* WorkspaceModifier */,
 				DB04EF732C3AC4FD007F0CBB /* Channel */,
@@ -605,6 +606,13 @@
 				DBE1CCB32C37CBE500B627BD /* User.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		DB5EDC112C47A6B9008F1A13 /* DM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DM;
 			sourceTree = "<group>";
 		};
 		DB717EE12C293D08003C59ED /* SideMenu */ = {

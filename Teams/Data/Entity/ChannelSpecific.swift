@@ -15,7 +15,7 @@ struct ChannelSpecific : Equatable, Identifiable {
 }
 
 extension ChannelSpecific {
-    var profileImageToUrl : URL {
+    var coverImageToUrl : URL {
         return URL(string: APIKey.baseURLWithVersion() + coverImage)!
     }
     

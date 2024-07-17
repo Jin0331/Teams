@@ -15,7 +15,7 @@ struct Workspace : Equatable, Identifiable {
 }
 
 extension Workspace {
-    var profileImageToUrl : URL {
+    var coverImageToUrl : URL {
         return URL(string: APIKey.baseURLWithVersion() + coverImage)!
     }
     

@@ -18,12 +18,7 @@ struct ChannelSettingFeature {
         var channelCurrent : Channel?
         var channelCurrentMemebers : UserList?
         var expanded : Bool = true
-        
         var popupPresent : CustomPopup?
-        enum CustomPopup : Equatable {
-            case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
-            case channelExit(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
-        }
     }
     
     enum Action : BindableAction{
@@ -146,6 +141,25 @@ struct ChannelSettingFeature {
                 
             default :
                 return .none
+            }
+        }
+    }
+}
+
+extension ChannelSettingFeature {
+    enum CustomPopup : Equatable {
+        case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+        case channelExit(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+        case ownerChange, channelEdit
+        
+        var toastMessage : String {
+            switch self {
+            case .ownerChange:
+                return "채널 관리자가 변경되었습니다."
+            case .channelEdit:
+                return "채널이 편집되었습니다"
+            default :
+                return ""
             }
         }
     }

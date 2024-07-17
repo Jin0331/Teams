@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PopupButtonWorkspaceView: View {
     @Perception.Bindable var store : StoreOf<WorkspaceCoordinator>
-    let action : WorkspaceCoordinator.State.CustomPopup
+    let action : WorkspaceCoordinator.CustomPopup
     
     var body: some View {
         VStack(spacing : 10) {
@@ -62,28 +62,34 @@ struct PopupButtonWorkspaceView: View {
     }
     
     @ViewBuilder
-    private func actionView(for action: WorkspaceCoordinator.State.CustomPopup) -> some View {
+    private func actionView(for action: WorkspaceCoordinator.CustomPopup) -> some View {
         switch action {
         case let .workspaceExit(titleText, bodyText, _, _, _), let .workspaceRemove(titleText, bodyText, _, _, _), let .workspaceExitManager(titleText, bodyText, _, _):
             alertText(titleText, bodyText)
+        case .ownerChange, .workspaceChange, .channelCreate:
+            Text("")
         }
     }
 
-    private func actionButtonTitle(for action: WorkspaceCoordinator.State.CustomPopup) -> String {
+    private func actionButtonTitle(for action: WorkspaceCoordinator.CustomPopup) -> String {
         switch action {
         case let .workspaceExit(_, _, buttonTitle, _, _), let .workspaceRemove(_, _, buttonTitle, _, _), let .workspaceExitManager(_, _, buttonTitle, _):
             return buttonTitle
+        default :
+            return ""
         }
     }
     
-    private func actionButtonType(for action: WorkspaceCoordinator.State.CustomPopup) -> Bool {
+    private func actionButtonType(for action: WorkspaceCoordinator.CustomPopup) -> Bool {
         switch action {
         case let .workspaceExit(_, _, _, _, type), let .workspaceRemove(_, _, _, _, type), let .workspaceExitManager(_, _, _, type):
             return type
+        default :
+            return false
         }
     }
 
-    private func handleAction(for action: WorkspaceCoordinator.State.CustomPopup) {
+    private func handleAction(for action: WorkspaceCoordinator.CustomPopup) {
         switch action {
         case let .workspaceRemove(_,_,_,removeWorkspaceID, _):
             store.send(.workspaceRemoveOnPopupView(removeWorkspaceID))

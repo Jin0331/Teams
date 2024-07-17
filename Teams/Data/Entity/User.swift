@@ -19,7 +19,7 @@ extension User {
         if !profileImage.isEmpty {
             return URL(string: APIKey.baseURLWithVersion() + profileImage)!
         } else {
-            return URL(string: APIKey.defaultImage.rawValue)!
+            return URL(string: APIKey.defaultProfileImage())!
         }
     }
 }

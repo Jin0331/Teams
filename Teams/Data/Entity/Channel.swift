@@ -14,7 +14,7 @@ struct Channel : Equatable, Identifiable {
 }
 
 extension Channel {
-    var profileImageToUrl : URL {
+    var coverImageToUrl : URL {
         return URL(string: APIKey.baseURLWithVersion() + coverImage)!
     }
     
