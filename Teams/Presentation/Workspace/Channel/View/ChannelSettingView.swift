@@ -13,7 +13,6 @@ import PopupView
 struct ChannelSettingView: View {
     
     @State var store : StoreOf<ChannelSettingFeature>
-    @State private var expanded: Bool = false
     
     var body: some View {
         WithPerceptionTracking {
@@ -54,6 +53,9 @@ struct ChannelSettingView: View {
                     .closeOnTapOutside(true)
                     .backgroundColor(.black.opacity(0.4))
             }
+            .task {
+                store.send(.onAppear)
+            }
             .navigationBarTitle("채널 설정", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
             .toolbar(.hidden, for: .tabBar)
@@ -83,7 +85,7 @@ extension ChannelSettingView {
             GridItem(.flexible())
         ]
         
-        return DisclosureGroup(isExpanded: $expanded) {
+        return DisclosureGroup(isExpanded: $store.expanded) {
             LazyVGrid(columns: columns) {
                 ForEach(store.channelCurrentMemebers!, id: \.id) { user in
                     VStack {

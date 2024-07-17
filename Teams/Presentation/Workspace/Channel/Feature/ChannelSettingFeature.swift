@@ -17,6 +17,7 @@ struct ChannelSettingFeature {
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel?
         var channelCurrentMemebers : UserList?
+        var expanded : Bool = true
         
         var popupPresent : CustomPopup?
         enum CustomPopup : Equatable {
@@ -70,6 +71,7 @@ struct ChannelSettingFeature {
             switch action {
                 
             case .onAppear:
+                print("ChannelSettingView onAppear 🌟")
                 guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
                 return .run { send in
                     await send(.networkResponse(.channelSpecificResponse(

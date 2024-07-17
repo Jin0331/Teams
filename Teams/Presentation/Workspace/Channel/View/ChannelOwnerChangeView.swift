@@ -32,7 +32,7 @@ struct ChannelOwnerChangeView: View {
                         }
                     }
                 }
-                .onAppear {
+                .task {
                     store.send(.onAppear)
                 }
                 .navigationBarTitle("채널 관리자 변경", displayMode: .inline)
