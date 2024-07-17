@@ -36,6 +36,7 @@ struct SideMenuFeature {
         case workspaceExit(String)
         case workspaceExitManager
         case workspaceEdit(Workspace)
+        case workspaceTransition(Workspace)
         case binding(BindingAction<State>)
     }
     
@@ -69,6 +70,7 @@ struct SideMenuFeature {
                 
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
                 return .none
                 
             case .workspaceRemoveButtonTapped:

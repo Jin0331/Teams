@@ -46,6 +46,7 @@ struct MainCoordinator {
         var onboarding : OnboardingCoordinator.State
         var homeInitial : HomeInitialCoordinator.State
         var workspace : WorkspaceCoordinator.State
+        var workspaceList : WorkspaceList?
         var isLogined : Bool
         var isSignUp : Bool
     }
@@ -55,6 +56,7 @@ struct MainCoordinator {
         case onboarding(OnboardingCoordinator.Action)
         case homeInitial(HomeInitialCoordinator.Action)
         case workspace(WorkspaceCoordinator.Action)
+        case workspaceTransition(Workspace)
         case refreshTokenExposed
         case autoLogin(Result<[Workspace], APIError>)
     }
@@ -95,18 +97,42 @@ struct MainCoordinator {
                 print(errorType)
                 
                 
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(response))))), let .autoLogin(.success(response)):
-                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: response) {
-                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace), 
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(workspace))))), let .autoLogin(.success(workspace)):
+                
+                state.workspaceList = workspace
+                
+                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
+                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
                                                        dm: .initialState(currentWorkspace: mostRecentWorkspace),
                                                        selectedTab: .home, 
                                                        sideMenu: .initialState()),
-                                            homeEmpty: .initialState, sideMenu: .initialState(),
+                                            homeEmpty: .initialState, 
+                                            sideMenu: .initialState(),
                                             workspaceCurrent: mostRecentWorkspace,
-                                            showingView: response.count > 0 ? .home : .empty)
+                                            showingView: workspace.count > 0 ? .home : .empty)
                 }
                 state.isLogined = true
                 state.isSignUp = false
+                
+            //MARK: - Workspace Transition
+            case let .workspace(.sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceTransition(selectedWorkspace)))))):
+                return .run { send in
+                    await send(.workspace(.closeSideMenu))
+                    await send(.workspaceTransition(selectedWorkspace))
+                }
+                
+            case let .workspaceTransition(selectedWorkspace):
+                guard let workspaceList = state.workspaceList else { return .none }
+                state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
+                                                   dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                   selectedTab: .home,
+                                                   sideMenu: .initialState()),
+                                        homeEmpty: .initialState,
+                                        sideMenu: .initialState(),
+                                        workspaceCurrent: selectedWorkspace,
+                                        showingView: workspaceList.count > 0 ? .home : .empty)
+                
+                return .send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.onAppear)))))))
                 
             case let .onboarding(.router(.routeAction(_, action: .signUp(.signUpComplete(nickname))))):
                 state.isLogined = true

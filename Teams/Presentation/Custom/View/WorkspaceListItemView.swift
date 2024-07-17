@@ -10,7 +10,7 @@ import SwiftUI
 import Kingfisher
 
 struct WorkspaceListItemView: View {
-    let response: Workspace
+    let workspace: Workspace
     let userID : String
     @Perception.Bindable var store: StoreOf<SideMenuFeature>
     @State private var showingSheet : Bool = false
@@ -18,7 +18,7 @@ struct WorkspaceListItemView: View {
     var body: some View {
         WithPerceptionTracking {
             HStack {
-                KFImage.url(response.coverImageToUrl)
+                KFImage.url(workspace.coverImageToUrl)
                     .requestModifier(AuthManager.kingfisherAuth())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -27,15 +27,15 @@ struct WorkspaceListItemView: View {
                     .padding(.leading, 10)
                 
                 VStack(alignment:.leading, spacing : 5) {
-                    Text(response.name)
+                    Text(workspace.name)
                         .bodyBold()
-                    Text(response.createdAtToString)
+                    Text(workspace.createdAtToString)
                         .bodyRegular()
                         .foregroundStyle(Color.secondary)
                 }
                 .frame(width: 192, alignment: .leading)
                 
-                if response.id == store.workspaceIdCurrent {
+                if workspace.id == store.workspaceIdCurrent {
                     Image(.listEdit)
                         .resizable()
                         .frame(width: 20, height: 20)
@@ -45,12 +45,12 @@ struct WorkspaceListItemView: View {
                 }
             }
             .frame(width: 305, height: 72, alignment: .leading)
-            .background(response.id == store.workspaceIdCurrent ? .brandGray : .brandWhite)
+            .background(workspace.id == store.workspaceIdCurrent ? .brandGray : .brandWhite)
             .confirmationDialog("", isPresented: $showingSheet) {
                 //TODO: - Button 선택에 따른 기능 구현 필요
-                if response.ownerID == userID {
+                if workspace.ownerID == userID {
                     Button("워크스페이스 편집") {
-                        store.send(.workspaceEdit(response))
+                        store.send(.workspaceEdit(workspace))
                     }
                     Button("워크스페이스 나가기") {
                         store.send(.workspaceExitManager)

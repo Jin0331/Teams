@@ -20,10 +20,10 @@ struct SideMenuView: View {
                 case .success :
                     List {
                         ScrollView {
-                            ForEach(store.workspaceList, id: \.id) { response in
-                                WorkspaceListItemView(response: response, userID: UserDefaultManager.shared.userId!, store: store)
+                            ForEach(store.workspaceList, id: \.id) { workspace in
+                                WorkspaceListItemView(workspace: workspace, userID: UserDefaultManager.shared.userId!, store: store)
                                     .onTapGesture {
-                                        print("", UserDefaultManager.shared.userId!, response.ownerID)
+                                        store.send(.workspaceTransition(workspace))
                                     }
                             }
                             .listRowSeparator(.hidden)
@@ -64,34 +64,7 @@ struct SideMenuView: View {
                 }
                 
                 Spacer()
-                
-                VStack {
-                    Button(action: {
-                        store.send(.createWorkspaceTapped)
-                    }, label: {
-                        HStack {
-                            Image(.plus)
-                            Text("워크스페이스 추가")
-                                .bodyRegular()
-                                .tint(.secondary)
-                                .frame(width: 115, height: 28, alignment: .leading)
-                            Spacer()
-                        }
-                    })
-                    .padding(.leading, 20)
-                    
-                    Button(action: {}, label: {
-                        HStack {
-                            Image(.help)
-                            Text("도움말")
-                                .bodyRegular()
-                                .tint(.secondary)
-                                .frame(width: 115, height: 28, alignment: .leading)
-                            Spacer()
-                        }
-                    })
-                    .padding(.leading, 20)
-                }
+                SideMenuBottomView()
             }
             .animation(.default, value: store.showList)
             .customNavigationBar(title: "워크스페이스", height: 98)
@@ -105,23 +78,34 @@ struct SideMenuView: View {
     }
 }
 
-
-struct RoundedCornerShape: Shape {
-    var corners: UIRectCorner
-    var radius: CGFloat
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius)
-        )
-        return Path(path.cgPath)
+extension SideMenuView {
+    private func SideMenuBottomView() -> VStack<TupleView<(some View, some View)>> {
+        return VStack {
+            Button(action: {
+                store.send(.createWorkspaceTapped)
+            }, label: {
+                HStack {
+                    Image(.plus)
+                    Text("워크스페이스 추가")
+                        .bodyRegular()
+                        .tint(.secondary)
+                        .frame(width: 115, height: 28, alignment: .leading)
+                    Spacer()
+                }
+            })
+            .padding(.leading, 20)
+            
+            Button(action: {}, label: {
+                HStack {
+                    Image(.help)
+                    Text("도움말")
+                        .bodyRegular()
+                        .tint(.secondary)
+                        .frame(width: 115, height: 28, alignment: .leading)
+                    Spacer()
+                }
+            })
+            .padding(.leading, 20)
+        }
     }
 }
-
-//#Preview {
-//    SideMenuView(store: Store(initialState: SideMenuFeature.State(), reducer: {
-//        SideMenuFeature()
-//    }))
-//}
