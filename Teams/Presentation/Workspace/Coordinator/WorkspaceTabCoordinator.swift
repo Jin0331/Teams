@@ -17,12 +17,27 @@ struct WorkspaceTabCoordinatorView : View {
             TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
                 HomeCoordinatorView(store: store.scope(state: \.home, action: \.home))
                     .tabItem {
-                        Image(.homeTab)
+                        Image(store.selectedTab == .home ? .tabhomeActive : .tabhomeInactive)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                         Text("홈")
                             .bodyRegular()
                     }
                     .tag(WorkspaceTabCoordinator.Tab.home)
+                
+                DMCoordinatorView(store: store.scope(state: \.dm, action: \.dm))
+                    .tabItem {
+                        Image(store.selectedTab == .dm ? .tabdmActive : .tabdmInactive)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                        Text("DM")
+                            .bodyRegular()
+                    }
+                    .tag(WorkspaceTabCoordinator.Tab.dm)
             }
+            
+            
+            
             .accentColor(Color.brandBlack)
         }
     }
@@ -32,19 +47,22 @@ struct WorkspaceTabCoordinatorView : View {
 struct WorkspaceTabCoordinator {
     enum Tab : Hashable {
         case home
+        case dm
     }
     
     enum Action {
         case home(HomeCoordinator.Action)
+        case dm(DMCoordinator.Action)
         case tabSelected(Tab)
     }
     
     @ObservableState
     struct State : Equatable {
         //TODO: - current Workspace ID 초기화
-        static let initialState = State(home: .initialState(), selectedTab: .home, sideMenu: .initialState())
+        static let initialState = State(home: .initialState(), dm: .initialState(), selectedTab: .home, sideMenu: .initialState())
         
         var home : HomeCoordinator.State
+        var dm : DMCoordinator.State
         var selectedTab: Tab
         var sideMenu : SideMenuCoordinator.State
         var sidemenuOpen : Bool = false
