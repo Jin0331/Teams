@@ -18,19 +18,19 @@ struct CustomDisclosureGroupView : View {
         WithPerceptionTracking {
             DisclosureGroup(isExpanded: $store.channelListExpanded) {
                 VStack {
-                    ForEach(store.channelList, id: \.id) { response in
+                    ForEach(store.channelList, id: \.id) { channel in
                         HStack {
                             Image(systemName: "number")
                                 .resizable()
                                 .frame(width: 18, height: 18)
                                 .padding(.leading, 15)
-                            Text(response.name)
+                            Text(channel.name)
                                 .bodyRegular()
                         }
                         .padding(.horizontal, 15)
                         .frame(width: 393, height: 41, alignment: .leading)
                         .onTapGesture {
-                            print("hi")
+                            store.send(.channelEnter(channel))
                         }
                     }
                     

@@ -91,6 +91,9 @@ struct HomeCoordinator {
                     $0.dismiss()
                     $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
                 }
+            
+            case let .router(.routeAction(_, action: .home(.channelEnter(channel)))):
+                state.routes.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
                 
             case .router(.routeAction(_, action: .channelChat(.goBack))), .router(.routeAction(_, action: .channelSetting(.goBack))):
                 state.routes.goBack()
