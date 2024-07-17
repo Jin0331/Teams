@@ -97,7 +97,7 @@ struct HomeView: View {
                     ToolbarItem(placement: .principal) {
                         HStack {
                             if let workspace = store.workspaceCurrent {
-                                KFImage.url(workspace.profileImageToUrl)
+                                KFImage.url(workspace.coverImageToUrl)
                                     .requestModifier(AuthManager.kingfisherAuth())
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)

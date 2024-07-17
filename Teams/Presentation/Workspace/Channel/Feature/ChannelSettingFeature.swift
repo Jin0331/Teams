@@ -17,12 +17,8 @@ struct ChannelSettingFeature {
         var workspaceCurrent : Workspace?
         var channelCurrent : Channel?
         var channelCurrentMemebers : UserList?
-        
+        var expanded : Bool = true
         var popupPresent : CustomPopup?
-        enum CustomPopup : Equatable {
-            case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
-            case channelExit(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
-        }
     }
     
     enum Action : BindableAction{
@@ -57,6 +53,7 @@ struct ChannelSettingFeature {
     enum PopupComplete {
         case channelRemoveOrExit
         case channelEdit(Channel)
+        case channelOwnerChange(Channel)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -69,6 +66,7 @@ struct ChannelSettingFeature {
             switch action {
                 
             case .onAppear:
+                print("ChannelSettingView onAppear 🌟")
                 guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
                 return .run { send in
                     await send(.networkResponse(.channelSpecificResponse(
@@ -98,6 +96,10 @@ struct ChannelSettingFeature {
             case .buttonTapped(.channelEditButtonTapped):
                 guard let channelCurrent = state.channelCurrent else { return .none}
                 return .send(.popupComplete(.channelEdit(channelCurrent)))
+                
+            case .buttonTapped(.channelOwnerButtonTapped):
+                guard let channelCurrent = state.channelCurrent else { return .none}
+                return .send(.popupComplete(.channelOwnerChange(channelCurrent)))
                 
             case let .popup(.channelRemove(workspace, channel)):
                 return .run { send in
@@ -139,6 +141,25 @@ struct ChannelSettingFeature {
                 
             default :
                 return .none
+            }
+        }
+    }
+}
+
+extension ChannelSettingFeature {
+    enum CustomPopup : Equatable {
+        case channelRemove(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+        case channelExit(titleText:String, bodyText:String, buttonTitle:String, workspaceID:Workspace, channelId:Channel, twoButton:Bool)
+        case ownerChange, channelEdit
+        
+        var toastMessage : String {
+            switch self {
+            case .ownerChange:
+                return "채널 관리자가 변경되었습니다."
+            case .channelEdit:
+                return "채널이 편집되었습니다"
+            default :
+                return ""
             }
         }
     }

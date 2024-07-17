@@ -88,7 +88,7 @@ struct ChannelChatView: View {
                     )
                 )
             }
-            .onAppear {
+            .task {
                 store.send(.onAppear)
             }
             .navigationBarBackButtonHidden(true)

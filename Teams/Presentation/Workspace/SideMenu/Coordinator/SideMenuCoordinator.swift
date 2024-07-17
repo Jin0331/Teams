@@ -53,7 +53,7 @@ struct SideMenuCoordinator {
                 state.routes.presentSheet(.workspaceAdd(.init()))
                 
             case let .router(.routeAction(_, action: .sidemenu(.workspaceEdit(workspace)))):
-                state.routes.presentSheet(.workspaceEdit(.init(workspaceID: workspace.id, workspaceImage: workspace.profileImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
+                state.routes.presentSheet(.workspaceEdit(.init(workspaceID: workspace.id, workspaceImage: workspace.coverImageToUrl, workspaceName: workspace.name, workspaceDescription: workspace.description)))
                 
             case .router(.routeAction(_, action: .workspaceAdd(.dismiss))), .router(.routeAction(_, action: .workspaceEdit(.dismiss))):
                 state.routes.dismiss()

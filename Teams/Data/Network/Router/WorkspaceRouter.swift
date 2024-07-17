@@ -28,6 +28,7 @@ enum WorkspaceRouter {
     case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChannelChatRequestDTO)
     
     case channelMember(request : WorkspaceIDRequestDTO)
+    case channelOwnerChange(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO)
     
     case dmList(request : WorkspaceIDRequestDTO)
     
@@ -46,7 +47,7 @@ extension WorkspaceRouter : TargetType {
             return .post
         case .removeWorkspace, .removeChannel:
             return .delete
-        case .editWorkspace, .editChannel:
+        case .editWorkspace, .editChannel, .channelOwnerChange:
             return .put
         }
     }
@@ -75,6 +76,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/chats"
         case let .channelMember(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/members"
+        case let .channelOwnerChange(workspaceID, _):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/transfer/ownership"
         }
     }
     
@@ -82,7 +85,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -114,6 +117,11 @@ extension WorkspaceRouter : TargetType {
             encoder.keyEncodingStrategy = .convertToSnakeCase
             
             return try? encoder.encode(email)
+        
+        case let .channelOwnerChange(_, ownerID):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(ownerID)
+
         default :
             return nil
         }

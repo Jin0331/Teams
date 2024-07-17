@@ -18,7 +18,7 @@ struct WorkspaceListItemView: View {
     var body: some View {
         WithPerceptionTracking {
             HStack {
-                KFImage.url(response.profileImageToUrl)
+                KFImage.url(response.coverImageToUrl)
                     .requestModifier(AuthManager.kingfisherAuth())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
