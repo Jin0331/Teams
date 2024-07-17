@@ -7,7 +7,6 @@
 
 import ComposableArchitecture
 import SwiftUI
-import SocketIO
 import TCACoordinators
 
 struct HomeCoordinatorView : View {

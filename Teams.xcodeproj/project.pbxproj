@@ -63,6 +63,11 @@
 		DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE32C180FED002907B6 /* JoinResponseDTO+Mapping.swift */; };
 		DB5AADE72C181427002907B6 /* Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE62C181427002907B6 /* Join.swift */; };
 		DB5AADE92C1818ED002907B6 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADE82C1818ED002907B6 /* Token.swift */; };
+		DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC162C47B93B008F1A13 /* DMCoordinator.swift */; };
+		DB5EDC192C47F88C008F1A13 /* DMListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC182C47F88C008F1A13 /* DMListView.swift */; };
+		DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */; };
+		DB5EDC1D2C47FAE3008F1A13 /* DMScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1C2C47FAE3008F1A13 /* DMScreen.swift */; };
+		DB5EDC1F2C47FB19008F1A13 /* DMScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1E2C47FB19008F1A13 /* DMScreen+Identifiable.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -202,6 +207,11 @@
 		DB5AADE62C181427002907B6 /* Join.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		DB5AADE82C1818ED002907B6 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		DB5AADEA2C1821C6002907B6 /* Teams.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teams.entitlements; sourceTree = "<group>"; };
+		DB5EDC162C47B93B008F1A13 /* DMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCoordinator.swift; sourceTree = "<group>"; };
+		DB5EDC182C47F88C008F1A13 /* DMListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListView.swift; sourceTree = "<group>"; };
+		DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListFeature.swift; sourceTree = "<group>"; };
+		DB5EDC1C2C47FAE3008F1A13 /* DMScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMScreen.swift; sourceTree = "<group>"; };
+		DB5EDC1E2C47FB19008F1A13 /* DMScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -611,8 +621,37 @@
 		DB5EDC112C47A6B9008F1A13 /* DM */ = {
 			isa = PBXGroup;
 			children = (
+				DB5EDC122C47B90F008F1A13 /* Coordinator */,
+				DB5EDC132C47B915008F1A13 /* View */,
+				DB5EDC142C47B91A008F1A13 /* Feature */,
 			);
 			path = DM;
+			sourceTree = "<group>";
+		};
+		DB5EDC122C47B90F008F1A13 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DB5EDC162C47B93B008F1A13 /* DMCoordinator.swift */,
+				DB5EDC1C2C47FAE3008F1A13 /* DMScreen.swift */,
+				DB5EDC1E2C47FB19008F1A13 /* DMScreen+Identifiable.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DB5EDC132C47B915008F1A13 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB5EDC182C47F88C008F1A13 /* DMListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB5EDC142C47B91A008F1A13 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		DB717EE12C293D08003C59ED /* SideMenu */ = {
@@ -964,6 +1003,7 @@
 				DB11F5C42C1D9A1000D84619 /* MainCoordinator.swift in Sources */,
 				DB04EF772C3AC5B2007F0CBB /* ChannelSearchView.swift in Sources */,
 				DBEA522E2C2534E700026926 /* Workspace.swift in Sources */,
+				DB5EDC192C47F88C008F1A13 /* DMListView.swift in Sources */,
 				DBBAAEB02C3D0F400015596C /* ChannelChatModel.swift in Sources */,
 				DBEA522A2C2428DB00026926 /* WorkspaceRouter.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
@@ -996,6 +1036,7 @@
 				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */,
+				DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC3F8172C419D8600D11D3B /* ChannelChatRequestDTO.swift in Sources */,
 				DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */,
@@ -1028,6 +1069,7 @@
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
 				DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift in Sources */,
+				DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
@@ -1038,6 +1080,7 @@
 				DB085B4C2C0DFB2000199065 /* OnboardingView.swift in Sources */,
 				DB04EF6E2C38EF43007F0CBB /* HomeScreen+Identifiable.swift in Sources */,
 				DBFB53EA2C3C44BF00ADE1E7 /* ChannelChatView.swift in Sources */,
+				DB5EDC1F2C47FB19008F1A13 /* DMScreen+Identifiable.swift in Sources */,
 				DB23BCFC2C2062C000A9C193 /* WorkspaceCoordinator.swift in Sources */,
 				DB5AADDD2C173DD0002907B6 /* InputFeature.swift in Sources */,
 				DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */,
@@ -1050,6 +1093,7 @@
 				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
+				DB5EDC1D2C47FAE3008F1A13 /* DMScreen.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
@@ -1340,7 +1384,7 @@
 			repositoryURL = "https://github.com/Jin0331/ChatCustom.git";
 			requirement = {
 				kind = revision;
-				revision = 418f690ef6e35d6eb80ed1d66b57355226305c6c;
+				revision = 4023b5b0509ced786c6095819ab947b9d4d4e3a2;
 			};
 		};
 		DBF386202C1BFAD000A08152 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
