@@ -71,6 +71,10 @@ struct WorkspaceTabCoordinator {
             HomeCoordinator()
         }
         
+        Scope(state : \.dm, action: \.dm) {
+            DMCoordinator()
+        }
+        
         Reduce<State, Action> { state, action in
             switch action {
             case let .tabSelected(tab):

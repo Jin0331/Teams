@@ -15,6 +15,7 @@ enum WorkspaceRouter {
     case exitWorkspace(request : WorkspaceIDRequestDTO)
     case editWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceCreateRequestDTO)
     case inviteWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceEmailRequestDTO)
+    case workspaceMember(request : WorkspaceIDRequestDTO)
     
     case createChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
     case editChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
@@ -41,7 +42,7 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, .workspaceMember:
             return .get
         case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat:
             return .post
@@ -64,6 +65,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
         case let .dmList(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
+        case let .workspaceMember(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/members"
         case let .createChannel(workspaceID, _), let .channels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
         case let .inviteWorkspace(workspaceID,_):
@@ -85,7 +88,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]

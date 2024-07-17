@@ -12,12 +12,14 @@ extension DMScreen.State : Identifiable {
         switch self {
         case .dmList:
                 .dmList
+        case .inviteMember:
+                .inviteMember
         }
     }
     
     enum ID : Identifiable {
         case dmList
-        
+        case inviteMember
         var id : ID { self }
     }
 }
