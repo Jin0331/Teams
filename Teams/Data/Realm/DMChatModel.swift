@@ -31,7 +31,7 @@ final class DMChatModel : Object, ObjectKeyIdentifiable {
     }
     
     func toMessage() -> ChatMessage {
-        return ChatMessage(uid: dmID, sender: user!.toUser(), createdAt: createdAt, text: content, images: filesToChatImage)
+        return ChatMessage(uid: _id.stringValue, sender: user!.toUser(), createdAt: createdAt, text: content, images: filesToChatImage)
     }
 }
 
