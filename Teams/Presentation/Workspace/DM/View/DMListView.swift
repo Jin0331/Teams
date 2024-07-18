@@ -33,30 +33,45 @@ struct DMListView : View {
                         }
                     case .empty:
                         Spacer()
-                        VStack(spacing : 25) {
-                            Text("워크스페이스에\n멤버가 없어요.")
-                                .title1()
-                                .multilineTextAlignment(.center)
-                            
-                            Text("새로운 팀원을 초대해보세요.")
-                                .bodyRegular()
-                            
-                            Image(.dmListButton)
-                                .asButton {
-                                    store.send(.buttonTapped(.inviteMemberButtonTapped))
-                                }
-                        }
+                        DMListemptyView()
                         
                     case .normal:
-                        Text("empty")
+                        VStack {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack(spacing : 25) {
+                                    ForEach(store.workspaceMember, id: \.id) { member in
+                                        VStack(alignment : .center, spacing: 5) {
+                                            if member.userID != UserDefaultManager.shared.userId {
+                                                KFImage.url(member.profileImageToUrl)
+                                                    .requestModifier(AuthManager.kingfisherAuth())
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 44, height: 44)
+                                                    .cornerRadius(8)
+                                                Text(member.nickname)
+                                                    .bodyRegular()
+                                            }
+                                        }
+                                        .onTapGesture {
+                                            store.send(.buttonTapped(.dmUserButtonTapped(member)))
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                            .frame(height: 100)
+                            Divider().background(.brandWhite).padding(.top, 5)
+                            
+                        }
+
                     }
                     
                     Spacer()
                 }
             }
             .animation(.default, value: store.viewType)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            .task {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     store.send(.onAppear)
                 }
             }
@@ -78,6 +93,24 @@ struct DMListView : View {
                     }
                 }
             }
+        }
+    }
+}
+
+extension DMListView {
+    private func DMListemptyView() -> VStack<TupleView<(some View, some View, some View)>> {
+        return VStack(spacing : 25) {
+            Text("워크스페이스에\n멤버가 없어요.")
+                .title1()
+                .multilineTextAlignment(.center)
+            
+            Text("새로운 팀원을 초대해보세요.")
+                .bodyRegular()
+            
+            Image(.dmListButton)
+                .asButton {
+                    store.send(.buttonTapped(.inviteMemberButtonTapped))
+                }
         }
     }
 }

@@ -1,8 +1,8 @@
 //
-//  ChannelChatView.swift
+//  DMChatView.swift
 //  Teams
 //
-//  Created by JinwooLee on 7/9/24.
+//  Created by JinwooLee on 7/18/24.
 //
 
 import SwiftUI
@@ -10,19 +10,22 @@ import ExyteChat
 import ExyteMediaPicker
 import ComposableArchitecture
 
-struct ChannelChatView: View {
-    @State var store : StoreOf<ChannelChatFeature>
+struct DMChatView: View {
+    
+    @State var store : StoreOf<DMChatFeature>
     
     var body: some View {
-        
         WithPerceptionTracking {
             NavigationStack {
                 Divider().background(.brandWhite)
                 
                 ChatView(messages: store.message, chatType : .conversation) { draft in
-                    Task {
-                        store.send(.sendMessage(draft))
-                    }
+                    
+                    print(draft)
+                    
+//                    Task {
+//                        store.send(.sendMessage(draft))
+//                    }
                 } inputViewBuilder: { textBinding, attachments, inputViewState, inputViewStyle, inputViewActionClosure, dismissKeyboardClosure in
                     Group {
                         switch inputViewStyle {
@@ -89,15 +92,12 @@ struct ChannelChatView: View {
                 )
                 Spacer()
             }
-            .task {
-                store.send(.onAppear)
-            }
             .navigationBarBackButtonHidden(true)
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
-                        Text("# \(store.channelCurrent.name) \(store.channelCurrentMembers.count)" )
+                        Text(store.roomCurrent.user.nickname)
                             .title2()
                     }
                 }
@@ -112,18 +112,6 @@ struct ChannelChatView: View {
                     })
                 }
                 
-                if store.channelCurrent.name != "일반" {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            store.send(.socket(.socketDisconnectAndGoChannelSetting))
-                            store.send(.goChannelSetting((currentWorksapce: store.workspaceCurrent, currentChannel: store.channelCurrent, currentChannelMembers: store.channelCurrentMembers)))
-                        }, label: {
-                            Image(.list)
-                                .resizable()
-                                .frame(width: 18, height: 15.92)
-                        })
-                    }
-                }
             }
         }
     }

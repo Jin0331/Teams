@@ -12,4 +12,5 @@ import Foundation
 enum DMScreen {
     case dmList(DMListFeature)
     case inviteMember(WorkspaceInviteFeature)
+    case dmChat(DMChatFeature)
 }

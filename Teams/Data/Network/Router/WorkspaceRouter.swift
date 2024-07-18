@@ -32,6 +32,7 @@ enum WorkspaceRouter {
     case channelOwnerChange(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO)
     
     case dmList(request : WorkspaceIDRequestDTO)
+    case dmListCreate(request : WorkspaceIDRequestDTO, body : DMListRequestDTO)
     
 }
 
@@ -44,7 +45,7 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, .workspaceMember:
             return .get
-        case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat:
+        case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat, .dmListCreate:
             return .post
         case .removeWorkspace, .removeChannel:
             return .delete
@@ -63,7 +64,7 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/exit"
         case let .myChannels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
-        case let .dmList(workspaceID):
+        case let .dmList(workspaceID), let .dmListCreate(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
         case let .workspaceMember(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/members"
@@ -88,7 +89,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -125,6 +126,10 @@ extension WorkspaceRouter : TargetType {
             let encoder = JSONEncoder()
             return try? encoder.encode(ownerID)
 
+        case let .dmListCreate(_, opponentID):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(opponentID)
+            
         default :
             return nil
         }

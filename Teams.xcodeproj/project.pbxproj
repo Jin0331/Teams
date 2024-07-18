@@ -68,6 +68,9 @@
 		DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */; };
 		DB5EDC1D2C47FAE3008F1A13 /* DMScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1C2C47FAE3008F1A13 /* DMScreen.swift */; };
 		DB5EDC1F2C47FB19008F1A13 /* DMScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC1E2C47FB19008F1A13 /* DMScreen+Identifiable.swift */; };
+		DB5EDC212C48D7E2008F1A13 /* DMListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC202C48D7E2008F1A13 /* DMListRequestDTO.swift */; };
+		DB5EDC232C48E42E008F1A13 /* DMChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC222C48E42E008F1A13 /* DMChatView.swift */; };
+		DB5EDC252C48E441008F1A13 /* DMChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -212,6 +215,9 @@
 		DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListFeature.swift; sourceTree = "<group>"; };
 		DB5EDC1C2C47FAE3008F1A13 /* DMScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMScreen.swift; sourceTree = "<group>"; };
 		DB5EDC1E2C47FB19008F1A13 /* DMScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMScreen+Identifiable.swift"; sourceTree = "<group>"; };
+		DB5EDC202C48D7E2008F1A13 /* DMListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListRequestDTO.swift; sourceTree = "<group>"; };
+		DB5EDC222C48E42E008F1A13 /* DMChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatView.swift; sourceTree = "<group>"; };
+		DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatFeature.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -455,6 +461,7 @@
 				DB04EF6F2C38F260007F0CBB /* ChannelCreateRequestDTO.swift */,
 				DBC3F8162C419D8600D11D3B /* ChannelChatRequestDTO.swift */,
 				DBD397342C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift */,
+				DB5EDC202C48D7E2008F1A13 /* DMListRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -642,6 +649,7 @@
 			isa = PBXGroup;
 			children = (
 				DB5EDC182C47F88C008F1A13 /* DMListView.swift */,
+				DB5EDC222C48E42E008F1A13 /* DMChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -650,6 +658,7 @@
 			isa = PBXGroup;
 			children = (
 				DB5EDC1A2C47F896008F1A13 /* DMListFeature.swift */,
+				DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -1023,6 +1032,7 @@
 				DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */,
 				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
 				DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */,
+				DB5EDC252C48E441008F1A13 /* DMChatFeature.swift in Sources */,
 				DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
@@ -1068,6 +1078,7 @@
 				DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */,
 				DB5AADBD2C16AA59002907B6 /* AuthManager.swift in Sources */,
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
+				DB5EDC212C48D7E2008F1A13 /* DMListRequestDTO.swift in Sources */,
 				DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift in Sources */,
 				DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
@@ -1096,6 +1107,7 @@
 				DB5EDC1D2C47FAE3008F1A13 /* DMScreen.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
+				DB5EDC232C48E42E008F1A13 /* DMChatView.swift in Sources */,
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
 				DBD397312C46509900A45D17 /* ChannelOwnerChangeFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
