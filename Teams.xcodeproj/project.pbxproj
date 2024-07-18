@@ -71,6 +71,9 @@
 		DB5EDC212C48D7E2008F1A13 /* DMListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC202C48D7E2008F1A13 /* DMListRequestDTO.swift */; };
 		DB5EDC232C48E42E008F1A13 /* DMChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC222C48E42E008F1A13 /* DMChatView.swift */; };
 		DB5EDC252C48E441008F1A13 /* DMChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */; };
+		DB5EDC272C48F144008F1A13 /* DMChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC262C48F144008F1A13 /* DMChatModel.swift */; };
+		DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */; };
+		DB5EDC2E2C48F395008F1A13 /* DMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2D2C48F395008F1A13 /* DMChat.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -218,6 +221,9 @@
 		DB5EDC202C48D7E2008F1A13 /* DMListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListRequestDTO.swift; sourceTree = "<group>"; };
 		DB5EDC222C48E42E008F1A13 /* DMChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatView.swift; sourceTree = "<group>"; };
 		DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatFeature.swift; sourceTree = "<group>"; };
+		DB5EDC262C48F144008F1A13 /* DMChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatModel.swift; sourceTree = "<group>"; };
+		DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMChatResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DB5EDC2D2C48F395008F1A13 /* DMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChat.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -314,13 +320,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		95DBDB8797CFF709D67FA5C7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		DB04EF732C3AC4FD007F0CBB /* Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,9 +444,10 @@
 				DB04EF802C3ADD44007F0CBB /* WorkspaceUserResponseDTO+Mapping.swift */,
 				DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */,
 				DBFB53FA2C3CFD8300ADE1E7 /* ChannelChatResponseDTO+Mapping.swift */,
-				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
-				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 				DBD3972A2C46488800A45D17 /* ChannelSpecificResponseDTO+Mapping.swift */,
+				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
+				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
+				DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -610,17 +610,9 @@
 		DB5AADE52C181366002907B6 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				DB5AADE62C181427002907B6 /* Join.swift */,
-				DB5AADE82C1818ED002907B6 /* Token.swift */,
-				DBEA522D2C2534E700026926 /* Workspace.swift */,
-				DBE1CCAB2C36AEAE00B627BD /* Channel.swift */,
-				DBD3972C2C4648D100A45D17 /* ChannelSpecific.swift */,
-				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
-				DBBAAEB92C3E69D10015596C /* ChatMessage.swift */,
-				DBBAAEB72C3E69AD0015596C /* ChatUser.swift */,
-				DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */,
-				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
-				DBE1CCB32C37CBE500B627BD /* User.swift */,
+				DB5EDC292C48F193008F1A13 /* User */,
+				DB5EDC2A2C48F1A6008F1A13 /* Workspace */,
+				DB5EDC282C48F175008F1A13 /* Chat */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -661,6 +653,39 @@
 				DB5EDC242C48E441008F1A13 /* DMChatFeature.swift */,
 			);
 			path = Feature;
+			sourceTree = "<group>";
+		};
+		DB5EDC282C48F175008F1A13 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				DBBAAEB92C3E69D10015596C /* ChatMessage.swift */,
+				DBBAAEB72C3E69AD0015596C /* ChatUser.swift */,
+				DBBAAEBB2C3E6A210015596C /* ChatAttachment.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		DB5EDC292C48F193008F1A13 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				DB5AADE62C181427002907B6 /* Join.swift */,
+				DB5AADE82C1818ED002907B6 /* Token.swift */,
+				DBE1CCB32C37CBE500B627BD /* User.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		DB5EDC2A2C48F1A6008F1A13 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA522D2C2534E700026926 /* Workspace.swift */,
+				DBE1CCAB2C36AEAE00B627BD /* Channel.swift */,
+				DBD3972C2C4648D100A45D17 /* ChannelSpecific.swift */,
+				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
+				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
+				DB5EDC2D2C48F395008F1A13 /* DMChat.swift */,
+			);
+			path = Workspace;
 			sourceTree = "<group>";
 		};
 		DB717EE12C293D08003C59ED /* SideMenu */ = {
@@ -792,7 +817,6 @@
 				DBF85C272C0DF68D00CDFA04 /* .gitignore */,
 				DBF85C172C0DF5FB00CDFA04 /* Teams */,
 				DBF85C162C0DF5FB00CDFA04 /* Products */,
-				95DBDB8797CFF709D67FA5C7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -885,6 +909,7 @@
 			isa = PBXGroup;
 			children = (
 				DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */,
+				DB5EDC262C48F144008F1A13 /* DMChatModel.swift */,
 				DBBAAEB12C3D14DD0015596C /* UserModel.swift */,
 				DBBAAEB32C3D18A20015596C /* RealmRepository.swift */,
 			);
@@ -1052,6 +1077,7 @@
 				DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */,
 				DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
+				DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,
 				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
@@ -1103,12 +1129,14 @@
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
 				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,
+				DB5EDC272C48F144008F1A13 /* DMChatModel.swift in Sources */,
 				DB5AADE72C181427002907B6 /* Join.swift in Sources */,
 				DB5EDC1D2C47FAE3008F1A13 /* DMScreen.swift in Sources */,
 				DB5AADBF2C16AA73002907B6 /* TargetType.swift in Sources */,
 				DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */,
 				DB5EDC232C48E42E008F1A13 /* DMChatView.swift in Sources */,
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
+				DB5EDC2E2C48F395008F1A13 /* DMChat.swift in Sources */,
 				DBD397312C46509900A45D17 /* ChannelOwnerChangeFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,

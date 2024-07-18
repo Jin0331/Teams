@@ -47,7 +47,7 @@ struct DMListFeature {
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 return .run { send in
                     await send(.networkResponse(.workspaceMembersResponse(
-                        networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "")))
+                        networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))
                     ))
                 }
             
@@ -55,7 +55,7 @@ struct DMListFeature {
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 return .run { send in
                     await send(.networkResponse(.dmResponse(
-                        networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: ""),
+                        networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""),
                                                          body: DMListRequestDTO(opponent_id: user.userID))
                     )))
                 }
@@ -72,7 +72,7 @@ struct DMListFeature {
                     state.viewType = .normal
                     return .run { send in
                         await send(.networkResponse(.dmListResponse(
-                            networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: ""))
+                            networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""))
                         )))
                     }
                 }

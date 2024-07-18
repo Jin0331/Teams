@@ -46,7 +46,7 @@ final class RealmRepository {
         }
     }
     
-    func fetchChatLastDate(channelID : String) -> Date? {
+    func fetchChannelChatLastDate(channelID : String) -> Date? {
         let table = realm.objects(ChannelChatModel.self).where {
             $0.channelID == channelID
         }
@@ -58,7 +58,7 @@ final class RealmRepository {
         }
     }
     
-    func fetchExyteMessage(channelID : String) -> [Message] {
+    func fetchChannelExyteMessage(channelID : String) -> [Message] {
         let table = realm.objects(ChannelChatModel.self).where {
             $0.channelID == channelID
         }
@@ -66,7 +66,28 @@ final class RealmRepository {
         return table.map { row in
             row.toMessage().toExyteMessage()
         }
+    }
+    
+    func fetchDMChatLastDate(roomID : String) -> Date? {
+        let table = realm.objects(DMChatModel.self).where {
+            $0.roomID == roomID
+        }
+
+        if let latestMessage = table.sorted(byKeyPath: "createdAt", ascending: false).first {
+            return latestMessage.createdAt
+        } else {
+            return nil
+        }
+    }
+    
+    func fetchDMExyteMessage(roomID : String) -> [Message] {
+        let table = realm.objects(DMChatModel.self).where {
+            $0.roomID == roomID
+        }
         
+        return table.map { row in
+            row.toMessage().toExyteMessage()
+        }
     }
 }
 

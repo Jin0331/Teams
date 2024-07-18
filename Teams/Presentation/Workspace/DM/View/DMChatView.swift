@@ -20,12 +20,9 @@ struct DMChatView: View {
                 Divider().background(.brandWhite)
                 
                 ChatView(messages: store.message, chatType : .conversation) { draft in
-                    
-                    print(draft)
-                    
-//                    Task {
-//                        store.send(.sendMessage(draft))
-//                    }
+                    Task {
+                        store.send(.sendMessage(draft))
+                    }
                 } inputViewBuilder: { textBinding, attachments, inputViewState, inputViewStyle, inputViewActionClosure, dismissKeyboardClosure in
                     Group {
                         switch inputViewStyle {
@@ -91,6 +88,9 @@ struct DMChatView: View {
                     )
                 )
                 Spacer()
+            }
+            .task {
+                store.send(.onAppear)
             }
             .navigationBarBackButtonHidden(true)
             .toolbar(.hidden, for: .tabBar)

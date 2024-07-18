@@ -53,15 +53,7 @@ struct ChannelChatFeature {
             switch action {
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-                
-                //TODO: - Realm 연결을 통해 가장 마지막 cusur date 추출해야됨
-                
-                realmRepository.realmLocation()
-                print("🌟🌟🌟🌟🌟🌟🌟\nworkspaceID 🌟 : \(workspace.id)\nchannelID 🌟 : \(state.channelCurrent.channelID)\nToken 🌟 : \(UserDefaultManager.shared.accessToken!)\nSecretKey 🌟 : \(APIKey.secretKey.rawValue)\n🌟🌟🌟🌟🌟🌟🌟")
-                
-                
-                let cursorDate = realmRepository.fetchChatLastDate(channelID: state.channelCurrent.id) ?? Date()
-                
+                let cursorDate = realmRepository.fetchChannelChatLastDate(channelID: state.channelCurrent.id) ?? Date()
                 
                 return .run { [channel = state.channelCurrent] send in
                     
@@ -98,7 +90,7 @@ struct ChannelChatFeature {
                 }
                 
                 //TODO: - Realm으로부터 message 조회
-                state.message = realmRepository.fetchExyteMessage(channelID: state.channelCurrent.id)
+                state.message = realmRepository.fetchChannelExyteMessage(channelID: state.channelCurrent.id)
                 
                 return .send(.socket(.socketConnect))
             
