@@ -67,7 +67,7 @@ struct HomeView: View {
                                 .title2()
                                 .foregroundColor(.brandBlack)
                                 .frame(height: 56)
-                                .padding(.leading, 15)
+                                .padding(.leading, 25)
                         }
                         .tint(.brandBlack)
                         .padding(.horizontal, 15)
@@ -92,6 +92,7 @@ struct HomeView: View {
                         Spacer()
                     }
                 }
+                .padding(.trailing, 25)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {

@@ -11,4 +11,6 @@ import Foundation
 @Reducer(state: .equatable)
 enum DMScreen {
     case dmList(DMListFeature)
+    case inviteMember(WorkspaceInviteFeature)
+    case dmChat(DMChatFeature)
 }

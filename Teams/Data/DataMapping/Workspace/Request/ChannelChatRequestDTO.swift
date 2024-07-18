@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChannelChatRequestDTO : Encodable {
+struct ChatRequestDTO : Encodable {
     let content : String
     let files : [URL]
 }

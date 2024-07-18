@@ -15,6 +15,7 @@ enum WorkspaceRouter {
     case exitWorkspace(request : WorkspaceIDRequestDTO)
     case editWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceCreateRequestDTO)
     case inviteWorkspace(request : WorkspaceIDRequestDTO, body : WorkspaceEmailRequestDTO)
+    case workspaceMember(request : WorkspaceIDRequestDTO)
     
     case createChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
     case editChannel(request : WorkspaceIDRequestDTO, body : ChannelCreateRequestDTO)
@@ -25,12 +26,15 @@ enum WorkspaceRouter {
     case channels(request : WorkspaceIDRequestDTO)
     case specificChannels(request : WorkspaceIDRequestDTO)
     case channelChat(request : WorkspaceIDRequestDTO, query : String)
-    case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChannelChatRequestDTO)
+    case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChatRequestDTO)
     
     case channelMember(request : WorkspaceIDRequestDTO)
     case channelOwnerChange(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO)
     
     case dmList(request : WorkspaceIDRequestDTO)
+    case dmListCreate(request : WorkspaceIDRequestDTO, body : DMListRequestDTO)
+    case dmChat(request : WorkspaceIDRequestDTO, query : String)
+    case sendDMChat(request : WorkspaceIDRequestDTO, body : ChatRequestDTO)
     
 }
 
@@ -41,9 +45,9 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, .workspaceMember, .dmChat:
             return .get
-        case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat:
+        case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat, .dmListCreate, .sendDMChat:
             return .post
         case .removeWorkspace, .removeChannel:
             return .delete
@@ -62,8 +66,12 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/exit"
         case let .myChannels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/my-channels"
-        case let .dmList(workspaceID):
+        case let .dmList(workspaceID), let .dmListCreate(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
+        case let .dmChat(workspaceID, _), let .sendDMChat(workspaceID, _):
+            return "/workspaces/" + workspaceID.workspace_id + "/dms/" + workspaceID.room_id + "/chats"
+        case let .workspaceMember(workspaceID):
+            return "/workspaces/" + workspaceID.workspace_id + "/members"
         case let .createChannel(workspaceID, _), let .channels(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/channels"
         case let .inviteWorkspace(workspaceID,_):
@@ -85,7 +93,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate, .dmChat, .sendDMChat:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -99,7 +107,7 @@ extension WorkspaceRouter : TargetType {
     
     var parameter: Parameters? {
         switch self {
-        case let .channelChat(_, query):
+        case let .channelChat(_, query), let .dmChat(_, query):
             return ["cursor_date" : query]
         default :
             return nil
@@ -122,6 +130,10 @@ extension WorkspaceRouter : TargetType {
             let encoder = JSONEncoder()
             return try? encoder.encode(ownerID)
 
+        case let .dmListCreate(_, opponentID):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(opponentID)
+            
         default :
             return nil
         }
@@ -155,7 +167,7 @@ extension WorkspaceRouter : TargetType {
             
             return multiPart
         
-        case let .sendChannelChat(_, body):
+        case let .sendChannelChat(_, body), let .sendDMChat(_, body):
             let multiPart = MultipartFormData()
             multiPart.append(body.content.data(using: .utf8)!, withName: "content")
             

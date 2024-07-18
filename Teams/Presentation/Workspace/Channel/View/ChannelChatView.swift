@@ -87,6 +87,7 @@ struct ChannelChatView: View {
                         fullscreenTint: .brandWhite
                     )
                 )
+                Spacer()
             }
             .task {
                 store.send(.onAppear)

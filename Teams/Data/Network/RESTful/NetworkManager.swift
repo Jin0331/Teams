@@ -285,8 +285,23 @@ final class NetworkManager {
     
     func inviteMember(request : WorkspaceIDRequestDTO, query : WorkspaceEmailRequestDTO) async -> Result<User, APIError> {
         do {
-            let response = try await requestAPI(router: WorkspaceRouter.inviteWorkspace(request: request, body : query), of: WorkspaceUserResponseDTO.self)
+            let response = try await requestAPIWithRefresh(router: WorkspaceRouter.inviteWorkspace(request: request, body : query), of: WorkspaceUserResponseDTO.self)
             return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getWorkspaceMember(request : WorkspaceIDRequestDTO) async -> Result<UserList, APIError> {
+        do {
+            let response = try await requestAPIWithRefresh(router: WorkspaceRouter.workspaceMember(request: request), of: [WorkspaceUserResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
         } catch {
             if let apiError = error as? APIError {
                 return .failure(apiError)
@@ -347,7 +362,7 @@ final class NetworkManager {
         }
     }
     
-    func getDMList(request : WorkspaceIDRequestDTO) async -> Result<[DM], APIError> {
+    func getDMList(request : WorkspaceIDRequestDTO) async -> Result<DMList, APIError> {
         
         let router = WorkspaceRouter.dmList(request: request)
         
@@ -357,6 +372,22 @@ final class NetworkManager {
             return .success(response.map({ dto in
                 return dto.toDomain()
             }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getOrCreateDMList(request : WorkspaceIDRequestDTO, body : DMListRequestDTO) async -> Result<DM, APIError> {
+        
+        let router = WorkspaceRouter.dmListCreate(request: request, body: body)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: DMResponseDTO.self)
+            return .success(response.toDomain())
         } catch {
             if let apiError = error as? APIError {
                 return .failure(apiError)
@@ -416,7 +447,7 @@ final class NetworkManager {
         }
     }
     
-    func sendChannelMessage(request : WorkspaceIDRequestDTO, body : ChannelChatRequestDTO) async -> Result<ChannelChat, APIError> {
+    func sendChannelMessage(request : WorkspaceIDRequestDTO, body : ChatRequestDTO) async -> Result<ChannelChat, APIError> {
         let router = WorkspaceRouter.sendChannelChat(request: request, body: body)
         
         do {
@@ -455,7 +486,7 @@ final class NetworkManager {
     
     func removeChannel(request : WorkspaceIDRequestDTO) async -> Result<EmptyResponseDTO, APIError> {
         do {
-            let response = try await requestAPI(router: WorkspaceRouter.removeChannel(request: request), of: EmptyResponseDTO.self)
+            let response = try await requestAPIWithRefresh(router: WorkspaceRouter.removeChannel(request: request), of: EmptyResponseDTO.self)
             return .success(response)
         } catch {
             if let apiError = error as? APIError {
@@ -500,6 +531,37 @@ final class NetworkManager {
         }
     }
     
+    func getDMChat(request : WorkspaceIDRequestDTO, cursorDate : String) async -> Result<DMChatList, APIError> {
+        let router = WorkspaceRouter.dmChat(request: request, query: cursorDate)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: [DMChatResponseDTO].self)
+            return .success(response.map({ dto in
+                return dto.toDomain()
+            }))
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func sendDMMessage(request : WorkspaceIDRequestDTO, body : ChatRequestDTO) async -> Result<DMChat, APIError> {
+        let router = WorkspaceRouter.sendDMChat(request: request, body: body)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: DMChatResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
 }
 
 

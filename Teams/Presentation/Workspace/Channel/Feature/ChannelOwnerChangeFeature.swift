@@ -67,7 +67,7 @@ struct ChannelOwnerChangeFeature {
             case .onAppear :
                 
                 guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none }
-                let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id)
+                let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: "")
                 
                 return .run { send in
                     await send(.networkResponse(.channelMembersResponse(
@@ -91,7 +91,7 @@ struct ChannelOwnerChangeFeature {
             case let .popup(.channelChangeOwner(workspace, channel, member)):
                 return .run { send in
                     await send(.networkResponse(.channelOwnerChangeResponse(
-                        networkManager.changeChannelOwner(request : WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id),
+                        networkManager.changeChannelOwner(request : WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""),
                                                           body : ChannelOwnershipRequestDTO(owner_id: member.userID))
                     )))
                 }

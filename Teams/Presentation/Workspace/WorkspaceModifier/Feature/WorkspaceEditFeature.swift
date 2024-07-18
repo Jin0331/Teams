@@ -92,7 +92,7 @@ struct WorkspaceEditFeature {
                 
                 return .run { [workspaceID = state.workspaceID] send in
                     await send(.editWorkspaceResponse(
-                        networkManager.editWorkspace(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: ""), query: createWorkspaceRequest)
+                        networkManager.editWorkspace(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "", room_id: ""), query: createWorkspaceRequest)
                     ))
                 }
             case let .editWorkspaceResponse(.success(response)):
