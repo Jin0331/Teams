@@ -65,7 +65,7 @@ struct ChannelChatFeature {
                 
                 return .run { [channel = state.channelCurrent] send in
                     
-                    let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id)
+                    let workspaceIDDTO = WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: "")
                     
                     await send(.channelMembersResponse(
                         networkManager.getChannelMemebers(request: workspaceIDDTO)
@@ -126,10 +126,10 @@ struct ChannelChatFeature {
                                 }
                             }
                             await send(.channelSendChatResponse(
-                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), body: ChannelChatRequestDTO(content: sendMessage.text, files: files))))
+                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""), body: ChatRequestDTO(content: sendMessage.text, files: files))))
                         } else {
                             await send(.channelSendChatResponse(
-                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id), body: ChannelChatRequestDTO(content: sendMessage.text, files: []))))
+                                networkManager.sendChannelMessage(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""), body: ChatRequestDTO(content: sendMessage.text, files: []))))
 
                         }
                     }

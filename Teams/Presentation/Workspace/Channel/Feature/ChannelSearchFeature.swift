@@ -47,10 +47,10 @@ struct ChannelSearchFeature {
                 guard let workspace = state.workspaceCurrent else { return .none }
                 return .concatenate([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
+                        await send(.channeListlResponse(networkManager.getChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
                     },
                     .run { send in
-                        await send(.myChanneListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
+                        await send(.myChanneListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
                     }
                 ])
                 

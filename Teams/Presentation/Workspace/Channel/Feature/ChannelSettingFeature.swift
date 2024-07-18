@@ -70,7 +70,7 @@ struct ChannelSettingFeature {
                 guard let workspace = state.workspaceCurrent, let channel = state.channelCurrent else { return .none}
                 return .run { send in
                     await send(.networkResponse(.channelSpecificResponse(
-                        networkManager.getSpecificChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                        networkManager.getSpecificChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""))
                     )))
                 }
             
@@ -104,14 +104,14 @@ struct ChannelSettingFeature {
             case let .popup(.channelRemove(workspace, channel)):
                 return .run { send in
                     await send(.networkResponse(.channelRemoveResponse(
-                           networkManager.removeChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                        networkManager.removeChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""))
                        )))
                 }
             
             case let .popup(.channelExit(workspace, channel)):
                 return .run { send in
                     await send(.networkResponse(.channelExitResponse(
-                        networkManager.exitChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id))
+                        networkManager.exitChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""))
                     )))
                 }
             

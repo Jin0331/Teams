@@ -49,10 +49,10 @@ struct HomeFeature {
                 guard let workspace = state.workspaceCurrent else { return .none }
                 return .merge([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
+                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
                     },
                     .run { send in
-                        await send(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""))))
+                        await send(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
                     }
                 ])
                 

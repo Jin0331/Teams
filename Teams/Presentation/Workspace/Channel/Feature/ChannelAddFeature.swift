@@ -81,12 +81,12 @@ struct ChannelAddFeature {
                     
                     if viewMode == .create {
                         await send(.createChannelResponse(
-                            networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: ""), query: createChannelRequest)
+                            networkManager.createChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""), query: createChannelRequest)
                         ))
                     } else { // edit mode
                         if let currentChannel {
                             await send(.createChannelResponse(
-                                networkManager.editChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: currentChannel.channelID), query: createChannelRequest)
+                                networkManager.editChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: currentChannel.channelID, room_id: ""), query: createChannelRequest)
                             ))
                         }
                     }
