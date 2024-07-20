@@ -562,6 +562,21 @@ final class NetworkManager {
             }
         }
     }
+    
+    func getUnreadDMChat(request : WorkspaceIDRequestDTO, after : String) async -> Result<DMChatUnreadsCount, APIError> {
+        let router = WorkspaceRouter.unreadDMChat(request: request, query: after)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: DMChatUnreadCountResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
 }
 
 

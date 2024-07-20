@@ -74,6 +74,8 @@
 		DB5EDC272C48F144008F1A13 /* DMChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC262C48F144008F1A13 /* DMChatModel.swift */; };
 		DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */; };
 		DB5EDC2E2C48F395008F1A13 /* DMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2D2C48F395008F1A13 /* DMChat.swift */; };
+		DB5EDC302C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */; };
+		DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -224,6 +226,8 @@
 		DB5EDC262C48F144008F1A13 /* DMChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatModel.swift; sourceTree = "<group>"; };
 		DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMChatResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB5EDC2D2C48F395008F1A13 /* DMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChat.swift; sourceTree = "<group>"; };
+		DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMChatUnreadCountResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatUnreadsCount.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -448,6 +452,7 @@
 				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
 				DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */,
+				DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -684,6 +689,7 @@
 				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
 				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
 				DB5EDC2D2C48F395008F1A13 /* DMChat.swift */,
+				DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -1071,6 +1077,7 @@
 				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */,
+				DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */,
 				DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC3F8172C419D8600D11D3B /* ChannelChatRequestDTO.swift in Sources */,
@@ -1080,6 +1087,7 @@
 				DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,
+				DB5EDC302C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift in Sources */,
 				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,

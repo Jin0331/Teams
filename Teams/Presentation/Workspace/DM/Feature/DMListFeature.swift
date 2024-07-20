@@ -7,9 +7,13 @@
 
 import Foundation
 import ComposableArchitecture
+import RealmSwift
 
 @Reducer
 struct DMListFeature {
+    
+    @ObservedResults(DMChatListModel.self) var chatListTable
+    
     @ObservableState
     struct State : Equatable {
         let id = UUID()
@@ -34,8 +38,10 @@ struct DMListFeature {
         case workspaceMembersResponse(Result<UserList, APIError>)
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
+        case dmChatResponse([DMChatList])
     }
     
+    @Dependency(\.realmRepository) var realmRepository
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
@@ -45,6 +51,7 @@ struct DMListFeature {
             switch action {
             case .onAppear:
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
+                realmRepository.realmLocation()
                 return .run { send in
                     await send(.networkResponse(.workspaceMembersResponse(
                         networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))
@@ -78,11 +85,29 @@ struct DMListFeature {
                 }
             //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨 
             case let .networkResponse(.dmListResponse(.success(dmList))):
+                    
+                guard let currentWorkspace = state.currentWorkspace else { return .none }
                 
-                dump(dmList)
+                // DM list 생성
+                if !dmList.isEmpty {
+                    dmList.forEach { chat in
+                        realmRepository.upsertDMList(dmResponse: chat)
+                        let chatLastChatDate = realmRepository.fetchDMChatLastDate(roomID: chat.roomID)
+                        realmRepository.upsertDMListLastChatCreatedAt(roomID: chat.roomID, lastChatCreatedAt: chatLastChatDate)
+                    }
+                } else { return .none }
+                
+                return .run { send in
+                    await send(.networkResponse(.dmChatResponse(try await getDMChatList(workspaceID: currentWorkspace.id, dmlist: dmList))))
+                }
+                
+            case let .networkResponse(.dmChatResponse(dmChatList)):
+                dmChatList.forEach { list in
+                    print(list.last)
+                }
                 
                 return .none
-                
+            
             case let .networkResponse(.dmResponse(.success(dm))):
                 return .send(.dmListEnter(dm))
                 
@@ -106,5 +131,31 @@ extension DMListFeature {
         case loading
         case empty
         case normal
+    }
+    
+    private func getDMChatList(workspaceID : String , dmlist : DMList) async throws -> [DMChatList] {
+        var dmChatList : [DMChatList] = []
+        try await withThrowingTaskGroup(of: DMChatList.self) { group in
+            for dm in dmlist {
+                group.addTask {
+                    let dm = await networkManager.getDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "", 
+                                                                                           room_id: dm.roomID),
+                                                            cursorDate: "")
+                    
+                    if case let .success(response) = dm {
+                        return response
+                    } else {
+                        return []
+                    }
+                }
+                
+                for try await chatList in group {
+//                    dmChatList.append(contentsOf: chatList)
+                    dmChatList.append(chatList)
+                }
+            }
+        }
+        
+        return dmChatList
     }
 }
