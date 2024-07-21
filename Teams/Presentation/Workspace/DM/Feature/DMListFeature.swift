@@ -7,9 +7,13 @@
 
 import Foundation
 import ComposableArchitecture
+import RealmSwift
 
 @Reducer
 struct DMListFeature {
+    
+    @ObservedResults(DMChatListModel.self) var chatListTable
+    
     @ObservableState
     struct State : Equatable {
         let id = UUID()
@@ -27,15 +31,17 @@ struct DMListFeature {
     
     enum ButtonTapped {
         case inviteMemberButtonTapped
-        case dmUserButtonTapped(User)
+        case dmUserButtonTapped(String)
     }
     
     enum NetworkResponse {
         case workspaceMembersResponse(Result<UserList, APIError>)
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
+        case dmChatResponse([DMChatList])
     }
     
+    @Dependency(\.realmRepository) var realmRepository
     @Dependency(\.networkManager) var networkManager
     
     var body : some Reducer<State, Action> {
@@ -56,16 +62,18 @@ struct DMListFeature {
                 return .run { send in
                     await send(.networkResponse(.dmResponse(
                         networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""),
-                                                         body: DMListRequestDTO(opponent_id: user.userID))
+                                                         body: DMListRequestDTO(opponent_id: user))
                     )))
                 }
                 
             
             case let .networkResponse(.workspaceMembersResponse(.success(member))):
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
-                state.workspaceMember = member
+                state.workspaceMember = member.filter {
+                    $0.userID != UserDefaultManager.shared.userId!
+                }
                 
-                if state.workspaceMember.count < 2 {
+                if state.workspaceMember.count < 1 {
                     state.viewType = .empty
                     return .none
                 } else {
@@ -78,11 +86,50 @@ struct DMListFeature {
                 }
             //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨 
             case let .networkResponse(.dmListResponse(.success(dmList))):
+                    
+                guard let currentWorkspace = state.currentWorkspace else { return .none }
                 
-                dump(dmList)
+                // DM list 생성
+                if !dmList.isEmpty {
+                    dmList.forEach { chat in
+                        realmRepository.upsertDMList(dmResponse: chat, workspaceID: currentWorkspace.workspaceID)
+                        let chatLastChatDate = realmRepository.fetchDMChatLastDate(roomID: chat.roomID)
+                        realmRepository.upsertDMListLastChatCreatedAt(roomID: chat.roomID, lastChatCreatedAt: chatLastChatDate)
+                    }
+                } else { return .none }
+                
+                return .run { send in
+                    await send(.networkResponse(.dmChatResponse(try await networkManager.getDMChatList(workspaceID: currentWorkspace.id, dmlist: dmList))))
+                }
+                
+            case let .networkResponse(.dmChatResponse(dmChatList)):
+                
+                guard let currentWorkspace = state.currentWorkspace else { return .none }
+                
+                for list in dmChatList {
+                    if let lastChat = list.last {
+                        realmRepository.upsertCurrentDMListContentWithCreatedAt(roomID: lastChat.roomID,
+                                                                                content: lastChat.content,
+                                                                                currentChatCreatedAt: lastChat.createdAtDate,
+                                                                                lastChatUser: lastChat.user.userID
+                        )
+                        
+                        if let lastChatUser = realmRepository.fetchDMListChatUser(roomID: lastChat.roomID), lastChatUser == UserDefaultManager.shared.userId! {
+                            realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: 0)
+                        } else {
+                            let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? Date()
+                            Task {
+                                let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
+                                if case let .success(response) = unreadCountResponse {
+                                    realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 return .none
-                
+            
             case let .networkResponse(.dmResponse(.success(dm))):
                 return .send(.dmListEnter(dm))
                 

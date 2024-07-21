@@ -28,19 +28,113 @@ final class RealmRepository {
         }
     }
     
-    func upsertChannelChatList(chatResponse : ChannelChat)  {
+    func upsertChannelChat(chatResponse : ChannelChat)  {
+        do {
+            try realm.write {
+                realm.create(ChannelChatModel.self, 
+                             value: ["channelID":chatResponse.channelID,
+                                     "channelName":chatResponse.channelName,
+                                     "chatID":chatResponse.chatID,
+                                     "content": chatResponse.content,
+                                     "createdAt": chatResponse.createdAtDate!,
+                                     "files" : chatResponse.files,
+                                     "user" : chatResponse.user], update: .modified) }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertChannelList(channelResponse : Channel, workspaceID : String) {
         
         do {
             try realm.write {
-                realm.create(ChannelChatModel.self, value: ["channelID":chatResponse.channelID,
-                                                             "channelName":chatResponse.channelName,
-                                                             "chatID":chatResponse.chatID,
-                                                             "content": chatResponse.content,
-                                                             "createdAt": chatResponse.createdAtDate!,
-                                                             "files" : chatResponse.files,
-                                                             "user" : chatResponse.user
-                                                ],
-                             update: .modified) }
+                realm.create(ChannelChatListModel.self,
+                             value : [ "channelID": channelResponse.channelID,
+                                       "workspaceID": workspaceID,
+                                       "channelName": channelResponse.name,
+                                       "ownerID": channelResponse.ownerID,
+                                       "coverImage": channelResponse.coverImage,
+                                       "desc" : channelResponse.description,
+                                       "createdAt": channelResponse.createdAtDate!
+                                     ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    func upsertChannelListLastChatCreatedAt(channelID : String , lastChatCreatedAt : Date?) {
+        
+        do {
+            try realm.write {
+                realm.create(ChannelChatListModel.self,
+                             value : ["channelID": channelID,
+                                      "lastChatCreatedAt" : lastChatCreatedAt
+                                     ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertCurrentChannelListContentWithCreatedAt(channelID : String, currentChatCreatedAt : Date?, lastChatUser : String?) {
+        do {
+            try realm.write {
+                realm.create(ChannelChatListModel.self,
+                             value: ["channelID":channelID,
+                                     "currentChatCreatedAt":currentChatCreatedAt,
+                                     "lastChatUser":lastChatUser
+                                    ], update: .modified)
+                
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    func upsertDMList(dmResponse : DM, workspaceID : String) {
+        
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self, 
+                             value : ["roomID": dmResponse.roomID,
+                                      "workspaceID" : workspaceID,
+                                      "createdAt": dmResponse.createdAtDate!,
+                                      "user": ChatUserModel(from: dmResponse.user)
+                                     ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertDMListLastChatCreatedAt(roomID : String , lastChatCreatedAt : Date?) {
+        
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self,
+                             value : ["roomID": roomID,
+                                      "lastChatCreatedAt" : lastChatCreatedAt
+                                     ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertCurrentDMListContentWithCreatedAt(roomID : String, content : String?, currentChatCreatedAt : Date?, lastChatUser : String?) {
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self,
+                             value: ["roomID":roomID,
+                                     "content":content,
+                                     "currentChatCreatedAt":currentChatCreatedAt,
+                                     "lastChatUser":lastChatUser
+                                    ], update: .modified)
+                
+            }
         } catch {
             print(error)
         }
@@ -68,6 +162,21 @@ final class RealmRepository {
         }
     }
     
+    func fetchAllDMChatList(workspaceID : String) -> [DMListChat] {
+        
+        var list : [DMListChat] = []
+        
+        let table = realm.objects(DMChatListModel.self).where {
+            $0.workspaceID == workspaceID
+        }
+        
+        table.forEach { dmChatListModel in
+            list.append(dmChatListModel.toDMChatList)
+        }
+        
+        return list
+    }
+    
     func fetchDMChatLastDate(roomID : String) -> Date? {
         let table = realm.objects(DMChatModel.self).where {
             $0.roomID == roomID
@@ -88,6 +197,50 @@ final class RealmRepository {
         return table.map { row in
             row.toMessage().toExyteMessage()
         }
+    }
+    
+    func upsertChannelUnreadsCount(channelID : String, unreadCount : Int) {
+        do {
+            try realm.write {
+                realm.create(ChannelChatListModel.self,
+                             value: ["channelID":channelID,
+                                     "unreadCount":unreadCount
+                                    ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertDMUnreadsCount(roomID : String, unreadCount : Int) {
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self,
+                             value: ["roomID":roomID,
+                                     "unreadCount":unreadCount
+                                    ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchDMListCreateDate(roomID : String) -> Date {
+        guard let table = realm.object(ofType: DMChatListModel.self, forPrimaryKey: roomID) else { return Date()}
+        
+        return table.createdAt
+    }
+    
+    func fetchChannelListChatUser(channelID : String) -> String? {
+        guard let table = realm.object(ofType: ChannelChatListModel.self, forPrimaryKey: channelID) else { return nil }
+        
+        return table.lastChatUser
+    }
+    
+    func fetchDMListChatUser(roomID : String) -> String? {
+        guard let table = realm.object(ofType: DMChatListModel.self, forPrimaryKey: roomID) else { return nil }
+        
+        return table.lastChatUser
     }
 }
 

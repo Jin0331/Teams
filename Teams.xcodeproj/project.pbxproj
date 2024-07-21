@@ -39,6 +39,9 @@
 		DB2566152C352BB200D34BEB /* SideMenuScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566142C352BB200D34BEB /* SideMenuScreen+Identifiable.swift */; };
 		DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */; };
 		DB2FB0A52C329AD70091B6CE /* WorkspaceListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */; };
+		DB304C1F2C4D5DFB0023E890 /* ChannelListChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB304C1E2C4D5DFB0023E890 /* ChannelListChat.swift */; };
+		DB304C212C4D6CD50023E890 /* ChannelChatUnreadsCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB304C202C4D6CD50023E890 /* ChannelChatUnreadsCount.swift */; };
+		DB304C232C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB304C222C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift */; };
 		DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37633B2C29C664009A201B /* HomeCoordinator.swift */; };
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
@@ -74,6 +77,8 @@
 		DB5EDC272C48F144008F1A13 /* DMChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC262C48F144008F1A13 /* DMChatModel.swift */; };
 		DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */; };
 		DB5EDC2E2C48F395008F1A13 /* DMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2D2C48F395008F1A13 /* DMChat.swift */; };
+		DB5EDC302C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */; };
+		DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -138,6 +143,7 @@
 		DBEA522A2C2428DB00026926 /* WorkspaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA52292C2428DB00026926 /* WorkspaceRouter.swift */; };
 		DBEA522C2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */; };
 		DBEA522E2C2534E700026926 /* Workspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEA522D2C2534E700026926 /* Workspace.swift */; };
+		DBEE33952C4D00DC00C33B57 /* DMListChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE33942C4D00DC00C33B57 /* DMListChat.swift */; };
 		DBF386192C1BF70800A08152 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386182C1BF70800A08152 /* SplashView.swift */; };
 		DBF386222C1BFAD000A08152 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DBF386212C1BFAD000A08152 /* TCACoordinators */; };
 		DBF386262C1C090400A08152 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF386252C1C090400A08152 /* HomeView.swift */; };
@@ -189,6 +195,9 @@
 		DB2566142C352BB200D34BEB /* SideMenuScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SideMenuScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB2566162C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB2FB0A42C329AD70091B6CE /* WorkspaceListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListItemView.swift; sourceTree = "<group>"; };
+		DB304C1E2C4D5DFB0023E890 /* ChannelListChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListChat.swift; sourceTree = "<group>"; };
+		DB304C202C4D6CD50023E890 /* ChannelChatUnreadsCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatUnreadsCount.swift; sourceTree = "<group>"; };
+		DB304C222C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelChatUnreadCountResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB37633B2C29C664009A201B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
@@ -224,6 +233,8 @@
 		DB5EDC262C48F144008F1A13 /* DMChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatModel.swift; sourceTree = "<group>"; };
 		DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMChatResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DB5EDC2D2C48F395008F1A13 /* DMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChat.swift; sourceTree = "<group>"; };
+		DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DMChatUnreadCountResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatUnreadsCount.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -276,6 +287,7 @@
 		DBEA52292C2428DB00026926 /* WorkspaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRouter.swift; sourceTree = "<group>"; };
 		DBEA522B2C25341600026926 /* WorkspaceResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkspaceResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		DBEA522D2C2534E700026926 /* Workspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workspace.swift; sourceTree = "<group>"; };
+		DBEE33942C4D00DC00C33B57 /* DMListChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListChat.swift; sourceTree = "<group>"; };
 		DBF386182C1BF70800A08152 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DBF386252C1C090400A08152 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DBF386302C1C31C500A08152 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
@@ -448,6 +460,8 @@
 				DBEA52122C20872D00026926 /* ProfileResponseDTO+Mapping.swift */,
 				DBE1CCAD2C37BD7E00B627BD /* DMResponseDTO+Mapping.swift */,
 				DB5EDC2B2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift */,
+				DB5EDC2F2C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift */,
+				DB304C222C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -682,8 +696,12 @@
 				DBE1CCAB2C36AEAE00B627BD /* Channel.swift */,
 				DBD3972C2C4648D100A45D17 /* ChannelSpecific.swift */,
 				DBFB53FE2C3CFF9500ADE1E7 /* ChannelChat.swift */,
+				DB304C1E2C4D5DFB0023E890 /* ChannelListChat.swift */,
+				DB304C202C4D6CD50023E890 /* ChannelChatUnreadsCount.swift */,
 				DBE1CCB12C37CBBF00B627BD /* DM.swift */,
 				DB5EDC2D2C48F395008F1A13 /* DMChat.swift */,
+				DBEE33942C4D00DC00C33B57 /* DMListChat.swift */,
+				DB5EDC312C498595008F1A13 /* DMChatUnreadsCount.swift */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -1060,6 +1078,7 @@
 				DB5EDC252C48E441008F1A13 /* DMChatFeature.swift in Sources */,
 				DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
+				DB304C232C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
 				DBD3971F2C456E3E00A45D17 /* ChannelSettingView.swift in Sources */,
@@ -1071,15 +1090,18 @@
 				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */,
+				DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */,
 				DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC3F8172C419D8600D11D3B /* ChannelChatRequestDTO.swift in Sources */,
 				DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */,
 				DB04EF7B2C3AD2CE007F0CBB /* WorkspaceInviteView.swift in Sources */,
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
+				DB304C212C4D6CD50023E890 /* ChannelChatUnreadsCount.swift in Sources */,
 				DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,
+				DB5EDC302C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift in Sources */,
 				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
@@ -1106,10 +1128,12 @@
 				DB5AADE22C180F73002907B6 /* TeamsAppDelegate.swift in Sources */,
 				DB5EDC212C48D7E2008F1A13 /* DMListRequestDTO.swift in Sources */,
 				DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift in Sources */,
+				DBEE33952C4D00DC00C33B57 /* DMListChat.swift in Sources */,
 				DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,
 				DB5AADE92C1818ED002907B6 /* Token.swift in Sources */,
+				DB304C1F2C4D5DFB0023E890 /* ChannelListChat.swift in Sources */,
 				DB085B592C0E104A00199065 /* AuthFeature.swift in Sources */,
 				DBD397352C46730E00A45D17 /* ChannelOwnershipRequestDTO.swift in Sources */,
 				DB37633C2C29C664009A201B /* HomeCoordinator.swift in Sources */,

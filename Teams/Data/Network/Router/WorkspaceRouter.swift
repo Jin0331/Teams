@@ -27,6 +27,7 @@ enum WorkspaceRouter {
     case specificChannels(request : WorkspaceIDRequestDTO)
     case channelChat(request : WorkspaceIDRequestDTO, query : String)
     case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChatRequestDTO)
+    case unreadChannelChat(request : WorkspaceIDRequestDTO, query : String)
     
     case channelMember(request : WorkspaceIDRequestDTO)
     case channelOwnerChange(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO)
@@ -35,6 +36,7 @@ enum WorkspaceRouter {
     case dmListCreate(request : WorkspaceIDRequestDTO, body : DMListRequestDTO)
     case dmChat(request : WorkspaceIDRequestDTO, query : String)
     case sendDMChat(request : WorkspaceIDRequestDTO, body : ChatRequestDTO)
+    case unreadDMChat(request : WorkspaceIDRequestDTO, query : String)
     
 }
 
@@ -45,7 +47,8 @@ extension WorkspaceRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, .workspaceMember, .dmChat:
+        case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, 
+                .workspaceMember, .dmChat, .unreadDMChat, .unreadChannelChat:
             return .get
         case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat, .dmListCreate, .sendDMChat:
             return .post
@@ -70,6 +73,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/dms"
         case let .dmChat(workspaceID, _), let .sendDMChat(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id + "/dms/" + workspaceID.room_id + "/chats"
+        case let .unreadDMChat(workspaceID, _):
+            return "/workspaces/" + workspaceID.workspace_id + "/dms/" + workspaceID.room_id + "/unreads"
         case let .workspaceMember(workspaceID):
             return "/workspaces/" + workspaceID.workspace_id + "/members"
         case let .createChannel(workspaceID, _), let .channels(workspaceID):
@@ -86,6 +91,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/members"
         case let .channelOwnerChange(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/transfer/ownership"
+        case let .unreadChannelChat(workspaceID,_):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/unreads"
         }
     }
     
@@ -93,7 +100,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate, .dmChat, .sendDMChat:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate, .dmChat, .sendDMChat, .unreadDMChat, .unreadChannelChat:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -109,6 +116,8 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case let .channelChat(_, query), let .dmChat(_, query):
             return ["cursor_date" : query]
+        case let .unreadDMChat(_, query), let .unreadChannelChat(_, query):
+            return ["after" : query]
         default :
             return nil
         }

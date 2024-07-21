@@ -8,11 +8,13 @@
 import ComposableArchitecture
 import SwiftUI
 import Kingfisher
+import RealmSwift
 
 struct HomeView: View {
     
     @State var store : StoreOf<HomeFeature>
-    @State private var expanded: Bool = false
+    @ObservedResults(ChannelChatListModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true)) var channelChatListTable
+    @ObservedResults(DMChatListModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true)) var dmChatListTable
     
     var body: some View {
         
@@ -25,52 +27,11 @@ struct HomeView: View {
                         //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
                         Divider().background(.brandWhite).padding(.top, 10)
                         
-                        CustomDisclosureGroupView(store: store)
+                        ChannelListView()
                         
                         Divider().background(Color.viewSeperator)
                         
-                        DisclosureGroup(isExpanded: $expanded) {
-                            VStack {
-                                ForEach(store.dmList, id: \.id) { response in
-                                    HStack {
-                                        Image(systemName: "number")
-                                            .resizable()
-                                            .frame(width: 18, height: 18)
-                                        Text(response.roomID)
-                                            .bodyRegular()
-                                    }
-                                    .padding(.leading, 15)
-                                    .frame(width: 393, height: 41, alignment: .leading)
-                                    .onTapGesture {
-                                        print("hi")
-                                    }
-                                }
-                                
-                                HStack {
-                                    Image(systemName: "plus")
-                                        .resizable()
-                                        .frame(width: 18, height: 18)
-                                        .padding(.leading, 15)
-                                    Text("새 메세지 시작")
-                                        .bodyRegular()
-                                }
-                                .padding(.leading, 15)
-                                .frame(width: 393, height: 41, alignment: .leading)
-                                .onTapGesture {
-                                    print("hi")
-                                }
-                                
-                            }
-                            
-                        } label: {
-                            Text("다이렉트 메세지")
-                                .title2()
-                                .foregroundColor(.brandBlack)
-                                .frame(height: 56)
-                                .padding(.leading, 25)
-                        }
-                        .tint(.brandBlack)
-                        .padding(.horizontal, 15)
+                        DMListView()
                         
                         Divider().background(Color.viewSeperator)
                         
@@ -86,7 +47,7 @@ struct HomeView: View {
                         .frame(width: 393, height: 41, alignment: .leading)
                         .padding(.horizontal, 15)
                         .onTapGesture {
-                            store.send(.inviteMemberButtonTapped)
+                            store.send(.buttonTapped(.inviteMemberButtonTapped))
                         }
                         
                         Spacer()
@@ -129,13 +90,155 @@ struct HomeView: View {
     }
 }
 
-//#Preview {
-//    HomeView(store: Store(initialState: HomeFeature.State(workspaceCurrent: Workspace(workspaceID: "4e93033c-bedf-4a36-b16b-e16f37f93ae7",
-//                                                                                      name: "천장zxc",
-//                                                                                      description: "",
-//                                                                                      coverImage: "/static/workspaceCoverImages/1720011671324.jpeg",
-//                                                                                      ownerID: "e1b47086-a781-4885-a9a3-3998ec818fa8",
-//                                                                                      createdAt: "2024-07-03T12:44:24.083Z")), reducer: {
-//        HomeFeature()
-//    }))
-//}
+extension HomeView {
+    private func ChannelListView() -> some View {
+        return WithPerceptionTracking {
+            DisclosureGroup(isExpanded: $store.channelListExpanded) {
+                VStack {
+                    ForEach(channelChatListTable, id: \.id) { channel in
+                        if store.workspaceCurrent!.workspaceID == channel.workspaceID {
+                            HStack {
+                                Image(systemName: "number")
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
+                                
+                                if  channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
+                                    Text(channel.channelName)
+                                        .bodyBold()
+                                } else {
+                                    Text(channel.channelName)
+                                        .bodyRegular()
+                                }
+                                
+                                Spacer()
+                                
+                                if channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 19, height: 18)
+                                        .overlay {
+                                            Text(String(channel.unreadCount))
+                                                .font(.caption)
+                                                .foregroundStyle(.brandWhite)
+                                        }
+                                }
+                            }
+                            
+                            .padding(.horizontal, 15)
+                            .frame(width: 393, height: 41, alignment: .leading)
+                            .onTapGesture {
+                                store.send(.channelEnter(channel.toChannel))
+                            }
+                        }
+                    }
+                    
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
+                        Text("채널 추가")
+                            .bodyRegular()
+                    }
+                    .padding(.horizontal, 15)
+                    .frame(width: 393, height: 41, alignment: .leading)
+                    .onTapGesture {
+                        store.send(.buttonTapped(.channelAddButtonTapped))
+                    }
+                }
+                
+            } label: {
+                Text("채널")
+                    .title2()
+                    .foregroundColor(.brandBlack)
+                    .frame(height: 56)
+                    .padding(.leading, 25)
+            }
+            .tint(.brandBlack)
+            .padding(.horizontal, 15)
+            .confirmationDialog("", isPresented: $store.showingChannelActionSheet) {
+                Button("채널 생성") {
+                    store.send(.buttonTapped(.channelCreateButtonTapped))
+                }
+                Button("채널 탐색") {
+                    store.send(.buttonTapped(.channelSearchButtonTapped))
+                }
+                Button("취소", role: .cancel) {}
+            }
+        }
+    }
+    
+    private func DMListView() -> some View {
+        return WithPerceptionTracking {
+            DisclosureGroup(isExpanded: $store.dmlListExpanded) {
+                VStack {
+                    ForEach(dmChatListTable, id: \.id) { chatList in
+                        if store.workspaceCurrent!.workspaceID == chatList.workspaceID {
+                            HStack {
+                                KFImage.url(chatList.user?.profileImageToUrl)
+                                    .requestModifier(AuthManager.kingfisherAuth())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 24, height: 24)
+                                    .cornerRadius(8)
+                                
+                                if  chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
+                                    Text(chatList.user!.nickname)
+                                        .bodyBold()
+                                } else {
+                                    Text(chatList.user!.nickname)
+                                        .bodyRegular()
+                                }
+                                
+                                Spacer()
+                                
+                                if chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 19, height: 18)
+                                        .overlay {
+                                            Text(String(chatList.unreadCount))
+                                                .font(.caption)
+                                                .foregroundStyle(.brandWhite)
+                                        }
+                                }
+                                
+                            }
+                            .padding(.leading, 30)
+                            .onTapGesture {
+                                if let user = chatList.user {
+                                    store.send(.buttonTapped(.dmUserButtonTapped(user.userID)))
+                                }
+                            }
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
+                        Text("새 메세지 시작")
+                            .bodyRegular()
+                    }
+                    .padding(.leading, 15)
+                    .frame(width: 393, height: 41, alignment: .leading)
+                    .onTapGesture {
+                        print("hi")
+                    }
+                }
+                
+            } label: {
+                Text("다이렉트 메세지")
+                    .title2()
+                    .foregroundColor(.brandBlack)
+                    .frame(height: 56)
+                    .padding(.leading, 25)
+            }
+            .tint(.brandBlack)
+            .padding(.horizontal, 15)
+        }
+    }
+}

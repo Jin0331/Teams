@@ -22,6 +22,8 @@ extension HomeScreen.State: Identifiable {
                 .channelSetting
         case .channelOwnerChange:
                 .channelOwnerChange
+        case .dmChat:
+                .dmChat
         }
     }
     
@@ -33,6 +35,7 @@ extension HomeScreen.State: Identifiable {
         case channelChat
         case channelSetting
         case channelOwnerChange
+        case dmChat
         var id: ID { self }
     }
 }

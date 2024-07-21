@@ -562,6 +562,85 @@ final class NetworkManager {
             }
         }
     }
+    
+    func getUnreadChannelChat(request : WorkspaceIDRequestDTO, after : String) async -> Result<ChannelChatUnreadsCount, APIError> {
+        let router = WorkspaceRouter.unreadChannelChat(request: request, query: after)
+        
+        print(router)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ChannelChatUnreadCountResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getUnreadDMChat(request : WorkspaceIDRequestDTO, after : String) async -> Result<DMChatUnreadsCount, APIError> {
+        let router = WorkspaceRouter.unreadDMChat(request: request, query: after)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: DMChatUnreadCountResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getDMChatList(workspaceID : String, dmlist : DMList) async throws -> [DMChatList] {
+        var dmChatList : [DMChatList] = []
+        try await withThrowingTaskGroup(of: DMChatList.self) { group in
+            for dm in dmlist {
+                group.addTask {
+                    let dm = await self.getDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "",
+                                                                                           room_id: dm.roomID),
+                                                            cursorDate: "")
+                    
+                    if case let .success(response) = dm {
+                        return response
+                    } else {
+                        return []
+                    }
+                }
+                
+                for try await chatList in group {
+                    dmChatList.append(chatList)
+                }
+            }
+        }
+        return dmChatList
+    }
+    
+    func getChannelChatList(workspaceID : String, channelList : ChannelList) async throws -> [ChannelChatList] {
+        var channelChatList : [ChannelChatList] = []
+        try await withThrowingTaskGroup(of: ChannelChatList.self) { group in
+            for channel in channelList {
+                group.addTask {
+                    let channel = await self.joinOrSearchChannelChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: channel.channelID, room_id: ""), cursorDate: "")
+                    
+                    if case let .success(response) = channel {
+                        return response
+                    } else {
+                        return []
+                    }
+                }
+                
+                for try await chatList in group {
+                    channelChatList.append(chatList)
+                }
+            }
+        }
+        
+        return channelChatList
+    }
 }
 
 

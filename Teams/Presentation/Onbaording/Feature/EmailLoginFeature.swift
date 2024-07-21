@@ -82,7 +82,7 @@ struct EmailLoginFeature {
                 
                 let emailLoginRequest = EmailLoginRequestDTO(email: state.emailText,
                                                              password: state.passwordText,
-                                                             deviceToken: UserDefaultManager.shared.deviceToken!)
+                                                             deviceToken: UserDefaultManager.shared.deviceToken)
                 
                 
                 return .run { send in
