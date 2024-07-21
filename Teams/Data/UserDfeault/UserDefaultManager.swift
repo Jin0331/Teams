@@ -61,6 +61,7 @@ final class UserDefaultManager {
     @UserStatus(key: "provider") var provider : String?
     @UserLogin(key: "userLogin") var isLogined : Bool
     
+    
     func removeData(forKey key: String) {
         userDefaults.removeObject(forKey: key)
     }
@@ -80,5 +81,28 @@ final class UserDefaultManager {
         accessToken = login.token.accessToken
         refreshToken = login.token.refreshToken
         isLogined = true
+    }
+    
+    func saveWorkspace(_ workspace: Workspace) {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(workspace)
+            userDefaults.set(data, forKey: "workspace")
+        } catch {
+            print("Failed to encode Workspace: \(error)")
+        }
+    }
+    
+    // Workspace 불러오기
+    func getWorkspace() -> Workspace? {
+        guard let data = userDefaults.data(forKey: "workspace") else { return nil }
+        do {
+            let decoder = JSONDecoder()
+            let workspace = try decoder.decode(Workspace.self, from: data)
+            return workspace
+        } catch {
+            print("Failed to decode Workspace: \(error)")
+            return nil
+        }
     }
 }

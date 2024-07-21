@@ -101,7 +101,16 @@ struct MainCoordinator {
                 
                 state.workspaceList = workspace
                 
-                if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
+                if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
+                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
+                                                       dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                       selectedTab: .home,
+                                                       sideMenu: .initialState()),
+                                            homeEmpty: .initialState,
+                                            sideMenu: .initialState(),
+                                            workspaceCurrent: selectedWorkspace,
+                                            showingView: workspace.count > 0 ? .home : .empty)
+                } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
                                                        dm: .initialState(currentWorkspace: mostRecentWorkspace),
                                                        selectedTab: .home, 
@@ -123,6 +132,9 @@ struct MainCoordinator {
                 
             case let .workspaceTransition(selectedWorkspace):
                 guard let workspaceList = state.workspaceList else { return .none }
+                
+                UserDefaultManager.shared.saveWorkspace(selectedWorkspace)
+                
                 state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
                                                    dm: .initialState(currentWorkspace: selectedWorkspace),
                                                    selectedTab: .home,

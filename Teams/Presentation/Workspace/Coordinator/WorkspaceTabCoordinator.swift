@@ -27,7 +27,7 @@ struct WorkspaceTabCoordinatorView : View {
                     
                     DMCoordinatorView(store: store.scope(state: \.dm, action: \.dm))
                         .tabItem {
-                            Image(store.selectedTab == .dm ? .tabdmActive : .tabdmInactive)
+                            Image(store.selectedTab == .dm ? .tabDMActive : .tabDMInactive)
                                 .resizable()
                                 .frame(width: 24, height: 24)
                             Text("DM")
