@@ -13,6 +13,7 @@ import SwiftUI
 struct HomeFeature {
     
     @ObservedResults(DMChatListModel.self) var chatListTable
+    @ObservedResults(ChannelChatListModel.self) var channelChatListTable
     
     @ObservableState
     struct State : Equatable {
@@ -45,7 +46,8 @@ struct HomeFeature {
     }
     
     enum NetworkResponse {
-        case channeListlResponse(Result<[Channel], APIError>)
+        case channeListResponse(Result<ChannelList, APIError>)
+        case channelChatResponse([ChannelChatList])
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
         case dmChatResponse([DMChatList])
@@ -65,21 +67,66 @@ struct HomeFeature {
             
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
+                realmRepository.realmLocation()
+                
+                
+                print("🌟🌟🌟🌟🌟🌟🌟Token 🌟 : \(UserDefaultManager.shared.accessToken!)\nSecretKey 🌟 : \(APIKey.secretKey.rawValue)\n🌟🌟🌟🌟🌟🌟🌟")
+                
                 return .merge([
                     .run { send in
-                        await send(.networkResponse(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
+                        await send(.networkResponse(.channeListResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                     },
                     .run { send in
                         await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))))
                     }
                 ])
                 
-            case let .networkResponse(.channeListlResponse(.success(response))):
-                state.channelList = utils.getSortedChannelList(from: response)
+            case let .networkResponse(.channeListResponse(.success(channelList))):
+                guard let currentWorkspace = state.workspaceCurrent else { return .none }
+  
+                if !channelList.isEmpty {
+                    channelList.forEach { channel in
+                        realmRepository.upsertChannelList(channelResponse: channel, workspaceID: currentWorkspace.workspaceID)
+                        let chatLastChatDate = realmRepository.fetchChannelChatLastDate(channelID: channel.channelID)
+                        realmRepository.upsertChannelListLastChatCreatedAt(channelID: channel.channelID, lastChatCreatedAt: chatLastChatDate)
+                    }
+                } else { return .none}
+                
+                return .run { send in
+                    await send(.networkResponse(.channelChatResponse(try await networkManager.getChannelChatList(workspaceID: currentWorkspace.workspaceID, channelList: channelList))))
+                }
+                
+            case let .networkResponse(.channelChatResponse(channelChatList)):
+                guard let currentWorkspace = state.workspaceCurrent else { return .none }
+                
+                for list in channelChatList {
+                    if let lastChat = list.last {
+                        realmRepository.upsertCurrentChannelListContentWithCreatedAt(channelID: lastChat.channelID,
+                                                                                currentChatCreatedAt: lastChat.createdAtDate,
+                                                                                lastChatUser: lastChat.user.userID
+                        )
+                        
+                        if let lastChatUser = realmRepository.fetchChannelListChatUser(channelID: lastChat.channelID), lastChatUser == UserDefaultManager.shared.userId! {
+                            print("설마")
+                            realmRepository.upsertChannelUnreadsCount(channelID: lastChat.channelID, unreadCount: 0)
+                        } else {
+                            let after = realmRepository.fetchChannelChatLastDate(channelID: lastChat.channelID) ?? Date()
+                            Task {
+                                let unreadCountResponse = await networkManager.getUnreadChannelChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: lastChat.channelID, room_id: ""), after: after.toStringRaw())
+                                if case let .success(response) = unreadCountResponse {
+                                    
+                                    print(response)
+                                    
+                                    realmRepository.upsertChannelUnreadsCount(channelID: lastChat.channelID, unreadCount: response.count)
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 return .none
                 
-            case let .networkResponse(.channeListlResponse(.failure(error))):
+            case let .networkResponse(.channeListResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 

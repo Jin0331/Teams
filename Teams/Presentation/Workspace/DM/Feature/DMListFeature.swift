@@ -51,7 +51,6 @@ struct DMListFeature {
             switch action {
             case .onAppear:
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
-                realmRepository.realmLocation()
                 return .run { send in
                     await send(.networkResponse(.workspaceMembersResponse(
                         networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))

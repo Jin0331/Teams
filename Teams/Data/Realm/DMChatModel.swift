@@ -20,9 +20,6 @@ final class DMChatListModel : Object, ObjectKeyIdentifiable {
     @Persisted var unreadCount : Int
     
     var toDMChatList : DMListChat {
-        
-        print(unreadCount)
-        
         return .init(roomID: roomID,
                      workspaceID: workspaceID,
                      createdAt: createdAt,

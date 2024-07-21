@@ -8,6 +8,36 @@
 import Foundation
 import RealmSwift
 
+final class ChannelChatListModel : Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var channelID : String
+    @Persisted var workspaceID : String
+    @Persisted var channelName : String
+    @Persisted var ownerID : String
+    @Persisted var coverImage : String
+    @Persisted var desc : String
+    @Persisted var createdAt : Date
+    @Persisted var currentChatCreatedAt : Date?
+    @Persisted var lastChatCreatedAt : Date?
+    @Persisted var lastChatUser : String?
+    @Persisted var unreadCount : Int
+    
+    var toChannelChatList : ChannelListChat {
+        return .init(channelID: channelID,
+                     workspaceID: workspaceID,
+                     channelName: channelName,
+                     createdAt: createdAt,
+                     currentChatCreatedAt: currentChatCreatedAt,
+                     lastChatCreatedAt: lastChatCreatedAt,
+                     lastChatUser: lastChatUser,
+                     unreadCount: unreadCount)
+    }
+    
+    var toChannel : Channel {
+        return .init(channelID: channelID, name: channelName, coverImage: coverImage, ownerID: ownerID, createdAt: createdAt.toStringRaw(), description: desc)
+    }
+    
+}
+
 final class ChannelChatModel : Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id : ObjectId
     @Persisted var channelID : String
@@ -69,6 +99,17 @@ final class ChatUserModel : EmbeddedObject, ObjectKeyIdentifiable {
         return ChatUser(uid: userID, name: nickname, avatar: profileImageToUrl)
     }
 }
+
+
+extension ChannelChatListModel {
+    convenience init(from response : Channel) {
+        self.init()
+        channelID = response.channelID
+        createdAt = response.createdAtDate!
+        unreadCount = 0
+    }
+}
+
 
 extension ChatUserModel {
     convenience init(from response : User) {

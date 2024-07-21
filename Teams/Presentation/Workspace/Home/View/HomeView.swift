@@ -13,7 +13,8 @@ import RealmSwift
 struct HomeView: View {
     
     @State var store : StoreOf<HomeFeature>
-    @ObservedResults(DMChatListModel.self) var chatListTable
+    @ObservedResults(ChannelChatListModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true)) var channelChatListTable
+    @ObservedResults(DMChatListModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true)) var dmChatListTable
     
     var body: some View {
         
@@ -26,7 +27,7 @@ struct HomeView: View {
                         //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
                         Divider().background(.brandWhite).padding(.top, 10)
                         
-                        CustomDisclosureGroupView(store: store)
+                        ChannelListView()
                         
                         Divider().background(Color.viewSeperator)
                         
@@ -90,75 +91,151 @@ struct HomeView: View {
 }
 
 extension HomeView {
-    fileprivate func DMListView() -> some View {
-        return DisclosureGroup(isExpanded: $store.dmlListExpanded) {
-            VStack {
-                ForEach(chatListTable, id: \.id) { chatList in
-                    
-                    if store.workspaceCurrent!.workspaceID == chatList.workspaceID {
+    private func ChannelListView() -> some View {
+        return WithPerceptionTracking {
+            DisclosureGroup(isExpanded: $store.channelListExpanded) {
+                VStack {
+                    ForEach(channelChatListTable, id: \.id) { channel in
                         HStack {
-                            KFImage.url(chatList.user?.profileImageToUrl)
-                                .requestModifier(AuthManager.kingfisherAuth())
+                            Image(systemName: "number")
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 24, height: 24)
-                                .cornerRadius(8)
+                                .frame(width: 18, height: 18)
+                                .padding(.leading, 15)
                             
-                            if  chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
-                                Text(chatList.user!.nickname)
+                            if  channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
+                                Text(channel.channelName)
                                     .bodyBold()
                             } else {
-                                Text(chatList.user!.nickname)
+                                Text(channel.channelName)
                                     .bodyRegular()
                             }
                             
                             Spacer()
                             
-                            if chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
+                            if channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(.brandGreen)
                                     .frame(width: 19, height: 18)
                                     .overlay {
-                                        Text(String(chatList.unreadCount))
+                                        Text(String(channel.unreadCount))
                                             .font(.caption)
                                             .foregroundStyle(.brandWhite)
                                     }
                             }
-                            
                         }
-                        .padding(.leading, 30)
+                        .padding(.horizontal, 15)
+                        .frame(width: 393, height: 41, alignment: .leading)
                         .onTapGesture {
-                            if let user = chatList.user {
-                                store.send(.buttonTapped(.dmUserButtonTapped(user.userID)))
-                            }
+                            store.send(.channelEnter(channel.toChannel))
                         }
+                    }
+                    
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
+                        Text("채널 추가")
+                            .bodyRegular()
+                    }
+                    .padding(.horizontal, 15)
+                    .frame(width: 393, height: 41, alignment: .leading)
+                    .onTapGesture {
+                        store.send(.buttonTapped(.channelAddButtonTapped))
                     }
                 }
                 
-                HStack {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .frame(width: 18, height: 18)
-                        .padding(.leading, 15)
-                    Text("새 메세지 시작")
-                        .bodyRegular()
+            } label: {
+                Text("채널")
+                    .title2()
+                    .foregroundColor(.brandBlack)
+                    .frame(height: 56)
+                    .padding(.leading, 25)
+            }
+            .tint(.brandBlack)
+            .padding(.horizontal, 15)
+            .confirmationDialog("", isPresented: $store.showingChannelActionSheet) {
+                Button("채널 생성") {
+                    store.send(.buttonTapped(.channelCreateButtonTapped))
                 }
-                .padding(.leading, 15)
-                .frame(width: 393, height: 41, alignment: .leading)
-                .onTapGesture {
-                    print("hi")
+                Button("채널 탐색") {
+                    store.send(.buttonTapped(.channelSearchButtonTapped))
+                }
+                Button("취소", role: .cancel) {}
+            }
+        }
+    }
+    
+    private func DMListView() -> some View {
+        return WithPerceptionTracking {
+            DisclosureGroup(isExpanded: $store.dmlListExpanded) {
+                VStack {
+                    ForEach(dmChatListTable, id: \.id) { chatList in
+                        if store.workspaceCurrent!.workspaceID == chatList.workspaceID {
+                            HStack {
+                                KFImage.url(chatList.user?.profileImageToUrl)
+                                    .requestModifier(AuthManager.kingfisherAuth())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 24, height: 24)
+                                    .cornerRadius(8)
+                                
+                                if  chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
+                                    Text(chatList.user!.nickname)
+                                        .bodyBold()
+                                } else {
+                                    Text(chatList.user!.nickname)
+                                        .bodyRegular()
+                                }
+                                
+                                Spacer()
+                                
+                                if chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 19, height: 18)
+                                        .overlay {
+                                            Text(String(chatList.unreadCount))
+                                                .font(.caption)
+                                                .foregroundStyle(.brandWhite)
+                                        }
+                                }
+                                
+                            }
+                            .padding(.leading, 30)
+                            .onTapGesture {
+                                if let user = chatList.user {
+                                    store.send(.buttonTapped(.dmUserButtonTapped(user.userID)))
+                                }
+                            }
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    
+                    HStack {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .padding(.leading, 15)
+                        Text("새 메세지 시작")
+                            .bodyRegular()
+                    }
+                    .padding(.leading, 15)
+                    .frame(width: 393, height: 41, alignment: .leading)
+                    .onTapGesture {
+                        print("hi")
+                    }
                 }
                 
+            } label: {
+                Text("다이렉트 메세지")
+                    .title2()
+                    .foregroundColor(.brandBlack)
+                    .frame(height: 56)
+                    .padding(.leading, 25)
             }
-            
-        } label: {
-            Text("다이렉트 메세지")
-                .title2()
-                .foregroundColor(.brandBlack)
-                .frame(height: 56)
-                .padding(.leading, 25)
+            .tint(.brandBlack)
+            .padding(.horizontal, 15)
         }
-        .tint(.brandBlack)
-        .padding(.horizontal, 15)
     }
 }

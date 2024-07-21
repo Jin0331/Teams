@@ -27,6 +27,7 @@ enum WorkspaceRouter {
     case specificChannels(request : WorkspaceIDRequestDTO)
     case channelChat(request : WorkspaceIDRequestDTO, query : String)
     case sendChannelChat(request : WorkspaceIDRequestDTO, body : ChatRequestDTO)
+    case unreadChannelChat(request : WorkspaceIDRequestDTO, query : String)
     
     case channelMember(request : WorkspaceIDRequestDTO)
     case channelOwnerChange(request : WorkspaceIDRequestDTO, body : ChannelOwnershipRequestDTO)
@@ -47,7 +48,7 @@ extension WorkspaceRouter : TargetType {
     var method: HTTPMethod {
         switch self {
         case .myWorkspaces, .exitWorkspace, .channels, .myChannels, .dmList, .channelChat, .channelMember, .exitChannel, .specificChannels, 
-                .workspaceMember, .dmChat, .unreadDMChat:
+                .workspaceMember, .dmChat, .unreadDMChat, .unreadChannelChat:
             return .get
         case .createWorkspace, .createChannel, .inviteWorkspace, .sendChannelChat, .dmListCreate, .sendDMChat:
             return .post
@@ -90,6 +91,8 @@ extension WorkspaceRouter : TargetType {
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/members"
         case let .channelOwnerChange(workspaceID, _):
             return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/transfer/ownership"
+        case let .unreadChannelChat(workspaceID,_):
+            return "/workspaces/" + workspaceID.workspace_id + "/channels/" + workspaceID.channel_id + "/unreads"
         }
     }
     
@@ -97,7 +100,7 @@ extension WorkspaceRouter : TargetType {
         guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
         
         switch self {
-        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate, .dmChat, .sendDMChat, .unreadDMChat:
+        case .myWorkspaces, .createWorkspace, .removeWorkspace, .exitWorkspace, .editWorkspace, .myChannels, .dmList, .channels, .inviteWorkspace, .channelChat, .channelMember, .exitChannel, .removeChannel, .specificChannels, .channelOwnerChange, .workspaceMember, .dmListCreate, .dmChat, .sendDMChat, .unreadDMChat, .unreadChannelChat:
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
@@ -113,7 +116,7 @@ extension WorkspaceRouter : TargetType {
         switch self {
         case let .channelChat(_, query), let .dmChat(_, query):
             return ["cursor_date" : query]
-        case let .unreadDMChat(_, query):
+        case let .unreadDMChat(_, query), let .unreadChannelChat(_, query):
             return ["after" : query]
         default :
             return nil
