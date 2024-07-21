@@ -54,10 +54,10 @@ final class RealmRepository {
                                       "workspaceID" : workspaceID,
                                       "createdAt": dmResponse.createdAtDate!,
                                       "user": ChatUserModel(from: dmResponse.user),
-                                      "unreadCount" : 0,
-                                      "content" : nil,
-                                      "currentChatCreatedAt" : nil,
-                                      "lastChatCreatedAt" : nil
+//                                      "unreadCount" : 0,
+//                                      "content" : nil,
+//                                      "currentChatCreatedAt" : nil,
+//                                      "lastChatCreatedAt" : nil
                                      ], update: .modified)
             }
         } catch {

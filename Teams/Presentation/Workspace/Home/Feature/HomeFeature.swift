@@ -6,10 +6,14 @@
 //
 
 import ComposableArchitecture
+import RealmSwift
 import SwiftUI
 
 @Reducer
 struct HomeFeature {
+    
+    @ObservedResults(DMChatListModel.self) var chatListTable
+    
     @ObservableState
     struct State : Equatable {
         let id = UUID()
@@ -42,12 +46,14 @@ struct HomeFeature {
     
     enum NetworkResponse {
         case channeListlResponse(Result<[Channel], APIError>)
-        case dmListResponse(Result<[DM], APIError>)
+        case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
+        case dmChatResponse([DMChatList])
     }
     
     
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.realmRepository) var realmRepository
     @Dependency(\.utilitiesFunction) var utils
     
     var body : some ReducerOf<Self> {
@@ -64,7 +70,7 @@ struct HomeFeature {
                         await send(.networkResponse(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                     },
                     .run { send in
-                        await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
+                        await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))))
                     }
                 ])
                 
@@ -72,11 +78,6 @@ struct HomeFeature {
                 state.channelList = utils.getSortedChannelList(from: response)
                 
                 return .none
-                
-            case let .networkResponse(.dmListResponse(.success(response))):
-                
-                return .none
-
                 
             case let .networkResponse(.channeListlResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
@@ -108,6 +109,49 @@ struct HomeFeature {
                 
             case let .networkResponse(.dmResponse(.success(dm))):
                 return .send(.dmListEnter(dm))
+            
+                
+            //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
+            case let .networkResponse(.dmListResponse(.success(dmList))):
+                    
+                guard let currentWorkspace = state.workspaceCurrent else { return .none }
+                
+                // DM list 생성
+                if !dmList.isEmpty {
+                    dmList.forEach { chat in
+                        realmRepository.upsertDMList(dmResponse: chat, workspaceID: currentWorkspace.workspaceID)
+                        let chatLastChatDate = realmRepository.fetchDMChatLastDate(roomID: chat.roomID)
+                        realmRepository.upsertDMListLastChatCreatedAt(roomID: chat.roomID, lastChatCreatedAt: chatLastChatDate)
+                    }
+                } else { return .none }
+                
+                return .run { send in
+                    await send(.networkResponse(.dmChatResponse(try await networkManager.getDMChatList(workspaceID: currentWorkspace.id, dmlist: dmList))))
+                }
+                
+            case let .networkResponse(.dmChatResponse(dmChatList)):
+                
+                guard let currentWorkspace = state.workspaceCurrent else { return .none }
+                
+                for list in dmChatList {
+                    if let lastChat = list.last {
+                        realmRepository.upsertCurrentDMListContentWithCreatedAt(roomID: lastChat.roomID,
+                                                                                content: lastChat.content,
+                                                                                currentChatCreatedAt: lastChat.createdAtDate)
+                        
+                        let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? Date()
+                        
+                        Task {
+                            let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
+                            if case let .success(response) = unreadCountResponse {
+                                realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
+                            }
+                        }
+                    }
+                }
+                
+                return .none
+        
                 
             default :
                 return .none

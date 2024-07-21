@@ -19,7 +19,6 @@ struct DMListFeature {
         let id = UUID()
         var currentWorkspace : Workspace?
         var workspaceMember : UserList = []
-        var dmChatList : [DMListChat] = []
         var viewType : DMlistViewType = .loading
     }
     
@@ -28,7 +27,6 @@ struct DMListFeature {
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
         case dmListEnter(DM)
-        case dmListUpdate
     }
     
     enum ButtonTapped {
@@ -126,14 +124,6 @@ struct DMListFeature {
                     }
                 }
                 
-                return .send(.dmListUpdate)
-            
-            case .dmListUpdate:
-                guard let currentWorkspace = state.currentWorkspace else { return .none }
-                state.dmChatList = realmRepository.fetchAllDMChatList(workspaceID: currentWorkspace.workspaceID)
-                
-                print(state.dmChatList)
-                
                 return .none
             
             case let .networkResponse(.dmResponse(.success(dm))):
@@ -160,28 +150,4 @@ extension DMListFeature {
         case empty
         case normal
     }
-    
-
-//    private func getDMUnreadChatCount(workspaceID : String, dmList : DMList) async throws -> [DMChatUnreadsCount] {
-//        var dmUnreadChatCount : [DMChatUnreadsCount] = []
-//        try await withThrowingTaskGroup(of: DMChatUnreadsCount.self) { group in
-//            for dm in dmList {
-//                group.addTask {
-//                    
-//                    let dmUnreadCount = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "", room_id: dm.roomID), after: "")
-//                    
-//                    if case let .success(dmCount) = dmUnreadCount {
-//                        return dmCount
-//                    } else {
-//                        return DMChatUnreadsCount(roomID: dm.roomID, count: 0)
-//                    }
-//                }
-//                
-//                for try await g in group {
-//                    dmUnreadChatCount.append(g)
-//                }
-//            }
-//        }
-//        return dmUnreadChatCount
-//    }
 }
