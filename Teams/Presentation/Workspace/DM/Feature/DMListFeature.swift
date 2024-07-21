@@ -39,6 +39,7 @@ struct DMListFeature {
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
         case dmChatResponse([DMChatList])
+        case dmUnreadChatCountResponse([DMChatUnreadsCount])
     }
     
     @Dependency(\.realmRepository) var realmRepository
@@ -98,13 +99,37 @@ struct DMListFeature {
                 } else { return .none }
                 
                 return .run { send in
-                    await send(.networkResponse(.dmChatResponse(try await getDMChatList(workspaceID: currentWorkspace.id, dmlist: dmList))))
+                    await send(.networkResponse(.dmChatResponse(try await networkManager.getDMChatList(workspaceID: currentWorkspace.id, dmlist: dmList))))
                 }
                 
             case let .networkResponse(.dmChatResponse(dmChatList)):
+                
+                guard let currentWorkspace = state.currentWorkspace else { return .none }
+                
                 dmChatList.forEach { list in
-                    print(list.last)
+                    
+                    if let lastChat = list.last {
+                        realmRepository.upsertCurrentDMListContentWithCreatedAt(roomID: lastChat.roomID,
+                                                                                content: lastChat.content,
+                                                                                currentChatCreatedAt: lastChat.createdAtDate)
+                        
+                        let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? realmRepository.fetchDMListCreateDate(roomID: lastChat.roomID)
+                        
+                        Task {
+                            let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
+                            if case let .success(response) = unreadCountResponse {
+                                realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
+                            }
+                        }
+                        
+                        
+                    }
                 }
+                
+                return .none
+                
+            case let .networkResponse(.dmUnreadChatCountResponse(dmChatUnreadsCount)):
+                print(dmChatUnreadsCount)
                 
                 return .none
             
@@ -133,29 +158,27 @@ extension DMListFeature {
         case normal
     }
     
-    private func getDMChatList(workspaceID : String , dmlist : DMList) async throws -> [DMChatList] {
-        var dmChatList : [DMChatList] = []
-        try await withThrowingTaskGroup(of: DMChatList.self) { group in
-            for dm in dmlist {
-                group.addTask {
-                    let dm = await networkManager.getDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "", 
-                                                                                           room_id: dm.roomID),
-                                                            cursorDate: "")
-                    
-                    if case let .success(response) = dm {
-                        return response
-                    } else {
-                        return []
-                    }
-                }
-                
-                for try await chatList in group {
-//                    dmChatList.append(contentsOf: chatList)
-                    dmChatList.append(chatList)
-                }
-            }
-        }
-        
-        return dmChatList
-    }
+
+//    private func getDMUnreadChatCount(workspaceID : String, dmList : DMList) async throws -> [DMChatUnreadsCount] {
+//        var dmUnreadChatCount : [DMChatUnreadsCount] = []
+//        try await withThrowingTaskGroup(of: DMChatUnreadsCount.self) { group in
+//            for dm in dmList {
+//                group.addTask {
+//                    
+//                    let dmUnreadCount = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "", room_id: dm.roomID), after: "")
+//                    
+//                    if case let .success(dmCount) = dmUnreadCount {
+//                        return dmCount
+//                    } else {
+//                        return DMChatUnreadsCount(roomID: dm.roomID, count: 0)
+//                    }
+//                }
+//                
+//                for try await g in group {
+//                    dmUnreadChatCount.append(g)
+//                }
+//            }
+//        }
+//        return dmUnreadChatCount
+//    }
 }

@@ -577,6 +577,30 @@ final class NetworkManager {
             }
         }
     }
+    
+    func getDMChatList(workspaceID : String , dmlist : DMList) async throws -> [DMChatList] {
+        var dmChatList : [DMChatList] = []
+        try await withThrowingTaskGroup(of: DMChatList.self) { group in
+            for dm in dmlist {
+                group.addTask {
+                    let dm = await self.getDMChat(request: WorkspaceIDRequestDTO(workspace_id: workspaceID, channel_id: "",
+                                                                                           room_id: dm.roomID),
+                                                            cursorDate: "")
+                    
+                    if case let .success(response) = dm {
+                        return response
+                    } else {
+                        return []
+                    }
+                }
+                
+                for try await chatList in group {
+                    dmChatList.append(chatList)
+                }
+            }
+        }
+        return dmChatList
+    }
 }
 
 

@@ -64,7 +64,7 @@ final class RealmRepository {
         }
     }
     
-    func upsertDMListLastChatCreatedAt(roomID : String ,lastChatCreatedAt : Date?) {
+    func upsertDMListLastChatCreatedAt(roomID : String , lastChatCreatedAt : Date?) {
         
         do {
             try realm.write {
@@ -72,6 +72,21 @@ final class RealmRepository {
                              value : ["roomID": roomID,
                                       "lastChatCreatedAt" : lastChatCreatedAt
                                      ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertCurrentDMListContentWithCreatedAt(roomID : String, content : String?, currentChatCreatedAt : Date?) {
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self,
+                             value: ["roomID":roomID,
+                                     "content":content,
+                                     "currentChatCreatedAt":currentChatCreatedAt
+                                    ], update: .modified)
+                
             }
         } catch {
             print(error)
@@ -120,6 +135,25 @@ final class RealmRepository {
         return table.map { row in
             row.toMessage().toExyteMessage()
         }
+    }
+    
+    func upsertDMUnreadsCount(roomID : String, unreadCount : Int) {
+        do {
+            try realm.write {
+                realm.create(DMChatListModel.self,
+                             value: ["roomID":roomID,
+                                     "unreadCount":unreadCount
+                                    ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchDMListCreateDate(roomID : String) -> Date {
+        guard let table = realm.object(ofType: DMChatListModel.self, forPrimaryKey: roomID) else { return Date()}
+        
+        return table.createdAt
     }
 }
 
