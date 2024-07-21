@@ -45,12 +45,13 @@ final class RealmRepository {
         }
     }
     
-    func upsertDMList(dmResponse : DM) {
+    func upsertDMList(dmResponse : DM, workspaceID : String) {
         
         do {
             try realm.write {
                 realm.create(DMChatListModel.self, 
                              value : ["roomID": dmResponse.roomID,
+                                      "workspaceID" : workspaceID,
                                       "createdAt": dmResponse.createdAtDate!,
                                       "user": ChatUserModel(from: dmResponse.user),
                                       "unreadCount" : 0,
@@ -113,6 +114,21 @@ final class RealmRepository {
         return table.map { row in
             row.toMessage().toExyteMessage()
         }
+    }
+    
+    func fetchAllDMChatList(workspaceID : String) -> [DMListChat] {
+        
+        var list : [DMListChat] = []
+        
+        let table = realm.objects(DMChatListModel.self).where {
+            $0.workspaceID == workspaceID
+        }
+        
+        table.forEach { dmChatListModel in
+            list.append(dmChatListModel.toDMChatList)
+        }
+        
+        return list
     }
     
     func fetchDMChatLastDate(roomID : String) -> Date? {

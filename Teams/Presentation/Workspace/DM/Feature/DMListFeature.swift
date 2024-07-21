@@ -19,6 +19,7 @@ struct DMListFeature {
         let id = UUID()
         var currentWorkspace : Workspace?
         var workspaceMember : UserList = []
+        var dmChatList : [DMListChat] = []
         var viewType : DMlistViewType = .loading
     }
     
@@ -27,11 +28,12 @@ struct DMListFeature {
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
         case dmListEnter(DM)
+        case dmListUpdate
     }
     
     enum ButtonTapped {
         case inviteMemberButtonTapped
-        case dmUserButtonTapped(User)
+        case dmUserButtonTapped(String)
     }
     
     enum NetworkResponse {
@@ -39,7 +41,6 @@ struct DMListFeature {
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
         case dmChatResponse([DMChatList])
-        case dmUnreadChatCountResponse([DMChatUnreadsCount])
     }
     
     @Dependency(\.realmRepository) var realmRepository
@@ -64,16 +65,18 @@ struct DMListFeature {
                 return .run { send in
                     await send(.networkResponse(.dmResponse(
                         networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""),
-                                                         body: DMListRequestDTO(opponent_id: user.userID))
+                                                         body: DMListRequestDTO(opponent_id: user))
                     )))
                 }
                 
             
             case let .networkResponse(.workspaceMembersResponse(.success(member))):
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
-                state.workspaceMember = member
+                state.workspaceMember = member.filter {
+                    $0.userID != UserDefaultManager.shared.userId!
+                }
                 
-                if state.workspaceMember.count < 2 {
+                if state.workspaceMember.count < 1 {
                     state.viewType = .empty
                     return .none
                 } else {
@@ -92,7 +95,7 @@ struct DMListFeature {
                 // DM list 생성
                 if !dmList.isEmpty {
                     dmList.forEach { chat in
-                        realmRepository.upsertDMList(dmResponse: chat)
+                        realmRepository.upsertDMList(dmResponse: chat, workspaceID: currentWorkspace.workspaceID)
                         let chatLastChatDate = realmRepository.fetchDMChatLastDate(roomID: chat.roomID)
                         realmRepository.upsertDMListLastChatCreatedAt(roomID: chat.roomID, lastChatCreatedAt: chatLastChatDate)
                     }
@@ -106,14 +109,13 @@ struct DMListFeature {
                 
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 
-                dmChatList.forEach { list in
-                    
+                for list in dmChatList {
                     if let lastChat = list.last {
                         realmRepository.upsertCurrentDMListContentWithCreatedAt(roomID: lastChat.roomID,
                                                                                 content: lastChat.content,
                                                                                 currentChatCreatedAt: lastChat.createdAtDate)
                         
-                        let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? realmRepository.fetchDMListCreateDate(roomID: lastChat.roomID)
+                        let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? Date()
                         
                         Task {
                             let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
@@ -121,15 +123,16 @@ struct DMListFeature {
                                 realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
                             }
                         }
-                        
-                        
                     }
                 }
                 
-                return .none
+                return .send(.dmListUpdate)
+            
+            case .dmListUpdate:
+                guard let currentWorkspace = state.currentWorkspace else { return .none }
+                state.dmChatList = realmRepository.fetchAllDMChatList(workspaceID: currentWorkspace.workspaceID)
                 
-            case let .networkResponse(.dmUnreadChatCountResponse(dmChatUnreadsCount)):
-                print(dmChatUnreadsCount)
+                print(state.dmChatList)
                 
                 return .none
             

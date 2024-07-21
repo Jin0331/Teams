@@ -8,10 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 import Kingfisher
+import RealmSwift
 
 struct DMListView : View {
     
     @State var store : StoreOf<DMListFeature>
+    @ObservedResults(DMChatListModel.self) var chatListTable
     
     var body : some View {
         
@@ -36,34 +38,7 @@ struct DMListView : View {
                         DMListemptyView()
                         
                     case .normal:
-                        VStack {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                LazyHStack(spacing : 25) {
-                                    ForEach(store.workspaceMember, id: \.id) { member in
-                                        VStack(alignment : .center, spacing: 5) {
-                                            if member.userID != UserDefaultManager.shared.userId {
-                                                KFImage.url(member.profileImageToUrl)
-                                                    .requestModifier(AuthManager.kingfisherAuth())
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fill)
-                                                    .frame(width: 44, height: 44)
-                                                    .cornerRadius(8)
-                                                Text(member.nickname)
-                                                    .bodyRegular()
-                                            }
-                                        }
-                                        .onTapGesture {
-                                            store.send(.buttonTapped(.dmUserButtonTapped(member)))
-                                        }
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
-                            .frame(height: 100)
-                            Divider().background(.brandWhite).padding(.top, 5)
-                            
-                        }
-
+                        DMListSubView()
                     }
                     
                     Spacer()
@@ -111,6 +86,82 @@ extension DMListView {
                 .asButton {
                     store.send(.buttonTapped(.inviteMemberButtonTapped))
                 }
+        }
+    }
+    
+    private func DMListSubView() -> VStack<TupleView<(some View, some View, some View)>> {
+        return VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing : 25) {
+                    ForEach(store.workspaceMember, id: \.id) { member in
+                        VStack(alignment : .center, spacing: 5) {
+                            KFImage.url(member.profileImageToUrl)
+                                .requestModifier(AuthManager.kingfisherAuth())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 44, height: 44)
+                                .cornerRadius(8)
+                            Text(member.nickname)
+                                .bodyRegular()
+                        }
+                        .onTapGesture {
+                            store.send(.buttonTapped(.dmUserButtonTapped(member.userID)))
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .frame(height: 100)
+            
+            Divider().background(.brandWhite).padding(.horizontal, 5)
+            
+            List {
+                ForEach(chatListTable, id: \.id) { chatList in
+                    
+                    if store.currentWorkspace!.workspaceID == chatList.workspaceID {
+                        HStack {
+                            KFImage.url(chatList.user?.profileImageToUrl)
+                                .requestModifier(AuthManager.kingfisherAuth())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 44, height: 44)
+                                .cornerRadius(8)
+                            
+                            VStack(alignment:.leading, spacing : 10) {
+                                Text(chatList.user!.nickname)
+                                    .font(.caption)
+                                Text(chatList.content ?? "")
+                                    .font(.caption2)
+                            }
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .trailing) {
+                                Text(chatList.createdAtToString)
+                                    .font(.caption2)
+                                
+                                if chatList.unreadCount >= 1 {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 18, height: 18)
+                                        .overlay {
+                                            Text(String(chatList.unreadCount))
+                                                .font(.caption)
+                                                .foregroundStyle(.brandWhite)
+                                        }
+                                }
+                            }
+                        }
+                        .onTapGesture {
+                            if let user = chatList.user {
+                                store.send(.buttonTapped(.dmUserButtonTapped(user.userID)))
+                            }
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
+            }
+            .listStyle(.plain)
         }
     }
 }
