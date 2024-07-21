@@ -111,14 +111,19 @@ struct DMListFeature {
                     if let lastChat = list.last {
                         realmRepository.upsertCurrentDMListContentWithCreatedAt(roomID: lastChat.roomID,
                                                                                 content: lastChat.content,
-                                                                                currentChatCreatedAt: lastChat.createdAtDate)
+                                                                                currentChatCreatedAt: lastChat.createdAtDate,
+                                                                                lastChatUser: lastChat.user.userID
+                        )
                         
-                        let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? Date()
-                        
-                        Task {
-                            let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
-                            if case let .success(response) = unreadCountResponse {
-                                realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
+                        if let lastChatUser = realmRepository.fetchDMListChatUser(roomID: lastChat.roomID), lastChatUser == UserDefaultManager.shared.userId! {
+                            realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: 0)
+                        } else {
+                            let after = realmRepository.fetchDMChatLastDate(roomID: lastChat.roomID) ?? Date()
+                            Task {
+                                let unreadCountResponse = await networkManager.getUnreadDMChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: lastChat.roomID), after: after.toStringRaw())
+                                if case let .success(response) = unreadCountResponse {
+                                    realmRepository.upsertDMUnreadsCount(roomID: lastChat.roomID, unreadCount: response.count)
+                                }
                             }
                         }
                     }

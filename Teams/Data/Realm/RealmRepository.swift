@@ -79,13 +79,14 @@ final class RealmRepository {
         }
     }
     
-    func upsertCurrentDMListContentWithCreatedAt(roomID : String, content : String?, currentChatCreatedAt : Date?) {
+    func upsertCurrentDMListContentWithCreatedAt(roomID : String, content : String?, currentChatCreatedAt : Date?, lastChatUser : String?) {
         do {
             try realm.write {
                 realm.create(DMChatListModel.self,
                              value: ["roomID":roomID,
                                      "content":content,
-                                     "currentChatCreatedAt":currentChatCreatedAt
+                                     "currentChatCreatedAt":currentChatCreatedAt,
+                                     "lastChatUser":lastChatUser
                                     ], update: .modified)
                 
             }
@@ -170,6 +171,12 @@ final class RealmRepository {
         guard let table = realm.object(ofType: DMChatListModel.self, forPrimaryKey: roomID) else { return Date()}
         
         return table.createdAt
+    }
+    
+    func fetchDMListChatUser(roomID : String) -> String? {
+        guard let table = realm.object(ofType: DMChatListModel.self, forPrimaryKey: roomID) else { return nil }
+        
+        return table.lastChatUser
     }
 }
 

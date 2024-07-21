@@ -16,6 +16,7 @@ final class DMChatListModel : Object, ObjectKeyIdentifiable {
     @Persisted var content : String?
     @Persisted var currentChatCreatedAt : Date?
     @Persisted var lastChatCreatedAt : Date?
+    @Persisted var lastChatUser : String?
     @Persisted var unreadCount : Int
     
     var toDMChatList : DMListChat {

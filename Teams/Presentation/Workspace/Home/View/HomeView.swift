@@ -104,7 +104,7 @@ extension HomeView {
                                 .frame(width: 24, height: 24)
                                 .cornerRadius(8)
                             
-                            if  chatList.unreadCount >= 1 {
+                            if  chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
                                 Text(chatList.user!.nickname)
                                     .bodyBold()
                             } else {
@@ -114,7 +114,7 @@ extension HomeView {
                             
                             Spacer()
                             
-                            if chatList.unreadCount >= 1 {
+                            if chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(.brandGreen)
                                     .frame(width: 19, height: 18)

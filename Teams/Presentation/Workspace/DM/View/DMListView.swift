@@ -140,7 +140,7 @@ extension DMListView {
                                 Text(chatList.createdAtToString)
                                     .font(.caption2)
                                 
-                                if chatList.unreadCount >= 1 {
+                                if chatList.unreadCount >= 1 && chatList.lastChatUser! != UserDefaultManager.shared.userId {
                                     RoundedRectangle(cornerRadius: 8)
                                         .fill(.brandGreen)
                                         .frame(width: 18, height: 18)
