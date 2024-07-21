@@ -96,37 +96,40 @@ extension HomeView {
             DisclosureGroup(isExpanded: $store.channelListExpanded) {
                 VStack {
                     ForEach(channelChatListTable, id: \.id) { channel in
-                        HStack {
-                            Image(systemName: "number")
-                                .resizable()
-                                .frame(width: 18, height: 18)
-                                .padding(.leading, 15)
-                            
-                            if  channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
-                                Text(channel.channelName)
-                                    .bodyBold()
-                            } else {
-                                Text(channel.channelName)
-                                    .bodyRegular()
+                        if store.workspaceCurrent!.workspaceID == channel.workspaceID {
+                            HStack {
+                                Image(systemName: "number")
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
+                                
+                                if  channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
+                                    Text(channel.channelName)
+                                        .bodyBold()
+                                } else {
+                                    Text(channel.channelName)
+                                        .bodyRegular()
+                                }
+                                
+                                Spacer()
+                                
+                                if channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 19, height: 18)
+                                        .overlay {
+                                            Text(String(channel.unreadCount))
+                                                .font(.caption)
+                                                .foregroundStyle(.brandWhite)
+                                        }
+                                }
                             }
                             
-                            Spacer()
-                            
-                            if channel.unreadCount >= 1 && channel.lastChatUser! != UserDefaultManager.shared.userId {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(.brandGreen)
-                                    .frame(width: 19, height: 18)
-                                    .overlay {
-                                        Text(String(channel.unreadCount))
-                                            .font(.caption)
-                                            .foregroundStyle(.brandWhite)
-                                    }
+                            .padding(.horizontal, 15)
+                            .frame(width: 393, height: 41, alignment: .leading)
+                            .onTapGesture {
+                                store.send(.channelEnter(channel.toChannel))
                             }
-                        }
-                        .padding(.horizontal, 15)
-                        .frame(width: 393, height: 41, alignment: .leading)
-                        .onTapGesture {
-                            store.send(.channelEnter(channel.toChannel))
                         }
                     }
                     
