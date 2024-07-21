@@ -25,15 +25,27 @@ struct HomeFeature {
         case onAppear
         case openSideMenu
         case closeSideMenu
+        case channelEnter(Channel)
+        case dmListEnter(DM)
+        case buttonTapped(ButtonTapped)
+        case networkResponse(NetworkResponse)
+        case binding(BindingAction<State>)
+    }
+    
+    enum ButtonTapped {
         case channelAddButtonTapped
         case channelCreateButtonTapped
         case channelSearchButtonTapped
-        case channelEnter(Channel)
         case inviteMemberButtonTapped
-        case binding(BindingAction<State>)
-        case channeListlResponse(Result<[Channel], APIError>)
-        case dmListResponse(Result<[DM], APIError>)   
+        case dmUserButtonTapped(String)
     }
+    
+    enum NetworkResponse {
+        case channeListlResponse(Result<[Channel], APIError>)
+        case dmListResponse(Result<[DM], APIError>)
+        case dmResponse(Result<DM, APIError>)
+    }
+    
     
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.utilitiesFunction) var utils
@@ -49,31 +61,31 @@ struct HomeFeature {
                 guard let workspace = state.workspaceCurrent else { return .none }
                 return .merge([
                     .run { send in
-                        await send(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
+                        await send(.networkResponse(.channeListlResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                     },
                     .run { send in
-                        await send(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: ""))))
+                        await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                     }
                 ])
                 
-            case let .channeListlResponse(.success(response)):
+            case let .networkResponse(.channeListlResponse(.success(response))):
                 state.channelList = utils.getSortedChannelList(from: response)
                 
                 return .none
                 
-            case let .dmListResponse(.success(response)):
+            case let .networkResponse(.dmListResponse(.success(response))):
                 
                 return .none
 
                 
-            case let .channeListlResponse(.failure(error)):
+            case let .networkResponse(.channeListlResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 
                 return .none
                 
                 
-            case let .dmListResponse(.failure(error)):
+            case let .networkResponse(.dmListResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 if case .E13 = errorType {
                     state.dmList = []
@@ -81,9 +93,21 @@ struct HomeFeature {
                 
                 return .none
                 
-            case .channelAddButtonTapped:
+            case .buttonTapped(.channelAddButtonTapped):
                 state.showingChannelActionSheet = true
                 return .none
+                
+            case let .buttonTapped(.dmUserButtonTapped(user)):
+                guard let currentWorkspace = state.workspaceCurrent else { return .none }
+                return .run { send in
+                    await send(.networkResponse(.dmResponse(
+                        networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""),
+                                                         body: DMListRequestDTO(opponent_id: user))
+                    )))
+                }
+                
+            case let .networkResponse(.dmResponse(.success(dm))):
+                return .send(.dmListEnter(dm))
                 
             default :
                 return .none

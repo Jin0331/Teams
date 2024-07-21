@@ -11,7 +11,6 @@ import SwiftUI
 
 struct CustomDisclosureGroupView : View {
     @Perception.Bindable var store: StoreOf<HomeFeature>
-    @State private var showingSheet : Bool = false
     
     var body: some View {
         
@@ -45,7 +44,7 @@ struct CustomDisclosureGroupView : View {
                     .padding(.horizontal, 15)
                     .frame(width: 393, height: 41, alignment: .leading)
                     .onTapGesture {
-                        store.send(.channelAddButtonTapped)
+                        store.send(.buttonTapped(.channelAddButtonTapped))
                     }
                 }
                 
@@ -60,10 +59,10 @@ struct CustomDisclosureGroupView : View {
             .padding(.horizontal, 15)
             .confirmationDialog("", isPresented: $store.showingChannelActionSheet) {
                 Button("채널 생성") {
-                    store.send(.channelCreateButtonTapped)
+                    store.send(.buttonTapped(.channelCreateButtonTapped))
                 }
                 Button("채널 탐색") {
-                    store.send(.channelSearchButtonTapped)
+                    store.send(.buttonTapped(.channelSearchButtonTapped))
                 }
                 Button("취소", role: .cancel) {}
             }

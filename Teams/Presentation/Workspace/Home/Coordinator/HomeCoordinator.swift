@@ -29,6 +29,8 @@ struct HomeCoordinatorView : View {
                 ChannelSettingView(store: store)
             case let .channelOwnerChange(store):
                 ChannelOwnerChangeView(store: store)
+            case let .dmChat(store):
+                DMChatView(store: store)
             }
         }
     }
@@ -57,7 +59,7 @@ struct HomeCoordinator {
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .router(.routeAction(_, action: .home(.channelCreateButtonTapped))):
+            case .router(.routeAction(_, action: .home(.buttonTapped(.channelCreateButtonTapped)))):
                 state.routes.presentSheet(.channelAdd(.init(viewMode: .create, currentWorkspace: state.currentWorkspace)))
             
             case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelEdit(channel))))):
@@ -66,10 +68,10 @@ struct HomeCoordinator {
             case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelOwnerChange(channel))))):
                 state.routes.presentSheet(.channelOwnerChange(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
             
-            case .router(.routeAction(_, action: .home(.inviteMemberButtonTapped))):
+            case .router(.routeAction(_, action: .home(.buttonTapped(.inviteMemberButtonTapped)))):
                 state.routes.presentSheet(.inviteMember(.init(currentWorkspace: state.currentWorkspace)))
                 
-            case .router(.routeAction(_, action: .home(.channelSearchButtonTapped))):
+            case .router(.routeAction(_, action: .home(.buttonTapped(.channelSearchButtonTapped)))):
                 state.routes.presentCover(.channelSearch(.init(workspaceCurrent: state.currentWorkspace)))
                 
             case .router(.routeAction(_, action: .channelAdd(.dismiss))), .router(.routeAction(_, action: .channelSearch(.dismiss))), 
@@ -95,7 +97,7 @@ struct HomeCoordinator {
             case let .router(.routeAction(_, action: .home(.channelEnter(channel)))):
                 state.routes.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
                 
-            case .router(.routeAction(_, action: .channelChat(.goBack))), .router(.routeAction(_, action: .channelSetting(.goBack))):
+            case .router(.routeAction(_, action: .channelChat(.goBack))), .router(.routeAction(_, action: .channelSetting(.goBack))), .router(.routeAction(_, action: .dmChat(.goBack))):
                 state.routes.goBack()
                 
             case let .router(.routeAction(_, action: .channelChat(.goChannelSetting(worksapceChannel)))):
@@ -103,7 +105,10 @@ struct HomeCoordinator {
                 
             case .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelRemoveOrExit)))):
                 state.routes.goBackToRoot()
-                
+            
+            case let .router(.routeAction(_, action: .home(.dmListEnter(dm)))):
+                state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
+            
             default :
                 break
             }
