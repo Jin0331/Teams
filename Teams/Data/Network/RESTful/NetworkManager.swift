@@ -230,6 +230,20 @@ final class NetworkManager {
         }
     }
     
+    func editMyProfile(query : ProfileEditRequestDTO) async -> Result<Profile, APIError> {
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: UserRouter.myProfileEdit(query: query), of: ProfileResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     //MARK: - Workspace
     func getWorkspaceList() async -> Result<[Workspace], APIError> {
         

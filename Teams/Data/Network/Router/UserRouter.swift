@@ -17,6 +17,7 @@ enum UserRouter {
     case refresh(query : RefreshRequestDTO)
     case myProfile
     case myProfileImageChange(query : ProfileImageChangeRequestDTO)
+    case myProfileEdit(query : ProfileEditRequestDTO)
 }
 
 extension UserRouter : TargetType {
@@ -30,7 +31,7 @@ extension UserRouter : TargetType {
             return .post
         case .refresh, .myProfile:
             return .get
-        case .myProfileImageChange:
+        case .myProfileImageChange, .myProfileEdit:
             return .put
         }
     }
@@ -53,6 +54,8 @@ extension UserRouter : TargetType {
             return "/users/me"
         case .myProfileImageChange:
             return "/users/me/image"
+        case .myProfileEdit:
+            return "/users/me"
         }
     }
     
@@ -67,7 +70,7 @@ extension UserRouter : TargetType {
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue,
                     HTTPHeader.refresh.rawValue : token.refreshToken
             ]
-        case .myProfile, .myProfileImageChange:
+        case .myProfile, .myProfileImageChange, .myProfileEdit:
             guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
@@ -111,6 +114,10 @@ extension UserRouter : TargetType {
         case let .kakaoLogin(login):
             let encoder = JSONEncoder()
             return try? encoder.encode(login)
+            
+        case let .myProfileEdit(profile):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(profile)
             
         default:
             return nil

@@ -79,6 +79,9 @@ struct WorkspaceTabCoordinator {
             switch action {
             case let .tabSelected(tab):
                 state.selectedTab = tab
+            
+            case .home(.router(.routeAction(_, action: .home(.buttonTapped(.newMessageButtonTapped))))):
+                state.selectedTab = .dm
                 
             default:
                 break

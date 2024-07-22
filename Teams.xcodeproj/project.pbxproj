@@ -86,6 +86,9 @@
 		DB6B83102C4E492D00EDD8A8 /* ProfileScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B830F2C4E492D00EDD8A8 /* ProfileScreen+Identifiable.swift */; };
 		DB6B83122C4E87D200EDD8A8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83112C4E87D200EDD8A8 /* Profile.swift */; };
 		DB6B83142C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */; };
+		DB6B83162C4EAC4700EDD8A8 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */; };
+		DB6B83182C4EAC5500EDD8A8 /* ProfileEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */; };
+		DB6B831A2C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -249,6 +252,9 @@
 		DB6B830F2C4E492D00EDD8A8 /* ProfileScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB6B83112C4E87D200EDD8A8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeRequestDTO.swift; sourceTree = "<group>"; };
+		DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditFeature.swift; sourceTree = "<group>"; };
+		DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditRequestDTO.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -735,6 +741,7 @@
 			isa = PBXGroup;
 			children = (
 				DB6B830B2C4E491700EDD8A8 /* ProfileFeature.swift */,
+				DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -743,6 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				DB6B83092C4E491000EDD8A8 /* ProfileView.swift */,
+				DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -793,6 +801,7 @@
 				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
 				DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */,
 				DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */,
+				DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1111,6 +1120,7 @@
 				DB5EDC192C47F88C008F1A13 /* DMListView.swift in Sources */,
 				DBBAAEB02C3D0F400015596C /* ChannelChatModel.swift in Sources */,
 				DBEA522A2C2428DB00026926 /* WorkspaceRouter.swift in Sources */,
+				DB6B83182C4EAC5500EDD8A8 /* ProfileEditFeature.swift in Sources */,
 				DBC567E52C1AA54E00444E98 /* AppleLoginRequestDTO.swift in Sources */,
 				DB5AADD32C16DCAB002907B6 /* EmailValidationResponseDTO.swift in Sources */,
 				DB04EF6A2C38EAFC007F0CBB /* ChannelAddFeature.swift in Sources */,
@@ -1145,7 +1155,9 @@
 				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
 				DBF386262C1C090400A08152 /* HomeView.swift in Sources */,
 				DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */,
+				DB6B83162C4EAC4700EDD8A8 /* ProfileEditView.swift in Sources */,
 				DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */,
+				DB6B831A2C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift in Sources */,
 				DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC3F8172C419D8600D11D3B /* ChannelChatRequestDTO.swift in Sources */,

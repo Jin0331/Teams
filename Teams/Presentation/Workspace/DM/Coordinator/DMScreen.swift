@@ -13,4 +13,5 @@ enum DMScreen {
     case dmList(DMListFeature)
     case inviteMember(WorkspaceInviteFeature)
     case dmChat(DMChatFeature)
+    case profile(ProfileCoordinator)
 }

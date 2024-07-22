@@ -90,7 +90,6 @@ struct HomeView: View {
                             }
                         }
                         .onTapGesture {
-                            print("Profile Open")
                             store.send(.buttonTapped(.profileOpenTapped))
                         }
                     }
@@ -249,7 +248,7 @@ extension HomeView {
                     .padding(.leading, 15)
                     .frame(width: 393, height: 41, alignment: .leading)
                     .onTapGesture {
-                        print("hi")
+                        store.send(.buttonTapped(.newMessageButtonTapped))
                     }
                 }
                 

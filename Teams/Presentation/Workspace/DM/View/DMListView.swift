@@ -67,6 +67,25 @@ struct DMListView : View {
                         }
                     }
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack(alignment:.center) {
+                        if let workspace = store.currentWorkspace {
+                            KFImage.url(store.profileImage)
+                                .requestModifier(AuthManager.kingfisherAuth())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 34, height: 34) //resize
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(.brandGray, lineWidth: 2.5)
+                                )
+                        }
+                    }
+                    .onTapGesture {
+                        store.send(.buttonTapped(.profileOpenTapped))
+                    }
+                }
             }
         }
     }

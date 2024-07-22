@@ -11,5 +11,6 @@ import ComposableArchitecture
 @Reducer(state: .equatable)
 enum ProfileScreen {
     case profile(ProfileFeature)
+    case profileEdit(ProfileEditFeature)
 }
 
