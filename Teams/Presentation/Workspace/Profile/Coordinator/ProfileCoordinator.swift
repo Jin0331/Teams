@@ -17,6 +17,8 @@ struct ProfileCoordinatorView : View {
             switch screen.case {
             case let .profile(store):
                 ProfileView(store: store)
+            case let .profileEdit(store):
+                ProfileEditView(store: store)
             }
         }
     }
@@ -43,6 +45,15 @@ struct ProfileCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
             
+            case let .router(.routeAction(_, action: .profile(.viewTransition(.nicknameEdit(profile))))):
+                state.routes.push(.profileEdit(.init(currentProfile: profile, viewType: .nickname)))
+                
+            case let .router(.routeAction(_, action: .profile(.viewTransition(.phonenumberEdit(profile))))):
+                state.routes.push(.profileEdit(.init(currentProfile: profile, viewType: .phonenumber)))
+                
+            case .router(.routeAction(_, action: .profileEdit(.goBack))):
+                state.routes.goBack()
+                
             default :
                 break
             }

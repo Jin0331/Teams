@@ -22,6 +22,7 @@ struct ProfileFeature {
         var selectedImageData: Data?
         var toastPresent : ToastMessage?
         var viewType : viewState = .loading
+        var currentProfile : Profile?
     }
     
     enum Action : BindableAction {
@@ -30,13 +31,21 @@ struct ProfileFeature {
         case pickedImage(Data?)
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
+        case viewTransition(ViewTransition)
         case binding(BindingAction<State>)
     }
     
     enum ButtonTapped {
         case changeProfileImage(Data?)
+        case nicknameEditButtonTapped
+        case phonenumberEditButtonTapped
     }
     
+    enum ViewTransition {
+        case nicknameEdit(Profile)
+        case phonenumberEdit(Profile)
+    }
+        
     enum NetworkResponse {
         case myProfile(Result<Profile, APIError>)
         case myProfileImageChange(Result<Profile, APIError>)
@@ -54,6 +63,7 @@ struct ProfileFeature {
             switch action {
             
             case .onAppear :
+                state.viewType = .loading
                 return .run { send in
                     await send(.networkResponse(.myProfile(
                         networkManager.getMyProfile()
@@ -81,6 +91,7 @@ struct ProfileFeature {
                 state.coin = myProfile.sesacCoin
                 state.provider = myProfile.provider
                 state.profileImage = myProfile.profileImageToUrl
+                state.currentProfile = myProfile
                 state.viewType = .success
                 
                 return .run { [imageURL = state.profileImage] send in
@@ -89,6 +100,7 @@ struct ProfileFeature {
             
             case let .networkResponse(.myProfileImageChange(.success(myProfile))):
                 state.profileImage = myProfile.profileImageToUrl
+                state.currentProfile = myProfile
                 state.toastPresent = ToastMessage.profileChange
             
                 return .run { [imageURL = state.profileImage] send in
@@ -100,7 +112,15 @@ struct ProfileFeature {
                 print(error, errorType)
                 
                 return .none
+            
+            case .buttonTapped(.nicknameEditButtonTapped):
+                guard let profile = state.currentProfile else { return .none }
+                return .send(.viewTransition(.nicknameEdit(profile)))
                 
+            case .buttonTapped(.phonenumberEditButtonTapped):
+                guard let profile = state.currentProfile else { return .none }
+                return .send(.viewTransition(.phonenumberEdit(profile)))
+
             default :
                 return .none
                 
