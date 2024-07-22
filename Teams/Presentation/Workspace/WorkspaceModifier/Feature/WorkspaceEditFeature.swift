@@ -46,7 +46,7 @@ struct WorkspaceEditFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
-    @Dependency(\.utilitiesFunction) var validTest
+    @Dependency(\.utilitiesFunction) var utilitiesFunction
     
     var body : some Reducer<State, Action> {
         
@@ -57,7 +57,7 @@ struct WorkspaceEditFeature {
             
             case .onApear:
                 return .run { [imageURL = state.workspaceImage] send in
-                    await send(.pickedImage(loadImage(from: imageURL)))
+                    await send(.pickedImage(utilitiesFunction.loadImage(from: imageURL)))
                 }
                 
             case .binding(\.workspaceName):
@@ -77,7 +77,7 @@ struct WorkspaceEditFeature {
                 return .none
             
             case .editButtonTapped:
-                state.workspaceNameValid = validTest.isValidNickname(state.workspaceName)
+                state.workspaceNameValid = utilitiesFunction.isValidNickname(state.workspaceName)
                 
                 if let field = [state.workspaceNameValid, state.workspaceImageValid].firstIndex(of: false) {
                     state.toastPresent = State.ToastMessage.allCases[field]
@@ -116,29 +116,6 @@ struct WorkspaceEditFeature {
                 return .none
             default :
                 return .none
-            }
-        }
-    }
-    
-    private func loadImage(from url : URL?) async -> Data? {
-        
-        guard let url = url else { return nil }
-        
-        return await withCheckedContinuation { continuation in
-            
-            KingfisherManager.shared.retrieveImage(with: url, options: [.requestModifier(AuthManager.kingfisherAuth())] ) { result in
-                switch result {
-                case let .success(response):
-                    
-                    let imageData = response.image.jpegData(compressionQuality: 1)
-                    
-                    DispatchQueue.main.async {
-                        continuation.resume(returning: imageData)
-                    }
-                    
-                case .failure(_):
-                    continuation.resume(returning: nil)
-                }
             }
         }
     }

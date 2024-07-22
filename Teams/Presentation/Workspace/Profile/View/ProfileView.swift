@@ -53,7 +53,7 @@ struct ProfileView: View {
                             Task {
                                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
                                     if let image = UIImage(data: data) {
-                                        store.send(.pickedImage(image.compressImage(to: 0.95)))
+                                        store.send(.buttonTapped(.changeProfileImage(image.compressImage(to: 0.95))))
                                     }
                                 }
                             }
@@ -62,6 +62,11 @@ struct ProfileView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+            }
+            .popup(item: $store.toastPresent) { text in
+                ToastView(text: text.rawValue)
+            } customize: {
+                $0.autohideIn(2)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("내 정보 수정", displayMode: .inline)

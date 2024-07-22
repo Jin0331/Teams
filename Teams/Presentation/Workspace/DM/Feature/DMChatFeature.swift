@@ -54,10 +54,8 @@ struct DMChatFeature {
             switch action {
             case .onAppear:
                 guard let workspace = state.workspaceCurrent else { return .none }
-                let cursorDate = realmRepository.fetchDMChatLastDate(roomID: state.roomCurrent.roomID) ?? Date()
-                
+                let cursorDate = realmRepository.fetchDMChatLastDate(roomID: state.roomCurrent.roomID) ?? Date()                
                 realmRepository.realmLocation()
-                print("🌟🌟🌟🌟🌟🌟🌟\nworkspaceID 🌟 : \(workspace.id)\nchannelID 🌟 : \(state.roomCurrent.roomID)\nToken 🌟 : \(UserDefaultManager.shared.accessToken!)\nSecretKey 🌟 : \(APIKey.secretKey.rawValue)\n🌟🌟🌟🌟🌟🌟🌟")
     
                 return .run { [room = state.roomCurrent] send in
                     

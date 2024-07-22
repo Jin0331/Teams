@@ -69,10 +69,6 @@ struct HomeFeature {
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
                 realmRepository.realmLocation()
-                
-                
-                print("🌟🌟🌟🌟🌟🌟🌟Token 🌟 : \(UserDefaultManager.shared.accessToken!)\nSecretKey 🌟 : \(APIKey.secretKey.rawValue)\n🌟🌟🌟🌟🌟🌟🌟")
-                
                 return .merge([
                     .run { send in
                         await send(.networkResponse(.channeListResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
@@ -108,16 +104,12 @@ struct HomeFeature {
                         )
                         
                         if let lastChatUser = realmRepository.fetchChannelListChatUser(channelID: lastChat.channelID), lastChatUser == UserDefaultManager.shared.userId! {
-                            print("설마")
                             realmRepository.upsertChannelUnreadsCount(channelID: lastChat.channelID, unreadCount: 0)
                         } else {
                             let after = realmRepository.fetchChannelChatLastDate(channelID: lastChat.channelID) ?? Date()
                             Task {
                                 let unreadCountResponse = await networkManager.getUnreadChannelChat(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: lastChat.channelID, room_id: ""), after: after.toStringRaw())
                                 if case let .success(response) = unreadCountResponse {
-                                    
-                                    print(response)
-                                    
                                     realmRepository.upsertChannelUnreadsCount(channelID: lastChat.channelID, unreadCount: response.count)
                                 }
                             }

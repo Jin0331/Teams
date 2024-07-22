@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 import ComposableArchitecture
 
 final class UtilitiesFunction {
@@ -71,6 +72,29 @@ final class UtilitiesFunction {
         return channels.sorted(by: {
             ($0.createdAtDate ?? Date.distantPast) < ($1.createdAtDate ?? Date.distantPast)
         })
+    }
+    
+    func loadImage(from url : URL?) async -> Data? {
+        
+        guard let url = url else { return nil }
+        
+        return await withCheckedContinuation { continuation in
+            
+            KingfisherManager.shared.retrieveImage(with: url, options: [.requestModifier(AuthManager.kingfisherAuth())] ) { result in
+                switch result {
+                case let .success(response):
+                    
+                    let imageData = response.image.jpegData(compressionQuality: 1)
+                    
+                    DispatchQueue.main.async {
+                        continuation.resume(returning: imageData)
+                    }
+                    
+                case .failure(_):
+                    continuation.resume(returning: nil)
+                }
+            }
+        }
     }
 }
 
