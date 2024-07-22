@@ -14,7 +14,22 @@ struct ProfileView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            Text("hi profile")
+            NavigationStack {
+                Text("hi Profile")
+            }
+            .navigationBarBackButtonHidden(true)
+            .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        store.send(.goBack)
+                    }, label: {
+                        Image(.chevron)
+                            .resizable()
+                            .frame(width: 14, height: 19)
+                    })
+                }
+            }
         }
     }
     

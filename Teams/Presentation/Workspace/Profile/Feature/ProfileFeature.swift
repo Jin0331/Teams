@@ -17,6 +17,7 @@ struct ProfileFeature {
     
     enum Action {
         case onAppear
+        case goBack
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
     }

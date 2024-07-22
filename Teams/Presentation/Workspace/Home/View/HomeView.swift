@@ -91,6 +91,7 @@ struct HomeView: View {
                         }
                         .onTapGesture {
                             print("Profile Open")
+                            store.send(.buttonTapped(.profileOpenTapped))
                         }
                     }
                 }

@@ -110,6 +110,12 @@ struct HomeCoordinator {
             
             case let .router(.routeAction(_, action: .home(.dmListEnter(dm)))):
                 state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
+                
+            case .router(.routeAction(_, action: .home(.buttonTapped(.profileOpenTapped)))):
+                state.routes.push(.profile(.initialState()))
+                
+            case .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
+                state.routes.goBack()
             
             default :
                 break
