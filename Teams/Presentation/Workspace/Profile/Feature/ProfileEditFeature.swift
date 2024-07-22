@@ -26,7 +26,9 @@ struct ProfileEditFeature {
     enum Action : BindableAction {
         case onAppear
         case goBack
+        case networkResponse(NetworkResponse)
         case phoneNumberChange(String)
+        case editComplete
         case buttonTapped(ButtonTapped)
         case binding(BindingAction<State>)
     }
@@ -35,6 +37,10 @@ struct ProfileEditFeature {
         case editButtonActive
         case editNicknameButtonTapped
         case editPhonenumberButtonTapped
+    }
+    
+    enum NetworkResponse {
+        case myProfileChange(Result<Profile, APIError>)
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -70,11 +76,11 @@ struct ProfileEditFeature {
                 return .none
                 
             case .buttonTapped(.editNicknameButtonTapped):
-                
                 if utilitiesFunction.isValidNickname(state.nickname) {
-                    print(state.nickname)
-                    return .run { send in
-                        
+                    return .run {[nickname = state.nickname, phonenumber = state.currentProfile.phone] send in
+                        await send(.networkResponse(.myProfileChange(
+                            networkManager.editMyProfile(query: ProfileEditRequestDTO(nickname: nickname, phone: phonenumber))
+                        )))
                     }
                 } else {
                     state.toastPresent = .nickname
@@ -82,16 +88,27 @@ struct ProfileEditFeature {
                 }
                 
             case .buttonTapped(.editPhonenumberButtonTapped):
-                
                 if utilitiesFunction.isValidPhoneNumber(state.phonenumber) {
-                    print(state.phonenumber)
-                    return .run { send in
-                        
+                    return .run {[nickname = state.currentProfile.nickname, phonenumber = state.phonenumber] send in
+                        await send(.networkResponse(.myProfileChange(
+                            networkManager.editMyProfile(query: ProfileEditRequestDTO(nickname: nickname, phone: phonenumber))
+                        )))
                     }
                 } else {
                     state.toastPresent = .phoneNumber
                     return .none
                 }
+                
+            case let .networkResponse(.myProfileChange(.success(myProfile))):
+                
+                return .send(.editComplete)
+                
+            case let .networkResponse(.myProfileChange(.failure(error))):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
+                
+                return .none
+                
             default :
                 return .none
             }

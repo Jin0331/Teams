@@ -28,6 +28,7 @@ struct ProfileFeature {
     enum Action : BindableAction {
         case onAppear
         case goBack
+        case profileEditComplete
         case pickedImage(Data?)
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
@@ -120,7 +121,11 @@ struct ProfileFeature {
             case .buttonTapped(.phonenumberEditButtonTapped):
                 guard let profile = state.currentProfile else { return .none }
                 return .send(.viewTransition(.phonenumberEdit(profile)))
-
+                
+            case .profileEditComplete:
+                state.toastPresent = .profileEdit
+                return .none
+                
             default :
                 return .none
                 
@@ -132,6 +137,7 @@ struct ProfileFeature {
 extension ProfileFeature {
     enum ToastMessage : String, Hashable, CaseIterable {
         case profileChange = "프로필 이미지가 성공적으로 변경되었습니다."
+        case profileEdit = "프로필 수정이 완료되었습니다."
     }
     
     enum viewState  {

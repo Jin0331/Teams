@@ -88,6 +88,7 @@
 		DB6B83142C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */; };
 		DB6B83162C4EAC4700EDD8A8 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */; };
 		DB6B83182C4EAC5500EDD8A8 /* ProfileEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */; };
+		DB6B831A2C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */; };
 		DB717EE02C27FCA6003C59ED /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */; };
 		DB717EE32C293D13003C59ED /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE22C293D13003C59ED /* SideMenuView.swift */; };
 		DB717EE72C299E71003C59ED /* SideMenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717EE62C299E71003C59ED /* SideMenuFeature.swift */; };
@@ -253,6 +254,7 @@
 		DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeRequestDTO.swift; sourceTree = "<group>"; };
 		DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditFeature.swift; sourceTree = "<group>"; };
+		DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditRequestDTO.swift; sourceTree = "<group>"; };
 		DB717EDF2C27FCA6003C59ED /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		DB717EE22C293D13003C59ED /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		DB717EE62C299E71003C59ED /* SideMenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFeature.swift; sourceTree = "<group>"; };
@@ -799,6 +801,7 @@
 				DBD0758C2C1B61FB00678DAB /* KakaoLoginRequestDTO.swift */,
 				DBEA52102C207E6400026926 /* RefreshRequestDTO.swift */,
 				DB6B83132C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift */,
+				DB6B83192C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				DBBAAEB22C3D14DD0015596C /* UserModel.swift in Sources */,
 				DB6B83162C4EAC4700EDD8A8 /* ProfileEditView.swift in Sources */,
 				DB5EDC322C498595008F1A13 /* DMChatUnreadsCount.swift in Sources */,
+				DB6B831A2C4EC48800EDD8A8 /* ProfileEditRequestDTO.swift in Sources */,
 				DB5EDC172C47B93B008F1A13 /* DMCoordinator.swift in Sources */,
 				DBEA520D2C207DA200026926 /* RefreshResponseDTO+Mapping.swift in Sources */,
 				DBC3F8172C419D8600D11D3B /* ChannelChatRequestDTO.swift in Sources */,

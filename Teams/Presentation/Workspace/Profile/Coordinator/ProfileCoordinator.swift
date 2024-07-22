@@ -54,6 +54,11 @@ struct ProfileCoordinator {
             case .router(.routeAction(_, action: .profileEdit(.goBack))):
                 state.routes.goBack()
                 
+            case .router(.routeAction(_, action: .profileEdit(.editComplete))):
+                state.routes.goBack()
+                
+                return .send(.router(.routeAction(id: .profile, action: .profile(.profileEditComplete))))
+                
             default :
                 break
             }
