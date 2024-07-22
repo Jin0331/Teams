@@ -70,6 +70,28 @@ struct HomeView: View {
                                 Spacer()
                             }
                         }
+                        .onTapGesture {
+                            print("SideMenu Open")
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        HStack(alignment:.center) {
+                            if let workspace = store.workspaceCurrent {
+                                KFImage.url(UserDefaultManager.shared.profileImageToUrl())
+                                    .requestModifier(AuthManager.kingfisherAuth())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 34, height: 34) //resize
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle().stroke(.brandGray, lineWidth: 2.5)
+                                    )
+                            }
+                        }
+                        .onTapGesture {
+                            print("Profile Open")
+                        }
                     }
                 }
             }

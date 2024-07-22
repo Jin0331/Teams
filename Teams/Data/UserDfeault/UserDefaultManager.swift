@@ -105,4 +105,12 @@ final class UserDefaultManager {
             return nil
         }
     }
+    
+    func profileImageToUrl() -> URL? {
+        if let profile {
+            return URL(string: APIKey.baseURLWithVersion() + profile)!
+        } else {
+            return URL(string: APIKey.defaultProfileImage())!
+        }
+    }
 }

@@ -31,6 +31,8 @@ struct HomeCoordinatorView : View {
                 ChannelOwnerChangeView(store: store)
             case let .dmChat(store):
                 DMChatView(store: store)
+            case let .profile(store):
+                ProfileCoordinatorView(store: store)
             }
         }
     }

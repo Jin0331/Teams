@@ -18,4 +18,5 @@ enum HomeScreen {
     case channelSetting(ChannelSettingFeature)
     case channelOwnerChange(ChannelOwnerChangeFeature)
     case dmChat(DMChatFeature)
+    case profile(ProfileCoordinator)
 }
