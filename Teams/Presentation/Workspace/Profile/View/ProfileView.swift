@@ -17,7 +17,11 @@ struct ProfileView: View {
             NavigationStack {
                 Text("hi Profile")
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
             .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("내 정보 수정", displayMode: .inline)
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

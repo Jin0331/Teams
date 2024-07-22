@@ -35,7 +35,13 @@ struct ProfileFeature {
         Reduce { state, action in
             
             switch action {
+            
+            case .onAppear :
                 
+                print("hihihi")
+                
+                return .none
+            
             default :
                 return .none
                 
