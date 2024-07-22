@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct ProfileEditView: View {
     
@@ -21,14 +22,39 @@ struct ProfileEditView: View {
                 VStack {
                     switch store.viewType {
                     case .nickname :
-                        Text("nickanme")
+                        TextField("닉네임을 입력하세요", text : $store.nickname)
+                            .bodyRegular()
+                            .padding()
+                            .frame(width: 345, height: 44, alignment: .leading)
                     case .phonenumber:
-                        Text("Phonenumber")
+                        TextField("전화번호를 입력하세요", text : $store.phonenumber)
+                            .bodyRegular()
+                            .padding()
+                            .frame(width: 345, height: 44, alignment: .leading)
                     }
+                    
+                    Button("완료") {
+                        switch store.viewType {
+                        case .nickname :
+                            store.send(.buttonTapped(.editNicknameButtonTapped))
+                        case .phonenumber:
+                            store.send(.buttonTapped(.editPhonenumberButtonTapped))
+                        }
+                    }
+                    .foregroundStyle(.brandWhite)
+                    .frame(width: 345, height: 44)
+                    .title2()
+                    .background(backgroundForIsActive(store.editButton))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .disabled(!store.editButton)
+                    
+                    Spacer()
                 }
             }
-            .onAppear {
-                
+            .popup(item: $store.toastPresent) { text in
+                ToastView(text: text.rawValue)
+            } customize: {
+                $0.autohideIn(2)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle(store.viewType == .nickname ? "닉네임 수정" : "전화번호 수정", displayMode: .inline)
