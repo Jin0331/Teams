@@ -78,7 +78,7 @@ struct HomeView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         HStack(alignment:.center) {
                             if let workspace = store.workspaceCurrent {
-                                KFImage.url(UserDefaultManager.shared.profileImageToUrl())
+                                KFImage.url(store.profileImage)
                                     .requestModifier(AuthManager.kingfisherAuth())
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)

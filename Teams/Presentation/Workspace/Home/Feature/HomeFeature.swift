@@ -24,6 +24,7 @@ struct HomeFeature {
         var showingChannelActionSheet : Bool = false
         var channelListExpanded : Bool = true
         var dmlListExpanded : Bool = true
+        var profileImage : URL?
     }
 
     enum Action : BindableAction{
@@ -47,6 +48,7 @@ struct HomeFeature {
     }
     
     enum NetworkResponse {
+        case myProfile(Result<Profile, APIError>)
         case channeListResponse(Result<ChannelList, APIError>)
         case channelChatResponse([ChannelChatList])
         case dmListResponse(Result<DMList, APIError>)
@@ -70,6 +72,11 @@ struct HomeFeature {
                 guard let workspace = state.workspaceCurrent else { return .none }
                 realmRepository.realmLocation()
                 return .merge([
+                    .run { send in
+                        await send(.networkResponse(.myProfile(
+                            networkManager.getMyProfile()
+                        )))
+                    },
                     .run { send in
                         await send(.networkResponse(.channeListResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                     },
@@ -119,7 +126,12 @@ struct HomeFeature {
                 
                 return .none
                 
-            case let .networkResponse(.channeListResponse(.failure(error))):
+            case let .networkResponse(.myProfile(.success(myProfile))):
+                state.profileImage = myProfile.profileImageToUrl
+                
+                return .none
+                
+            case let .networkResponse(.channeListResponse(.failure(error))), let .networkResponse(.myProfile(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ channeListlResponse error")
                 

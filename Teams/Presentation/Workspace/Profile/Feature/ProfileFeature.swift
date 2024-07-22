@@ -93,7 +93,7 @@ struct ProfileFeature {
                     await send(.pickedImage(utilitiesFunction.loadImage(from: imageURL)))
                 }
                 
-            case let .networkResponse(.myProfile(.failure(error))):
+            case let .networkResponse(.myProfile(.failure(error))), let .networkResponse(.myProfileImageChange(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(error, errorType)
                 
