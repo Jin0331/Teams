@@ -21,6 +21,8 @@ struct DMCoordinatorView : View {
                 WorkspaceInviteView(store: store)
             case let .dmChat(store):
                 DMChatView(store: store)
+            case let .profile(store):
+                ProfileCoordinatorView(store: store)
             }
         }
     }
@@ -58,6 +60,10 @@ struct DMCoordinator {
             case let .router(.routeAction(_, action: .dmList(.dmListEnter(dm)))):
                 state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
             case .router(.routeAction(_, action: .dmChat(.goBack))):
+                state.routes.goBack()
+            case .router(.routeAction(_, action: .dmList(.buttonTapped(.profileOpenTapped)))):
+                state.routes.push(.profile(.initialState()))
+            case .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
                 state.routes.goBack()
             
             default :

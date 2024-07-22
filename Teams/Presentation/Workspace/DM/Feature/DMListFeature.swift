@@ -20,6 +20,7 @@ struct DMListFeature {
         var currentWorkspace : Workspace?
         var workspaceMember : UserList = []
         var viewType : DMlistViewType = .loading
+        var profileImage : URL?
     }
     
     enum Action {
@@ -32,10 +33,12 @@ struct DMListFeature {
     enum ButtonTapped {
         case inviteMemberButtonTapped
         case dmUserButtonTapped(String)
+        case profileOpenTapped
     }
     
     enum NetworkResponse {
         case workspaceMembersResponse(Result<UserList, APIError>)
+        case myProfile(Result<Profile, APIError>)
         case dmListResponse(Result<DMList, APIError>)
         case dmResponse(Result<DM, APIError>)
         case dmChatResponse([DMChatList])
@@ -51,11 +54,18 @@ struct DMListFeature {
             switch action {
             case .onAppear:
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
-                return .run { send in
-                    await send(.networkResponse(.workspaceMembersResponse(
-                        networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))
-                    ))
-                }
+                return .merge([
+                    .run { send in
+                        await send(.networkResponse(.myProfile(
+                            networkManager.getMyProfile()
+                        )))
+                    },
+                    .run { send in
+                        await send(.networkResponse(.workspaceMembersResponse(
+                            networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))
+                        ))
+                    }
+                ])
             
             case let .buttonTapped(.dmUserButtonTapped(user)):
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
@@ -84,7 +94,13 @@ struct DMListFeature {
                         )))
                     }
                 }
-            //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨 
+            
+            case let .networkResponse(.myProfile(.success(myProfile))):
+                state.profileImage = myProfile.profileImageToUrl
+                
+                return .none
+                
+            //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
             case let .networkResponse(.dmListResponse(.success(dmList))):
                     
                 guard let currentWorkspace = state.currentWorkspace else { return .none }

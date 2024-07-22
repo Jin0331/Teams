@@ -16,6 +16,8 @@ extension DMScreen.State : Identifiable {
                 .inviteMember
         case .dmChat:
                 .dmChat
+        case .profile:
+                .profile
         }
     }
     
@@ -23,6 +25,7 @@ extension DMScreen.State : Identifiable {
         case dmList
         case inviteMember
         case dmChat
+        case profile
         var id : ID { self }
     }
 }

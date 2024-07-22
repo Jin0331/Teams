@@ -45,6 +45,7 @@ struct HomeFeature {
         case inviteMemberButtonTapped
         case dmUserButtonTapped(String)
         case profileOpenTapped
+        case newMessageButtonTapped
     }
     
     enum NetworkResponse {
