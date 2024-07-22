@@ -15,6 +15,8 @@ enum UserRouter {
     case appleLogin(query : AppleLoginRequestDTO)
     case kakaoLogin(query : KakaoLoginRequestDTO)
     case refresh(query : RefreshRequestDTO)
+    case myProfile
+    case myProfileImageChange(query : ProfileImageChangeRequestDTO)
 }
 
 extension UserRouter : TargetType {
@@ -26,8 +28,10 @@ extension UserRouter : TargetType {
         switch self {
         case .emailValidation, .join, .emailLogin, .appleLogin, .kakaoLogin:
             return .post
-        case .refresh:
+        case .refresh, .myProfile:
             return .get
+        case .myProfileImageChange:
+            return .put
         }
     }
     
@@ -45,6 +49,10 @@ extension UserRouter : TargetType {
             return "/users/login/kakao"
         case .refresh:
             return "/auth/refresh"
+        case .myProfile:
+            return "/users/me"
+        case .myProfileImageChange:
+            return "/users/me/image"
         }
     }
     
@@ -59,7 +67,11 @@ extension UserRouter : TargetType {
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue,
                     HTTPHeader.refresh.rawValue : token.refreshToken
             ]
-        
+        case .myProfile, .myProfileImageChange:
+            guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
+            return [HTTPHeader.authorization.rawValue : token,
+                    HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,
+                    HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue]
         }
     }
     
@@ -102,6 +114,20 @@ extension UserRouter : TargetType {
             
         default:
             return nil
+        }
+    }
+    
+    var multipart: MultipartFormData {
+        switch self {
+        case let .myProfileImageChange(body):
+            let multiPart = MultipartFormData()
+            
+            multiPart.append(body.image, withName: "image", fileName: UserDefaultManager.shared.nick! + "_workspaceImage.jpeg", mimeType: "image/jpeg")
+            
+            return multiPart
+            
+        default :
+            return MultipartFormData()
         }
     }
 }

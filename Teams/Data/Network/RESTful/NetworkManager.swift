@@ -200,6 +200,36 @@ final class NetworkManager {
         }
     }
     
+    func getMyProfile() async -> Result<Profile, APIError> {
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: UserRouter.myProfile, of: ProfileResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func editMyProfileImage(query : ProfileImageChangeRequestDTO) async -> Result<Profile, APIError> {
+        
+        let router = UserRouter.myProfileImageChange(query: query)
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: ProfileResponseDTO.self, multipart: router.multipart)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     //MARK: - Workspace
     func getWorkspaceList() async -> Result<[Workspace], APIError> {
         
@@ -470,9 +500,6 @@ final class NetworkManager {
             let response = try await requestAPIWithRefresh(router: router, of: [WorkspaceUserResponseDTO].self)
 
             return .success(response.map({ dto in
-                
-                print(dto)
-                
                 return dto.toDomain()
             }))
         } catch {
@@ -565,9 +592,6 @@ final class NetworkManager {
     
     func getUnreadChannelChat(request : WorkspaceIDRequestDTO, after : String) async -> Result<ChannelChatUnreadsCount, APIError> {
         let router = WorkspaceRouter.unreadChannelChat(request: request, query: after)
-        
-        print(router)
-        
         do {
             let response = try await requestAPIWithRefresh(router: router, of: ChannelChatUnreadCountResponseDTO.self)
             return .success(response.toDomain())

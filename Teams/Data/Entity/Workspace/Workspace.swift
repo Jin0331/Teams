@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Workspace : Equatable, Identifiable {
+struct Workspace : Equatable, Identifiable, Codable {
     let workspaceID, name, description, coverImage: String
     let ownerID, createdAt: String
     
