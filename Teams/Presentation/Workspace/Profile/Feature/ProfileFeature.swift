@@ -21,6 +21,7 @@ struct ProfileFeature {
         var profileImage : URL?
         var selectedImageData: Data?
         var toastPresent : ToastMessage?
+        var viewType : viewState = .loading
     }
     
     enum Action : BindableAction {
@@ -80,6 +81,7 @@ struct ProfileFeature {
                 state.coin = myProfile.sesacCoin
                 state.provider = myProfile.provider
                 state.profileImage = myProfile.profileImageToUrl
+                state.viewType = .success
                 
                 return .run { [imageURL = state.profileImage] send in
                     await send(.pickedImage(utilitiesFunction.loadImage(from: imageURL)))
@@ -110,5 +112,10 @@ struct ProfileFeature {
 extension ProfileFeature {
     enum ToastMessage : String, Hashable, CaseIterable {
         case profileChange = "프로필 이미지가 성공적으로 변경되었습니다."
+    }
+    
+    enum viewState  {
+        case loading
+        case success
     }
 }
