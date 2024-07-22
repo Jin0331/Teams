@@ -13,11 +13,13 @@ struct ProfileFeature {
     @ObservableState
     struct State : Equatable {
         let id = UUID()
+        var selectedImageData: Data?
     }
     
     enum Action {
         case onAppear
         case goBack
+        case pickedImage(Data?)
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
     }

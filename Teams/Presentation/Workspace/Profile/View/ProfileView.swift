@@ -6,16 +6,59 @@
 //
 
 import SwiftUI
+import PhotosUI
+import PopupView
+import Kingfisher
 import ComposableArchitecture
 
 struct ProfileView: View {
     
     @State var store : StoreOf<ProfileFeature>
+    @State private var selectedItem: PhotosPickerItem?
     
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
-                Text("hi Profile")
+                VStack {
+                    PhotosPicker( //https://swiftsenpai.com/development/swiftui-photos-picker/
+                        selection: $selectedItem,
+                        matching: .images,
+                        photoLibrary: .shared()) {
+                            ZStack {
+                                if let image = store.selectedImageData, let uiImage = UIImage(data: image) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 70, height: 70)
+                                        .cornerRadius(8)
+                                        .padding()
+                                } else {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.brandGreen)
+                                        .frame(width: 70, height: 70)
+                                        .padding()
+                                    Image(.workspace)
+                                        .resizable()
+                                        .frame(width: 48, height: 60)
+                                        .offset(y: 5)
+                                }
+                                
+                                Image(.camera)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .offset(x: 30, y: 30)
+                            }
+                        }
+                        .onChange(of: selectedItem) { newItem in
+                            Task {
+                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                    if let image = UIImage(data: data) {
+                                        store.send(.pickedImage(image.compressImage(to: 0.95)))
+                                    }
+                                }
+                            }
+                        }
+                }
             }
             .onAppear {
                 store.send(.onAppear)
