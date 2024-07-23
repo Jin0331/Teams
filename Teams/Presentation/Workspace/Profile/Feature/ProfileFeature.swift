@@ -21,6 +21,7 @@ struct ProfileFeature {
         var profileImage : URL?
         var selectedImageData: Data?
         var toastPresent : ToastMessage?
+        var popupPresent : CustomPopup?
         var viewType : viewState = .loading
         var currentProfile : Profile?
     }
@@ -33,6 +34,8 @@ struct ProfileFeature {
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
         case viewTransition(ViewTransition)
+        case popup(PopupAction)
+        case popupComplete(PopupComplete)
         case binding(BindingAction<State>)
     }
     
@@ -40,6 +43,7 @@ struct ProfileFeature {
         case changeProfileImage(Data?)
         case nicknameEditButtonTapped
         case phonenumberEditButtonTapped
+        case logoutButtonTapped
     }
     
     enum ViewTransition {
@@ -50,6 +54,14 @@ struct ProfileFeature {
     enum NetworkResponse {
         case myProfile(Result<Profile, APIError>)
         case myProfileImageChange(Result<Profile, APIError>)
+    }
+    
+    enum PopupAction {
+        case dismissPopupView
+    }
+    
+    enum PopupComplete {
+        case logout
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -122,10 +134,18 @@ struct ProfileFeature {
                 guard let profile = state.currentProfile else { return .none }
                 return .send(.viewTransition(.phonenumberEdit(profile)))
                 
+            case .buttonTapped(.logoutButtonTapped):
+                state.popupPresent = .logout(titleText: "로그아웃", bodyText: "정말 로그아웃 할까요?", buttonTitle: "로그아웃", twoButton: true)
+                return .none
+                
             case .profileEditComplete:
                 state.toastPresent = .profileEdit
                 return .none
-                
+            
+            case .popup(.dismissPopupView):
+                state.popupPresent = nil
+                return .none
+            
             default :
                 return .none
                 
@@ -143,5 +163,9 @@ extension ProfileFeature {
     enum viewState  {
         case loading
         case success
+    }
+    
+    enum CustomPopup : Equatable {
+        case logout(titleText:String, bodyText:String, buttonTitle:String, twoButton:Bool)
     }
 }

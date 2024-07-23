@@ -28,6 +28,16 @@ final class RealmRepository {
         }
     }
     
+    func deleteALL() {
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+        } catch {
+            print(error, "- Delete ALL error")
+        }
+    }
+    
     func upsertChannelChat(chatResponse : ChannelChat)  {
         do {
             try realm.write {

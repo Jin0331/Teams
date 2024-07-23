@@ -9,6 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 import Kingfisher
 import RealmSwift
+import FloatingButton
 
 struct HomeView: View {
     
@@ -22,37 +23,57 @@ struct HomeView: View {
             
             //TODO: - scroll View
             NavigationStack {
-                ScrollView {
-                    VStack {
-                        //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
-                        Divider().background(.brandWhite).padding(.top, 10)
-                        
-                        ChannelListView()
-                        
-                        Divider().background(Color.viewSeperator)
-                        
-                        DMListView()
-                        
-                        Divider().background(Color.viewSeperator)
-                        
-                        HStack {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 18, height: 18)
-                                .padding(.leading, 15)
-                            Text("팀원 추가")
-                                .bodyRegular()
+                ZStack(alignment:.bottomTrailing) {
+                    ScrollView {
+                        VStack {
+                            //TODO: - DisclosureGroup 커스텀뷰 생성해야됨
+                            Divider().background(.brandWhite).padding(.top, 10)
+                            
+                            ChannelListView()
+                            
+                            Divider().background(Color.viewSeperator)
+                            
+                            DMListView()
+                            
+                            Divider().background(Color.viewSeperator)
+                            
+                            HStack {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: 18, height: 18)
+                                    .padding(.leading, 15)
+                                Text("팀원 추가")
+                                    .bodyRegular()
+                            }
+                            .padding()
+                            .frame(width: 393, height: 41, alignment: .leading)
+                            .padding(.horizontal, 15)
+                            .onTapGesture {
+                                store.send(.buttonTapped(.inviteMemberButtonTapped))
+                            }
+                            
+                            Spacer()
                         }
-                        .padding()
-                        .frame(width: 393, height: 41, alignment: .leading)
-                        .padding(.horizontal, 15)
-                        .onTapGesture {
-                            store.send(.buttonTapped(.inviteMemberButtonTapped))
-                        }
-                        
-                        Spacer()
                     }
+                    
+                    FloatingButton(mainButtonView: HomeFloatingButton(), buttons: [
+                        IconAndTextButton(imageName: "paperplane.circle", buttonText: "다이렉트 메세지")
+                            .onTapGesture(perform: {
+                                store.send(.buttonTapped(.newMessageButtonTapped))
+                            }),
+                        IconAndTextButton(imageName: "list.bullet.circle", buttonText: "채널 메세지")
+                            .onTapGesture(perform: {
+                                store.send(.buttonTapped(.channelSearchButtonTapped))
+                            })
+                    ])
+                    .straight()
+                    .direction(.top)
+                    .alignment(.right)
+                    .spacing(3)
+                    .initialOpacity(0)
+                    .offset(x: 25, y: -18)
                 }
+                
                 .padding(.trailing, 25)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -118,7 +139,7 @@ extension HomeView {
             DisclosureGroup(isExpanded: $store.channelListExpanded) {
                 VStack {
                     ForEach(channelChatListTable, id: \.id) { channel in
-                        if store.workspaceCurrent!.workspaceID == channel.workspaceID {
+                        if let workspaceCurrent = store.workspaceCurrent, workspaceCurrent.workspaceID == channel.workspaceID {
                             HStack {
                                 Image(systemName: "number")
                                     .resizable()
@@ -196,7 +217,7 @@ extension HomeView {
             DisclosureGroup(isExpanded: $store.dmlListExpanded) {
                 VStack {
                     ForEach(dmChatListTable, id: \.id) { chatList in
-                        if store.workspaceCurrent!.workspaceID == chatList.workspaceID {
+                        if let workspaceCurrent = store.workspaceCurrent, workspaceCurrent.workspaceID == chatList.workspaceID {
                             HStack {
                                 KFImage.url(chatList.user?.profileImageToUrl)
                                     .requestModifier(AuthManager.kingfisherAuth())

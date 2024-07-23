@@ -63,6 +63,7 @@ struct MainCoordinator {
     
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.utilitiesFunction) var utilitiesFunction
+    @Dependency(\.realmRepository) var realmRepository
     
     var body : some ReducerOf<Self> {
         
@@ -160,8 +161,24 @@ struct MainCoordinator {
                 state.isSignUp = false
                 
             case .refreshTokenExposed:
+                state.workspace = .initialState
+                state.onboarding = .initialState
+                state.homeInitial = .initialState()
+                
                 state.isLogined = false
                 state.isSignUp = false
+                UserDefaultManager.shared.clearAllData()
+                
+            case .workspace(.tab(.home(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
+                    .workspace(.tab(.dm(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))):
+                state.workspace = .initialState
+                state.onboarding = .initialState
+                state.homeInitial = .initialState()
+                
+                state.isLogined = false
+                state.isSignUp = false
+                UserDefaultManager.shared.clearAllData()
+                realmRepository.deleteALL()
                 
             default:
               break
