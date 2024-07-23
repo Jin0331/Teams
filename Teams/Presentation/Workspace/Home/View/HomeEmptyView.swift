@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Kingfisher
 import SwiftUI
 
 struct HomeEmptyView: View {
@@ -16,26 +17,24 @@ struct HomeEmptyView: View {
         
         WithPerceptionTracking {
             NavigationStack {
-                Divider().background(.brandWhite).padding(.top, 10)
                 VStack {
-                    VStack(spacing : 25) {
-                        Text("워크스페이스를 찾을 수 없어요.")
-                            .title1()
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요. ")
-                            .multilineTextAlignment(.center)
-                            .bodyRegular()
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    }
-                    .frame(height: 150)
+                    Divider().background(.brandWhite).padding(.top, 10)
+                    
+                    Text("워크스페이스를 찾을 수 없어요.")
+                        .title1()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 15)
+                    Text("관리자에게 초대를 요청하거나, 다른 이메일로 시도하거나 새로운 워크스페이스를 생성해주세요. ")
+                        .multilineTextAlignment(.center)
+                        .bodyRegular()
+                        .frame(maxWidth: .infinity, alignment: .center)
                     
                     Image(.workspaceEmpty)
                         .frame(width: 368, height: 368)
-                    
-                    Spacer()
+                        .padding(.bottom, 20)
                     
                     Button("워크스페이스 생성") {
-                        store.send(.createWorkspaceTapped)
+                        store.send(.buttonTapped(.createWorkspaceTapped))
                     }
                     .tint(.brandWhite)
                     .frame(width: 345, height: 44)
@@ -43,37 +42,54 @@ struct HomeEmptyView: View {
                     .background(.brandGreen)
                     .cornerRadius(8)
                     .padding()
-                    .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            HStack {
-                                Image(.empty)
-                                Text("No Workspace")
-                                    .title1()
-                                Spacer()
-                            }
+                    
+                    Spacer()
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            Image(.empty)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 34, height: 34) //resize
+                            Text("No Workspace")
+                                .title1()
+                            Spacer()
                         }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                store.send(.profileButtonTapped)
-                            }) {
-                                Image(systemName: "person.circle")
-                                    .frame(width: 32, height: 32)
-                                    .font(.title) // 버튼 아이콘 크기 설정
-                                    .tint(.brandBlack)
-                            }
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        HStack {
+                            KFImage.url(store.profileImage)
+                                .requestModifier(AuthManager.kingfisherAuth())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 34, height: 34) //resize
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(.brandGray, lineWidth: 2.5)
+                                )
+                        }
+                        .onTapGesture {
+                            store.send(.buttonTapped(.profileOpenTapped))
                         }
                     }
                 }
-                .gesture(
-                    DragGesture()
-                        .onEnded { value in
-                            if value.translation.width > 100 {
-                                store.send(.openSideMenu)
-                            } else if value.translation.width < -100 {
-                                store.send(.closeSideMenu)
-                            }
+            }
+            .animation(.default, value: store.profileImage)
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 100 {
+                            store.send(.openSideMenu)
+                        } else if value.translation.width < -100 {
+                            store.send(.closeSideMenu)
                         }
-                )
+                    }
+            )
+            .onAppear {
+                store.send(.onAppear)
             }
         }
     }

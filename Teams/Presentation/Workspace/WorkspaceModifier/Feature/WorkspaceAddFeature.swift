@@ -87,7 +87,7 @@ struct WorkspaceAddFeature {
                 }
             case let .createWorkspaceResponse(.success(response)):
                 
-                dump(response)
+                UserDefaultManager.shared.saveWorkspace(response)
                 
                 return .concatenate([.send(.createWorkspaceComplete), .send(.dismiss)])
                 

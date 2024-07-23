@@ -29,9 +29,9 @@ struct ProfileCoordinatorView : View {
 struct ProfileCoordinator {
     @ObservableState
     struct State : Equatable {
-        static func initialState() -> Self {
+        static func initialState(tabViewMode : Bool = false) -> Self {
             Self(
-                routes: [.root(.profile(.init()))]
+                routes: [.root(.profile(.init(tabViewMode: tabViewMode)), embedInNavigationView: tabViewMode)]
             )
         }
         var routes: IdentifiedArrayOf<Route<ProfileScreen.State>>

@@ -24,6 +24,7 @@ struct ProfileFeature {
         var popupPresent : CustomPopup?
         var viewType : viewState = .loading
         var currentProfile : Profile?
+        var tabViewMode : Bool = false
     }
     
     enum Action : BindableAction {

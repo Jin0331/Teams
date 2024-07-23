@@ -18,9 +18,50 @@ struct HomeEmptyFeature {
     }
     
     enum Action {
-        case createWorkspaceTapped
-        case profileButtonTapped
+        case onAppear
         case openSideMenu
         case closeSideMenu
+        case buttonTapped(ButtonTapped)
+        case networkResponse(NetworkResponse)
+    }
+    
+    enum ButtonTapped {
+        case profileOpenTapped
+        case createWorkspaceTapped
+    }
+    
+    enum NetworkResponse {
+        case myProfile(Result<Profile, APIError>)
+    }
+    
+    @Dependency(\.networkManager) var networkManager
+    
+    var body : some ReducerOf<Self> {
+        
+        Reduce<State, Action> { state, action in
+            switch action {
+            case .onAppear :
+                return .run { send in
+                    await send(.networkResponse(.myProfile(
+                        networkManager.getMyProfile()
+                    )))
+                }
+                
+            case let .networkResponse(.myProfile(.success(myProfile))):
+                state.profileImage = myProfile.profileImageToUrl
+                
+                return .none
+                
+            case let .networkResponse(.myProfile(.failure(error))):
+                let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(errorType, error, "❗️ channeListlResponse error")
+                
+                return .none
+                
+            default:
+                return .none
+            }
+            
+        }
     }
 }

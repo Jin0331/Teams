@@ -104,8 +104,8 @@ struct WorkspaceCoordinator {
         case workspaceExitOnPopupView(String)
         case workspaceRemoveResponse(Result<WorkspaceRemoveResponseDTO, APIError>)
         case workspaceExitResponse(Result<[Workspace], APIError>)
+        case workspaceChangeComplete([Workspace])
         case binding(BindingAction<State>)
-        
     }
     
     @Dependency(\.networkManager) var networkManager
@@ -128,9 +128,19 @@ struct WorkspaceCoordinator {
         
         Reduce<State, Action> { state, action in
             switch action {
+            
+            case .onAppear :
+                return .run { send in
+                    await send(.myWorkspaceResponse(
+                        networkManager.getWorkspaceList()
+                    ))
+                }
+            case let .myWorkspaceResponse(.success(response)):
+                return .send(.workspaceChangeComplete(response))
                 
             case let .myWorkspaceResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
+                print(error, errorType)
                 
                 return .none
                 

@@ -98,13 +98,15 @@ struct MainCoordinator {
                 print(errorType)
                 
                 
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(workspace))))), let .autoLogin(.success(workspace)):
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(workspace))))), let .onboarding(.router(.routeAction(_, action: .auth(.loginComplete(workspace))))),
+                let .autoLogin(.success(workspace)), let .workspace(.workspaceChangeComplete(workspace)):
                 
                 state.workspaceList = workspace
                 
                 if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
-                                                       dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                       dm: .initialState(currentWorkspace: selectedWorkspace), 
+                                                       profile: .initialState(tabViewMode : true),
                                                        selectedTab: .home,
                                                        sideMenu: .initialState()),
                                             homeEmpty: .initialState,
@@ -112,15 +114,27 @@ struct MainCoordinator {
                                             workspaceCurrent: selectedWorkspace,
                                             showingView: workspace.count > 0 ? .home : .empty)
                 } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
+                    UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
-                                                       dm: .initialState(currentWorkspace: mostRecentWorkspace),
-                                                       selectedTab: .home, 
+                                                       dm: .initialState(currentWorkspace: mostRecentWorkspace), 
+                                                       profile: .initialState(tabViewMode : true),
+                                                       selectedTab: .home,
                                                        sideMenu: .initialState()),
                                             homeEmpty: .initialState, 
                                             sideMenu: .initialState(),
                                             workspaceCurrent: mostRecentWorkspace,
                                             showingView: workspace.count > 0 ? .home : .empty)
+                } else {
+                    state.workspace = .init(tab: .init(home: .initialState(),
+                                                       dm: .initialState(),
+                                                       profile: .initialState(tabViewMode : true),
+                                                       selectedTab: .home,
+                                                       sideMenu: .initialState()),
+                                            homeEmpty: .initialState,
+                                            sideMenu: .initialState(),
+                                            showingView: workspace.count > 0 ? .home : .empty)
                 }
+                
                 state.isLogined = true
                 state.isSignUp = false
                 
@@ -138,6 +152,7 @@ struct MainCoordinator {
                 
                 state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
                                                    dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                   profile: .initialState(tabViewMode : true),
                                                    selectedTab: .home,
                                                    sideMenu: .initialState()),
                                         homeEmpty: .initialState,
@@ -152,9 +167,6 @@ struct MainCoordinator {
                 state.isSignUp = true
                 state.homeInitial = .initialState(nickname: nickname)
                 
-            case .onboarding(.router(.routeAction(_, action: .auth(.loginComplete)))):
-                state.isLogined = true
-                state.isSignUp = false
                 
             case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
                 state.isLogined = true
@@ -170,7 +182,8 @@ struct MainCoordinator {
                 UserDefaultManager.shared.clearAllData()
                 
             case .workspace(.tab(.home(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
-                    .workspace(.tab(.dm(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))):
+                    .workspace(.tab(.dm(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
+                    .workspace(.homeEmpty(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout))))))))):
                 state.workspace = .initialState
                 state.onboarding = .initialState
                 state.homeInitial = .initialState()

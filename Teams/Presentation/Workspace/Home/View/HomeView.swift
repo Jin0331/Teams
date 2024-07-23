@@ -30,10 +30,12 @@ struct HomeView: View {
                             Divider().background(.brandWhite).padding(.top, 10)
                             
                             ChannelListView()
+                                .padding(.horizontal, 15)
                             
                             Divider().background(Color.viewSeperator)
                             
                             DMListView()
+                                .padding(.horizontal, 15)
                             
                             Divider().background(Color.viewSeperator)
                             
@@ -73,7 +75,6 @@ struct HomeView: View {
                     .initialOpacity(0)
                     .offset(x: 25, y: -18)
                 }
-                
                 .padding(.trailing, 25)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
