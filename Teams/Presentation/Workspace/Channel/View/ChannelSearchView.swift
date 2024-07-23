@@ -60,11 +60,4 @@ struct ChannelSearchView: View {
             }
         }
     }
-    
-}
-
-#Preview {
-    ChannelSearchView(store: Store(initialState: ChannelSearchFeature.State(), reducer: {
-        ChannelSearchFeature()
-    }))
 }

@@ -42,7 +42,7 @@ struct ProfileEditFeature {
     enum NetworkResponse {
         case myProfileChange(Result<Profile, APIError>)
     }
-    
+        
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.utilitiesFunction) var utilitiesFunction
     

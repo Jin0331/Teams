@@ -139,7 +139,7 @@ extension HomeView {
             DisclosureGroup(isExpanded: $store.channelListExpanded) {
                 VStack {
                     ForEach(channelChatListTable, id: \.id) { channel in
-                        if store.workspaceCurrent!.workspaceID == channel.workspaceID {
+                        if let workspaceCurrent = store.workspaceCurrent, workspaceCurrent.workspaceID == channel.workspaceID {
                             HStack {
                                 Image(systemName: "number")
                                     .resizable()
@@ -217,7 +217,7 @@ extension HomeView {
             DisclosureGroup(isExpanded: $store.dmlListExpanded) {
                 VStack {
                     ForEach(dmChatListTable, id: \.id) { chatList in
-                        if store.workspaceCurrent!.workspaceID == chatList.workspaceID {
+                        if let workspaceCurrent = store.workspaceCurrent, workspaceCurrent.workspaceID == chatList.workspaceID {
                             HStack {
                                 KFImage.url(chatList.user?.profileImageToUrl)
                                     .requestModifier(AuthManager.kingfisherAuth())

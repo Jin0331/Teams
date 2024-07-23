@@ -47,6 +47,15 @@ struct ProfileView: View {
             } customize: {
                 $0.autohideIn(2)
             }
+            .popup(item: $store.popupPresent) { popup in
+                PopupButtonLogoutView(store: store, action: popup)
+            } customize: {
+                $0
+                    .isOpaque(true)
+                    .closeOnTap(false)
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.4))
+            }
             .animation(.default, value: store.viewType)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("내 정보 수정", displayMode: .inline)
@@ -179,7 +188,7 @@ extension ProfileView {
                     Spacer()
                 }
                 .onTapGesture {
-                    print("로그아웃")
+                    store.send(.buttonTapped(.logoutButtonTapped))
                 }
             }
         }

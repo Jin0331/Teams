@@ -61,9 +61,3 @@ struct WorkspaceInviteView: View {
         }
     }
 }
-
-#Preview {
-    WorkspaceInviteView(store: Store(initialState: WorkspaceInviteFeature.State(), reducer: {
-        WorkspaceInviteFeature()
-    }))
-}
