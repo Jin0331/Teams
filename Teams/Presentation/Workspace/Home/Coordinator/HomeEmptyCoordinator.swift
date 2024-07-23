@@ -13,6 +13,7 @@ import TCACoordinators
 enum HomeEmptyScreen {
     case emptyView(HomeEmptyFeature)
     case workspaceAdd(WorkspaceAddFeature)
+    case profile(ProfileCoordinator)
 }
 
 struct HomeEmptyCoordinatorView : View {
@@ -25,6 +26,8 @@ struct HomeEmptyCoordinatorView : View {
                 HomeEmptyView(store: store)
             case let .workspaceAdd(store):
                 WorkspaceAddView(store: store)
+            case let .profile(store):
+                ProfileCoordinatorView(store: store)
             }
         }
     }
@@ -35,7 +38,7 @@ struct HomeEmptyCoordinatorView : View {
 struct HomeEmptyCoordinator {
     @ObservableState
     struct State : Equatable {
-        static let initialState = State(routes: [.root(.emptyView(.init()))])
+        static let initialState = State(routes: [.root(.emptyView(.init()), embedInNavigationView: true)])
         var routes : [Route<HomeEmptyScreen.State>]
     }
     
@@ -47,11 +50,17 @@ struct HomeEmptyCoordinator {
         Reduce<State, Action> { state, action in
             switch action {
                 
-            case .router(.routeAction(_, action: .emptyView(.createWorkspaceTapped))):
+            case .router(.routeAction(_, action: .emptyView(.buttonTapped(.createWorkspaceTapped)))):
                 state.routes.presentSheet(.workspaceAdd(.init()))
             
             case .router(.routeAction(_, action: .workspaceAdd(.dismiss))):
                 state.routes.dismiss()
+                
+            case .router(.routeAction(_, action: .emptyView(.buttonTapped(.profileOpenTapped)))):
+                state.routes.push(.profile(.initialState()))
+                
+            case .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
+                state.routes.goBack()
                 
             default:
               break

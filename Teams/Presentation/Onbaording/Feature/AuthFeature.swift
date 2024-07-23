@@ -38,7 +38,8 @@ struct AuthFeature {
         case kakaoLogin(Result<OAuthToken, Error>)
         case emailLoginButtonTapped
         case loginResponse(Result<Join, APIError>)
-        case loginComplete
+        case myWorkspaceResponse(Result<[Workspace], APIError>)
+        case loginComplete([Workspace])
         case binding(BindingAction<State>)
     }
     
@@ -81,7 +82,7 @@ struct AuthFeature {
                     let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
                     let request = AppleLoginRequestDTO(idToken: identifyTokenString,
                                                        nickname: name,
-                                                       deviceToken: UserDefaultManager.shared.deviceToken!)
+                                                       deviceToken: "")
                     return .run { send in
                         await send(.loginResponse(
                             networkManager.appleLogin(query: request)
@@ -99,7 +100,7 @@ struct AuthFeature {
                 return .run { send in
                     await send(.loginResponse(
                         networkManager.kakaoLogin(query: KakaoLoginRequestDTO(oauthToken: oauthToken.accessToken,
-                                                                              deviceToken: UserDefaultManager.shared.deviceToken!))
+                                                                              deviceToken: ""))
                     ))
                 }
                 
@@ -109,7 +110,14 @@ struct AuthFeature {
                 
             case let .loginResponse(.success(response)):
                 UserDefaultManager.shared.saveAllData(login: response)
-                return .send(.loginComplete)
+                return .run { send in
+                    await send(.myWorkspaceResponse(
+                        networkManager.getWorkspaceList()
+                    ))
+                }
+                
+            case let .myWorkspaceResponse(.success(response)):
+                return .send(.loginComplete(response))
                 
             case let .loginResponse(.failure(error)):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)

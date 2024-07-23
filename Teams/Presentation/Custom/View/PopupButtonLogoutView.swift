@@ -84,9 +84,13 @@ struct PopupButtonLogoutView : View {
     private func handleAction(for action: ProfileFeature.CustomPopup) {
         switch action {
         case .logout:
-            store.send(.popupComplete(.logout))
-        }
-        
+            
+            store.send(.popup(.dismissPopupView))
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                store.send(.popupComplete(.logout))
+            }
+        }        
     }
     
     private func alertText(_ titleText: String, _ bodyText: String) -> VStack<TupleView<(some View, some View)>> {
