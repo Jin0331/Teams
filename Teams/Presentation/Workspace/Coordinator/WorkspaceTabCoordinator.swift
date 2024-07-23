@@ -34,6 +34,16 @@ struct WorkspaceTabCoordinatorView : View {
                                 .bodyRegular()
                         }
                         .tag(WorkspaceTabCoordinator.Tab.dm)
+                    
+                    ProfileCoordinatorView(store: store.scope(state: \.profile, action: \.profile))
+                        .tabItem {
+                            Image(store.selectedTab == .profile ? .tabProfileActive : .tabProfileInactive)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            Text("설정")
+                                .bodyRegular()
+                        }
+                        .tag(WorkspaceTabCoordinator.Tab.profile)
                 }
                 .accentColor(Color.brandBlack)
         }
@@ -45,21 +55,27 @@ struct WorkspaceTabCoordinator {
     enum Tab : Hashable {
         case home
         case dm
+//        case search
+        case profile
     }
     
     enum Action {
         case home(HomeCoordinator.Action)
         case dm(DMCoordinator.Action)
+//        case search(SearchCoordinator.Action)
+        case profile(ProfileCoordinator.Action)
         case tabSelected(Tab)
     }
     
     @ObservableState
     struct State : Equatable {
         //TODO: - current Workspace ID 초기화
-        static let initialState = State(home: .initialState(), dm: .initialState(), selectedTab: .home, sideMenu: .initialState())
+        static let initialState = State(home: .initialState(), dm: .initialState(), profile: .initialState(tabViewMode: false), selectedTab: .home, sideMenu: .initialState())
         
         var home : HomeCoordinator.State
         var dm : DMCoordinator.State
+//        var search : SearchCoordinator.State
+        var profile : ProfileCoordinator.State
         var selectedTab: Tab
         var sideMenu : SideMenuCoordinator.State
         var sidemenuOpen : Bool = false
@@ -73,6 +89,14 @@ struct WorkspaceTabCoordinator {
         
         Scope(state : \.dm, action: \.dm) {
             DMCoordinator()
+        }
+        
+//        Scope(state: \.search, action: \.search) {
+//            SearchCoordinator()
+//        }
+        
+        Scope(state: \.profile, action: \.profile) {
+            ProfileCoordinator()
         }
         
         Reduce<State, Action> { state, action in

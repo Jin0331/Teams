@@ -19,10 +19,9 @@ struct ProfileView: View {
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
-                Divider().background(.brandWhite)
-                    .padding(.bottom, 15)
-                
                 VStack {
+                    Divider().background(.brandWhite).padding(.top, 10)
+                    
                     switch store.viewType {
                     case .success :
                         ProfileImageView()
@@ -58,17 +57,45 @@ struct ProfileView: View {
             }
             .animation(.default, value: store.viewType)
             .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("내 정보 수정", displayMode: .inline)
-            .toolbar(.hidden, for: .tabBar)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(store.tabViewMode ? .visible : .hidden, for: .tabBar)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        store.send(.goBack)
-                    }, label: {
-                        Image(.chevron)
-                            .resizable()
-                            .frame(width: 14, height: 19)
-                    })
+                if store.tabViewMode {
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            if let workspace = UserDefaultManager.shared.getWorkspace() {
+                                KFImage.url(workspace.coverImageToUrl)
+                                    .requestModifier(AuthManager.kingfisherAuth())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 32, height: 32) //resize
+                                    .cornerRadius(8)
+                            }
+                            
+                            Text("설정")
+                                .title1()
+                            Spacer()
+                            
+                        }
+                    }
+                } else {
+                    
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            Text("내 정보 수정")
+                                .title2()
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            store.send(.goBack)
+                        }, label: {
+                            Image(.chevron)
+                                .resizable()
+                                .frame(width: 14, height: 19)
+                        })
+                    }
                 }
             }
         }

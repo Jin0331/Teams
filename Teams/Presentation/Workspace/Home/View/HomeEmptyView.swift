@@ -18,6 +18,8 @@ struct HomeEmptyView: View {
         WithPerceptionTracking {
             NavigationStack {
                 VStack {
+                    Divider().background(.brandWhite).padding(.top, 10)
+                    
                     Text("워크스페이스를 찾을 수 없어요.")
                         .title1()
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -43,6 +45,7 @@ struct HomeEmptyView: View {
                     
                     Spacer()
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         HStack {

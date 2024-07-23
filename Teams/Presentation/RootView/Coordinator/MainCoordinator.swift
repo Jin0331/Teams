@@ -105,7 +105,8 @@ struct MainCoordinator {
                 
                 if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
-                                                       dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                       dm: .initialState(currentWorkspace: selectedWorkspace), 
+                                                       profile: .initialState(tabViewMode : true),
                                                        selectedTab: .home,
                                                        sideMenu: .initialState()),
                                             homeEmpty: .initialState,
@@ -115,15 +116,23 @@ struct MainCoordinator {
                 } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
                     UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
-                                                       dm: .initialState(currentWorkspace: mostRecentWorkspace),
-                                                       selectedTab: .home, 
+                                                       dm: .initialState(currentWorkspace: mostRecentWorkspace), 
+                                                       profile: .initialState(tabViewMode : true),
+                                                       selectedTab: .home,
                                                        sideMenu: .initialState()),
                                             homeEmpty: .initialState, 
                                             sideMenu: .initialState(),
                                             workspaceCurrent: mostRecentWorkspace,
                                             showingView: workspace.count > 0 ? .home : .empty)
                 } else {
-                    state.workspace = .init(tab: .initialState, homeEmpty: .initialState, sideMenu: .initialState(), showingView: workspace.count > 0 ? .home : .empty)
+                    state.workspace = .init(tab: .init(home: .initialState(),
+                                                       dm: .initialState(),
+                                                       profile: .initialState(tabViewMode : true),
+                                                       selectedTab: .home,
+                                                       sideMenu: .initialState()),
+                                            homeEmpty: .initialState,
+                                            sideMenu: .initialState(),
+                                            showingView: workspace.count > 0 ? .home : .empty)
                 }
                 
                 state.isLogined = true
@@ -143,6 +152,7 @@ struct MainCoordinator {
                 
                 state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
                                                    dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                   profile: .initialState(tabViewMode : true),
                                                    selectedTab: .home,
                                                    sideMenu: .initialState()),
                                         homeEmpty: .initialState,
