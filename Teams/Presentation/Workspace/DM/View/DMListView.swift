@@ -137,7 +137,7 @@ extension DMListView {
             List {
                 ForEach(chatListTable, id: \.id) { chatList in
                     
-                    if store.currentWorkspace!.workspaceID == chatList.workspaceID {
+                    if let currentWorkspace = store.currentWorkspace, currentWorkspace.workspaceID == chatList.workspaceID {
                         HStack {
                             KFImage.url(chatList.user?.profileImageToUrl)
                                 .requestModifier(AuthManager.kingfisherAuth())
