@@ -57,8 +57,14 @@ struct HomeView: View {
                     }
                     
                     FloatingButton(mainButtonView: HomeFloatingButton(), buttons: [
-                        IconAndTextButton(imageName: "paperplane.circle", buttonText: "다이렉트 메세지"),
+                        IconAndTextButton(imageName: "paperplane.circle", buttonText: "다이렉트 메세지")
+                            .onTapGesture(perform: {
+                                store.send(.buttonTapped(.newMessageButtonTapped))
+                            }),
                         IconAndTextButton(imageName: "list.bullet.circle", buttonText: "채널 메세지")
+                            .onTapGesture(perform: {
+                                store.send(.buttonTapped(.channelSearchButtonTapped))
+                            })
                     ])
                     .straight()
                     .direction(.top)
