@@ -46,6 +46,7 @@
 		DB4B780B2C105A8100350F04 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B780A2C105A8100350F04 /* UserRouter.swift */; };
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
 		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
+		DB4BB6F22C512CE00015E754 /* PopupButtonSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F12C512CE00015E754 /* PopupButtonSearchView.swift */; };
 		DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52DB6A2C3F872B005A0119 /* SocketCase.swift */; };
 		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
 		DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADB82C12ED2E002907B6 /* ToastView.swift */; };
@@ -220,6 +221,7 @@
 		DB4B780A2C105A8100350F04 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		DB4BB6F12C512CE00015E754 /* PopupButtonSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonSearchView.swift; sourceTree = "<group>"; };
 		DB52DB6A2C3F872B005A0119 /* SocketCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCase.swift; sourceTree = "<group>"; };
 		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		DB5AADB82C12ED2E002907B6 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				DBFB53E72C3C333C00ADE1E7 /* PopupButtonChannelView.swift */,
 				DBD397242C46108D00A45D17 /* PopupButtonChannelSettingView.swift */,
 				DBB059192C4F7E390044A5C8 /* PopupButtonLogoutView.swift */,
+				DB4BB6F12C512CE00015E754 /* PopupButtonSearchView.swift */,
 				DB04EF712C3905B2007F0CBB /* CustomDisclosureGroupView.swift */,
 				DBD397222C45904800A45D17 /* ChannelSettingButtonView.swift */,
 				DBD397322C465CE200A45D17 /* PopupButtonChannelOwnerChangeView.swift */,
@@ -1264,6 +1267,7 @@
 				DB04EF7F2C3ADC32007F0CBB /* WorkspaceEmailRequestDTO.swift in Sources */,
 				DBEE33952C4D00DC00C33B57 /* DMListChat.swift in Sources */,
 				DB5EDC1B2C47F896008F1A13 /* DMListFeature.swift in Sources */,
+				DB4BB6F22C512CE00015E754 /* PopupButtonSearchView.swift in Sources */,
 				DBF386312C1C31C500A08152 /* OnboardingCoordinator.swift in Sources */,
 				DB6B83122C4E87D200EDD8A8 /* Profile.swift in Sources */,
 				DB085B622C0ED09700199065 /* SignUpView.swift in Sources */,

@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Kingfisher
+import PopupView
 
 struct SearchView: View {
     
@@ -63,6 +64,9 @@ struct SearchView: View {
                                         .bodyRegular()
                                     Spacer()
                                 }
+                                .onTapGesture {
+                                    store.send(.buttonTapped(.channelListTapped(channel)))
+                                }
                                 .padding()
                             }
                             
@@ -105,6 +109,14 @@ struct SearchView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+            }
+            .popup(item: $store.popupPresent) { popup in
+                PopupButtonSearchView(store: store, action: popup)
+            } customize: {
+                $0
+                    .closeOnTap(false)
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.4))
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
