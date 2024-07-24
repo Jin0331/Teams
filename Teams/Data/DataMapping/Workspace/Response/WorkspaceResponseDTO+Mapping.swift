@@ -44,11 +44,9 @@ extension WorkspaceResponseDTO {
                      ownerID: ownerID,
                      createdAt: createdAt,
                      channels: channels.map({ channel in
-                        return channel.toDomain()
-                    }),
+                        return channel.toDomain() }),
                      workspacMembers: workspaceMembers.map({ member in
-                        return member.toDomain()
-                    })
+                        return member.toDomain() })
         )
     }
 }
