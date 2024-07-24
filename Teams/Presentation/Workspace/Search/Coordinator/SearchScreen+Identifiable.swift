@@ -14,12 +14,15 @@ extension SearchScreen.State : Identifiable {
                 .search
         case .channel:
                 .channel
+        case .dmChat:
+                .dmChat
         }
     }
     
     enum ID :Identifiable {
         case search
         case channel
+        case dmChat
         
         var id: ID { self }
     }

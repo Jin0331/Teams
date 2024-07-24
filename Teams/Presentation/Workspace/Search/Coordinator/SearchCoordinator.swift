@@ -19,6 +19,8 @@ struct SearchCoordinatorView : View {
                 SearchView(store: store)
             case let .channel(store):
                 ChannelCoordinatorView(store: store)
+            case let .dmChat(store):
+                DMChatView(store: store)
             }
         }
     }
@@ -49,11 +51,14 @@ struct SearchCoordinator {
             case let .router(.routeAction(_, action: .search(.buttonTapped(.channelEnter(channel))))):
                 state.routes.push(.channel(.initialState(mode: .chat, currentWorkspace: state.currentWorkspace, currentChannel: channel)))
                 
-            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .chat(.goBack)))))):
-                state.routes.goBack()
-                
+            case let .router(.routeAction(_, action: .search(.dmListEnter(dm)))):
+                state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
+                                
             case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .setting(.popupComplete(.channelRemoveOrExit))))))):
                 state.routes.goBackToRoot()
+                
+            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .chat(.goBack)))))), .router(.routeAction(_, action: .dmChat(.goBack))):
+                state.routes.goBack()
                 
             default :
                 break

@@ -100,7 +100,7 @@ struct SearchView: View {
                                 .padding()
                                 .contextMenu {
                                     Button {
-                                        print("Enable geolocation")
+                                        store.send(.buttonTapped(.dmUserButtonTapped(member.userID)))
                                     } label: {
                                         Label("다이렉트 메세지 보내기", systemImage: "location.circle")
                                     }

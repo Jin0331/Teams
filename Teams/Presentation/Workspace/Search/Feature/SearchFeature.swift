@@ -26,6 +26,7 @@ struct SearchFeature {
         case onAppear
         case dismiss
         case dismissPopupView
+        case dmListEnter(DM)
         case networkResponse(NetworkResponse)
         case binding(BindingAction<State>)
         case buttonTapped(ButtonTapped)
@@ -34,12 +35,14 @@ struct SearchFeature {
     enum ButtonTapped {
         case channelListTapped(Channel)
         case channelEnter(Channel)
+        case dmUserButtonTapped(String)
     }
     
     enum NetworkResponse {
         case profile(Result<Profile, APIError>)
         case workspaceSearch(Result<Workspace, APIError>)
         case myChanneListlResponse(Result<[Channel], APIError>)
+        case dmResponse(Result<DM, APIError>)
     }
     
     enum ID: Hashable {
@@ -93,6 +96,18 @@ struct SearchFeature {
                 
                 state.popupPresent = .channelEnter(titleText: "채널 참여", bodyText: "[\(channel.name)] 채널에 참여하시겠습니까?", buttonTitle: "참여", id: channel, twoButton: true)
                 return .none
+                
+            case let .buttonTapped(.dmUserButtonTapped(user)):
+                guard let currentWorkspace = state.currentWorkspace else { return .none}
+                return .run { send in
+                    await send(.networkResponse(.dmResponse(
+                        networkManager.getOrCreateDMList(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: ""),
+                                                         body: DMListRequestDTO(opponent_id: user))
+                    )))
+                }
+                
+            case let .networkResponse(.dmResponse(.success(dm))):
+                return .send(.dmListEnter(dm))
             
             case let .networkResponse(.profile(.success(myProfile))):
                 state.profileImage = myProfile.profileImageToUrl
@@ -121,7 +136,7 @@ struct SearchFeature {
                 return .none
 
             
-            case let .networkResponse(.profile(.failure(error))), let .networkResponse(.myChanneListlResponse(.failure(error))):
+            case let .networkResponse(.profile(.failure(error))), let .networkResponse(.myChanneListlResponse(.failure(error))), let .networkResponse(.dmResponse(.failure(error))):
                 let errorType = APIError.networkErrorType(error: error.errorDescription)
                 print(errorType, error, "❗️ error")
                 return .none

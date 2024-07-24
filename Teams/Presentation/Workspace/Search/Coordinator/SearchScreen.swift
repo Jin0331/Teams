@@ -12,5 +12,6 @@ import Foundation
 enum SearchScreen {
     case search(SearchFeature)
     case channel(ChannelCoordinator)
+    case dmChat(DMChatFeature)
 }
 
