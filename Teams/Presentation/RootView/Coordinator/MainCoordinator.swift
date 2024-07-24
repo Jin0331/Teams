@@ -106,6 +106,7 @@ struct MainCoordinator {
                 if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
                                                        dm: .initialState(currentWorkspace: selectedWorkspace), 
+                                                       search: .initialState(currentWorkspace: selectedWorkspace),
                                                        profile: .initialState(tabViewMode : true),
                                                        selectedTab: .home,
                                                        sideMenu: .initialState()),
@@ -117,6 +118,7 @@ struct MainCoordinator {
                     UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
                     state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
                                                        dm: .initialState(currentWorkspace: mostRecentWorkspace), 
+                                                       search: .initialState(currentWorkspace: mostRecentWorkspace),
                                                        profile: .initialState(tabViewMode : true),
                                                        selectedTab: .home,
                                                        sideMenu: .initialState()),
@@ -127,6 +129,7 @@ struct MainCoordinator {
                 } else {
                     state.workspace = .init(tab: .init(home: .initialState(),
                                                        dm: .initialState(),
+                                                       search: .initialState(),
                                                        profile: .initialState(tabViewMode : true),
                                                        selectedTab: .home,
                                                        sideMenu: .initialState()),
@@ -152,6 +155,7 @@ struct MainCoordinator {
                 
                 state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
                                                    dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                   search: .initialState(currentWorkspace: selectedWorkspace),
                                                    profile: .initialState(tabViewMode : true),
                                                    selectedTab: .home,
                                                    sideMenu: .initialState()),

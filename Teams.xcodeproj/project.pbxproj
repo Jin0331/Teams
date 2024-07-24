@@ -105,6 +105,11 @@
 		DBB059162C4F6E930044A5C8 /* FloatingButton in Frameworks */ = {isa = PBXBuildFile; productRef = DBB059152C4F6E930044A5C8 /* FloatingButton */; };
 		DBB059182C4F70FC0044A5C8 /* FloatingButtonCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059172C4F70FC0044A5C8 /* FloatingButtonCustomView.swift */; };
 		DBB0591A2C4F7E390044A5C8 /* PopupButtonLogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059192C4F7E390044A5C8 /* PopupButtonLogoutView.swift */; };
+		DBB059202C50B9320044A5C8 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB0591F2C50B9320044A5C8 /* SearchCoordinator.swift */; };
+		DBB059222C50B93A0044A5C8 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059212C50B93A0044A5C8 /* SearchScreen.swift */; };
+		DBB059242C50B9480044A5C8 /* SearchScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059232C50B9480044A5C8 /* SearchScreen+Identifiable.swift */; };
+		DBB059262C50B9520044A5C8 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059252C50B9520044A5C8 /* SearchView.swift */; };
+		DBB059282C50B9670044A5C8 /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB059272C50B9670044A5C8 /* SearchFeature.swift */; };
 		DBBAAEA92C3D0E310015596C /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DBBAAEA82C3D0E310015596C /* Realm */; };
 		DBBAAEAB2C3D0E310015596C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DBBAAEAA2C3D0E310015596C /* RealmSwift */; };
 		DBBAAEB02C3D0F400015596C /* ChannelChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */; };
@@ -267,6 +272,11 @@
 		DBABF02A2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCreateRequestDTO.swift; sourceTree = "<group>"; };
 		DBB059172C4F70FC0044A5C8 /* FloatingButtonCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonCustomView.swift; sourceTree = "<group>"; };
 		DBB059192C4F7E390044A5C8 /* PopupButtonLogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonLogoutView.swift; sourceTree = "<group>"; };
+		DBB0591F2C50B9320044A5C8 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		DBB059212C50B93A0044A5C8 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		DBB059232C50B9480044A5C8 /* SearchScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchScreen+Identifiable.swift"; sourceTree = "<group>"; };
+		DBB059252C50B9520044A5C8 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		DBB059272C50B9670044A5C8 /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		DBBAAEAF2C3D0F400015596C /* ChannelChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatModel.swift; sourceTree = "<group>"; };
 		DBBAAEB12C3D14DD0015596C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		DBBAAEB32C3D18A20015596C /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
@@ -442,6 +452,7 @@
 				DBEA521A2C231D4A00026926 /* WorkspaceModifier */,
 				DB04EF732C3AC4FD007F0CBB /* Channel */,
 				DB6B83032C4E486500EDD8A8 /* Profile */,
+				DBB0591B2C50B8C70044A5C8 /* Search */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -799,6 +810,42 @@
 			path = Feature;
 			sourceTree = "<group>";
 		};
+		DBB0591B2C50B8C70044A5C8 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				DBB0591E2C50B8EB0044A5C8 /* Coordinator */,
+				DBB0591C2C50B8E30044A5C8 /* View */,
+				DBB0591D2C50B8E70044A5C8 /* Feature */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		DBB0591C2C50B8E30044A5C8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DBB059252C50B9520044A5C8 /* SearchView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DBB0591D2C50B8E70044A5C8 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DBB059272C50B9670044A5C8 /* SearchFeature.swift */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		DBB0591E2C50B8EB0044A5C8 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DBB0591F2C50B9320044A5C8 /* SearchCoordinator.swift */,
+				DBB059212C50B93A0044A5C8 /* SearchScreen.swift */,
+				DBB059232C50B9480044A5C8 /* SearchScreen+Identifiable.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		DBEA520E2C207DCD00026926 /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -1146,6 +1193,7 @@
 				DBABF02B2C2560E700A3CB37 /* WorkspaceCreateRequestDTO.swift in Sources */,
 				DB04EF702C38F260007F0CBB /* ChannelCreateRequestDTO.swift in Sources */,
 				DB04EF7D2C3AD2DB007F0CBB /* WorkspaceInviteFeature.swift in Sources */,
+				DBB059262C50B9520044A5C8 /* SearchView.swift in Sources */,
 				DBE1CCB22C37CBBF00B627BD /* DM.swift in Sources */,
 				DB717EE92C299F1B003C59ED /* SideMenuCoordinator.swift in Sources */,
 				DBE1CCAC2C36AEAE00B627BD /* Channel.swift in Sources */,
@@ -1161,6 +1209,7 @@
 				DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */,
 				DB085B5B2C0E106B00199065 /* AuthView.swift in Sources */,
 				DB5AADD62C172AF7002907B6 /* ErrorResponseDTO.swift in Sources */,
+				DBB059202C50B9320044A5C8 /* SearchCoordinator.swift in Sources */,
 				DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */,
 				DBFB53FF2C3CFF9500ADE1E7 /* ChannelChat.swift in Sources */,
 				DBFB53EC2C3C44CB00ADE1E7 /* ChannelChatFeature.swift in Sources */,
@@ -1177,14 +1226,17 @@
 				DBC567E12C184E4400444E98 /* LoginView.swift in Sources */,
 				DB304C212C4D6CD50023E890 /* ChannelChatUnreadsCount.swift in Sources */,
 				DB5EDC2C2C48F2FC008F1A13 /* DMChatResponseDTO+Mapping.swift in Sources */,
+				DBB059282C50B9670044A5C8 /* SearchFeature.swift in Sources */,
 				DBEA521E2C23EB9800026926 /* WorkspaceAddView.swift in Sources */,
 				DB2566132C352B8800D34BEB /* SideMenuScreen.swift in Sources */,
 				DB5EDC302C49855A008F1A13 /* DMChatUnreadCountResponseDTO+Mapping.swift in Sources */,
+				DBB059222C50B93A0044A5C8 /* SearchScreen.swift in Sources */,
 				DBBAAEBA2C3E69D10015596C /* ChatMessage.swift in Sources */,
 				DB6B83142C4E914E00EDD8A8 /* ProfileImageChangeRequestDTO.swift in Sources */,
 				DBEA52152C208FF900026926 /* HomeInitialView.swift in Sources */,
 				DB085B572C0E05CD00199065 /* Font.swift in Sources */,
 				DBD397212C456E9700A45D17 /* ChannelSettingFeature.swift in Sources */,
+				DBB059242C50B9480044A5C8 /* SearchScreen+Identifiable.swift in Sources */,
 				DBEA52172C23004000026926 /* HomeInitialFeature.swift in Sources */,
 				DBEA52192C23085E00026926 /* HomeInitialCoordinator.swift in Sources */,
 				DBC567E72C1AD3C900444E98 /* Utils.swift in Sources */,
