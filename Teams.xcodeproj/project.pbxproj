@@ -47,6 +47,9 @@
 		DB4B78122C105C3100350F04 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78112C105C3100350F04 /* HTTPHeader.swift */; };
 		DB4B78142C105C4F00350F04 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4B78132C105C4F00350F04 /* APIKey.swift */; };
 		DB4BB6F22C512CE00015E754 /* PopupButtonSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F12C512CE00015E754 /* PopupButtonSearchView.swift */; };
+		DB4BB6F52C51325E0015E754 /* ChannelCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F42C51325E0015E754 /* ChannelCoordinator.swift */; };
+		DB4BB6F72C5132670015E754 /* ChannelScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F62C5132670015E754 /* ChannelScreen.swift */; };
+		DB4BB6F92C5132780015E754 /* ChannelScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F82C5132780015E754 /* ChannelScreen+Identifiable.swift */; };
 		DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52DB6A2C3F872B005A0119 /* SocketCase.swift */; };
 		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
 		DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADB82C12ED2E002907B6 /* ToastView.swift */; };
@@ -222,6 +225,9 @@
 		DB4B78112C105C3100350F04 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		DB4B78132C105C4F00350F04 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		DB4BB6F12C512CE00015E754 /* PopupButtonSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupButtonSearchView.swift; sourceTree = "<group>"; };
+		DB4BB6F42C51325E0015E754 /* ChannelCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCoordinator.swift; sourceTree = "<group>"; };
+		DB4BB6F62C5132670015E754 /* ChannelScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelScreen.swift; sourceTree = "<group>"; };
+		DB4BB6F82C5132780015E754 /* ChannelScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelScreen+Identifiable.swift"; sourceTree = "<group>"; };
 		DB52DB6A2C3F872B005A0119 /* SocketCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCase.swift; sourceTree = "<group>"; };
 		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		DB5AADB82C12ED2E002907B6 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -373,6 +379,7 @@
 		DB04EF732C3AC4FD007F0CBB /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				DB4BB6F32C51324E0015E754 /* Coordinator */,
 				DB04EF742C3AC514007F0CBB /* View */,
 				DB04EF752C3AC519007F0CBB /* Feature */,
 			);
@@ -585,6 +592,16 @@
 			children = (
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		DB4BB6F32C51324E0015E754 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DB4BB6F42C51325E0015E754 /* ChannelCoordinator.swift */,
+				DB4BB6F62C5132670015E754 /* ChannelScreen.swift */,
+				DB4BB6F82C5132780015E754 /* ChannelScreen+Identifiable.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		DB5A3B2A2C0EFC0300463E0B /* Extension */ = {
@@ -1203,10 +1220,12 @@
 				DB5EDC252C48E441008F1A13 /* DMChatFeature.swift in Sources */,
 				DB2566172C36AC1900D34BEB /* ChannelResponseDTO+Mapping.swift in Sources */,
 				DB6B830E2C4E492200EDD8A8 /* ProfileScreen.swift in Sources */,
+				DB4BB6F72C5132670015E754 /* ChannelScreen.swift in Sources */,
 				DB6B83082C4E48FB00EDD8A8 /* ProfileCoordinator.swift in Sources */,
 				DBEA52202C23EBA500026926 /* WorkspaceAddFeature.swift in Sources */,
 				DB304C232C4D6DE40023E890 /* ChannelChatUnreadCountResponseDTO+Mapping.swift in Sources */,
 				DBF386192C1BF70800A08152 /* SplashView.swift in Sources */,
+				DB4BB6F52C51325E0015E754 /* ChannelCoordinator.swift in Sources */,
 				DBEA52262C241AF200026926 /* HomeEmptyCoordinator.swift in Sources */,
 				DBD3971F2C456E3E00A45D17 /* ChannelSettingView.swift in Sources */,
 				DB04EF6C2C38EEF2007F0CBB /* HomeScreen.swift in Sources */,
@@ -1301,6 +1320,7 @@
 				DB04EF792C3AC5BE007F0CBB /* ChannelSearchFeature.swift in Sources */,
 				DB5EDC2E2C48F395008F1A13 /* DMChat.swift in Sources */,
 				DB6B830A2C4E491000EDD8A8 /* ProfileView.swift in Sources */,
+				DB4BB6F92C5132780015E754 /* ChannelScreen+Identifiable.swift in Sources */,
 				DBD397312C46509900A45D17 /* ChannelOwnerChangeFeature.swift in Sources */,
 				DBEA52112C207E6400026926 /* RefreshRequestDTO.swift in Sources */,
 				DB5AADD82C172C64002907B6 /* APIError.swift in Sources */,
