@@ -22,17 +22,15 @@
 
     SwiftUI
 
-* ***아키텍쳐***
-
     The Composable Architecture(TCA)
+  
+    TCACoordinator
 
 * ***오픈 소스***
 
-    TCACoordinator
-
     Realm / Alamofire /	SocketIO / Kingfisher
 
-    PopupView
+    PopupView / Chat
 
 * ***버전 관리***
 
