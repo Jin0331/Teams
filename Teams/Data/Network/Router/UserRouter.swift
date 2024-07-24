@@ -18,6 +18,7 @@ enum UserRouter {
     case myProfile
     case myProfileImageChange(query : ProfileImageChangeRequestDTO)
     case myProfileEdit(query : ProfileEditRequestDTO)
+    case otherFile(query : String)
 }
 
 extension UserRouter : TargetType {
@@ -29,7 +30,7 @@ extension UserRouter : TargetType {
         switch self {
         case .emailValidation, .join, .emailLogin, .appleLogin, .kakaoLogin:
             return .post
-        case .refresh, .myProfile:
+        case .refresh, .myProfile, .otherFile:
             return .get
         case .myProfileImageChange, .myProfileEdit:
             return .put
@@ -50,12 +51,12 @@ extension UserRouter : TargetType {
             return "/users/login/kakao"
         case .refresh:
             return "/auth/refresh"
-        case .myProfile:
+        case .myProfile, .myProfileEdit:
             return "/users/me"
         case .myProfileImageChange:
             return "/users/me/image"
-        case .myProfileEdit:
-            return "/users/me"
+        case let .otherFile(userID):
+            return "/users/" + userID
         }
     }
     
@@ -70,7 +71,7 @@ extension UserRouter : TargetType {
                     HTTPHeader.sesacKey.rawValue : APIKey.secretKey.rawValue,
                     HTTPHeader.refresh.rawValue : token.refreshToken
             ]
-        case .myProfile, .myProfileImageChange, .myProfileEdit:
+        case .myProfile, .myProfileImageChange, .myProfileEdit, .otherFile:
             guard let token = UserDefaultManager.shared.accessToken else { print("accessToken 없음");return [:] }
             return [HTTPHeader.authorization.rawValue : token,
                     HTTPHeader.contentType.rawValue : HTTPHeader.json.rawValue,

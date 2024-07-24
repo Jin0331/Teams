@@ -1041,11 +1041,11 @@
 		DBFB53F32C3CF65D00ADE1E7 /* RESTful */ = {
 			isa = PBXGroup;
 			children = (
+				DB5AADD02C16C4CB002907B6 /* NetworkManager.swift */,
 				DB4B78112C105C3100350F04 /* HTTPHeader.swift */,
 				DB4B78132C105C4F00350F04 /* APIKey.swift */,
 				DB5AADBC2C16AA59002907B6 /* AuthManager.swift */,
 				DB5AADBE2C16AA73002907B6 /* TargetType.swift */,
-				DB5AADD02C16C4CB002907B6 /* NetworkManager.swift */,
 				DB5AADD72C172C64002907B6 /* APIError.swift */,
 			);
 			path = RESTful;
