@@ -16,6 +16,8 @@ extension SearchScreen.State : Identifiable {
                 .channel
         case .dmChat:
                 .dmChat
+        case .profile:
+                .profile
         }
     }
     
@@ -23,6 +25,7 @@ extension SearchScreen.State : Identifiable {
         case search
         case channel
         case dmChat
+        case profile
         
         var id: ID { self }
     }

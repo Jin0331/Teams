@@ -36,6 +36,8 @@ struct SearchFeature {
         case channelListTapped(Channel)
         case channelEnter(Channel)
         case dmUserButtonTapped(String)
+        case profileOpenTapped
+        case otherProfileButtonTapped(String)
     }
     
     enum NetworkResponse {
@@ -123,7 +125,9 @@ struct SearchFeature {
                 }
                 
                 if !search.workspacMembers.isEmpty {
-                    state.members = search.workspacMembers
+                    state.members = search.workspacMembers.filter({ user in
+                        user.userID != UserDefaultManager.shared.userId
+                    })
                 } else {
                     state.members = []
                 }

@@ -87,7 +87,7 @@ struct PopupButtonLogoutView : View {
             
             store.send(.popup(.dismissPopupView))
             
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 store.send(.popupComplete(.logout))
             }
         }        

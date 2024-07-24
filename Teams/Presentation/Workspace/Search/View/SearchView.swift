@@ -105,7 +105,7 @@ struct SearchView: View {
                                         Label("다이렉트 메세지 보내기", systemImage: "location.circle")
                                     }
                                     Button {
-                                        print("Change country setting")
+                                        store.send(.buttonTapped(.otherProfileButtonTapped(member.userID)))
                                     } label: {
                                         Label("프로필 조회하기", systemImage: "person.circle")
                                     }
@@ -165,7 +165,7 @@ struct SearchView: View {
                         }
                     }
                     .onTapGesture {
-                        //                        store.send(.buttonTapped(.profileOpenTapped))
+                        store.send(.buttonTapped(.profileOpenTapped))
                     }
                 }
                 

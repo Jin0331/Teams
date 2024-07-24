@@ -50,6 +50,8 @@
 		DB4BB6F52C51325E0015E754 /* ChannelCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F42C51325E0015E754 /* ChannelCoordinator.swift */; };
 		DB4BB6F72C5132670015E754 /* ChannelScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F62C5132670015E754 /* ChannelScreen.swift */; };
 		DB4BB6F92C5132780015E754 /* ChannelScreen+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6F82C5132780015E754 /* ChannelScreen+Identifiable.swift */; };
+		DB4BB6FB2C515B570015E754 /* ProfileOtherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6FA2C515B570015E754 /* ProfileOtherView.swift */; };
+		DB4BB6FD2C515B880015E754 /* ProfileOtherFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BB6FC2C515B880015E754 /* ProfileOtherFeature.swift */; };
 		DB52DB6B2C3F872B005A0119 /* SocketCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52DB6A2C3F872B005A0119 /* SocketCase.swift */; };
 		DB5A3B2C2C0EFC4E00463E0B /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */; };
 		DB5AADB92C12ED2E002907B6 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5AADB82C12ED2E002907B6 /* ToastView.swift */; };
@@ -228,6 +230,8 @@
 		DB4BB6F42C51325E0015E754 /* ChannelCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCoordinator.swift; sourceTree = "<group>"; };
 		DB4BB6F62C5132670015E754 /* ChannelScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelScreen.swift; sourceTree = "<group>"; };
 		DB4BB6F82C5132780015E754 /* ChannelScreen+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelScreen+Identifiable.swift"; sourceTree = "<group>"; };
+		DB4BB6FA2C515B570015E754 /* ProfileOtherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOtherView.swift; sourceTree = "<group>"; };
+		DB4BB6FC2C515B880015E754 /* ProfileOtherFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOtherFeature.swift; sourceTree = "<group>"; };
 		DB52DB6A2C3F872B005A0119 /* SocketCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCase.swift; sourceTree = "<group>"; };
 		DB5A3B2B2C0EFC4E00463E0B /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		DB5AADB82C12ED2E002907B6 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -780,6 +784,7 @@
 			isa = PBXGroup;
 			children = (
 				DB6B830B2C4E491700EDD8A8 /* ProfileFeature.swift */,
+				DB4BB6FC2C515B880015E754 /* ProfileOtherFeature.swift */,
 				DB6B83172C4EAC5500EDD8A8 /* ProfileEditFeature.swift */,
 			);
 			path = Feature;
@@ -789,6 +794,7 @@
 			isa = PBXGroup;
 			children = (
 				DB6B83092C4E491000EDD8A8 /* ProfileView.swift */,
+				DB4BB6FA2C515B570015E754 /* ProfileOtherView.swift */,
 				DB6B83152C4EAC4700EDD8A8 /* ProfileEditView.swift */,
 			);
 			path = View;
@@ -1271,6 +1277,7 @@
 				DB04EF682C38EA6D007F0CBB /* ChannelAddView.swift in Sources */,
 				DB5AADCD2C16B0BC002907B6 /* EmailValidationRequestDTO.swift in Sources */,
 				DB2566152C352BB200D34BEB /* SideMenuScreen+Identifiable.swift in Sources */,
+				DB4BB6FD2C515B880015E754 /* ProfileOtherFeature.swift in Sources */,
 				DBC567E32C1A9AD400444E98 /* EmailLoginRequestDTO.swift in Sources */,
 				DB25660F2C33D04400D34BEB /* WorkspaceEditView.swift in Sources */,
 				DBD3972D2C4648D100A45D17 /* ChannelSpecific.swift in Sources */,
@@ -1308,6 +1315,7 @@
 				DBF85C192C0DF5FB00CDFA04 /* TeamsApp.swift in Sources */,
 				DB5AADE42C180FED002907B6 /* JoinResponseDTO+Mapping.swift in Sources */,
 				DBE1CCB42C37CBE500B627BD /* User.swift in Sources */,
+				DB4BB6FB2C515B570015E754 /* ProfileOtherView.swift in Sources */,
 				DB5AADC82C16AC7F002907B6 /* UserDefaultManager.swift in Sources */,
 				DB119BB02C3306A400E47A53 /* WorkspaceRemoveResponseDTO.swift in Sources */,
 				DBEA52242C23FCA200026926 /* ValidTest.swift in Sources */,

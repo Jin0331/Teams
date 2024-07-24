@@ -188,7 +188,8 @@ struct MainCoordinator {
                 
             case .workspace(.tab(.home(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
                     .workspace(.tab(.dm(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
-                    .workspace(.homeEmpty(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout))))))))):
+                    .workspace(.homeEmpty(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout))))))))),
+                    .workspace(.tab(.search(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))):
                 state.workspace = .initialState
                 state.onboarding = .initialState
                 state.homeInitial = .initialState()

@@ -21,6 +21,8 @@ struct SearchCoordinatorView : View {
                 ChannelCoordinatorView(store: store)
             case let .dmChat(store):
                 DMChatView(store: store)
+            case let .profile(store):
+                ProfileCoordinatorView(store: store)
             }
         }
     }
@@ -54,10 +56,16 @@ struct SearchCoordinator {
             case let .router(.routeAction(_, action: .search(.dmListEnter(dm)))):
                 state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
                                 
+            case .router(.routeAction(_, action: .search(.buttonTapped(.profileOpenTapped)))):
+                state.routes.push(.profile(.initialState(mode: .me, tabViewMode: false)))
+            
+            case let .router(.routeAction(_, action: .search(.buttonTapped(.otherProfileButtonTapped(userID))))):
+                state.routes.push(.profile(.initialState(mode: .other, userID: userID)))
+                
             case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .setting(.popupComplete(.channelRemoveOrExit))))))):
                 state.routes.goBackToRoot()
                 
-            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .chat(.goBack)))))), .router(.routeAction(_, action: .dmChat(.goBack))):
+            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .chat(.goBack)))))), .router(.routeAction(_, action: .dmChat(.goBack))), .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profileOther(.goback)))))), .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
                 state.routes.goBack()
                 
             default :

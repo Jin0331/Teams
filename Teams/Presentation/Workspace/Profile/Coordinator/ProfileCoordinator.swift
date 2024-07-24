@@ -19,6 +19,8 @@ struct ProfileCoordinatorView : View {
                 ProfileView(store: store)
             case let .profileEdit(store):
                 ProfileEditView(store: store)
+            case let .profileOther(store):
+                ProfileOtherView(store: store)
             }
         }
     }
@@ -29,10 +31,15 @@ struct ProfileCoordinatorView : View {
 struct ProfileCoordinator {
     @ObservableState
     struct State : Equatable {
-        static func initialState(tabViewMode : Bool = false) -> Self {
-            Self(
-                routes: [.root(.profile(.init(tabViewMode: tabViewMode)), embedInNavigationView: tabViewMode)]
-            )
+        static func initialState(mode : ProfileRootMode = .me, tabViewMode : Bool = false, userID : String? = nil) -> Self {
+            
+            switch mode {
+            case .me:
+                return Self(routes: [.root(.profile(.init(tabViewMode: tabViewMode)), embedInNavigationView: tabViewMode)])
+            case .other:
+                return Self(routes: [.root(.profileOther(.init(userID: userID)), embedInNavigationView: false)])
+            }
+            
         }
         var routes: IdentifiedArrayOf<Route<ProfileScreen.State>>
     }
@@ -68,3 +75,9 @@ struct ProfileCoordinator {
     }
 }
 
+extension ProfileCoordinator {
+    enum ProfileRootMode {
+        case me
+        case other
+    }
+}
