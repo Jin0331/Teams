@@ -633,6 +633,20 @@ final class NetworkManager {
         }
     }
     
+    func getWorkspaceSearch(request : WorkspaceIDRequestDTO, query : String) async throws -> Result<Workspace, APIError> {
+        let router = WorkspaceRouter.workspaceSearch(request: request, query: query)
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: WorkspaceResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
     func getDMChatList(workspaceID : String, dmlist : DMList) async throws -> [DMChatList] {
         var dmChatList : [DMChatList] = []
         try await withThrowingTaskGroup(of: DMChatList.self) { group in
