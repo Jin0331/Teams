@@ -57,6 +57,7 @@ struct ChannelSettingFeature {
     }
     
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.realmRepository) var realmRepository
     
     var body : some Reducer<State, Action> {
         
@@ -102,6 +103,8 @@ struct ChannelSettingFeature {
                 return .send(.popupComplete(.channelOwnerChange(channelCurrent)))
                 
             case let .popup(.channelRemove(workspace, channel)):
+                //TODO: - Realm Table에서 삭제 필요
+                realmRepository.deleteChannel(channelID: channel.channelID)
                 return .run { send in
                     await send(.networkResponse(.channelRemoveResponse(
                         networkManager.removeChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""))
@@ -109,6 +112,7 @@ struct ChannelSettingFeature {
                 }
             
             case let .popup(.channelExit(workspace, channel)):
+                realmRepository.deleteChannel(channelID: channel.channelID)
                 return .run { send in
                     await send(.networkResponse(.channelExitResponse(
                         networkManager.exitChannel(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: channel.id, room_id: ""))

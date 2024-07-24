@@ -59,6 +59,9 @@ struct SearchFeature {
             
             case .onAppear:
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
+                
+                useValueInit(&state)
+                
                 return .run { send in
                     await send(.networkResponse(.profile(
                         networkManager.getMyProfile()
@@ -145,5 +148,11 @@ struct SearchFeature {
 extension SearchFeature {
     enum CustomPopup : Equatable {
         case channelEnter(titleText:String, bodyText:String, buttonTitle:String, id:Channel, twoButton:Bool)
+    }
+    
+    private func useValueInit(_ state: inout SearchFeature.State) {
+        state.searchKeyword = ""
+        state.channels = []
+        state.members = []
     }
 }

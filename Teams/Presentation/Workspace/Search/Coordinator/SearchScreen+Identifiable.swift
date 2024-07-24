@@ -12,11 +12,14 @@ extension SearchScreen.State : Identifiable {
         switch self {
         case .search:
                 .search
+        case .channel:
+                .channel
         }
     }
     
     enum ID :Identifiable {
         case search
+        case channel
         
         var id: ID { self }
     }

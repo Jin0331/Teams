@@ -85,9 +85,8 @@ struct PopupButtonSearchView: View {
     private func handleAction(for action: SearchFeature.CustomPopup) {
         switch action {
         case let .channelEnter(_,_,_,channelID, _):
+            store.send(.dismissPopupView)
             store.send(.buttonTapped(.channelEnter(channelID)))
-        default :
-            break
         }
     }
     

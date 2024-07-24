@@ -17,6 +17,8 @@ struct SearchCoordinatorView : View {
             switch screen.case {
             case let .search(store):
                 SearchView(store: store)
+            case let .channel(store):
+                ChannelCoordinatorView(store: store)
             }
         }
     }
@@ -43,6 +45,15 @@ struct SearchCoordinator {
     var body : some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
+                
+            case let .router(.routeAction(_, action: .search(.buttonTapped(.channelEnter(channel))))):
+                state.routes.push(.channel(.initialState(mode: .chat, currentWorkspace: state.currentWorkspace, currentChannel: channel)))
+                
+            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .chat(.goBack)))))):
+                state.routes.goBack()
+                
+            case .router(.routeAction(_, action: .channel(.router(.routeAction(_, action: .setting(.popupComplete(.channelRemoveOrExit))))))):
+                state.routes.goBackToRoot()
                 
             default :
                 break

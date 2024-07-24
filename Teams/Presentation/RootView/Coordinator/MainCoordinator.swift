@@ -184,6 +184,7 @@ struct MainCoordinator {
                 state.isLogined = false
                 state.isSignUp = false
                 UserDefaultManager.shared.clearAllData()
+                realmRepository.deleteALL()
                 
             case .workspace(.tab(.home(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),
                     .workspace(.tab(.dm(.router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.popupComplete(.logout)))))))))),

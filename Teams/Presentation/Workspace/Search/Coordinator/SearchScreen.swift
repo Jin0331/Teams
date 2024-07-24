@@ -11,5 +11,6 @@ import Foundation
 @Reducer(state: .equatable)
 enum SearchScreen {
     case search(SearchFeature)
+    case channel(ChannelCoordinator)
 }
 
