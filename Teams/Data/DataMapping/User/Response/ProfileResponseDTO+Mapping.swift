@@ -24,7 +24,7 @@ struct ProfileResponseDTO : Decodable {
         self.profileImage = (try? container.decode(String.self, forKey: .profileImage)) ?? ""
         self.phone = (try? container.decode(String.self, forKey: .phone)) ?? ""
         self.provider = (try? container.decode(String.self, forKey: .provider)) ?? ""
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.createdAt = (try? container.decode(String.self, forKey: .createdAt)) ?? ""
         self.sesacCoin = (try? container.decode(Int.self, forKey: .sesacCoin)) ?? 0
     }
 }
