@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Channel : Equatable, Identifiable {
+struct Channel : Equatable, Identifiable, Codable {
     let channelID, name, coverImage,ownerID, createdAt, description : String
     
     var id : String { return channelID}

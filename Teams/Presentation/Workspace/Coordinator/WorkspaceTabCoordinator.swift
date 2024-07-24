@@ -35,6 +35,16 @@ struct WorkspaceTabCoordinatorView : View {
                         }
                         .tag(WorkspaceTabCoordinator.Tab.dm)
                     
+                    SearchCoordinatorView(store: store.scope(state: \.search, action: \.search))
+                        .tabItem {
+                            Image(store.selectedTab == .search ? .tabSearchActive : .tabSearchInactive)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            Text("검색")
+                                .bodyRegular()
+                        }
+                        .tag(WorkspaceTabCoordinator.Tab.search)
+                    
                     ProfileCoordinatorView(store: store.scope(state: \.profile, action: \.profile))
                         .tabItem {
                             Image(store.selectedTab == .profile ? .tabProfileActive : .tabProfileInactive)
@@ -55,14 +65,14 @@ struct WorkspaceTabCoordinator {
     enum Tab : Hashable {
         case home
         case dm
-//        case search
+        case search
         case profile
     }
     
     enum Action {
         case home(HomeCoordinator.Action)
         case dm(DMCoordinator.Action)
-//        case search(SearchCoordinator.Action)
+        case search(SearchCoordinator.Action)
         case profile(ProfileCoordinator.Action)
         case tabSelected(Tab)
     }
@@ -70,11 +80,14 @@ struct WorkspaceTabCoordinator {
     @ObservableState
     struct State : Equatable {
         //TODO: - current Workspace ID 초기화
-        static let initialState = State(home: .initialState(), dm: .initialState(), profile: .initialState(tabViewMode: false), selectedTab: .home, sideMenu: .initialState())
-        
+        static let initialState = State(home: .initialState(),
+                                        dm: .initialState(),
+                                        search: .initialState(),
+                                        profile: .initialState(tabViewMode: false),
+                                        selectedTab: .home, sideMenu: .initialState())
         var home : HomeCoordinator.State
         var dm : DMCoordinator.State
-//        var search : SearchCoordinator.State
+        var search : SearchCoordinator.State
         var profile : ProfileCoordinator.State
         var selectedTab: Tab
         var sideMenu : SideMenuCoordinator.State
@@ -91,9 +104,9 @@ struct WorkspaceTabCoordinator {
             DMCoordinator()
         }
         
-//        Scope(state: \.search, action: \.search) {
-//            SearchCoordinator()
-//        }
+        Scope(state: \.search, action: \.search) {
+            SearchCoordinator()
+        }
         
         Scope(state: \.profile, action: \.profile) {
             ProfileCoordinator()

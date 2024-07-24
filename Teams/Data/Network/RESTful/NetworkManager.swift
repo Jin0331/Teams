@@ -214,6 +214,21 @@ final class NetworkManager {
         }
     }
     
+    func getOtherProfile(query : String) async -> Result<Profile, APIError> {
+        
+        do {
+            let response = try await requestAPIWithRefresh(router: UserRouter.otherFile(query: query), of: ProfileResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    
     func editMyProfileImage(query : ProfileImageChangeRequestDTO) async -> Result<Profile, APIError> {
         
         let router = UserRouter.myProfileImageChange(query: query)
@@ -623,6 +638,20 @@ final class NetworkManager {
         
         do {
             let response = try await requestAPIWithRefresh(router: router, of: DMChatUnreadCountResponseDTO.self)
+            return .success(response.toDomain())
+        } catch {
+            if let apiError = error as? APIError {
+                return .failure(apiError)
+            } else {
+                return .failure(APIError.unknown)
+            }
+        }
+    }
+    
+    func getWorkspaceSearch(request : WorkspaceIDRequestDTO, query : String) async -> Result<Workspace, APIError> {
+        let router = WorkspaceRouter.workspaceSearch(request: request, query: query)
+        do {
+            let response = try await requestAPIWithRefresh(router: router, of: WorkspaceResponseDTO.self)
             return .success(response.toDomain())
         } catch {
             if let apiError = error as? APIError {

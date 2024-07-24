@@ -1,18 +1,18 @@
 //
-//  PopupButtonLogoutView.swift
+//  PopupButtonSearchView.swift
 //  Teams
 //
-//  Created by JinwooLee on 7/23/24.
+//  Created by JinwooLee on 7/24/24.
 //
 
 import ComposableArchitecture
 import SwiftUI
 
-struct PopupButtonLogoutView : View {
-    @Perception.Bindable var store : StoreOf<ProfileFeature>
-    let action : ProfileFeature.CustomPopup
+struct PopupButtonSearchView: View {
+    @Perception.Bindable var store : StoreOf<SearchFeature>
+    let action : SearchFeature.CustomPopup
     
-    var body : some View {
+    var body: some View {
         VStack(spacing : 10) {
             
             actionView(for: action)
@@ -20,7 +20,7 @@ struct PopupButtonLogoutView : View {
             if actionButtonType(for:action){
                 HStack {
                     Button("취소") {
-                        store.send(.popup(.dismissPopupView))
+                        store.send(.dismissPopupView)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 152, height: 44)
@@ -41,7 +41,7 @@ struct PopupButtonLogoutView : View {
             } else {
                 HStack {
                     Button(actionButtonTitle(for: action)) {
-                        store.send(.popup(.dismissPopupView))
+                        store.send(.dismissPopupView)
                     }
                     .foregroundStyle(.brandWhite)
                     .frame(width: 312, height: 44)
@@ -57,40 +57,37 @@ struct PopupButtonLogoutView : View {
         .padding()
         .background(Color.white.cornerRadius(16))
         .padding(.horizontal, 16)
+        
     }
     
     @ViewBuilder
-    private func actionView(for action: ProfileFeature.CustomPopup) -> some View {
+    private func actionView(for action: SearchFeature.CustomPopup) -> some View {
         switch action {
-        case let .logout(titleText, bodyText,_,_):
+        case let .channelEnter(titleText, bodyText, _, _, _):
             alertText(titleText, bodyText)
         }
     }
 
-    private func actionButtonTitle(for action: ProfileFeature.CustomPopup) -> String {
+    private func actionButtonTitle(for action: SearchFeature.CustomPopup) -> String {
         switch action {
-        case let .logout(_, _, buttonTitle, _):
+        case let .channelEnter(_, _, buttonTitle, _, _):
             return buttonTitle
         }
     }
     
-    private func actionButtonType(for action: ProfileFeature.CustomPopup) -> Bool {
+    private func actionButtonType(for action: SearchFeature.CustomPopup) -> Bool {
         switch action {
-        case let .logout(_, _, _,type):
+        case let .channelEnter(_, _, _, _, type):
             return type
         }
     }
 
-    private func handleAction(for action: ProfileFeature.CustomPopup) {
+    private func handleAction(for action: SearchFeature.CustomPopup) {
         switch action {
-        case .logout:
-            
-            store.send(.popup(.dismissPopupView))
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                store.send(.popupComplete(.logout))
-            }
-        }        
+        case let .channelEnter(_,_,_,channelID, _):
+            store.send(.dismissPopupView)
+            store.send(.buttonTapped(.channelEnter(channelID)))
+        }
     }
     
     private func alertText(_ titleText: String, _ bodyText: String) -> VStack<TupleView<(some View, some View)>> {
@@ -103,5 +100,6 @@ struct PopupButtonLogoutView : View {
                 .foregroundStyle(.secondary)
         }
     }
+    
 }
 

@@ -14,12 +14,15 @@ extension ProfileScreen.State : Identifiable {
                 .profile
         case .profileEdit:
                 .profileEdit
+        case .profileOther:
+                .profileOther
         }
     }
     
     enum ID : Identifiable {
         case profile
         case profileEdit
+        case profileOther
         var id : ID { self }
     }
 }

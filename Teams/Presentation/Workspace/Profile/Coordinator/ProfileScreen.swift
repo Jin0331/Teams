@@ -12,5 +12,6 @@ import ComposableArchitecture
 enum ProfileScreen {
     case profile(ProfileFeature)
     case profileEdit(ProfileEditFeature)
+    case profileOther(ProfileOtherFeature)
 }
 

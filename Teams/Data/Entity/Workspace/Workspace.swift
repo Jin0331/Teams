@@ -10,6 +10,8 @@ import Foundation
 struct Workspace : Equatable, Identifiable, Codable {
     let workspaceID, name, description, coverImage: String
     let ownerID, createdAt: String
+    let channels : ChannelList
+    let workspacMembers : UserList
     
     var id : String { return workspaceID }
 }

@@ -10,12 +10,14 @@ import Foundation
 struct WorkspaceResponseDTO: Decodable {
     let workspaceID, name, description, coverImage: String
     let ownerID, createdAt: String
+    let channels : [ChannelResponseDTO]
+    let workspaceMembers : [WorkspaceUserResponseDTO]
 
     enum CodingKeys: String, CodingKey {
         case workspaceID = "workspace_id"
         case name, description, coverImage
         case ownerID = "owner_id"
-        case createdAt
+        case createdAt, channels, workspaceMembers
     }
     
     init(from decoder: any Decoder) throws {
@@ -26,6 +28,8 @@ struct WorkspaceResponseDTO: Decodable {
         self.coverImage = try container.decode(String.self, forKey: .coverImage)
         self.ownerID = try container.decode(String.self, forKey: .ownerID)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.channels = (try? container.decode([ChannelResponseDTO].self, forKey: .channels)) ?? []
+        self.workspaceMembers = (try? container.decode([WorkspaceUserResponseDTO].self, forKey: .workspaceMembers)) ?? []
     }
 }
 
@@ -38,6 +42,11 @@ extension WorkspaceResponseDTO {
                      description: description,
                      coverImage: coverImage,
                      ownerID: ownerID,
-                     createdAt: createdAt)
+                     createdAt: createdAt,
+                     channels: channels.map({ channel in
+                        return channel.toDomain() }),
+                     workspacMembers: workspaceMembers.map({ member in
+                        return member.toDomain() })
+        )
     }
 }

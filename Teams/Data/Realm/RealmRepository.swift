@@ -16,8 +16,6 @@ final class RealmRepository {
     
     func realmLocation() { print("현재 Realm 위치 🌼 - ",realm.configuration.fileURL!) }
     
-    //MARK: - CREATE
-    // CREATE
     func createTable<T:Object>(_ item : T) {
         do {
             try realm.write {
@@ -35,6 +33,19 @@ final class RealmRepository {
             }
         } catch {
             print(error, "- Delete ALL error")
+        }
+    }
+    
+    func deleteChannel(channelID:String) {
+        do {
+            try realm.write {
+                let channel = realm.objects(ChannelChatListModel.self).where {
+                    $0.channelID == channelID
+                }
+                realm.delete(channel)
+            }
+        } catch {
+            print(error, "- Delete Channel error")
         }
     }
     
