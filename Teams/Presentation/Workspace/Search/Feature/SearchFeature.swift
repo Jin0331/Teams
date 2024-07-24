@@ -70,6 +70,7 @@ struct SearchFeature {
                 .debounce(id: ID.debounce,
                           for: 1.5,
                           scheduler: DispatchQueue.main)
+                .animation(.smooth)
 
             case let .networkResponse(.profile(.success(myProfile))):
                 state.profileImage = myProfile.profileImageToUrl

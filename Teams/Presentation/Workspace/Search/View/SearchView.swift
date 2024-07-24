@@ -19,6 +19,29 @@ struct SearchView: View {
             NavigationStack {
                 ScrollView {
                     VStack {
+                        if store.channels.isEmpty && store.members.isEmpty {
+                            VStack {
+                                HStack {
+                                    Image(systemName: "list.bullet.circle")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .foregroundColor(.brandInActive)
+                                    
+                                    Image(systemName: "person.2.circle")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .foregroundColor(.brandInActive)
+                                }
+                                
+                                Text("찾고싶은 채널 또는 멤버를 검색하고 실시간 채팅을 진행해보세요.")
+                                    .multilineTextAlignment(.center)
+                                    .title2()
+                                    .padding()
+                                    .foregroundStyle(.brandInActive)
+                            }
+                            .padding(.top, 100)
+                        }
+                        
                         if !store.channels.isEmpty {
                             HStack {
                                 Image(systemName: "list.bullet.circle")
@@ -29,7 +52,6 @@ struct SearchView: View {
                                     .title2()
                                 Spacer()
                             }.padding()
-                            
                             
                             ForEach(store.channels, id: \.id) { channel in
                                 HStack {
@@ -76,8 +98,6 @@ struct SearchView: View {
                             
                             Divider().background(.brandWhite)
                         }
-                        
-
                     }
                 }
                 .searchable(text: $store.searchKeyword, prompt: "채널 또는 멤버를 검색해주세요")
