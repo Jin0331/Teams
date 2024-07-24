@@ -633,7 +633,7 @@ final class NetworkManager {
         }
     }
     
-    func getWorkspaceSearch(request : WorkspaceIDRequestDTO, query : String) async throws -> Result<Workspace, APIError> {
+    func getWorkspaceSearch(request : WorkspaceIDRequestDTO, query : String) async -> Result<Workspace, APIError> {
         let router = WorkspaceRouter.workspaceSearch(request: request, query: query)
         do {
             let response = try await requestAPIWithRefresh(router: router, of: WorkspaceResponseDTO.self)

@@ -74,6 +74,10 @@ final class UtilitiesFunction {
         })
     }
     
+    func isWhitespaceString(_ string: String) -> Bool {
+        return string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
     func loadImage(from url : URL?) async -> Data? {
         
         guard let url = url else { return nil }

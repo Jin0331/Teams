@@ -61,7 +61,7 @@ struct DMListView : View {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 32, height: 32) //resize
                                 .cornerRadius(8)
-                            Text("Direct Message")
+                            Text("다이렉트 메세지")
                                 .title1()
                             Spacer()
                         }
