@@ -26,7 +26,7 @@ struct HomeFeature {
         var dmlListExpanded : Bool = true
         var profileImage : URL?
     }
-
+    
     enum Action : BindableAction{
         case onAppear
         case openSideMenu
@@ -36,6 +36,8 @@ struct HomeFeature {
         case buttonTapped(ButtonTapped)
         case networkResponse(NetworkResponse)
         case binding(BindingAction<State>)
+        case timoerOn(Workspace)
+        case timerOff
     }
     
     enum ButtonTapped {
@@ -61,6 +63,7 @@ struct HomeFeature {
     @Dependency(\.networkManager) var networkManager
     @Dependency(\.realmRepository) var realmRepository
     @Dependency(\.utilitiesFunction) var utils
+    @Dependency(\.continuousClock) var clock
     
     var body : some ReducerOf<Self> {
         
@@ -68,7 +71,7 @@ struct HomeFeature {
         
         Reduce<State, Action> { state, action in
             switch action {
-            
+                
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
                 realmRepository.realmLocation()
@@ -83,12 +86,27 @@ struct HomeFeature {
                     },
                     .run { send in
                         await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))))
-                    }
+                    },
+                    .send(.timoerOn(workspace))
                 ])
+                
+            case let .timoerOn(workspace):
+                return .run { send in
+                    for await _ in await clock.timer(interval: .seconds(10)) {
+                        print("Timer On - HomeView 🌟")
+                        await send(.networkResponse(.channeListResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
+                        await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))))
+                    }
+                }
+                .cancellable(id: CancelID.timer)
+                
+            case .timerOff :
+                print("Timer Off - HomeView 🌟")
+                return .cancel(id: CancelID.timer)
                 
             case let .networkResponse(.channeListResponse(.success(channelList))):
                 guard let currentWorkspace = state.workspaceCurrent else { return .none }
-  
+                
                 if !channelList.isEmpty {
                     channelList.forEach { channel in
                         realmRepository.upsertChannelList(channelResponse: channel, workspaceID: currentWorkspace.workspaceID)
@@ -107,8 +125,8 @@ struct HomeFeature {
                 for list in channelChatList {
                     if let lastChat = list.last {
                         realmRepository.upsertCurrentChannelListContentWithCreatedAt(channelID: lastChat.channelID,
-                                                                                currentChatCreatedAt: lastChat.createdAtDate,
-                                                                                lastChatUser: lastChat.user.userID
+                                                                                     currentChatCreatedAt: lastChat.createdAtDate,
+                                                                                     lastChatUser: lastChat.user.userID
                         )
                         
                         if let lastChatUser = realmRepository.fetchChannelListChatUser(channelID: lastChat.channelID), lastChatUser == UserDefaultManager.shared.userId! {
@@ -162,11 +180,11 @@ struct HomeFeature {
                 
             case let .networkResponse(.dmResponse(.success(dm))):
                 return .send(.dmListEnter(dm))
-            
                 
-            //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
+                
+                //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
             case let .networkResponse(.dmListResponse(.success(dmList))):
-                    
+                
                 guard let currentWorkspace = state.workspaceCurrent else { return .none }
                 
                 // DM list 생성
@@ -209,12 +227,17 @@ struct HomeFeature {
                 }
                 
                 return .none
-        
                 
             default :
                 return .none
             }
-                
+            
         }
+    }
+}
+
+extension HomeFeature {
+    enum CancelID {
+        case timer
     }
 }
