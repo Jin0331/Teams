@@ -74,7 +74,6 @@ struct HomeFeature {
                 
             case .onAppear :
                 guard let workspace = state.workspaceCurrent else { return .none }
-                realmRepository.realmLocation()
                 return .merge([
                     .run { send in
                         await send(.networkResponse(.myProfile(
@@ -92,7 +91,7 @@ struct HomeFeature {
                 
             case let .timoerOn(workspace):
                 return .run { send in
-                    for await _ in await clock.timer(interval: .seconds(10)) {
+                    for await _ in await clock.timer(interval: .seconds(5)) {
                         print("Timer On - HomeView 🌟")
                         await send(.networkResponse(.channeListResponse(networkManager.getMyChannels(request: WorkspaceIDRequestDTO(workspace_id: workspace.id, channel_id: "", room_id: "")))))
                         await send(.networkResponse(.dmListResponse(networkManager.getDMList(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))))

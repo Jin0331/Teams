@@ -55,7 +55,6 @@ struct DMChatFeature {
             case .onAppear:
                 guard let workspace = state.workspaceCurrent else { return .none }
                 let cursorDate = realmRepository.fetchDMChatLastDate(roomID: state.roomCurrent.roomID) ?? Date()                
-                realmRepository.realmLocation()
     
                 return .run { [room = state.roomCurrent] send in
                     

@@ -116,7 +116,11 @@ struct WorkspaceTabCoordinator {
             switch action {
             case let .tabSelected(tab):
                 state.selectedTab = tab
-                return .send(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))
+                return .run { send in
+                    await send(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))
+                    await send(.dm(.router(.routeAction(id: .dmList, action: .dmList(.timerOff)))))
+                    
+                }
             
             case .home(.router(.routeAction(_, action: .home(.buttonTapped(.newMessageButtonTapped))))):
                 state.selectedTab = .dm

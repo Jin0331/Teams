@@ -29,7 +29,7 @@ class TeamsAppDelegate: NSObject, UIApplicationDelegate, ObservableObject, UNUse
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-        print("Device Token: \(token)")
+//        print("Device Token: \(token)")
         
         UserDefaultManager.shared.deviceToken = token
     }

@@ -28,6 +28,8 @@ struct DMListFeature {
         case networkResponse(NetworkResponse)
         case buttonTapped(ButtonTapped)
         case dmListEnter(DM)
+        case timoerOn(Workspace)
+        case timerOff
     }
     
     enum ButtonTapped {
@@ -46,6 +48,7 @@ struct DMListFeature {
     
     @Dependency(\.realmRepository) var realmRepository
     @Dependency(\.networkManager) var networkManager
+    @Dependency(\.continuousClock) var clock
     
     var body : some Reducer<State, Action> {
         
@@ -64,9 +67,25 @@ struct DMListFeature {
                         await send(.networkResponse(.workspaceMembersResponse(
                             networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: currentWorkspace.workspaceID, channel_id: "", room_id: "")))
                         ))
-                    }
+                    },
+                    .send(.timoerOn(currentWorkspace))
                 ])
-            
+                
+            case let .timoerOn(workspace):
+                return .run { send in
+                    for await _ in await clock.timer(interval: .seconds(5)) {
+                        print("Timer On - DmListView 🌟")
+                        await send(.networkResponse(.workspaceMembersResponse(
+                            networkManager.getWorkspaceMember(request: WorkspaceIDRequestDTO(workspace_id: workspace.workspaceID, channel_id: "", room_id: "")))
+                        ))
+                    }
+                }
+                .cancellable(id: CancelID.timer)
+                
+            case .timerOff :
+                print("Timer Off - DmListView 🌟")
+                return .cancel(id: CancelID.timer)
+                
             case let .buttonTapped(.dmUserButtonTapped(user)):
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 return .run { send in
@@ -76,7 +95,7 @@ struct DMListFeature {
                     )))
                 }
                 
-            
+                
             case let .networkResponse(.workspaceMembersResponse(.success(member))):
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 state.workspaceMember = member.filter {
@@ -94,15 +113,15 @@ struct DMListFeature {
                         )))
                     }
                 }
-            
+                
             case let .networkResponse(.myProfile(.success(myProfile))):
                 state.profileImage = myProfile.profileImageToUrl
                 
                 return .none
                 
-            //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
+                //TODO: - 채팅 내용 조회, 읽지 않은 DM 갯수 조회 Realm Table 구성해야됨
             case let .networkResponse(.dmListResponse(.success(dmList))):
-                    
+                
                 guard let currentWorkspace = state.currentWorkspace else { return .none }
                 
                 // DM list 생성
@@ -145,7 +164,7 @@ struct DMListFeature {
                 }
                 
                 return .none
-            
+                
             case let .networkResponse(.dmResponse(.success(dm))):
                 return .send(.dmListEnter(dm))
                 
@@ -169,5 +188,9 @@ extension DMListFeature {
         case loading
         case empty
         case normal
+    }
+    
+    enum CancelID {
+        case timer
     }
 }
