@@ -63,6 +63,7 @@ struct HomeCoordinator {
             switch action {
             case .router(.routeAction(_, action: .home(.buttonTapped(.channelCreateButtonTapped)))):
                 state.routes.presentSheet(.channelAdd(.init(viewMode: .create, currentWorkspace: state.currentWorkspace)))
+                return .send(.router(.routeAction(id: .home, action: .home(.timerOff))))
             
             case let .router(.routeAction(_, action: .channelSetting(.popupComplete(.channelEdit(channel))))):
                 state.routes.presentSheet(.channelAdd(.init(viewMode: .edit, currentWorkspace: state.currentWorkspace, currentChannel: channel)))
@@ -91,13 +92,17 @@ struct HomeCoordinator {
                 return .send(.router(.routeAction(id: .home, action: .home(.onAppear))))
                 
             case let .router(.routeAction(_, action: .channelSearch(.channelEnter(channel)))):
-                return .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
-                    $0.dismiss()
-                    $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
-                }
+                return .concatenate([
+                    .send(.router(.routeAction(id: .home, action: .home(.timerOff)))),
+                    .routeWithDelaysIfUnsupported(state.routes, action: \.router) {
+                        $0.dismiss()
+                        $0.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
+                    }
+                ])
             
             case let .router(.routeAction(_, action: .home(.channelEnter(channel)))):
                 state.routes.push(.channelChat(.init(workspaceCurrent: state.currentWorkspace, channelCurrent: channel)))
+                return .send(.router(.routeAction(id: .home, action: .home(.timerOff))))
                 
             case .router(.routeAction(_, action: .channelChat(.goBack))), .router(.routeAction(_, action: .channelSetting(.goBack))), .router(.routeAction(_, action: .dmChat(.goBack))):
                 state.routes.goBack()
@@ -110,9 +115,11 @@ struct HomeCoordinator {
             
             case let .router(.routeAction(_, action: .home(.dmListEnter(dm)))):
                 state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
+                return .send(.router(.routeAction(id: .home, action: .home(.timerOff))))
                 
             case .router(.routeAction(_, action: .home(.buttonTapped(.profileOpenTapped)))):
                 state.routes.push(.profile(.initialState()))
+                return .send(.router(.routeAction(id: .home, action: .home(.timerOff))))
                 
             case .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
                 state.routes.goBack()

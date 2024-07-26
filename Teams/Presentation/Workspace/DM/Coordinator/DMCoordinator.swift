@@ -52,17 +52,31 @@ struct DMCoordinator {
             switch action {
             case .router(.routeAction(_, action: .dmList(.buttonTapped(.inviteMemberButtonTapped)))):
                 state.routes.presentSheet(.inviteMember(.init(currentWorkspace: state.currentWorkspace)))
+                
             case .router(.routeAction(_, action: .inviteMember(.dismiss))):
                 state.routes.dismiss()
+                
             case .router(.routeAction(_, action: .inviteMember(.inviteComplete))):
                 state.routes.dismiss()
-                return .send(.router(.routeAction(id: .dmList, action: .dmList(.onAppear))))
+                
+                return .run { send in
+                    await send(.router(.routeAction(id: .dmList, action: .dmList(.timerOff))))
+                    await send(.router(.routeAction(id: .dmList, action: .dmList(.onAppear))))
+                }
+                
             case let .router(.routeAction(_, action: .dmList(.dmListEnter(dm)))):
                 state.routes.push(.dmChat(.init(workspaceCurrent: state.currentWorkspace, roomCurrent: dm)))
+                
+                return .send(.router(.routeAction(id: .dmList, action: .dmList(.timerOff))))
+                
             case .router(.routeAction(_, action: .dmChat(.goBack))):
                 state.routes.goBack()
+                
             case .router(.routeAction(_, action: .dmList(.buttonTapped(.profileOpenTapped)))):
                 state.routes.push(.profile(.initialState()))
+                
+                return .send(.router(.routeAction(id: .dmList, action: .dmList(.timerOff))))
+                
             case .router(.routeAction(_, action: .profile(.router(.routeAction(_, action: .profile(.goBack)))))):
                 state.routes.goBack()
             
