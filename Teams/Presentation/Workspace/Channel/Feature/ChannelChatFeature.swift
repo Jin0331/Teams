@@ -143,9 +143,6 @@ struct ChannelChatFeature {
                 }
                 
             case let .socket(.socketRecevieHandling(chat)):
-                
-                print(chat)
-                
                 let chat = ChannelChatModel(from: ChannelChat(channelID: chat.channelID,
                                                               channelName: chat.channelName,
                                                               chatID: chat.chatID,
