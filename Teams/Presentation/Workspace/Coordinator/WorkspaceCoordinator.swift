@@ -150,7 +150,10 @@ struct WorkspaceCoordinator {
                 
             case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))), .sideMenu(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
                 print("workspace add complete 🌟🌟🌟🌟")
-                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
+                UserDefaultManager.shared.removeCurrentWorkspace()
+                return .concatenate([ .send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))),
+                                      .send(.closeSideMenu),
+                                      .send(.onAppear)])
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 if let workspaceCurrent = state.workspaceCurrent {
@@ -178,14 +181,11 @@ struct WorkspaceCoordinator {
                 let query = WorkspaceIDRequestDTO(workspace_id: removeWorkspaceID, channel_id: "", room_id: "")
                 
                 return .run { send in
+                    await send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff))))))
                     await send(.workspaceRemoveResponse(
                         networkManager.removeWorkspace(query: query)
                     ))
                 }
-            
-            case .workspaceRemoveResponse(.success(_)):
-                print("workspace remove complete 🔆")
-                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
                 
             case let .workspaceRemoveResponse(.failure(error)) :
                 
@@ -203,9 +203,12 @@ struct WorkspaceCoordinator {
                     ))
                 }
                 
-            case .workspaceExitResponse(.success(_)):
-                print("workspace exit complete 🔆")
-                return .concatenate([.send(.closeSideMenu), .send(.onAppear)])
+            case .workspaceExitResponse(.success(_)), .workspaceRemoveResponse(.success(_)):
+                print("workspace exit or remove complete 🔆")
+                UserDefaultManager.shared.removeCurrentWorkspace()
+                return .concatenate([ .send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))),
+                                      .send(.closeSideMenu),
+                                      .send(.onAppear)])
                 
             case let .workspaceExitResponse(.failure(error)) :
                 

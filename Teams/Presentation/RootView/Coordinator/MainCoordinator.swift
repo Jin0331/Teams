@@ -98,52 +98,30 @@ struct MainCoordinator {
                 print(errorType)
                 
                 
-            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(workspace))))), let .onboarding(.router(.routeAction(_, action: .auth(.loginComplete(workspace))))),
-                let .autoLogin(.success(workspace)), let .workspace(.workspaceChangeComplete(workspace)):
+            case let .onboarding(.router(.routeAction(_, action: .emailLogin(.loginComplete(workspace))))),
+                let .onboarding(.router(.routeAction(_, action: .auth(.loginComplete(workspace))))),
+                let .autoLogin(.success(workspace)):
                 
                 state.workspaceList = workspace
-                
-                if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
-                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
-                                                       dm: .initialState(currentWorkspace: selectedWorkspace), 
-                                                       search: .initialState(currentWorkspace: selectedWorkspace),
-                                                       profile: .initialState(tabViewMode : true),
-                                                       selectedTab: .home,
-                                                       sideMenu: .initialState()),
-                                            homeEmpty: .initialState,
-                                            sideMenu: .initialState(),
-                                            workspaceCurrent: selectedWorkspace,
-                                            showingView: workspace.count > 0 ? .home : .empty)
-                } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
-                    UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
-                    state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
-                                                       dm: .initialState(currentWorkspace: mostRecentWorkspace), 
-                                                       search: .initialState(currentWorkspace: mostRecentWorkspace),
-                                                       profile: .initialState(tabViewMode : true),
-                                                       selectedTab: .home,
-                                                       sideMenu: .initialState()),
-                                            homeEmpty: .initialState, 
-                                            sideMenu: .initialState(),
-                                            workspaceCurrent: mostRecentWorkspace,
-                                            showingView: workspace.count > 0 ? .home : .empty)
-                } else {
-                    state.workspace = .init(tab: .init(home: .initialState(),
-                                                       dm: .initialState(),
-                                                       search: .initialState(),
-                                                       profile: .initialState(tabViewMode : true),
-                                                       selectedTab: .home,
-                                                       sideMenu: .initialState()),
-                                            homeEmpty: .initialState,
-                                            sideMenu: .initialState(),
-                                            showingView: workspace.count > 0 ? .home : .empty)
-                }
+                state.workspace = initializeWorkspace(with: workspace)
                 
                 state.isLogined = true
                 state.isSignUp = false
                 
+            case let .workspace(.workspaceChangeComplete(workspace)):
+                
+                state.workspaceList = workspace
+                state.workspace = initializeWorkspace(with: workspace)
+                
+                state.isLogined = true
+                state.isSignUp = false
+                
+                return .send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.onAppear)))))))
+            
             //MARK: - Workspace Transition
             case let .workspace(.sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceTransition(selectedWorkspace)))))):
                 return .run { send in
+                    await send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))))
                     await send(.workspace(.closeSideMenu))
                     await send(.workspaceTransition(selectedWorkspace))
                 }
@@ -203,6 +181,45 @@ struct MainCoordinator {
               break
             }
             return .none
+        }
+    }
+}
+
+extension MainCoordinator {
+    private func initializeWorkspace(with workspace: [Workspace]) -> WorkspaceCoordinator.State {
+        if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
+            return WorkspaceCoordinator.State(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
+                                             dm: .initialState(currentWorkspace: selectedWorkspace),
+                                             search: .initialState(currentWorkspace: selectedWorkspace),
+                                             profile: .initialState(tabViewMode : true),
+                                             selectedTab: .home,
+                                             sideMenu: .initialState()),
+                                  homeEmpty: .initialState,
+                                  sideMenu: .initialState(),
+                                  workspaceCurrent: selectedWorkspace,
+                                  showingView: workspace.count > 0 ? .home : .empty)
+        } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
+            UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
+            return WorkspaceCoordinator.State(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
+                                             dm: .initialState(currentWorkspace: mostRecentWorkspace),
+                                             search: .initialState(currentWorkspace: mostRecentWorkspace),
+                                             profile: .initialState(tabViewMode : true),
+                                             selectedTab: .home,
+                                             sideMenu: .initialState()),
+                                  homeEmpty: .initialState,
+                                  sideMenu: .initialState(),
+                                  workspaceCurrent: mostRecentWorkspace,
+                                  showingView: workspace.count > 0 ? .home : .empty)
+        } else {
+            return WorkspaceCoordinator.State(tab: .init(home: .initialState(),
+                                             dm: .initialState(),
+                                             search: .initialState(),
+                                             profile: .initialState(tabViewMode : true),
+                                             selectedTab: .home,
+                                             sideMenu: .initialState()),
+                                  homeEmpty: .initialState,
+                                  sideMenu: .initialState(),
+                                  showingView: workspace.count > 0 ? .home : .empty)
         }
     }
 }

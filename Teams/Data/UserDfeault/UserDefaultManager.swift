@@ -93,6 +93,10 @@ final class UserDefaultManager {
         }
     }
     
+    func removeCurrentWorkspace() {
+        userDefaults.set(nil, forKey: "workspace")
+    }
+    
     // Workspace 불러오기
     func getWorkspace() -> Workspace? {
         guard let data = userDefaults.data(forKey: "workspace") else { return nil }
