@@ -79,7 +79,7 @@ struct MainCoordinator {
         
         Reduce<State, Action> { state, action in
             switch action {
-            
+                
             //MARK: - 자동로그인에서 사용되는 부분
             case .onApper:
                 realmRepository.realmLocation()
@@ -91,7 +91,7 @@ struct MainCoordinator {
                 } else {
                     return .none
                 }
-            
+                
             //TODO: - 초기에 initalState로 초기화되었다가, 비동기 action으로 state가 초기화되면서 ,땅->땅 으로 뷰가 전환됨. Progress View 필요할듯
             //MARK: - Workspace가 지정되는 부분
             case let .autoLogin(.failure(error)):
@@ -118,8 +118,8 @@ struct MainCoordinator {
                 state.isSignUp = false
                 
                 return .send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.onAppear)))))))
-            
-            //MARK: - Workspace Transition
+                
+                //MARK: - Workspace Transition
             case let .workspace(.sideMenu(.router(.routeAction(_, action: .sidemenu(.workspaceTransition(selectedWorkspace)))))):
                 return .run { send in
                     await send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))))
@@ -131,17 +131,7 @@ struct MainCoordinator {
                 guard let workspaceList = state.workspaceList else { return .none }
                 
                 UserDefaultManager.shared.saveWorkspace(selectedWorkspace)
-                
-                state.workspace = .init(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
-                                                   dm: .initialState(currentWorkspace: selectedWorkspace),
-                                                   search: .initialState(currentWorkspace: selectedWorkspace),
-                                                   profile: .initialState(tabViewMode : true),
-                                                   selectedTab: .home,
-                                                   sideMenu: .initialState()),
-                                        homeEmpty: .initialState,
-                                        sideMenu: .initialState(),
-                                        workspaceCurrent: selectedWorkspace,
-                                        showingView: workspaceList.count > 0 ? .home : .empty)
+                state.workspace = initializeWorkspace(with: workspaceList)
                 
                 return .send(.workspace(.tab(.home(.router(.routeAction(id: .home, action: .home(.onAppear)))))))
                 
@@ -152,6 +142,8 @@ struct MainCoordinator {
                 
                 
             case .homeInitial(.router(.routeAction(_, action: .initial(.dismiss)))):
+                state.workspace = initializeWorkspace(with: [])
+                
                 state.isLogined = true
                 state.isSignUp = false
                 
@@ -179,7 +171,7 @@ struct MainCoordinator {
                 realmRepository.deleteALL()
                 
             default:
-              break
+                break
             }
             return .none
         }
@@ -190,37 +182,40 @@ extension MainCoordinator {
     private func initializeWorkspace(with workspace: [Workspace]) -> WorkspaceCoordinator.State {
         if let selectedWorkspace = UserDefaultManager.shared.getWorkspace() {
             return WorkspaceCoordinator.State(tab: .init(home: .initialState(workspaceCurrent: selectedWorkspace),
-                                             dm: .initialState(currentWorkspace: selectedWorkspace),
-                                             search: .initialState(currentWorkspace: selectedWorkspace),
-                                             profile: .initialState(tabViewMode : true),
-                                             selectedTab: .home,
-                                             sideMenu: .initialState()),
-                                  homeEmpty: .initialState,
-                                  sideMenu: .initialState(),
-                                  workspaceCurrent: selectedWorkspace,
-                                  showingView: workspace.count > 0 ? .home : .empty)
+                                                         dm: .initialState(currentWorkspace: selectedWorkspace),
+                                                         search: .initialState(currentWorkspace: selectedWorkspace),
+                                                         profile: .initialState(tabViewMode : true),
+                                                         selectedTab: .home,
+                                                         sideMenu: .initialState()),
+                                              homeEmpty: .initialState,
+                                              sideMenu: .initialState(),
+                                              workspaceCurrent: selectedWorkspace,
+                                              showingView: workspace.count > 0 ? .home : .empty)
+            
         } else if let mostRecentWorkspace = utilitiesFunction.getMostRecentWorkspace(from: workspace) {
             UserDefaultManager.shared.saveWorkspace(mostRecentWorkspace)
             return WorkspaceCoordinator.State(tab: .init(home: .initialState(workspaceCurrent: mostRecentWorkspace),
-                                             dm: .initialState(currentWorkspace: mostRecentWorkspace),
-                                             search: .initialState(currentWorkspace: mostRecentWorkspace),
-                                             profile: .initialState(tabViewMode : true),
-                                             selectedTab: .home,
-                                             sideMenu: .initialState()),
-                                  homeEmpty: .initialState,
-                                  sideMenu: .initialState(),
-                                  workspaceCurrent: mostRecentWorkspace,
-                                  showingView: workspace.count > 0 ? .home : .empty)
+                                                         dm: .initialState(currentWorkspace: mostRecentWorkspace),
+                                                         search: .initialState(currentWorkspace: mostRecentWorkspace),
+                                                         profile: .initialState(tabViewMode : true),
+                                                         selectedTab: .home,
+                                                         sideMenu: .initialState()),
+                                              homeEmpty: .initialState,
+                                              sideMenu: .initialState(),
+                                              workspaceCurrent: mostRecentWorkspace,
+                                              showingView: workspace.count > 0 ? .home : .empty)
+            
+            
         } else {
             return WorkspaceCoordinator.State(tab: .init(home: .initialState(),
-                                             dm: .initialState(),
-                                             search: .initialState(),
-                                             profile: .initialState(tabViewMode : true),
-                                             selectedTab: .home,
-                                             sideMenu: .initialState()),
-                                  homeEmpty: .initialState,
-                                  sideMenu: .initialState(),
-                                  showingView: workspace.count > 0 ? .home : .empty)
+                                                         dm: .initialState(),
+                                                         search: .initialState(),
+                                                         profile: .initialState(tabViewMode : true),
+                                                         selectedTab: .home,
+                                                         sideMenu: .initialState()),
+                                              homeEmpty: .initialState,
+                                              sideMenu: .initialState(),
+                                              showingView: workspace.count > 0 ? .home : .empty)
         }
     }
 }

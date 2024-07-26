@@ -129,7 +129,7 @@ struct SignUpFeature {
                                                  password: state.passwordText,
                                                  nickname: state.nicknameText,
                                                  phone: state.phoneNumberText,
-                                                 deviceToken: UserDefaultManager.shared.deviceToken!)
+                                                 deviceToken: UserDefaultManager.shared.deviceToken)
                 
                 return .run { send in
                     await send(.joinResponse(

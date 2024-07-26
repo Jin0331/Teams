@@ -12,5 +12,5 @@ struct JoinRequestDTO : Encodable {
     let password : String
     let nickname : String
     let phone : String
-    let deviceToken : String
+    let deviceToken : String?
 }
