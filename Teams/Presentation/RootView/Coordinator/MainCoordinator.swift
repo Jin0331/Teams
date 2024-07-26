@@ -83,7 +83,6 @@ struct MainCoordinator {
             //MARK: - 자동로그인에서 사용되는 부분
             case .onApper:
                 realmRepository.realmLocation()
-                print("🌟🌟🌟🌟🌟🌟🌟Token 🌟 : \(UserDefaultManager.shared.accessToken!)\nSecretKey 🌟 : \(APIKey.secretKey.rawValue)\n🌟🌟🌟🌟🌟🌟🌟")
                 if UserDefaultManager.shared.isLogined {
                     return .run { send in
                         await send(.autoLogin(
