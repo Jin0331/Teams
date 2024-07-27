@@ -148,12 +148,13 @@ struct WorkspaceCoordinator {
                 state.popupPresent = nil
                 state.sidemenuOpen = false
                 
+                return .concatenate([.send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))), .send(.onAppear)])
+                
             case .homeEmpty(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))), .sideMenu(.router(.routeAction(_, action: .workspaceAdd(.createWorkspaceComplete)))):
                 print("workspace add complete 🌟🌟🌟🌟")
                 UserDefaultManager.shared.removeCurrentWorkspace()
-                return .concatenate([ .send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))),
-                                      .send(.closeSideMenu),
-                                      .send(.onAppear)])
+                return .concatenate([.send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))),
+                                      .send(.closeSideMenu)])
                 
             case .homeEmpty(.router(.routeAction(_, action: .emptyView(.openSideMenu)))), .tab(.home(.router(.routeAction(_, action: .home(.openSideMenu))))):
                 if let workspaceCurrent = state.workspaceCurrent {
@@ -207,8 +208,7 @@ struct WorkspaceCoordinator {
                 print("workspace exit or remove complete 🔆")
                 UserDefaultManager.shared.removeCurrentWorkspace()
                 return .concatenate([ .send(.tab(.home(.router(.routeAction(id: .home, action: .home(.timerOff)))))),
-                                      .send(.closeSideMenu),
-                                      .send(.onAppear)])
+                                      .send(.closeSideMenu)])
                 
             case let .workspaceExitResponse(.failure(error)) :
                 
