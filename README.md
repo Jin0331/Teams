@@ -44,9 +44,91 @@
 
 ## 👨🏻‍💻 **적용 기술 소개**
 
-***TCA***
+***SwiftUI + TCA***
+
+* 일관된 상태 관리, 비즈니스 로직의 분리, Dpendency Injection(DI) 등을 통하여 코드의 유지보수성과 재사용성을 높이기 위해 The Composable Architecture(TCA) 적용.
+
+    ```swift 
+    @Reducer
+    struct HomeFeature {    
+        @ObservableState
+        struct State : Equatable {
+            let id = UUID()
+            ...
+        }
+        
+        enum Action : BindableAction{
+            case binding(BindingAction<State>)
+            case buttonTapped(ButtonTapped)
+            case networkResponse(NetworkResponse)
+            ...
+        }
+        
+        @Dependency(\.networkManager) var networkManager
+        @Dependency(\.utilitiesFunction) var utils
+        
+        var body : some ReducerOf<Self> {
+            BindingReducer()
+            Reduce<State, Action> { state, action in
+                switch action {
+                    ...
+                }
+            }
+        }   
+    }
+    ```
+
+<br>
 
 ***TCACoordinator***
+
+* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용.
+
+    ![Teams drawio (1)](https://github.com/user-attachments/assets/dff306c1-c0bd-4f45-97e6-f015db31f147)
+
+* Coordinator의 구성으로, TCARouter를 이용하여 해당 Coordiantor에 속한 View 구성
+
+    ```swift
+    struct CoordinatorView : View {
+        let store : StoreOf<Coordinator>
+        
+        var body : some View {
+            TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
+                switch screen.case {
+                case let .dmList(store):
+                    ListView(store: store)
+                    ...
+                }
+            }
+        }
+    }
+
+    @Reducer
+    struct Coordinator {
+        @ObservableState
+        struct State : Equatable {
+            var routes: IdentifiedArrayOf<Route<Screen.State>>
+        }
+        
+        enum Action {
+            case router(IdentifiedRouterActionOf<Screen>)
+        }
+        
+        var body : some ReducerOf<Self> {
+            Reduce<State, Action> { state, action in
+                switch action {
+                case .router(.routeAction(_, action: .list(.buttonTapped(.profileOpenTapped)))):
+                    state.routes.push(.profile(.initialState()))   
+                case .router(.routeAction(_, action: .inviteMember(.dismiss))):
+                    state.routes.dismiss()
+                    ...
+                }
+            }
+            .forEachRoute(\.routes, action: \.router)
+        }
+    }
+
+    ```
 
 ***Realm***
 
