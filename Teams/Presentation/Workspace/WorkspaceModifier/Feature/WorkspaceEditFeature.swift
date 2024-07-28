@@ -97,7 +97,7 @@ struct WorkspaceEditFeature {
                 }
             case let .editWorkspaceResponse(.success(response)):
                 
-                dump(response)
+                UserDefaultManager.shared.saveWorkspace(response)
                 
                 return .concatenate([.send(.editWorkspaceComplete), .send(.dismiss)])
                 
