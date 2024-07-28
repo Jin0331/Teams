@@ -1,4 +1,4 @@
-# 👨🏻‍💻 Teams - 업무 협업툴 (README 수정 예정)
+# 👨🏻‍💻 Teams - 업무 협업툴
 
 ![목업변환병합1](https://github.com/user-attachments/assets/91789873-ccda-4004-b81b-8c90f91fbc46)
 
@@ -131,6 +131,14 @@
     ```
 
 ***Realm***
+
+* Repository Pattern 기반의 데이터 로직 추상화
+
+* 아래와 같은 Database Schema 구성 (**1:N**)
+  
+    ![Untitled (3)](https://github.com/user-attachments/assets/eadcb91f-390d-4af9-be39-6eddc196211b)
+
+
 
 ***Alamofire***
 
