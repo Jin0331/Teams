@@ -1,8 +1,8 @@
 # 👨🏻‍💻 Teams - 업무 협업툴 (README 수정 예정)
 
-![병합이미지2](https://github.com/user-attachments/assets/f9e69ec9-9dd5-4939-9800-128467fb5da1)
-
 ![병합이미지1](https://github.com/user-attachments/assets/5409c405-638f-4af2-8576-3cd5e43a3fce)
+
+![병합이미지2](https://github.com/user-attachments/assets/f9e69ec9-9dd5-4939-9800-128467fb5da1)
 
 > 출시 기간 : 2024.06.03 - 07.25
 >
