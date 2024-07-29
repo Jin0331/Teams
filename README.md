@@ -130,21 +130,32 @@
 
     ```
 
+<br>
+
 ***Realm***
 
-* Repository Pattern 기반의 데이터 로직 추상화
+* Workspace 별 Channel 및 DM 채팅을 위한 Repository Pattern 기반의 데이터 로직 추상화
 
 * 아래와 같은 Database Schema 구성 (**1:N**)
   
     ![Untitled (3)](https://github.com/user-attachments/assets/eadcb91f-390d-4af9-be39-6eddc196211b)
 
 
+<br>
 
 ***Alamofire***
 
-***Socket.IO***
+* `URLRequestConvertible`을 활용한 `Router 패턴` 기반의 `GET/POST/DEL/PUT` 메소드를 활용한 `RESTful API Network`와의 통신 구현
 
-***Kingfisher***
+* `RequestInterceptor Protocol` 채택함으로써, `JWT(Json Web Token)` 갱신 적용
+
+<br>
+
+***Socket.IO + Chat***
+
+![Socket_Chat](https://github.com/user-attachments/assets/ab8b4e27-f45e-428a-91cf-76007d62668a)
+
+<br>
 
 ***PopupView***
 
