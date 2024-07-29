@@ -153,12 +153,21 @@
 
 ***Socket.IO + Chat***
 
-![Socket_Chat](https://github.com/user-attachments/assets/ab8b4e27-f45e-428a-91cf-76007d62668a)
-![socket_단체](https://github.com/user-attachments/assets/3c73f1b1-564b-4160-bc69-1032a387450e)
+* `Socket.IO`와 `Chat` 라이브러리를 이용한 실시간 개인, 단체 채팅 구현
+
+* `AsyncStream<Result<T, APIError>>`를 이용한 Success 또는 Failure Response Decoding 스트림 제공
+
+<p align="center" style="display: inline-block;">
+  <img src="https://github.com/user-attachments/assets/ab8b4e27-f45e-428a-91cf-76007d62668a" width="30%" height="30%"/>
+  <img src="https://github.com/user-attachments/assets/3c73f1b1-564b-4160-bc69-1032a387450e" width="30%" height="30%"/>
+</p>
+
 
 <br>
 
 ***PopupView***
+
+* 
 
 <br>
 
