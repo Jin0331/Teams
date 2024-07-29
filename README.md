@@ -167,7 +167,7 @@
 
 ***PopupView***
 
-* 
+* `PopupView` 라이브러리를 이용한 두 가지 형태의 `Toast Menu 구현`
 
 <p align="center" style="display: inline-block;">
   <img src="https://github.com/user-attachments/assets/ae7e450c-ede5-43ff-9080-0c7eaaed8dd3" width="30%" height="30%"/>
