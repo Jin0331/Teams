@@ -194,7 +194,7 @@
 
     1. 각 View는 무한 증식되지 않으므로 `IdentifiedArrayOf<Route<SideMenuScreen.State>>`와 같이, 각 View의 State를 관리하기 위하여 `IdentifiedArrayOf`를 사용하므로써 포함된 View에 대해 Identity 지정
 
-    2. Ientity를 지정하기 위해, `Identifiable` Protocol를 채택
+    2. Identity를 지정하기 위해, `Identifiable` Protocol를 채택
 
         ```swift
         @Reducer(state: .equatable)
@@ -225,7 +225,7 @@
         }
         ```
 
-    3. 또한, 각 View의 Event를 관리하기 위해, dentifiedRouterActionOf<SideMenuScreen>` 선언
+    3. 또한, 각 View의 Event를 관리하기 위해, `IdentifiedRouterActionOf<SideMenuScreen>` 선언
 
     4. Coordinaotr의 Reducer에서 View 간 이벤트 전달할 수 있도록 구현
         ```swift
