@@ -154,6 +154,7 @@
 ***Socket.IO + Chat***
 
 ![Socket_Chat](https://github.com/user-attachments/assets/ab8b4e27-f45e-428a-91cf-76007d62668a)
+![socket_단체](https://github.com/user-attachments/assets/3c73f1b1-564b-4160-bc69-1032a387450e)
 
 <br>
 
