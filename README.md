@@ -82,7 +82,7 @@
 
 ***TCACoordinator***
 
-* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용.
+* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용
 
     ![Teams drawio (1)](https://github.com/user-attachments/assets/dff306c1-c0bd-4f45-97e6-f015db31f147)
 
