@@ -82,7 +82,7 @@
 
 ***TCACoordinator***
 
-* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용
+* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용.
 
     ![Teams drawio (1)](https://github.com/user-attachments/assets/dff306c1-c0bd-4f45-97e6-f015db31f147)
 
@@ -260,9 +260,8 @@
 * **문제 상황**
 
     > - 실시간 채팅 구현을 위해, Action 내부에서 Socket을 연결하고, Socket으로 부터 전달된 데이터를 다른 Action으로 보내는 과정에서 `An action was sent from a completed effect` 에러가 발생
-    >
-    > - Task에서 Socket 연결 직후 Effect(`.run`) 구문이 종료되어, Action(`await send(.socket(.socketRecevieHandling(decodedData.toDomain()))`) 이벤트가 지속적으로 발생되는 비정상적인 과정이 발생
-    > - Effect는 종료되었지만, Socket이 정상적으로 연결되어 있으므로 값을 받아오게 되고, 후처리 로직이 문제없이 수행되지만 TCA에서 관리할 수 없는 상태가 되어 해당 에러가 발생함.
+    > - Task에서 Socket 연결 직후 Effect(`.run`) 구문이 종료되었지만, Action(`await send(.socket(.socketRecevieHandling(decodedData.toDomain()))`) 이벤트가 지속적으로 방출되는 비정상적인 현상이 나타남
+    > - Socket이 정상적으로 연결되어 있으므로 양방향 통신으로 값을 지소적으로 받아오게 되고, 데이터 처리로직이 문제없이 수행되지만 TCA 프레임워크에서 관리할 수 없는 상태가 되어 해당 에러가 발생함
 
     ```swift
     case .socketReceive:
