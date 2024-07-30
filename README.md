@@ -148,7 +148,7 @@
 
 ***Realm***
 
-* Workspace 별 Channel 및 DM 채팅을 위한 Repository Pattern 기반의 데이터 로직 추상화
+* 워크스페이스 기반의 실시간 채팅(단체, 개인)을 위한 Repository Pattern 기반의 데이터 로직 추상화
 
 * 아래와 같은 Database Schema 구성 (**1:N**)
   
