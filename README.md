@@ -46,7 +46,7 @@
 
 * ***오픈 소스***
 
-    Realm / Alamofire /	SocketIO / Kingfisher
+    Realm / Alamofire /	Socket.IO / Kingfisher
 
     PopupView / Chat
 
@@ -60,7 +60,7 @@
 
 ***SwiftUI + TCA***
 
-* 일관된 상태 관리, 비즈니스 로직의 분리, Dependency Injection(DI) 등을 통하여 코드의 유지보수성과 재사용성을 높이기 위해 The Composable Architecture(TCA) 적용.
+* 일관된 상태 관리, 비즈니스 로직의 분리, Dependency Injection(DI) 등을 통하여 코드의 유지보수성과 재사용성을 높이기 위해 The Composable Architecture(TCA) 적용
 
     ```swift 
     @Reducer
@@ -96,7 +96,7 @@
 
 ***TCACoordinator***
 
-* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용.
+* TCA가 적용된 상태에서 View 간 효율적인 화면전환을 위해 Coordinator Pattern 적용
 
     ![Teams drawio (1)](https://github.com/user-attachments/assets/dff306c1-c0bd-4f45-97e6-f015db31f147)
 
@@ -196,9 +196,9 @@
 
 * **문제 상황**
 
-    > - 아래와 같은 구조로, SideMenuView와 EditView는 SideMenuCoordinator에 포함된 하위 View이며, SideMenuView에서 수정 Button을 클릭시, EditView가 Present되는 형태임.
-    > - 또한, TCA는 단방향 아키텍처를 지향하며, TCACoordinator 또한 단방향 화면 전환을 목표로 View 간 양방향 소통이 아닌, Coordinator를 통한 단방향 화면전환을 지원함. 
-    > - 이때, 각 View는 서로 독립적이므로 특정 View에서 발생한 Event를 전달받아 View를 Update 해야하는 문제가 발생.
+    > - 아래와 같은 구조로, SideMenuView와 EditView는 SideMenuCoordinator에 포함된 하위 View이며, SideMenuView에서 수정 Button을 클릭시, EditView가 Present되는 형태임
+    > - 또한, TCA는 단방향 아키텍처를 지향하며, TCACoordinator 또한 단방향 화면 전환을 목표로 View 간 양방향 소통이 아닌, Coordinator를 통한 단방향 화면전환을 지원함
+    > - 이때, 각 View는 서로 독립적이므로 특정 View에서 발생한 Event를 전달받아 View를 Update 해야하는 문제가 발생
 
     <p align="center">
       <img src="https://github.com/Jin0331/Teams/assets/42958809/03bca249-7e30-45cf-800b-001335699d91" width="45%" height="45%"/>
@@ -303,7 +303,7 @@
 
 * **해결 방법**
 
-    1.  Effect가 Socket 연결 이후에도 종료되지 않도록, 해당 구문을 `AsyncStream`으로 변경하여 비동기 Sequence로 적용 후 `for await`을 통해 Stream을 지속적으로 받을 수 있는 대기 상태로 변경.
+    1.  Effect가 Socket 연결 이후에도 종료되지 않도록, 해당 구문을 `AsyncStream`으로 변경하여 비동기 Sequence로 적용 후 `for await`을 통해 Stream을 지속적으로 받을 수 있는 대기 상태로 변경
 
     2. SocketIOManager 구성 후, 반환값을 `AsyncStream<Result<T, APIError>>`으로 설정
 
