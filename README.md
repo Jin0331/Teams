@@ -60,7 +60,7 @@
 
 ***SwiftUI + TCA***
 
-* 일관된 상태 관리, 비즈니스 로직의 분리, Dpendency Injection(DI) 등을 통하여 코드의 유지보수성과 재사용성을 높이기 위해 The Composable Architecture(TCA) 적용.
+* 일관된 상태 관리, 비즈니스 로직의 분리, Dependency Injection(DI) 등을 통하여 코드의 유지보수성과 재사용성을 높이기 위해 The Composable Architecture(TCA) 적용.
 
     ```swift 
     @Reducer
